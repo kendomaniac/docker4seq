@@ -1,0 +1,9 @@
+Package: docker4seq
+Title: Running NGS computing demanding applications, e.g reads mapping and counting, wrapped in docker containers.
+Version: 0.0.0.9000
+Authors@R: person(“Raffaele”, “calogero”, email = “raffaele.calogero@unito.it”, role = "aut"
+Description: A collection of functions to execute NGS computing demanding applications, e.g reads mapping and counting, wrapped in docker containers.
+Depends: R (>= 3.3.2)
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
