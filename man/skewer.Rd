@@ -9,7 +9,7 @@ skewer(group = c("sudo", "docker"), fastq.folder = getwd(),
   "pe"), threads = 1, min.length = 18)
 }
 \arguments{
-\item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs.}
+\item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
 
 \item{fastq.folder, }{a character string indicating where gzip fastq files are located}
 
@@ -21,23 +21,23 @@ skewer(group = c("sudo", "docker"), fastq.folder = getwd(),
 
 \item{seq.type, }{a character string indicating the type of reads to be trimmed. Two options: \code{"se"} or \code{"pe"} respectively for single end and pair end sequencing.}
 
-\item{threads, }{a number indicating the number of cores to be used from the application.}
+\item{threads, }{a number indicating the number of cores to be used from the application}
 
-\item{min.length, }{a number indicating minimal length required to return a trimmed read.}
+\item{min.length, }{a number indicating minimal length required to return a trimmed read}
 }
 \value{
-One or two gzip fastq file ending with trimmed-pair1.fastq.gz and trimmed-pair1.fastq.gz, a log file of the trimming with the extensione trimmed.log, run.info file descring the analysis steps done by the docker. The latter file is useful to understand where the docker stop in case of unexpected end.
+One or two gzip fastq files ending with trimmed-pair1.fastq.gz and trimmed-pair1.fastq.gz, a log file of the trimming with the extensione trimmed.log, run.info file descring the analysis steps done by the docker. The latter file is useful to understand where the docker stop in case of unexpected end
 }
 \description{
-This function executes the docker container skewer1 to remove sequencing adapters from RNAseq reads.
+This function executes the docker container skewer1 to remove sequencing adapters from RNAseq reads
 }
 \examples{
 \dontrun{
     wget http://130.192.119.59/public/test_R1.fastq.gz
     wget http://130.192.119.59/public/test_R2.fastq.gz
-    skewer(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch", 
-    adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", 
-    adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", 
+    skewer(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
+    adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+    adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
     seq.type="pe", threads=10,  min.length=40)
 }
 }
