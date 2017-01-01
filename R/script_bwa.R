@@ -61,16 +61,16 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
 	if(group=="sudo"){
 		system("sudo docker pull docker.io/rcaloger/bwa.1")
 		if(seq.type=="pe"){
-		      system(paste("sudo docker run -v ",scratch.folder,":", scratch.folder," -d docker.io/rcaloger/bwa.1 sh /bin/bwa.sh ",file.path(scratch.folder, tmp.folder)," ",genome.folder," ", sample.id," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder, sep=""))
+		      system(paste("sudo docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.1 sh /bin/bwa.sh ",file.path(scratch.folder, tmp.folder)," ",genome.folder," ", sample.id," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder, sep=""))
 	    }else{
-			  system(paste("sudo docker run -v ",scratch.folder,":", scratch.folder," -d docker.io/rcaloger/bwa.1 sh /bin/bwa.sh ",file.path(scratch.folder, tmp.folder)," ",genome.folder," ", sample.id," ",fastq[1]," ", threads," ", fastq.folder,sep=""))
+			  system(paste("sudo docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.1 sh /bin/bwa.sh ",file.path(scratch.folder, tmp.folder)," ",genome.folder," ", sample.id," ",fastq[1]," ", threads," ", fastq.folder,sep=""))
 	    }
 	}else{
 		system("docker pull docker.io/rcaloger/bwa.1")
 		if(seq.type=="pe"){
-		      system(paste("docker run -v ",scratch.folder,":", scratch.folder," -d docker.io/rcaloger/bwa.1 sh /bin/bwa.sh ",file.path(scratch.folder, tmp.folder)," ",genome.folder," ", sample.id," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder, sep=""))
+		      system(paste("docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.1 sh /bin/bwa.sh ",file.path(scratch.folder, tmp.folder)," ",genome.folder," ", sample.id," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder, sep=""))
 	    }else{
-			  system(paste("docker run -v ",scratch.folder,":", scratch.folder," -d docker.io/rcaloger/bwa.1 sh /bin/bwa.sh ",file.path(scratch.folder, tmp.folder)," ",genome.folder," ", sample.id," ",fastq[1]," ", threads," ", fastq.folder,sep=""))
+			  system(paste("docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.1 sh /bin/bwa.sh ",file.path(scratch.folder, tmp.folder)," ",genome.folder," ", sample.id," ",fastq[1]," ", threads," ", fastq.folder,sep=""))
 	    }
 
 	}

@@ -4,8 +4,7 @@
 \alias{bwaIndex}
 \title{Generating bwa genome index}
 \usage{
-bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(), ensembl.url,
-  threads = 1)
+bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(), ensembl.url)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -13,8 +12,6 @@ bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(), ensembl.url,
 \item{genome.folder, }{a character string indicating the folder where the indexed reference genome for bwa will be located}
 
 \item{ensembl.url, }{a character string indicating the URL from ENSEMBL ftp for the unmasked genome sequence of interest}
-
-\item{threads, }{a number indicating the number of cores to be used from the application}
 }
 \value{
 The indexed bwa genome reference sequence
@@ -25,9 +22,8 @@ This function executes the docker container bwa1 where BWA is installed. The ind
 \examples{
 \dontrun{
     #running bwa index
-    bwaIndex(group="sudo",genome.folder=getwd(),
-    ensembl.url="ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz",
-    threads=24)
+    bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/hg38",
+    ensembl.url="ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz")
 }
 }
 
