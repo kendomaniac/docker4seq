@@ -4,7 +4,7 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param fastq.folder, a character string indicating where gzip fastq files are located
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
-#' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa is located
+#' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa is located. IMPORTANT the present function only suport genomic indexes made using ensembl genom and the corresponding gtf
 #' @param seq.type, a character string indicating the type of reads to be trimmed. Two options: \code{"se"} or \code{"pe"} respectively for single end and pair end sequencing
 #' @param strandness, a character string indicating the type ofsequencing protocol used for the analysis. Three options: \code{"none"}, \code{"forward"}, \code{"reverse"} respectively for non strand selection, forward for Illumina strandness protocols, reverse for ACCESS Illumina protocol
 #' @param threads, a number indicating the number of cores to be used from the application
