@@ -13,4 +13,14 @@ library(githubinstall)
 githubinstall("docker4seq")
 ```
 
+##Requirements
+You need to have docker installed on your machine. This package is expected to run on 64 bits machine with at least 4 cores and 32 Gb RAM.
+A scratch folder should be present, e.g. /data/scratch and it should be writebable from everybody:
+```
+chmod 777 /data/scratch
+```
+The functions in docker4seq package require that user is sudo or part of a docker group.
+See the following document for more info:
+https://docs.docker.com/engine/installation/linux/ubuntulinux/#/manage-docker-as-a-non-root-user
+
 
