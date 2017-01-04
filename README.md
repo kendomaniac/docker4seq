@@ -8,7 +8,8 @@ install_github("docker4seq")
 ```
 or you can use **githubinstall**:
 ```
-install.packages("ithubinstall")
+install.packages("githubinstall")
+library(githubinstall)
 githubinstall("docker4seq")
 ```
 
