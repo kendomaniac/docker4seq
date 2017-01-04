@@ -4,13 +4,13 @@ To install it you can use use **devtools**:
 ```
 install.packages("devtools")
 library(devtools)
-install_github("docker4seq")
+install_github("install_github("kendomaniac/docker4seq")")
 ```
 or you can use **githubinstall**:
 ```
 install.packages("githubinstall")
 library(githubinstall)
-githubinstall("docker4seq")
+githubinstall("kendomaniac/docker4seq")
 ```
 
 ##Requirements
