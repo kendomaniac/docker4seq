@@ -17,7 +17,8 @@
 #'     wget http://130.192.119.59/public/test_R2.fastq.gz
 #'     #running bwa
 #'     bwa(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
-#'     genome.folder="/data/scratch/hg19_exome", seq.type="pe", threads=24, sample.id="exome")
+#'     genome.folder="/data/scratch/hg19_exome", seq.type="pe",
+#'     threads=24, sample.id="exome")
 #' }
 
 bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), threads=1, sample.id){

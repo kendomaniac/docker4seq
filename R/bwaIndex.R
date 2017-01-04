@@ -10,7 +10,8 @@
 #'\dontrun{
 #'     #running bwa index
 #'     bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/hg38",
-#'     ensembl.url="ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz")
+#'     ensembl.url=
+#'     "ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz")
 #' }
 
 bwaIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensembl.url){

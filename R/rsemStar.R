@@ -17,7 +17,8 @@
 #'     wget http://130.192.119.59/public/test_R2.fastq.gz
 #'     #running rsemstar nostrand pe
 #'     rsemstar(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
-#'     genome.folder="/data/scratch/hg38star", seq.type="pe", strandness=FALSE, threads=24)
+#'     genome.folder="/data/scratch/hg38star", seq.type="pe", strandness=FALSE,
+#'     threads=24)
 #'
 #' }
 
