@@ -18,7 +18,7 @@
 #'     "ftp://ftp.ensembl.org/pub/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh38.87.gtf.gz",
 #'     threads=24)
 #' }
-
+#' @export
 rsemstarIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensembl.urlgenome, ensembl.urlgtf, threads=1){
 	cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 

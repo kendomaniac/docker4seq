@@ -20,7 +20,7 @@
 #'     genome.folder="/data/scratch/hg19_exome", seq.type="pe",
 #'     threads=24, sample.id="exome")
 #' }
-
+#' @export
 bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), threads=1, sample.id){
 	tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 	cat("\ncreating a folder in scratch folder\n")

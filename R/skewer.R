@@ -19,7 +19,7 @@
 #'     adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 #'     seq.type="pe", threads=10,  min.length=40)
 #' }
-
+#' @export
 skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", adapter5, adapter3, seq.type=c("se","pe"), threads=1, min.length=18){
 	tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 	cat("\ncreating a folder in scratch folder\n")

@@ -13,7 +13,7 @@
 #'     ensembl.url=
 #'     "ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz")
 #' }
-
+#' @export
 bwaIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensembl.url){
 	cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 

@@ -20,7 +20,7 @@
 #'     mirbase.id="hsa",download.status=FALSE, adapter.type="NEB", trimmed.fastq=FALSE)
 #'
 #' }
-
+#' @export
 mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch",mirbase.id=c("hsa", "mmu"), download.status=FALSE, adapter.type=c("ILLUMINA","NEB"),  trimmed.fastq=FALSE){
 	tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 	cat("\ncreating a folder in scratch folder\n")

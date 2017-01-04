@@ -6,12 +6,7 @@ install.packages("devtools")
 library(devtools)
 install_github("install_github("kendomaniac/docker4seq")")
 ```
-or you can use **githubinstall**:
-```
-install.packages("githubinstall")
-library(githubinstall)
-githubinstall("kendomaniac/docker4seq")
-```
+
 
 ##Requirements
 You need to have docker installed on your machine, for more info see this document:

@@ -21,7 +21,7 @@
 #'     threads=24)
 #'
 #' }
-
+#' @export
 rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), strandness=c("none","forward","reverse"), threads=1){
 	tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 	cat("\ncreating a folder in scratch folder\n")
