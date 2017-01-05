@@ -67,7 +67,7 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	    }
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	}
-	cat("\nsetting as working dir the scratch folder and running bwa docker container\n")
+	cat("\nsetting as working dir the scratch folder and running chipseq docker container\n")
 
 	if(group=="sudo"){
 		system("sudo docker pull docker.io/rcaloger/chipseq.8")
