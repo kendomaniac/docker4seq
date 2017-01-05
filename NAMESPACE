@@ -2,6 +2,7 @@
 
 export(bwa)
 export(bwaIndex)
+export(chipseq)
 export(mirnaCounts)
 export(rsemanno)
 export(rsemstar)
