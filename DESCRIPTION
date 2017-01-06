@@ -1,14 +1,16 @@
 Package: docker4seq
-Version: 0.0.6
+Version: 0.0.7
 Date: 2017-01-06
 Title: Running NGS computing demanding applications, e.g reads mapping and counting, wrapped in docker containers
 Authors@R: c(person("Raffaele", "Calogero", role = c("aut", "cre"),
                      email = "raffaele.calogero@unito.it"),
               person("Neha", "Kulkarni", role = "aut"),
-              person("Luca", "Alessandri", role = "aut"))
+              person("Luca", "Alessandri", role = "aut"),
+              person("Marco", "Beccuti", role = "aut"))
 Author: Raffaele Calogero [aut, cre],
     Neha Kulkarni [aut],
     Luca Alessandri [aut]
+    Marco Beccuti [aut]
 Maintainer: Raffaele Calogero <raffaele.calogero@unito.it>
 Depends:
     R (>= 3.3.1)
