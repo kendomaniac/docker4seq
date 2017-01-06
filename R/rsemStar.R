@@ -23,7 +23,13 @@
 #' }
 #' @export
 rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), strandness=c("none","forward","reverse"), threads=1){
-	tmp.folder <- gsub(":","-",gsub(" ","-",date()))
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    return()
+  }
+
+  tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 	cat("\ncreating a folder in scratch folder\n")
     dir.create(file.path(scratch.folder, tmp.folder))
     dir.create(file.path(scratch.folder, tmp.folder,"/tmp"))

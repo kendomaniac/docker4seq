@@ -20,7 +20,13 @@
 #' }
 #' @export
 rsemstarIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensembl.urlgenome, ensembl.urlgtf, threads=1){
-	cat("\nsetting as working dir the genome folder and running bwa docker container\n")
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    return()
+  }
+
+  cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 
 	if(group=="sudo"){
 		system("sudo docker pull docker.io/rcaloger/rsemstar1")

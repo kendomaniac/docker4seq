@@ -22,7 +22,13 @@
 #' }
 #' @export
 mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch",mirbase.id=c("hsa", "mmu"), download.status=FALSE, adapter.type=c("ILLUMINA","NEB"),  trimmed.fastq=FALSE){
-	tmp.folder <- gsub(":","-",gsub(" ","-",date()))
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    return()
+  }
+
+  tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 	cat("\ncreating a folder in scratch folder\n")
     dir.create(file.path(scratch.folder, tmp.folder))
 	dir <- dir()

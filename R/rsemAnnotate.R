@@ -23,7 +23,13 @@
 #' }
 #' @export
 rsemanno <- function(group=c("sudo","docker"),rsem.folder=getwd(), scratch.folder="/data/scratch",org=c("hg19", "hg38", "mm10","mm9"), truncating.expected.counts=FALSE, annotation.type=c("rsemUCSC","rsemENSEMBL"), protein.anno=FALSE){
-	tmp.folder <- gsub(":","-",gsub(" ","-",date()))
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    return()
+  }
+
+  tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 	cat("\ncreating a folder in scratch folder\n")
     dir.create(file.path(scratch.folder, tmp.folder))
 	dir <- dir()

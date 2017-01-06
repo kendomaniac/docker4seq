@@ -5,10 +5,10 @@
 #' @param fastq.folder, a character string indicating where gzip fastq files are located
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param adapter5, a character string indicating the fwd adapter
-#'@param adapter3, a character string indicating the rev adapter
+#' @param adapter3, a character string indicating the rev adapter
 #' @param seq.type, a character string indicating the type of reads to be trimmed. Two options: \code{"se"} or \code{"pe"} respectively for single end and pair end sequencing.
-#'@param threads, a number indicating the number of cores to be used from the application
-#'@param min.length, a number indicating minimal length required to return a trimmed read
+#' @param threads, a number indicating the number of cores to be used from the application
+#' @param min.length, a number indicating minimal length required to return a trimmed read
 #' @return One or two gzip fastq files ending with trimmed-pair1.fastq.gz and trimmed-pair1.fastq.gz, a log file of the trimming with the extensione trimmed.log, run.info file descring the analysis steps done by the docker. The latter file is useful to understand where the docker stop in case of unexpected end
 #' @examples
 #'\dontrun{
@@ -21,7 +21,13 @@
 #' }
 #' @export
 skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", adapter5, adapter3, seq.type=c("se","pe"), threads=1, min.length=18){
-	tmp.folder <- gsub(":","-",gsub(" ","-",date()))
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    return()
+  }
+
+  tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 	cat("\ncreating a folder in scratch folder\n")
     dir.create(file.path(scratch.folder, tmp.folder))
 	dir <- dir()

@@ -15,6 +15,12 @@
 #' }
 #' @export
 bwaIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensembl.url){
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    return()
+  }
+
 	cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 
 	if(group=="sudo"){
