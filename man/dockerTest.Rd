@@ -7,7 +7,7 @@
 dockerTest()
 }
 \value{
-a logic indicating if the version of the docker installed in the system
+a character string indicating the version of the docker installed in the system
 }
 \description{
 This function check that docker is installed

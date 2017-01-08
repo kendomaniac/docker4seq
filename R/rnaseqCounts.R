@@ -38,7 +38,9 @@ genome.folder="/data/scratch/hg38star", strandness=FALSE,
 org="hg38", truncating.expected.counts=FALSE, annotation.type="rsemENSEMBL"){
   #trimming adapter
   skewer(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder,adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
+  #running rsemstar
   rsemstar(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder, genome.folder=genome.folder, seq.type=seq.type, strandness=strandness,threads=threads)
+  #rumming annotation
   rsemanno(group=group,rsem.folder=fastq.folder, scratch.folder=scratch.folder, org=org, truncating.expected.counts=truncating.expected.counts, annotation.type=annotation.type, protein.anno=FALSE)
 }
 

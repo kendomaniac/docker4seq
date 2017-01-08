@@ -22,6 +22,9 @@
 #' }
 #' @export
 mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch",mirbase.id=c("hsa", "mmu"), download.status=FALSE, adapter.type=c("ILLUMINA","NEB"),  trimmed.fastq=FALSE){
+  #running time 1
+  ptm <- proc.time()
+  #running time 1
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
@@ -74,6 +77,14 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
 	tmp <- readLines(con)
 	close(con)
+	#running time 2
+	ptm <- proc.time() - ptm
+	con <- file(paste(file.path(scratch.folder, tmp.folder),"run.info", sep="/"), "r")
+	tmp.run <- readLines(con)
+	close(con)
+	tmp.run[length(tmp.run)+1] <- paste("run time mins ",ptm/60, sep="")
+	writeLines(tmp.run, paste(file.path(scratch.folder, tmp.folder),"run.info", sep="/"))
+	#running time 2
 	for(i in tmp){
 		i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
 		system(i)

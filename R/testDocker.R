@@ -1,7 +1,7 @@
 #' @title Testing if Docker is installed
 #' @description This function check that docker is installed
 #'
-#' @return a logic indicating if the version of the docker installed in the system
+#' @return a character string indicating the version of the docker installed in the system
 #' @examples
 #'  dockerTest()
 #' @export

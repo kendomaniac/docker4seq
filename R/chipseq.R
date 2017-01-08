@@ -40,6 +40,9 @@
 #' }
 #' @export
 chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ctrl.bam, scratch.folder="/data/scratch", genome=c("hg19","hg38","mm9","mm10"), read.size, tool=c("macs","sicer"), macs.min.mfold=10, macs.max.mfold=30, macs.pval="1e-5", sicer.wsize=200, sicer.gsize=c(200,600), sicer.fdr=0.10, tss.distance=0, max.upstream.distance=10000,  remove.duplicates=c("Y","N")){
+  #running time 1
+  ptm <- proc.time()
+  #running time 1
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
@@ -103,6 +106,15 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	}
 	con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
 	tmp <- readLines(con)
+	close(con)
+	#running time 2
+	ptm <- proc.time() - ptm
+	con <- file(paste(file.path(scratch.folder, tmp.folder),"run.info", sep="/"), "r")
+	tmp.run <- readLines(con)
+	close(con)
+	tmp.run[length(tmp.run)+1] <- paste("run time mins ",ptm/60, sep="")
+	writeLines(tmp.run, paste(file.path(scratch.folder, tmp.folder),"run.info", sep="/"))
+	#running time 2
 	for(i in tmp){
 		i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
 		system(i)

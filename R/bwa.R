@@ -10,8 +10,6 @@
 #' @param sample.id, a character string indicating the unique id to be associated to the bam that will be created
 #'
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
-#' @importFrom utils Rprof
-#' @importFrom utils summaryRprof
 #' @examples
 #'\dontrun{
 #'     #downloading fastq files
@@ -24,7 +22,9 @@
 #' }
 #' @export
 bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), threads=1, sample.id){
-    Rprof ( tf <- "runtime.log",  memory.profiling = TRUE )
+    #running time 1
+    ptm <- proc.time()
+    #running time 1
     test <- dockerTest()
     if(!test){
       cat("\nERROR: Docker seems not to be installed in your system\n")
@@ -96,10 +96,18 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
 	}
 	con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
 	tmp <- readLines(con)
+	close(con)
+	#running time 2
+	ptm <- proc.time() - ptm
+	con <- file(paste(file.path(scratch.folder, tmp.folder),"run.info", sep="/"), "r")
+	tmp.run <- readLines(con)
+	close(con)
+	tmp.run[length(tmp.run)+1] <- paste("run time mins ",ptm/60, sep="")
+	writeLines(tmp.run, paste(file.path(scratch.folder, tmp.folder),"run.info", sep="/"))
+	#running time 2
 	for(i in tmp){
 		i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
 		system(i)
 	}
-	Rprof ( NULL ) ; print ( summaryRprof ( tf )  )
 }
 

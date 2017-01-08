@@ -15,6 +15,9 @@
 #' }
 #' @export
 bwaIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensembl.url){
+  #running time 1
+  ptm <- proc.time()
+  #running time 1
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
@@ -30,5 +33,9 @@ bwaIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensembl.url
 		system("docker pull docker.io/rcaloger/bwa.1")
 		system(paste("docker run -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.1 sh /bin/bwa.index.sh "," ",genome.folder," ",ensembl.url, sep=""))
 	}
+	#running time 2
+	ptm <- proc.time() - ptm
+	writeLines(paste("run time mins ",ptm/60, sep=""), genome.folder,"run.info", sep="/")
+  #running time 2
 }
 

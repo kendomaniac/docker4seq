@@ -20,6 +20,9 @@
 #' }
 #' @export
 rsemstarIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensembl.urlgenome, ensembl.urlgtf, threads=1){
+  #running time 1
+  ptm <- proc.time()
+  #running time 1
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
@@ -35,5 +38,10 @@ rsemstarIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensemb
 		system("docker pull docker.io/rcaloger/rsemstar1")
 		system(paste("docker run -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar1 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
 	}
+  #running time 2
+  ptm <- proc.time() - ptm
+  writeLines(paste("run time mins ",ptm/60, sep=""), genome.folder,"run.info", sep="/")
+  #running time 2
+
 }
 
