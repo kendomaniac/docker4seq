@@ -20,8 +20,11 @@
 #'     genome.folder="/data/scratch/hg19_exome", seq.type="pe",
 #'     threads=24, sample.id="exome")
 #' }
+#' @importFrom utils Rprof
+#' @importFrom utils summaryRprof
 #' @export
 bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), threads=1, sample.id){
+    Rprof ( tf <- "runtime.log",  memory.profiling = TRUE )
     test <- dockerTest()
     if(!test){
       cat("\nERROR: Docker seems not to be installed in your system\n")
@@ -97,5 +100,6 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
 		i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
 		system(i)
 	}
+	Rprof ( NULL ) ; print ( summaryRprof ( tf )  )
 }
 
