@@ -10,6 +10,8 @@
 #' @param sample.id, a character string indicating the unique id to be associated to the bam that will be created
 #'
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
+#' @importFrom utils Rprof
+#' @importFrom utils summaryRprof
 #' @examples
 #'\dontrun{
 #'     #downloading fastq files
@@ -20,8 +22,6 @@
 #'     genome.folder="/data/scratch/hg19_exome", seq.type="pe",
 #'     threads=24, sample.id="exome")
 #' }
-#' @importFrom utils Rprof
-#' @importFrom utils summaryRprof
 #' @export
 bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), threads=1, sample.id){
     Rprof ( tf <- "runtime.log",  memory.profiling = TRUE )
