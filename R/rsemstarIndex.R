@@ -10,7 +10,7 @@
 #' @return The indexed bwa genome reference sequence
 #' @examples
 #'\dontrun{
-#'     #running bwa index
+#'     #running rsemstart index
 #'     rsemstarIndex(group="sudo",genome.folder="/data/scratch/hg38star",
 #'     ensembl.urlgenome=
 #'     "ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz",
@@ -38,13 +38,28 @@ rsemstarIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensemb
 		system("docker pull docker.io/rcaloger/rsemstar1")
 		system(paste("docker run -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar1 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
 	}
+  out <- "xxxx"
+  #waiting for the end of the container work
+  while(out != "out.info"){
+    Sys.sleep(10)
+    cat(".")
+    out.tmp <- dir(genome.folder)
+    out.tmp <- out.tmp[grep("out.info",out.tmp)]
+    if(length(out.tmp)>0){
+      out <- "out.info"
+    }
+  }
   #running time 2
   ptm <- proc.time() - ptm
+  con <- file(paste(genome.folder,"run.info", sep="/"), "r")
+  tmp.run <- readLines(con)
+  close(con)
+
   tmp.run <- NULL
   tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
   tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
   tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
-  writeLines(tmp.run, genome.folder,"run.info", sep="/")
+  writeLines(tmp.run, paste(genome.folder,"run.info", sep="/"))
   #running time 2
 }
 

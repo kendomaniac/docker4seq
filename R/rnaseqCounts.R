@@ -26,7 +26,7 @@
 #'     adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 #'     adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 #'     seq.type="pe", threads=10,  min.length=40,
-#'     genome.folder="/data/scratch/hg38star", strandness=FALSE,
+#'     genome.folder="/data/scratch/hg38star", strandness="FALS"none",
 #'     org="hg38", truncating.expected.counts=FALSE, annotation.type="rsemENSEMBL")
 #' }
 #' @export
@@ -34,7 +34,7 @@ rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/dat
 adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 seq.type="pe",   min.length=40,
-genome.folder="/data/scratch/hg38star", strandness=FALSE,
+genome.folder="/data/scratch/hg38star", strandness="none",
 org="hg38", truncating.expected.counts=FALSE, annotation.type="rsemENSEMBL"){
   #trimming adapter
   skewer(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder,adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)

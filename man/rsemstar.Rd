@@ -36,7 +36,7 @@ This function executes the docker container rsemstar1, where RSEM is used to cal
     wget http://130.192.119.59/public/test_R2.fastq.gz
     #running rsemstar nostrand pe
     rsemstar(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
-    genome.folder="/data/scratch/hg38star", seq.type="pe", strandness=FALSE,
+    genome.folder="/data/scratch/hg38star", seq.type="pe", strandness="none",
     threads=24)
 
 }
