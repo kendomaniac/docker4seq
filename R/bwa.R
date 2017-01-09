@@ -110,7 +110,6 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
 	tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
 	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
 	writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
-#running time 2
-
+  #running time 2
 }
 

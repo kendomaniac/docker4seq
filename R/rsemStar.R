@@ -133,24 +133,25 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 		if(length(out.tmp)>0){
 			out <- "out.info"
 		}
-	}
+  }
+	system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
 	tmp <- readLines(con)
 	close(con)
+	for(i in tmp){
+		i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
+		system(i)
+	}
 	#running time 2
 	ptm <- proc.time() - ptm
-	system("chmod 777 run.info")
-	con <- file(paste(file.path(scratch.folder, tmp.folder),"run.info", sep="/"), "r")
+	con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
 	tmp.run <- readLines(con)
 	close(con)
 	tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
 	tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
 	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
-	writeLines(tmp.run, paste(file.path(scratch.folder, tmp.folder),"run.info", sep="/"))
+	writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
 	#running time 2
-	for(i in tmp){
-		i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
-		system(i)
-	}
+
 }
 
