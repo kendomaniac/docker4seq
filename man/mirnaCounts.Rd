@@ -40,7 +40,7 @@ This function executes the docker container mrna8, which allows miRNAs counting.
     wget http://130.192.119.59/public/trt2_R1.fastq.gz
     #running mirnaCounts
     mirnaCounts(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
-    mirbase.id="hsa",download.status=FALSE, adapter.type="NEB", trimmed.fastq=FALSE)
+    mirbase.id="hsa",download.status=FALSE, adapter.type="NEB", trimmed.fastq=FALSE, fastq)
 
 }
 }

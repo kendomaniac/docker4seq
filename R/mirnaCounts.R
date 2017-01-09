@@ -20,7 +20,7 @@
 #'     wget http://130.192.119.59/public/trt2_R1.fastq.gz
 #'     #running mirnaCounts
 #'     mirnaCounts(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
-#'     mirbase.id="hsa",download.status=FALSE, adapter.type="NEB", trimmed.fastq=FALSE)
+#'     mirbase.id="hsa",download.status=FALSE, adapter.type="NEB", trimmed.fastq=FALSE, fastq)
 #'
 #' }
 #' @export
@@ -76,9 +76,18 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 		if(length(out.tmp)>0){
 			out <- "out.info"
 		}
+  }
+	system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+	con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
+	tmp <- readLines(con)
+	close(con)
+	for(i in tmp){
+	  i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
+	  system(i)
 	}
 	#running time 2
 	ptm <- proc.time() - ptm
+	tmp.run <- NULL
 	tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
 	tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
 	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
