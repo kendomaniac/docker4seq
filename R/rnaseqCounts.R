@@ -26,7 +26,7 @@
 #'     adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 #'     adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 #'     seq.type="pe", threads=10,  min.length=40,
-#'     genome.folder="/data/scratch/hg38star", strandness="FALS"none",
+#'     genome.folder="/data/scratch/hg38star", strandness="none",
 #'     org="hg38", truncating.expected.counts=FALSE, annotation.type="rsemENSEMBL")
 #' }
 #' @export
