@@ -20,8 +20,8 @@
 #' @return Returns the output of skewer, rsemstar, rsemanno
 #' @examples
 #'\dontrun{
-#'     wget http://130.192.119.59/public/test_R1.fastq.gz
-#'     wget http://130.192.119.59/public/test_R2.fastq.gz
+#'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
+#'     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 #'     rnaseqCounts(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
 #'     adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 #'     adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",

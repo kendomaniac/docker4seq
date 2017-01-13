@@ -23,8 +23,8 @@
 #' @examples
 #'\dontrun{
 #'     #downloading fastq files
-#'     wget http://130.192.119.59/public/YAPavCClp1.bam
-#'     wget http://130.192.119.59/public/YAPIgG.bam
+#'     system("wget http://130.192.119.59/public/YAPavCClp1.bam")
+#'     system("wget http://130.192.119.59/public/YAPIgG.bam")
 #'     #running chipseq for macs
 #'     chipseq(group="sudo",bam.folder=getwd(), sample.bam="YAPavCClp1.bam", ctrl.bam="YAPIgG.bam",
 #'     scratch.folder="/data/scratch", genome="hg19", read.size=50,
@@ -79,15 +79,15 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	cat("\nsetting as working dir the scratch folder and running chipseq docker container\n")
 
 	if(group=="sudo"){
-		system("sudo docker pull docker.io/rcaloger/chipseq.8")
-		system(paste("sudo docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.8 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
+		system("sudo docker pull docker.io/rcaloger/chipseq.2017.01")
+		system(paste("sudo docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
 		             bam.folder," ", ctrl.bam," 000000 ",file.path(scratch.folder, tmp.folder)," ",
 		             genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ",
 		             macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",
 		             max.upstream.distance," ",remove.duplicates, sep=""))
 	}else{
-		system("docker pull docker.io/rcaloger/chipseq.8")
-	  system(paste("docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.8 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
+		system("docker pull docker.io/rcaloger/chipseq.2017.01")
+	  system(paste("docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
 	               bam.folder," ", ctrl.bam," 000000 ",file.path(scratch.folder, tmp.folder)," ",
 	               genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ",
 	               macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",

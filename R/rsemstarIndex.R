@@ -32,11 +32,11 @@ rsemstarIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensemb
   cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 
 	if(group=="sudo"){
-		system("sudo docker pull docker.io/rcaloger/rsemstar1")
-		system(paste("sudo docker run -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar1 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
+		system("sudo docker pull docker.io/rcaloger/rsemstar.2017.01")
+		system(paste("sudo docker run -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
 	}else{
-		system("docker pull docker.io/rcaloger/rsemstar1")
-		system(paste("docker run -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar1 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
+		system("docker pull docker.io/rcaloger/rsemstar.2017.01")
+		system(paste("docker run -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
 	}
   out <- "xxxx"
   #waiting for the end of the container work

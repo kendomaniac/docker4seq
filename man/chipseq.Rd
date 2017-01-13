@@ -55,8 +55,8 @@ This function executes the docker container chipseq.8 and requires as input two 
 \examples{
 \dontrun{
     #downloading fastq files
-    wget http://130.192.119.59/public/YAPavCClp1.bam
-    wget http://130.192.119.59/public/YAPIgG.bam
+    system("wget http://130.192.119.59/public/YAPavCClp1.bam")
+    system("wget http://130.192.119.59/public/YAPIgG.bam")
     #running chipseq for macs
     chipseq(group="sudo",bam.folder=getwd(), sample.bam="YAPavCClp1.bam", ctrl.bam="YAPIgG.bam",
     scratch.folder="/data/scratch", genome="hg19", read.size=50,

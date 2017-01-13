@@ -13,11 +13,11 @@
 #' @examples
 #'\dontrun{
 #'     #downloading fastq files
-#'     wget http://130.192.119.59/public/ctrl1_R1.fastq.gz
-#'     wget http://130.192.119.59/public/ctrl2_R1.fastq.gz
-#'     wget http://130.192.119.59/public/ctrl3_R1.fastq.gz
-#'     wget http://130.192.119.59/public/trt1_R1.fastq.gz
-#'     wget http://130.192.119.59/public/trt2_R1.fastq.gz
+#'     system("wget http://130.192.119.59/public/ctrl1_R1.fastq.gz")
+#'     system("wget http://130.192.119.59/public/ctrl2_R1.fastq.gz")
+#'     system("wget http://130.192.119.59/public/ctrl3_R1.fastq.gz")
+#'     system("wget http://130.192.119.59/public/trt1_R1.fastq.gz")
+#'     system("wget http://130.192.119.59/public/trt2_R1.fastq.gz")
 #'     #running mirnaCounts
 #'     mirnaCounts(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
 #'     mirbase.id="hsa",download.status=FALSE, adapter.type="NEB", trimmed.fastq=FALSE)
@@ -57,11 +57,11 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 
 	cat("\nsetting as working dir the scratch folder and running mirna8 docker container\n")
 	if(group=="sudo"){
-		      system("sudo docker pull docker.io/rcaloger/mirna8")
-		      system(paste("sudo docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirna8 sh /bin/wrapperRun_local ", mirbase.id," ",file.path(scratch.folder, tmp.folder)," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep=""))
+		      system("sudo docker pull docker.io/rcaloger/mirnaseq.2017.01")
+		      system(paste("sudo docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",file.path(scratch.folder, tmp.folder)," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep=""))
 	}else{
-	        system("docker pull docker.io/rcaloger/mirna8")
-	        system(paste("docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirna8 sh /bin/wrapperRun_local ", mirbase.id," ",file.path(scratch.folder, tmp.folder)," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep=""))
+	        system("docker pull docker.io/rcaloger/mirnaseq.2017.01")
+	        system(paste("docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",file.path(scratch.folder, tmp.folder)," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep=""))
 
 	}
 

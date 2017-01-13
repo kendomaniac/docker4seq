@@ -27,11 +27,11 @@ bwaIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensembl.url
 	cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 
 	if(group=="sudo"){
-		system("sudo docker pull docker.io/rcaloger/bwa.1")
-		system(paste("sudo docker run -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.1 sh /bin/bwa.index.sh "," ",genome.folder," ",ensembl.url, sep=""))
+		system("sudo docker pull docker.io/rcaloger/bwa.2017.01")
+		system(paste("sudo docker run -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder," ",ensembl.url, sep=""))
 	}else{
-		system("docker pull docker.io/rcaloger/bwa.1")
-		system(paste("docker run -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.1 sh /bin/bwa.index.sh "," ",genome.folder," ",ensembl.url, sep=""))
+		system("docker pull docker.io/rcaloger/bwa.2017.01")
+		system(paste("docker run -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder," ",ensembl.url, sep=""))
 	}
 	out <- "xxxx"
 	#waiting for the end of the container work

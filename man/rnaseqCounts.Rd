@@ -49,4 +49,16 @@ Returns the output of skewer, rsemstar, rsemanno
 This function executes a set of docker containers allowing the generation of gene and isoforms counts for a single sample.
 #params skewer
 }
+\examples{
+\dontrun{
+    system("wget http://130.192.119.59/public/test_R1.fastq.gz")
+    system("wget http://130.192.119.59/public/test_R2.fastq.gz")
+    rnaseqCounts(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
+    adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+    adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+    seq.type="pe", threads=10,  min.length=40,
+    genome.folder="/data/scratch/hg38star", strandness="none",
+    org="hg38", truncating.expected.counts=FALSE, annotation.type="rsemENSEMBL")
+}
+}
 

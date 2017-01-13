@@ -32,8 +32,8 @@ This function executes the docker container bwa1 where BWA is installed BWA is a
 \examples{
 \dontrun{
     #downloading fastq files
-    wget http://130.192.119.59/public/test_R1.fastq.gz
-    wget http://130.192.119.59/public/test_R2.fastq.gz
+    system("wget http://130.192.119.59/public/test_R1.fastq.gz")
+    system("wget http://130.192.119.59/public/test_R2.fastq.gz")
     #running bwa
     bwa(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
     genome.folder="/data/scratch/hg19_exome", seq.type="pe",
