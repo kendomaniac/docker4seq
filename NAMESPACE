@@ -3,6 +3,7 @@
 export(bwa)
 export(bwaIndex)
 export(chipseq)
+export(chipseqCounts)
 export(dockerTest)
 export(mirnaCounts)
 export(rnaseqCounts)
