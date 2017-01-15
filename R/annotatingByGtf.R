@@ -1,23 +1,23 @@
 #' @title Annotating RSEM gene.results using ENSEMBL gtf and refGenome CRAN package
 #' @description This function executes the docker container annotate.1, where refGenome is used to annotated gene.results and isoforms.results outputs from RSEM using ENSEMBL GTF annotation
-#' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param rsem.folder, a character string indicating where gene.results file is located
-#' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param genome.folder, a character string indicating the folder for the genome reference used for mapping and counting with \code{"rsemstar"} function. In this folder is present the GTF used for by RSEM
 #' @param truncating.expected.counts, a boolean logical variable indicating if the expected counts calculated by RSEM need to be converted in integer to be compliant with differential expression Bioconductor packages as DESeq2. Default is FALSE
 #' @param annotation.type, a string indicating the ENSEMBL gene_biotype to be used for annotation.
 #' @return one file: annotated_genes.results, which is the annotated version of gene.results.
+#' @import refGenome
+#' @import utils
 #' @examples
-#'\dontrun{
+#' \dontrun{
 #'     #downloading fastq files
 #'     system("wget http://130.192.119.59/public/genes.results.gz")
 #'     gzip -d genes.results.gz
-#'     #running rsemanno
-#'     rsemanno(group="sudo",rsem.folder=getwd(), scratch.folder="/data/scratch",
-#'     org="hg38", truncating.expected.counts=FALSE, annotation.type="rsemENSEMBL",
-#'     protein.anno=FALSE)
-#'
+#'     #running rsemannoByGtf
+#'     rsemannoByGtf(rsem.folder=getwd(), genome.folder="/data/scratch/hg38star",
+#'     truncating.expected.counts=FALSE, annotation.type=c("miRNA","protein_coding",
+#'     "antisense","snRNA","snoRNA","scRNA","sRNA","macro_lncRNA","lincRNA","scaRNA"))
 #' }
+#'
 #' @export
 rsemannoByGtf <- function(rsem.folder=getwd(),
                           genome.folder="/data/scratch/hg38star",
@@ -30,8 +30,6 @@ rsemannoByGtf <- function(rsem.folder=getwd(),
   ######
   '%!in%' <- function(x,y)!('%in%'(x,y))
   ######
-  require(refGenome) || install.packages("refGenome")
-  library(refGenome)
   beg <- ensemblGenome()
   basedir(beg) <- genome.folder
   read.gtf(beg, "genome.gtf")
