@@ -13,11 +13,11 @@
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa is located. IMPORTANT the present function only suport genomic indexes made using ensembl genom and the corresponding gtf
 #' @param strandness, a character string indicating the type ofsequencing protocol used for the analysis. Three options: \code{"none"}, \code{"forward"}, \code{"reverse"} respectively for non strand selection, forward for Illumina strandness protocols, reverse for ACCESS Illumina protocol
 #' #params rsemanno
-#' @param org, a character string indicating the genome assembly used for mapping and counting with \code{"rsemstar"} function
+#' @param org, a character string indicating the genome assembly used for mapping and counting with \code{"rsemstar"} function only required for biocENSEMBL based annotation
 #' @param truncating.expected.counts, a boolean logical variable indicating if the expected counts calculated by RSEM need to be converted in integer to be compliant with differnetial expression Bioconductor packages as DESeq2. Default is FALSE
-#' @param annotation.type, a character string. Two options: \code{"rsemUCSC"} or \code{"rsemENSEMBL"}, depending to which database was used in rsemstar for counting: UCSC or ENSEMBL
-
-#' @return Returns the output of skewer, rsemstar, rsemanno
+#' @param annotation.function, a character string. Two options: \code{"biocENSEMBL"} or \code{"gtfENSEMBL"}. \code{"biocENSEMBL"} will annotate by Bioconductor only protein coding genes. \code{"gtfENSEMBL"} will annotate all RNAs described in \code{"annotation.type"}
+#' @param annotation.type, a character string or vector with the following options: \code{"miRNA"},\code{"protein_coding"},\code{"antisense"},\code{"snRNA"},\code{"snoRNA"},\code{"scRNA"},\code{"sRNA"},\code{"macro_lncRNA"},\code{"lincRNA"},\code{"scaRNA"}
+#' @return Returns the output of skewer, rsemstar, rsemannos' functions
 #' @examples
 #'\dontrun{
 #'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
@@ -27,7 +27,9 @@
 #'     adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 #'     seq.type="pe", threads=10,  min.length=40,
 #'     genome.folder="/data/scratch/hg38star", strandness="none",
-#'     org="hg38", truncating.expected.counts=FALSE, annotation.type="rsemENSEMBL")
+#'     org="hg38", truncating.expected.counts=FALSE, annotation.function="gtfENSEMBL",
+#'     annotation.type=c("miRNA","protein_coding","antisense","snRNA","snoRNA","scRNA",
+#'     "sRNA","macro_lncRNA","lincRNA","scaRNA"))
 #' }
 #' @export
 rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch", threads=4,
@@ -35,13 +37,21 @@ adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 seq.type="pe",   min.length=40,
 genome.folder="/data/scratch/hg38star", strandness="none",
-org="hg38", truncating.expected.counts=FALSE, annotation.type="rsemENSEMBL"){
+org="hg38", truncating.expected.counts=FALSE, annotation.function="gtfENSEMBL", annotation.type=c("miRNA","protein_coding","antisense","snRNA","snoRNA","scRNA","sRNA","macro_lncRNA","lincRNA","scaRNA")){
   #trimming adapter
   skewer(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder,adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
   #running rsemstar
   rsemstar(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder, genome.folder=genome.folder, seq.type=seq.type, strandness=strandness,threads=threads)
-  #rumming annotation
-  rsemanno(group=group,rsem.folder=fastq.folder, scratch.folder=scratch.folder, org=org, truncating.expected.counts=truncating.expected.counts, annotation.type=annotation.type, protein.anno=FALSE)
+  #running annotation
+  if(annotation.function=="biocENSEMBL"){
+    rsemanno(group=group,rsem.folder=fastq.folder, scratch.folder=scratch.folder, org=org, truncating.expected.counts=truncating.expected.counts, protein.anno=FALSE)
+  }else if(annotation.function=="gtfENSEMBL"){
+    rsemannoByGtf(rsem.folder=fastq.folder, genome.folder=genome.folder, truncating.expected.counts=truncating.expected.counts, annotation.type=annotation.type)
+  }else{
+    cat("\nERROR: an annotatin function not implemented was selected\n")
+    return(1)
+  }
+  return(0)
 }
 
 

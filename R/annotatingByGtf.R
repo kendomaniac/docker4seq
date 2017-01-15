@@ -19,9 +19,7 @@
 #' }
 #'
 #' @export
-rsemannoByGtf <- function(rsem.folder=getwd(),
-                          genome.folder="/data/scratch/hg38star",
-                          truncating.expected.counts=FALSE,
+rsemannoByGtf <- function(rsem.folder=getwd(), genome.folder,truncating.expected.counts=FALSE,
                           annotation.type=c("miRNA","protein_coding","antisense","snRNA","snoRNA","scRNA",
                           "sRNA","macro_lncRNA","lincRNA","scaRNA")){
   #running time 1
@@ -59,10 +57,21 @@ rsemannoByGtf <- function(rsem.folder=getwd(),
     gene.df.noann <- data.frame(gene.df.noann[,1], rep(NA,dim(gene.df.noann)[1]), rep(NA,dim(gene.df.noann)[1]), rep(NA,dim(gene.df.noann)[1]), gene.df.noann[,2:dim(gene.df.noann)[2]])
     names(gene.df.noann) <- names(gene.df.ann)
     gene.df <- rbind(gene.df.ann, gene.df.noann)
-    write.table(gene.df, "gtf_annotated_genes.results", sep="\t", col.names=NA)
-    return(0)
   }else{
     cat("\nAnnotation and genes.results gene_ids are not identical!\n")
     return(3)
   }
+  write.table(gene.df, "gtf_annotated_genes.results", sep="\t", col.names=NA)
+  #running time 2
+  ptm <- proc.time() - ptm
+  con <- file(paste(rsem.folder,"run.info", sep="/"), "r")
+  tmp.run <- readLines(con)
+  close(con)
+  tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
+  tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+  tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+  writeLines(tmp.run,paste(rsem.folder,"run.info", sep="/"))
+  #running time 2
+  return(0)
+
 }

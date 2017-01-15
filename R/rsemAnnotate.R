@@ -6,7 +6,6 @@
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param org, a character string indicating the genome assembly used for mapping and counting with \code{"rsemstar"} function
 #' @param truncating.expected.counts, a boolean logical variable indicating if the expected counts calculated by RSEM need to be converted in integer to be compliant with differnetial expression Bioconductor packages as DESeq2. Default is FALSE
-#' @param annotation.type, a character string. Two options: \code{"rsemUCSC"} or \code{"rsemENSEMBL"}, depending to which database was used in rsemstar for counting: UCSC or ENSEMBL
 #' @param protein.anno, a boolean logical variable indicating if instead of gene SYMBOL SWISSPROT symbol are used. This option is useful for integrating transcriptomics data with proteomics data
 #'
 #' @return one file: annotated_genes.results, which is the annotated version of gene.results.
@@ -17,12 +16,12 @@
 #'     gzip -d genes.results.gz
 #'     #running rsemanno
 #'     rsemanno(group="sudo",rsem.folder=getwd(), scratch.folder="/data/scratch",
-#'     org="hg38", truncating.expected.counts=FALSE, annotation.type="rsemENSEMBL",
+#'     org="hg38", truncating.expected.counts=FALSE,
 #'     protein.anno=FALSE)
 #'
 #' }
 #' @export
-rsemanno <- function(group=c("sudo","docker"),rsem.folder=getwd(), scratch.folder="/data/scratch",org=c("hg19", "hg38", "mm10","mm9"), truncating.expected.counts=FALSE, annotation.type=c("rsemUCSC","rsemENSEMBL"), protein.anno=FALSE){
+rsemanno <- function(group=c("sudo","docker"),rsem.folder=getwd(), scratch.folder="/data/scratch",org=c("hg19", "hg38", "mm10","mm9"), truncating.expected.counts=FALSE, protein.anno=FALSE){
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -31,7 +30,7 @@ rsemanno <- function(group=c("sudo","docker"),rsem.folder=getwd(), scratch.folde
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
-
+  annotation.type="rsemENSEMBL"
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 	cat("\ncreating a folder in scratch folder\n")
     dir.create(file.path(scratch.folder, tmp.folder))

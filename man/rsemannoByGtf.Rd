@@ -4,8 +4,7 @@
 \alias{rsemannoByGtf}
 \title{Annotating RSEM gene.results using ENSEMBL gtf and refGenome CRAN package}
 \usage{
-rsemannoByGtf(rsem.folder = getwd(),
-  genome.folder = "/data/scratch/hg38star",
+rsemannoByGtf(rsem.folder = getwd(), genome.folder,
   truncating.expected.counts = FALSE, annotation.type = c("miRNA",
   "protein_coding", "antisense", "snRNA", "snoRNA", "scRNA", "sRNA",
   "macro_lncRNA", "lincRNA", "scaRNA"))

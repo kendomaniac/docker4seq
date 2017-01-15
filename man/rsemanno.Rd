@@ -6,8 +6,7 @@
 \usage{
 rsemanno(group = c("sudo", "docker"), rsem.folder = getwd(),
   scratch.folder = "/data/scratch", org = c("hg19", "hg38", "mm10", "mm9"),
-  truncating.expected.counts = FALSE, annotation.type = c("rsemUCSC",
-  "rsemENSEMBL"), protein.anno = FALSE)
+  truncating.expected.counts = FALSE, protein.anno = FALSE)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -19,8 +18,6 @@ rsemanno(group = c("sudo", "docker"), rsem.folder = getwd(),
 \item{org, }{a character string indicating the genome assembly used for mapping and counting with \code{"rsemstar"} function}
 
 \item{truncating.expected.counts, }{a boolean logical variable indicating if the expected counts calculated by RSEM need to be converted in integer to be compliant with differnetial expression Bioconductor packages as DESeq2. Default is FALSE}
-
-\item{annotation.type, }{a character string. Two options: \code{"rsemUCSC"} or \code{"rsemENSEMBL"}, depending to which database was used in rsemstar for counting: UCSC or ENSEMBL}
 
 \item{protein.anno, }{a boolean logical variable indicating if instead of gene SYMBOL SWISSPROT symbol are used. This option is useful for integrating transcriptomics data with proteomics data}
 }
@@ -37,7 +34,7 @@ This function executes the docker container annotate.1, where Bioconductor is us
     gzip -d genes.results.gz
     #running rsemanno
     rsemanno(group="sudo",rsem.folder=getwd(), scratch.folder="/data/scratch",
-    org="hg38", truncating.expected.counts=FALSE, annotation.type="rsemENSEMBL",
+    org="hg38", truncating.expected.counts=FALSE,
     protein.anno=FALSE)
 
 }
