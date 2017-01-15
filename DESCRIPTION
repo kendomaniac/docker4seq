@@ -13,7 +13,7 @@ Author: Raffaele Calogero [aut, cre],
     Marco Beccuti [aut]
 Maintainer: Raffaele Calogero <raffaele.calogero@unito.it>
 Depends:
-    R (>= 3.3.1)
+    R (>= 3.3.1), refGenome
 VignetteBuilder: knitr
 Suggests: BiocStyle, knitr, rmarkdown
 BiocStyle::html_document
