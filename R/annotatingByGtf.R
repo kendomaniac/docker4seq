@@ -3,7 +3,6 @@
 #' @param rsem.folder, a character string indicating where gene.results file is located
 #' @param genome.folder, a character string indicating the folder for the genome reference used for mapping and counting with \code{"rsemstar"} function. In this folder is present the GTF used for by RSEM
 #' @param truncating.expected.counts, a boolean logical variable indicating if the expected counts calculated by RSEM need to be converted in integer to be compliant with differential expression Bioconductor packages as DESeq2. Default is FALSE
-#' @param annotation.type, a string indicating the ENSEMBL gene_biotype to be used for annotation.
 #' @return one file: annotated_genes.results, which is the annotated version of gene.results.
 #' @import refGenome
 #' @import utils
@@ -14,14 +13,11 @@
 #'     gzip -d genes.results.gz
 #'     #running rsemannoByGtf
 #'     rsemannoByGtf(rsem.folder=getwd(), genome.folder="/data/scratch/hg38star",
-#'     truncating.expected.counts=FALSE, annotation.type=c("miRNA","protein_coding",
-#'     "antisense","snRNA","snoRNA","scRNA","sRNA","macro_lncRNA","lincRNA","scaRNA"))
+#'     truncating.expected.counts=FALSE)
 #' }
 #'
 #' @export
-rsemannoByGtf <- function(rsem.folder=getwd(), genome.folder,truncating.expected.counts=FALSE,
-                          annotation.type=c("miRNA","protein_coding","antisense","snRNA","snoRNA","scRNA",
-                          "sRNA","macro_lncRNA","lincRNA","scaRNA")){
+rsemannoByGtf <- function(rsem.folder=getwd(), genome.folder,truncating.expected.counts=FALSE){
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -32,7 +28,7 @@ rsemannoByGtf <- function(rsem.folder=getwd(), genome.folder,truncating.expected
   basedir(beg) <- genome.folder
   read.gtf(beg, "genome.gtf")
   annotation <- extractPaGenes(beg)
-  annotation <- annotation[which(annotation$gene_biotype%in%annotation.type),]
+  #annotation <- annotation[which(annotation$gene_biotype%in%annotation.type),]
   dir <- dir(rsem.folder)
   dir <- dir[grep("^genes.results", dir)]
   cat("\ncopying \n")

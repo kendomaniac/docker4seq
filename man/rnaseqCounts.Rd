@@ -11,9 +11,7 @@ rnaseqCounts(group = "sudo", fastq.folder = getwd(),
   seq.type = "pe", min.length = 40,
   genome.folder = "/data/scratch/hg38star", strandness = "none",
   org = "hg38", truncating.expected.counts = FALSE,
-  annotation.function = "gtfENSEMBL", annotation.type = c("miRNA",
-  "protein_coding", "antisense", "snRNA", "snoRNA", "scRNA", "sRNA",
-  "macro_lncRNA", "lincRNA", "scaRNA"))
+  annotation.type = c("biocENSEMBL", "gtfENSEMBL"))
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -42,9 +40,7 @@ rnaseqCounts(group = "sudo", fastq.folder = getwd(),
 
 \item{truncating.expected.counts, }{a boolean logical variable indicating if the expected counts calculated by RSEM need to be converted in integer to be compliant with differnetial expression Bioconductor packages as DESeq2. Default is FALSE}
 
-\item{annotation.function, }{a character string. Two options: \code{"biocENSEMBL"} or \code{"gtfENSEMBL"}. \code{"biocENSEMBL"} will annotate by Bioconductor only protein coding genes. \code{"gtfENSEMBL"} will annotate all RNAs described in \code{"annotation.type"}}
-
-\item{annotation.type, }{a character string or vector with the following options: \code{"miRNA"},\code{"protein_coding"},\code{"antisense"},\code{"snRNA"},\code{"snoRNA"},\code{"scRNA"},\code{"sRNA"},\code{"macro_lncRNA"},\code{"lincRNA"},\code{"scaRNA"}}
+\item{annotation.type, }{a character string. Two options: \code{"biocENSEMBL"} or \code{"gtfENSEMBL"}. \code{"biocENSEMBL"} will annotate by Bioconductor only protein coding genes. \code{"gtfENSEMBL"} will annotate all RNAs described in \code{"annotation.type"}}
 }
 \value{
 Returns the output of skewer, rsemstar, rsemannos' functions
@@ -62,9 +58,7 @@ This function executes a set of docker containers allowing the generation of gen
     adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
     seq.type="pe", threads=10,  min.length=40,
     genome.folder="/data/scratch/hg38star", strandness="none",
-    org="hg38", truncating.expected.counts=FALSE, annotation.function="gtfENSEMBL",
-    annotation.type=c("miRNA","protein_coding","antisense","snRNA","snoRNA","scRNA",
-    "sRNA","macro_lncRNA","lincRNA","scaRNA"))
+    org="hg38", truncating.expected.counts=FALSE, annotation.type="gtfENSEMBL")
 }
 }
 

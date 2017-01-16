@@ -5,9 +5,7 @@
 \title{Annotating RSEM gene.results using ENSEMBL gtf and refGenome CRAN package}
 \usage{
 rsemannoByGtf(rsem.folder = getwd(), genome.folder,
-  truncating.expected.counts = FALSE, annotation.type = c("miRNA",
-  "protein_coding", "antisense", "snRNA", "snoRNA", "scRNA", "sRNA",
-  "macro_lncRNA", "lincRNA", "scaRNA"))
+  truncating.expected.counts = FALSE)
 }
 \arguments{
 \item{rsem.folder, }{a character string indicating where gene.results file is located}
@@ -15,8 +13,6 @@ rsemannoByGtf(rsem.folder = getwd(), genome.folder,
 \item{genome.folder, }{a character string indicating the folder for the genome reference used for mapping and counting with \code{"rsemstar"} function. In this folder is present the GTF used for by RSEM}
 
 \item{truncating.expected.counts, }{a boolean logical variable indicating if the expected counts calculated by RSEM need to be converted in integer to be compliant with differential expression Bioconductor packages as DESeq2. Default is FALSE}
-
-\item{annotation.type, }{a string indicating the ENSEMBL gene_biotype to be used for annotation.}
 }
 \value{
 one file: annotated_genes.results, which is the annotated version of gene.results.
@@ -31,8 +27,7 @@ This function executes the docker container annotate.1, where refGenome is used 
     gzip -d genes.results.gz
     #running rsemannoByGtf
     rsemannoByGtf(rsem.folder=getwd(), genome.folder="/data/scratch/hg38star",
-    truncating.expected.counts=FALSE, annotation.type=c("miRNA","protein_coding",
-    "antisense","snRNA","snoRNA","scRNA","sRNA","macro_lncRNA","lincRNA","scaRNA"))
+    truncating.expected.counts=FALSE)
 }
 
 }
