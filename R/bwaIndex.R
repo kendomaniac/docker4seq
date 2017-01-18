@@ -56,5 +56,7 @@ bwaIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensembl.url
 	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
 	writeLines(tmp.run, paste(genome.folder,"run.info", sep="/"))
   #running time 2
+	system(paste("rm ",genome.folder,"/out.info",sep=""))
+
 }
 

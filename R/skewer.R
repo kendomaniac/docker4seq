@@ -89,6 +89,7 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 		i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
 		system(i)
 	}
+
 	#running time 2
 	ptm <- proc.time() - ptm
 	con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
@@ -99,6 +100,6 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
 	writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
 	#running time 2
-
+	system(paste("rm ",file.path(scratch.folder, tmp.folder),"/out.info",sep=""))
 }
 

@@ -93,6 +93,7 @@ rsemanno <- function(group=c("sudo","docker"),rsem.folder=getwd(), scratch.folde
 	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
 	writeLines(tmp.run,paste(rsem.folder,"run.info", sep="/"))
 	#running time 2
+	system(paste("rm ",file.path(scratch.folder, tmp.folder),"/out.info",sep=""))
 
 }
 
