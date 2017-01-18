@@ -67,7 +67,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	}
 	fastq <- sub(".gz$", "", dir)
-	cat("\nsetting as working dir the scratch folder and running bwa docker container\n")
+	cat("\nsetting as working dir the scratch folder and running rsemstar docker container\n")
 
 	if(group=="sudo"){
 		system("sudo docker pull docker.io/rcaloger/rsemstar.2017.01")

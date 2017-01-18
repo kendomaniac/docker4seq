@@ -29,7 +29,7 @@ rsemstarIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensemb
     return()
   }
 
-  cat("\nsetting as working dir the genome folder and running bwa docker container\n")
+  cat("\nsetting as working dir the genome folder and running rsemstar docker container\n")
 
 	if(group=="sudo"){
 		system("sudo docker pull docker.io/rcaloger/rsemstar.2017.01")
