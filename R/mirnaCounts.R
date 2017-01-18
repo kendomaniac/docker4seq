@@ -58,10 +58,10 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	cat("\nsetting as working dir the scratch folder and running mirna8 docker container\n")
 	if(group=="sudo"){
 		      system("sudo docker pull docker.io/rcaloger/mirnaseq.2017.01")
-		      system(paste("sudo docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",file.path(scratch.folder, tmp.folder)," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep=""))
+		      system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",file.path(scratch.folder, tmp.folder)," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep=""))
 	}else{
 	        system("docker pull docker.io/rcaloger/mirnaseq.2017.01")
-	        system(paste("docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",file.path(scratch.folder, tmp.folder)," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep=""))
+	        system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",file.path(scratch.folder, tmp.folder)," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep=""))
 
 	}
 

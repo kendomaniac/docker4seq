@@ -57,16 +57,16 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	if(group=="sudo"){
 		system("sudo docker pull docker.io/rcaloger/skewer.2017.01")
 		if(seq.type=="pe"){
-		      system(paste("sudo docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim2.sh ",file.path(scratch.folder, tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep=""))
+		      system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim2.sh ",file.path(scratch.folder, tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep=""))
 	    }else{
-			  system(paste("sudo docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim1.sh ",file.path(scratch.folder, tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length, sep=""))
+			  system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim1.sh ",file.path(scratch.folder, tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length, sep=""))
 	    }
 	}else{
 		system("docker pull docker.io/rcaloger/skewer.2017.01")
 		if(seq.type=="pe"){
-		      system(paste("docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim2.sh ",file.path(scratch.folder, tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep=""))
+		      system(paste("docker run --privileged=true -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim2.sh ",file.path(scratch.folder, tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep=""))
 	    }else{
-			  system(paste("docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim1.sh ",file.path(scratch.folder, tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length , sep=""))
+			  system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim1.sh ",file.path(scratch.folder, tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length , sep=""))
 	    }
 
 	}

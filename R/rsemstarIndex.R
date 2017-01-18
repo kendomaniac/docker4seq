@@ -10,19 +10,12 @@
 #' @return The indexed bwa genome reference sequence
 #' @examples
 #'\dontrun{
-#'     #running rsemstart index hg38
+#'     #running rsemstart index
 #'     rsemstarIndex(group="sudo",genome.folder="/data/scratch/hg38star",
 #'     ensembl.urlgenome=
 #'     "ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz",
 #'     ensembl.urlgtf=
 #'     "ftp://ftp.ensembl.org/pub/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh38.87.gtf.gz",
-#'     threads=24)
-#'     #running rsemstart index hg19
-#'     rsemstarIndex(group="sudo",genome.folder="/data/scratch/hg19star",
-#'     ensembl.urlgenome=
-#'     "ftp://ftp.ensembl.org/pub/grch37/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh37.dna.toplevel.fa.gz",
-#'     ensembl.urlgtf=
-#'     "ftp://ftp.ensembl.org/pub/grch37/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh37.87.gtf.gz",
 #'     threads=24)
 #' }
 #' @export
@@ -40,10 +33,10 @@ rsemstarIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensemb
 
 	if(group=="sudo"){
 		system("sudo docker pull docker.io/rcaloger/rsemstar.2017.01")
-		system(paste("sudo docker run -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
+		system(paste("sudo docker run  --privileged=true  -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
 	}else{
 		system("docker pull docker.io/rcaloger/rsemstar.2017.01")
-		system(paste("docker run -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
+		system(paste("docker run  --privileged=true -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
 	}
   out <- "xxxx"
   #waiting for the end of the container work

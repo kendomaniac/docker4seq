@@ -80,14 +80,14 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 
 	if(group=="sudo"){
 		system("sudo docker pull docker.io/rcaloger/chipseq.2017.01")
-		system(paste("sudo docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
+		system(paste("sudo docker run --privileged=true -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
 		             bam.folder," ", ctrl.bam," 000000 ",file.path(scratch.folder, tmp.folder)," ",
 		             genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ",
 		             macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",
 		             max.upstream.distance," ",remove.duplicates, sep=""))
 	}else{
 		system("docker pull docker.io/rcaloger/chipseq.2017.01")
-	  system(paste("docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
+	  system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
 	               bam.folder," ", ctrl.bam," 000000 ",file.path(scratch.folder, tmp.folder)," ",
 	               genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ",
 	               macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",
