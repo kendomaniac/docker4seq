@@ -57,10 +57,10 @@ rsemanno <- function(group=c("sudo","docker"),rsem.folder=getwd(), scratch.folde
   rsem.results <- dir
 	if(group=="sudo"){
 		      system("sudo docker pull docker.io/rcaloger/annotate.2017.01")
-		      system(paste("sudo docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/annotate.2017.01 sh /bin/annotate.sh ", file.path(scratch.folder, tmp.folder)," ",rsem.results," ",org," ",truncating.expected.counts," ",annotation.type," ", protein.anno, " ", rsem.folder, sep=""))
+		      system(paste("sudo docker run --privileged=true -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/annotate.2017.01 sh /bin/annotate.sh ", file.path(scratch.folder, tmp.folder)," ",rsem.results," ",org," ",truncating.expected.counts," ",annotation.type," ", protein.anno, " ", rsem.folder, sep=""))
 	}else{
 	        system("docker pull docker.io/rcaloger/annotate.2017.01")
-	        system(paste("docker run -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/annotate.2017.01 sh /bin/annotate.sh ", file.path(scratch.folder, tmp.folder)," ",rsem.results," ",org," ",truncating.expected.counts," ",annotation.type," ", protein.anno, " ", rsem.folder, sep=""))
+	        system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/annotate.2017.01 sh /bin/annotate.sh ", file.path(scratch.folder, tmp.folder)," ",rsem.results," ",org," ",truncating.expected.counts," ",annotation.type," ", protein.anno, " ", rsem.folder, sep=""))
 
 	}
 	out <- "xxxx"
