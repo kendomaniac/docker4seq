@@ -33,19 +33,19 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 	cat("\ncreating a folder in scratch folder\n")
     dir.create(file.path(scratch.folder, tmp.folder))
-	dir <- dir()
+	dir <- dir(path=fastq.folder)
 	dir <- dir[grep(".fastq.gz", dir)]
 	cat("\ncopying and unzipping\n")
 	if(length(dir)==0){
-		cat(paste("It seems that in ", getwd(), "there are not fastq.gz files"))
+		cat(paste("It seems that in ",fastq.folder, "there are not fastq.gz files"))
 		return(1)
 	}else if(length(dir)>2){
-		cat(paste("It seems that in ", getwd(), "there are more than two fastq.gz files"))
+		cat(paste("It seems that in ",fastq.folder, "there are more than two fastq.gz files"))
 		return(2)
 	}else{
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 		for(i in dir){
-		      system(paste("cp ",getwd(),"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
+		      system(paste("cp ",fastq.folder,"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
 	#		  untar(paste(scratch.folder,tmp.folder,i,sep="/"), compressed = 'gzip')
 	    }
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
@@ -57,16 +57,16 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	if(group=="sudo"){
 		system("sudo docker pull docker.io/rcaloger/skewer.2017.01")
 		if(seq.type=="pe"){
-		      system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim2.sh ",file.path(scratch.folder, tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep=""))
+		      system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim2.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep=""))
 	    }else{
-			  system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim1.sh ",file.path(scratch.folder, tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length, sep=""))
+			  system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim1.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length, sep=""))
 	    }
 	}else{
 		system("docker pull docker.io/rcaloger/skewer.2017.01")
 		if(seq.type=="pe"){
-		      system(paste("docker run --privileged=true -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim2.sh ",file.path(scratch.folder, tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep=""))
+		      system(paste("docker run --privileged=true -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim2.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep=""))
 	    }else{
-			  system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim1.sh ",file.path(scratch.folder, tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length , sep=""))
+			  system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim1.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length , sep=""))
 	    }
 
 	}
@@ -81,7 +81,8 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 			out <- "out.info"
 		}
 	}
-	system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+	#moved inside the script!!!
+	#system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
 	tmp <- readLines(con)
 	close(con)
@@ -89,7 +90,6 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 		i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
 		system(i)
 	}
-
 	#running time 2
 	ptm <- proc.time() - ptm
 	con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
@@ -100,6 +100,6 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
 	writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
 	#running time 2
-	system(paste("rm ",file.path(scratch.folder, tmp.folder),"/out.info",sep=""))
+
 }
 
