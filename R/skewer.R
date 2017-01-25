@@ -102,8 +102,9 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
 	#running time 2
   #removing temporary folder
-	cat("Removing trimmed temporary file ....\n")
+	cat("\n\nRemoving trimmed temporary file ....\n")
 	system(paste("rm -R ",scrat_tmp.folder))
 	#removing temporary folder
+	
 }
 
