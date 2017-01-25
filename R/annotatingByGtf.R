@@ -33,12 +33,13 @@ rsemannoByGtf <- function(rsem.folder=getwd(), genome.folder,truncating.expected
   dir <- dir[grep("^genes.results", dir)]
   cat("\ncopying \n")
   if(length(dir)==0){
-    cat(paste("It seems that in ", getwd(), "there is not a genes.results file generated using rsemstar"))
+    cat(paste("It seems that in ",rsem.folder, "there is not a genes.results file generated using rsemstar"))
     return(1)
   }else if(length(dir)>1){
-    cat(paste("It seems that in ", getwd(), "there are more than one genes.results files"))
+    cat(paste("It seems that in ", rsem.folder, "there are more than one genes.results files"))
     return(2)
   }
+  dir=file.path(rsem.folder,dir)
   gene.df <- read.table(dir, sep="\t", header=T,stringsAsFactors = F)
   if(truncating.expected.counts){
     gene.df$expected_count <- trunc(gene.df$expected_count)
@@ -57,7 +58,7 @@ rsemannoByGtf <- function(rsem.folder=getwd(), genome.folder,truncating.expected
     cat("\nAnnotation and genes.results gene_ids are not identical!\n")
     return(3)
   }
-  write.table(gene.df, "gtf_annotated_genes.results", sep="\t", col.names=NA)
+  write.table(gene.df, file.path(rsem.folder,"gtf_annotated_genes.results"), sep="\t", col.names=NA)
   #running time 2
   ptm <- proc.time() - ptm
   con <- file(paste(rsem.folder,"run.info", sep="/"), "r")

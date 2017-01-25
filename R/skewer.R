@@ -31,8 +31,9 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
   }
 
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
+  scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
 	cat("\ncreating a folder in scratch folder\n")
-    dir.create(file.path(scratch.folder, tmp.folder))
+  dir.create(file.path(scratch.folder, tmp.folder))
 	dir <- dir(path=fastq.folder)
 	dir <- dir[grep(".fastq.gz", dir)]
 	cat("\ncopying and unzipping\n")
@@ -100,6 +101,9 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
 	writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
 	#running time 2
-
+  #removing temporary folder
+	cat("Removing trimmed temporary file ....\n")
+	system(paste("rm -R ",scrat_tmp.folder))
+	#removing temporary folder
 }
 
