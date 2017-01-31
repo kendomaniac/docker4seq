@@ -15,7 +15,7 @@ rsemstar(group = c("sudo", "docker"), fastq.folder = getwd(),
 
 \item{scratch.folder, }{a character string indicating the scratch folder where docker container will be mounted}
 
-\item{genome.folder, }{a character string indicating the folder where the indexed reference genome for bwa is located. IMPORTANT the present function only suport genomic indexes made using ensembl genom and the corresponding gtf}
+\item{genome.folder, }{a character string indicating the folder where the indexed reference genome for STAR is located. IMPORTANT the present function only suport genomic indexes made using ensembl genom and the corresponding gtf}
 
 \item{seq.type, }{a character string indicating the type of reads to be trimmed. Two options: \code{"se"} or \code{"pe"} respectively for single end and pair end sequencing}
 
