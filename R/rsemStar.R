@@ -31,7 +31,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
-  
+
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
   scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
 	cat("\ncreating a folder in scratch folder\n")
@@ -114,8 +114,8 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	  }
 
 	}
-	
-## OLD can be removed	
+
+## OLD can be removed
 #	star <- "xxxx"
 #	while(star != "Log.final.out"){
 #	  Sys.sleep(10)
@@ -128,8 +128,8 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 #	    system(paste("cp ",file.path(scratch.folder, tmp.folder),"/xxx.temp/xxxLog.final.out ", file.path(scratch.folder, tmp.folder),"/Log.final.out",sep=""))
 #	  }
 #	}
-	
-	
+
+
 	out <- "xxxx"
 	#waiting for the end of the container work
   while(out != "out.info"){
@@ -149,7 +149,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 		    star <- "Log.final.out"
 		    system(paste("cp ",file.path(scratch.folder, tmp.folder),"/xxx.temp/xxxLog.final.out ", file.path(scratch.folder, tmp.folder),"/Log.final.out",sep=""))
 		  }
-	
+
 	#system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
 	tmp <- readLines(con)
@@ -170,7 +170,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	#running time 2
 	#removing temporary folder
 	cat("\n\nRemoving the rsemStar temporary file ....\n")
-	system(paste("rm -R ",scrat_tmp.folder))
+#	system(paste("rm -R ",scrat_tmp.folder))
 	#removing temporary folder
 }
 
