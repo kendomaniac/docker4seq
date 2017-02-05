@@ -6,6 +6,7 @@
 #' @param label, a boolean value, TRUE or FALSE to ad the names of the samples in the plot
 #' @param label.size, an integer value indicating the size of label
 #' @param output.file, a tab delimited file in which the first column are names from counts object from experiment.table.Rda file generated with samples2experiment function. In the pdf will be also rpesent the istigram fo the PCA variance dispersion.
+#' @import rARPACK
 #' @import  ggfortify
 #' @importFrom graphics plot
 #' @importFrom grDevices pdf

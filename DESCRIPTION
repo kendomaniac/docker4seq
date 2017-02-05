@@ -13,7 +13,8 @@ Author: Raffaele Calogero [aut, cre],
     Marco Beccuti [aut]
 Maintainer: Raffaele Calogero <raffaele.calogero@unito.it>
 Depends:
-    R (>= 3.2.0), refGenome, ggfortify
+    R (>= 3.2.0), refGenome, rARPACK
+Imports: ggfortify
 VignetteBuilder: knitr
 Suggests: BiocStyle, knitr, rmarkdown
 BiocStyle::html_document
