@@ -149,7 +149,6 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 		  if(length(star.tmp)>0){
 		    star <- "Log.final.out"
 		    system(paste("cp ",file.path(scratch.folder, tmp.folder),"/xxx.temp/xxxLog.final.out ", file.path(scratch.folder, tmp.folder),"/Log.final.out",sep=""))
-		    system(paste("cp ",file.path(scratch.folder, tmp.folder),"/xxx.temp/*.bam ", file.path(scratch.folder, tmp.folder),"/",sep=""))
 		  }
 
 	#system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
@@ -172,10 +171,14 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	#running time 2
 	#removing temporary folder
 	cat("\n\nRemoving the rsemStar temporary file ....\n")
-#	system(paste("rm -R ",scrat_tmp.folder))
-	if (!save.bam){
-	  system("rm -R *.bam")
+
+	if (save.bam){
+	  system(paste("cp ",file.path(scratch.folder, tmp.folder),"/xxx.bam ", file.path(fastq.folder),"/Aligned.out.bam",sep=""))
+	  system(paste("cp ",file.path(scratch.folder, tmp.folder),"/xxx.transcript.bam ", file.path(fastq.folder),"/Aligned.toTranscriptome.out.bam",sep=""))
+	  system(paste("rm -R ",scrat_tmp.folder))
+	}else{
+	  system(paste("rm -R ",scrat_tmp.folder))
 	}
-	#removing temporary folder
+
 }
 
