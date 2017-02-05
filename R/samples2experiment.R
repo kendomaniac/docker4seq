@@ -33,11 +33,15 @@ sample2experiment <- function(experiment.folder=getwd(), bio.type=c("protein_cod
                                                            "macro_lncRNA","non_coding",
                                                            "IG_pseudogene"), output.prefix=""){
   data.dir <- experiment.folder
-  if(length(dir(data.dir))<2){
+  ls.folders <- dir(data.dir)
+
+  tmp.remove <- c(grep(".Rda$",ls.folders), grep(".txt$",ls.folders),grep(".R$",ls.folders),grep(".pdf$",ls.folders))
+  ls.folders <- ls.folders[setdiff(seq(1,length(ls.folders)),tmp.remove)]
+  if(length(ls.folders)<2){
     cat("\nThere are less than two samples in the present folder\n")
     return(1)
   }
-  ls.folders <- dir(data.dir)
+
   counts <- list()
   fpkm <- list()
   tpm <- list()
@@ -80,8 +84,8 @@ sample2experiment <- function(experiment.folder=getwd(), bio.type=c("protein_cod
   names(tpm) <- ls.folders
   save(counts, fpkm, tpm, file=paste(output.prefix,"_experiment.tables.Rda", sep=""))
   write.table(counts, paste(output.prefix,"_counts.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
-  write.table(log2(fpkm+1), paste(output.prefix,"_log2fpkm.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
-  write.table(log2(tpm+1), paste(output.prefix,"_log2tmp.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
+  write.table(log2(fpkm+1), paste(output.prefix,"_log2FPKM.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
+  write.table(log2(tpm+1), paste(output.prefix,"_log2TPM.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
 }
 
 
