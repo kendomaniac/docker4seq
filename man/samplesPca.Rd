@@ -26,7 +26,7 @@ This function runs PCA via ggfortify and ggplot2 on the output of samples2experi
 \examples{
 \dontrun{
    load("test_experiment.tables.Rda")
-   samplesPca(data=counts, groups=c("d","eb","wb","ws"),
+   samplesPca(data=counts, groups=c("d","eb","wb","ws"), label = TRUE, label.size = 3)
    output.file="test.pdf", label = FALSE, label.size = 3)
 }
 }

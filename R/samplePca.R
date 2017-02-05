@@ -6,7 +6,7 @@
 #' @param label, a boolean value, TRUE or FALSE to ad the names of the samples in the plot
 #' @param label.size, an integer value indicating the size of label
 #' @param output.file, a tab delimited file in which the first column are names from counts object from experiment.table.Rda file generated with samples2experiment function. In the pdf will be also rpesent the istigram fo the PCA variance dispersion.
-#' @import ggfortify
+#' @import  ggfortify
 #' @importFrom graphics plot
 #' @importFrom grDevices pdf
 #' @importFrom grDevices dev.off
@@ -15,7 +15,7 @@
 #' @examples
 #'\dontrun{
 #'    load("test_experiment.tables.Rda")
-#'    samplesPca(data=counts, groups=c("d","eb","wb","ws"),
+#'    samplesPca(data=counts, groups=c("d","eb","wb","ws"), label = TRUE, label.size = 3)
 #'    output.file="test.pdf", label = FALSE, label.size = 3)
 #' }
 #' @export
@@ -24,21 +24,21 @@ samplesPca <- function(data, groups=NULL, output.file=NULL, label, label.size){
         data.df <- data.frame(names(data), as.factor(groups))
         names(data.df) <- c("samples","groups")
         if(is.null(output.file)){
-          autoplot(prcomp(t(data)), data=data.df, colour='groups', label = label, label.size = label.size)
+          ggfortify::autoplot(prcomp(t(data)), data=data.df, colour='groups', label = label, label.size = label.size)
         }else{
           pdf(output.file)
              plot(prcomp(t(data)), main="")
-             autoplot(prcomp(t(data)), data=data.df, colour='groups', label = label, label.size = label.size)
+             ggfortify::autoplot(prcomp(t(data)), data=data.df, colour='groups', label = label, label.size = label.size)
           dev.off()
           cat(paste("\nPCA is saved in ",output.file, sep=""))
         }
     }else{
       if(is.null(output.file)){
-          autoplot(prcomp(t(data)))
+        ggfortify::autoplot(prcomp(t(data)))
       }else{
         pdf(output.file)
           plot(prcomp(t(data)), main="")
-          autoplot(prcomp(t(data)))
+          ggfortify::autoplot(prcomp(t(data)))
         dev.off()
         cat(paste("\nPCA is saved in ",output.file, sep=""))
       }
