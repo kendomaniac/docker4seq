@@ -1,5 +1,5 @@
 Package: docker4seq
-Version: 0.0.15
+Version: 0.0.16
 Date: 2017-02-05
 Title: Running NGS computing demanding applications, e.g reads mapping and counting, wrapped in docker containers
 Authors@R: c(person("Raffaele", "Calogero", role = c("aut", "cre"),
@@ -13,7 +13,7 @@ Author: Raffaele Calogero [aut, cre],
     Marco Beccuti [aut]
 Maintainer: Raffaele Calogero <raffaele.calogero@unito.it>
 Depends:
-    R (>= 3.2.0), refGenome, rARPACK
+    R (>= 3.2.0), refGenome
 Imports: ggfortify
 VignetteBuilder: knitr
 Suggests: BiocStyle, knitr, rmarkdown
