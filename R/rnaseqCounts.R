@@ -39,7 +39,7 @@ org="hg38", truncating.expected.counts=FALSE, annotation.type=c("biocENSEMBL","g
   #trimming adapter
   skewer(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder,adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
   #running rsemstar
-  rsemstar(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder, genome.folder=genome.folder, seq.type=seq.type, strandness=strandness,threads=threads)
+  rsemstar(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder, genome.folder=genome.folder, seq.type=seq.type, strandness=strandness,threads=threads, save.bam=save.bam)
   #running annotation
   if(annotation.type=="biocENSEMBL"){
     rsemanno(group=group,rsem.folder=fastq.folder, scratch.folder=scratch.folder, org=org, truncating.expected.counts=truncating.expected.counts, protein.anno=FALSE)
