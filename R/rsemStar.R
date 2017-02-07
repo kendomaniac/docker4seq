@@ -95,6 +95,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 		  }
 		}
 	}else{
+	  system("docker pull docker.io/rcaloger/rsemstar.2017.01")
 	  if(seq.type=="pe"){
 	    if(strandness=="none"){
 	      system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem2_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep=""))
