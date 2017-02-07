@@ -34,19 +34,19 @@ rsemanno <- function(group=c("sudo","docker"),rsem.folder=getwd(), scratch.folde
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 	cat("\ncreating a folder in scratch folder\n")
     dir.create(file.path(scratch.folder, tmp.folder))
-	dir <- dir()
+	dir <- dir(path=rsem.folder)
 	dir.info <- dir[which(dir=="run.info")]
 	if(length(dir.info)>0){
 	  system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-	  system(paste("cp run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
+	  system(paste("cp ",rsem.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
 	}
 	dir <- dir[grep("genes.results", dir)]
 	cat("\ncopying \n")
 	if(length(dir)==0){
-		cat(paste("It seems that in ", getwd(), "there is not a genes.results file generated using rsemstar"))
+		cat(paste("It seems that in ", rsem.folder, "there is not a genes.results file generated using rsemstar"))
 		return(1)
 	}else if(length(dir)>1){
-		cat(paste("It seems that in ", getwd(), "there are more than one genes.results files"))
+		cat(paste("It seems that in ", rsem.folder, "there are more than one genes.results files"))
 		return(2)
 	}else{
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
@@ -75,7 +75,7 @@ rsemanno <- function(group=c("sudo","docker"),rsem.folder=getwd(), scratch.folde
 			out <- "out.info"
 		}
   }
-	system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+	#system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
 	tmp <- readLines(con)
 	close(con)
@@ -93,7 +93,6 @@ rsemanno <- function(group=c("sudo","docker"),rsem.folder=getwd(), scratch.folde
 	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
 	writeLines(tmp.run,paste(rsem.folder,"run.info", sep="/"))
 	#running time 2
-	system(paste("rm ",file.path(scratch.folder, tmp.folder),"/out.info",sep=""))
 
 }
 
