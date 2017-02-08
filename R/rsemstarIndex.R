@@ -29,14 +29,14 @@ rsemstarIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensemb
     return()
   }
 
-  cat("\nsetting as working dir the genome folder and running rsemstar docker container\n")
+  cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 
 	if(group=="sudo"){
 		system("sudo docker pull docker.io/rcaloger/rsemstar.2017.01")
-		system(paste("sudo docker run  --privileged=true  -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
+		system(paste("sudo docker run  --privileged=true --cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
 	}else{
 		system("docker pull docker.io/rcaloger/rsemstar.2017.01")
-		system(paste("docker run  --privileged=true -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
+		system(paste("docker run  --privileged=true --cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
 	}
   out <- "xxxx"
   #waiting for the end of the container work
@@ -61,7 +61,6 @@ rsemstarIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensemb
   tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
   writeLines(tmp.run, paste(genome.folder,"run.info", sep="/"))
   #running time 2
-  system(paste("rm ",genome.folder,"/out.info",sep=""))
-
+  system(paste("rm ",genome.folder,"/dockerID", sep=""))
 }
 
