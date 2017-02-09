@@ -18,7 +18,7 @@
 #'     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 #'     #running star2step nostrand pe
 #'     star2steps(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
-#'     genome.folder="/data/scratch/hg38star", groupid="test", threads=8)
+#'     genome.folder="/data/scratch/hg38star", groupid="test", threads=8, opossum.preprocessing==FALSE)
 #'
 #' }
 #' @export
@@ -68,7 +68,7 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
   }
   #Trimmed fastq  linking fpr docker
-  docker_fastq.folder=file.path(scratch.folder, tmp.folder)
+  docker_fastq.folder=file.path("/data/scratch", tmp.folder)
   #Trimmed fastq  linking fpr docker
   fastq <- sub(".gz$", "", dir)
   cat("\nsetting as working dir the scratch folder and running  docker container\n")
