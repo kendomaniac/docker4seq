@@ -79,10 +79,6 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
       }else{
         system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
       }
-#         ID=$(docker run --privileged=true -i -t -d -v /data/scratch:/data/scratch -v /data/scratch/hg38star:/data/genome docker.io/rcaloger/star25.1 /bin/bash)
-#         docker attach $ID
-#        /bin/2step_star.sh /data/scratch/Thu-Feb--9-07-45-20-2017 24 test_R1.fastq test_R2.fastq /data/genome test /home/calogero/Documents/data/test
-
    }else{
         system("docker pull docker.io/rcaloger/star25.1")
         if(opossum.preprocessing){
