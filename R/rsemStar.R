@@ -175,7 +175,12 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	  system(paste("cp ", file.path(scratch.folder, tmp.folder),
 	               "/xxx.transcript.bam ", file.path(fastq.folder),
 	               "/Aligned.toTranscriptome.out.bam", sep = ""))
-	  system(paste("rm -R ", scrat_tmp.folder))
+	  #removing temporary folder
+	  cat("\n\nRemoving the rsemStar temporary file ....\n")
+	  system(paste("rm -R ",scrat_tmp.folder))
+	  system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
+	  #removing temporary folder
+
 	}
 	else {
 	  #removing temporary folder
