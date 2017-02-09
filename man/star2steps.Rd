@@ -5,7 +5,8 @@
 \title{Running Star two steps for variant calls}
 \usage{
 star2steps(group = c("sudo", "docker"), fastq.folder = getwd(),
-  scratch.folder = "/data/scratch", genome.folder, groupid, threads = 1)
+  scratch.folder = "/data/scratch", genome.folder, groupid, threads = 1,
+  opossum.preprocessing = FALSE)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -19,6 +20,8 @@ star2steps(group = c("sudo", "docker"), fastq.folder = getwd(),
 \item{groupid, }{a character string to be inserted in the bam as identifier for the sample}
 
 \item{threads, }{a number indicating the number of cores to be used from the application}
+
+\item{opossum.preprocessing, }{a boolean TRUE or FALSE to use opossum for RNAseq data preprocessing https://wellcomeopenresearch.org/articles/2-6/v1}
 }
 \value{
 three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics

@@ -7,6 +7,7 @@
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for STAR is located.
 #' @param groupid, a character string to be inserted in the bam as identifier for the sample
 #' @param threads, a number indicating the number of cores to be used from the application
+#' @param opossum.preprocessing, a boolean TRUE or FALSE to use opossum for RNAseq data preprocessing https://wellcomeopenresearch.org/articles/2-6/v1
 
 #'
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
@@ -21,7 +22,7 @@
 #'
 #' }
 #' @export
-star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, groupid, threads=1){
+star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, groupid, threads=1, opossum.preprocessing=FALSE){
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -71,19 +72,27 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
   #Trimmed fastq  linking fpr docker
   fastq <- sub(".gz$", "", dir)
   cat("\nsetting as working dir the scratch folder and running  docker container\n")
-
   if(group=="sudo"){
-    system("sudo docker pull docker.io/rcaloger/star25.1")
+      system("sudo docker pull docker.io/rcaloger/star25.1")
+      if(opossum.preprocessing){
+          system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star_opossum.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
+      }else{
         system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
-
-#       ID=$(docker run --privileged=true -i -t -d -v /data/scratch:/data/scratch -v /data/scratch/hg38star:/data/genome docker.io/rcaloger/star25.1 /bin/bash)
-#        docker attach $ID
+      }
+#         ID=$(docker run --privileged=true -i -t -d -v /data/scratch:/data/scratch -v /data/scratch/hg38star:/data/genome docker.io/rcaloger/star25.1 /bin/bash)
+#         docker attach $ID
 #        /bin/2step_star.sh /data/scratch/Thu-Feb--9-07-45-20-2017 24 test_R1.fastq test_R2.fastq /data/genome test /home/calogero/Documents/data/test
 
-  }else{
+   }else{
         system("docker pull docker.io/rcaloger/star25.1")
-        system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
-  }
+        if(opossum.preprocessing){
+          system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star_opossum.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
+        }else{
+          system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
+        }
+   }
+
+
 
   out <- "xxxx"
   #waiting for the end of the container work
