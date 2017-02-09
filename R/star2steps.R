@@ -117,8 +117,9 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
   writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
   #running time 2
   #removing temporary folder
+
   cat("\n\nRemoving the rsemStar temporary file ....\n")
-  system(paste("rm -R ",scrat_tmp.folder))
+#  system(paste("rm -R ",scrat_tmp.folder))
 
 }
 

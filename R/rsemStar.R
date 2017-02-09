@@ -8,7 +8,7 @@
 #' @param seq.type, a character string indicating the type of reads to be trimmed. Two options: \code{"se"} or \code{"pe"} respectively for single end and pair end sequencing
 #' @param strandness, a character string indicating the type ofsequencing protocol used for the analysis. Three options: \code{"none"}, \code{"forward"}, \code{"reverse"} respectively for non strand selection, forward for Illumina strandness protocols, reverse for ACCESS Illumina protocol
 #' @param threads, a number indicating the number of cores to be used from the application
-#'
+#' @param save.bam, a boolean TRUE FALSE to decide if bam files are saved
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
 #' @examples
 #'\dontrun{
@@ -18,11 +18,11 @@
 #'     #running rsemstar nostrand pe
 #'     rsemstar(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
 #'     genome.folder="/data/scratch/hg38star", seq.type="pe", strandness="none",
-#'     threads=24)
+#'     threads=24, save.bam = FALSE)
 #'
 #' }
 #' @export
-rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), strandness=c("none","forward","reverse"), threads=1){
+rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), strandness=c("none","forward","reverse"), threads=1, save.bam = TRUE){
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -31,7 +31,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
-  
+
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
   scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
 	cat("\ncreating a folder in scratch folder\n")
@@ -114,8 +114,8 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	  }
 
 	}
-	
-## OLD can be removed	
+
+## OLD can be removed
 #	star <- "xxxx"
 #	while(star != "Log.final.out"){
 #	  Sys.sleep(10)
@@ -128,8 +128,8 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 #	    system(paste("cp ",file.path(scratch.folder, tmp.folder),"/xxx.temp/xxxLog.final.out ", file.path(scratch.folder, tmp.folder),"/Log.final.out",sep=""))
 #	  }
 #	}
-	
-	
+
+
 	out <- "xxxx"
 	#waiting for the end of the container work
   while(out != "out.info"){
@@ -149,7 +149,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 		    star <- "Log.final.out"
 		    system(paste("cp ",file.path(scratch.folder, tmp.folder),"/xxx.temp/xxxLog.final.out ", file.path(scratch.folder, tmp.folder),"/Log.final.out",sep=""))
 		  }
-	
+
 	#system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
 	tmp <- readLines(con)
@@ -168,11 +168,23 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
 	writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
 	#running time 2
-	#removing temporary folder
-	cat("\n\nRemoving the rsemStar temporary file ....\n")
-	system(paste("rm -R ",scrat_tmp.folder))
-	system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
-	#removing temporary folder
-	
+	if (save.bam) {
+	  system(paste("cp ", file.path(scratch.folder, tmp.folder),
+	               "/xxx.temp/xxx.bam ", file.path(fastq.folder), "/Aligned.out.bam",
+	               sep = ""))
+	  system(paste("cp ", file.path(scratch.folder, tmp.folder),
+	               "/xxx.transcript.bam ", file.path(fastq.folder),
+	               "/Aligned.toTranscriptome.out.bam", sep = ""))
+	  system(paste("rm -R ", scrat_tmp.folder))
+	}
+	else {
+	  #removing temporary folder
+	  cat("\n\nRemoving the rsemStar temporary file ....\n")
+	  system(paste("rm -R ",scrat_tmp.folder))
+	  system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
+	  #removing temporary folder
+	}
+
+
 }
 

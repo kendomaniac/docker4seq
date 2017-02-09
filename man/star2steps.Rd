@@ -14,7 +14,7 @@ star2steps(group = c("sudo", "docker"), fastq.folder = getwd(),
 
 \item{scratch.folder, }{a character string indicating the scratch folder where docker container will be mounted}
 
-\item{genome.folder, }{a character string indicating the folder where the indexed reference genome for STAR is located. IMPORTANT the present function only suport genomic indexes made using ensembl genom and the corresponding gtf}
+\item{genome.folder, }{a character string indicating the folder where the indexed reference genome for STAR is located.}
 
 \item{groupid, }{a character string to be inserted in the bam as identifier for the sample}
 
