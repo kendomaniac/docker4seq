@@ -69,7 +69,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	}
 	#Trimmed fastq  linking fpr docker
-	docker_fastq.folder=file.path("/data/scratch", tmp.folder)
+	docker_fastq.folder=file.path(scratch.folder, tmp.folder)
 	#Trimmed fastq  linking fpr docker
 	fastq <- sub(".gz$", "", dir)
 	cat("\nsetting as working dir the scratch folder and running  docker container\n")
