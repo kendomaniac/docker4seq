@@ -34,6 +34,7 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
   scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
 	cat("\ncreating a folder in scratch folder\n")
   dir.create(file.path(scratch.folder, tmp.folder))
+  writeLines(scrat_tmp.folder,paste(fastq.folder,"/tempFolderID", sep=""))
 	dir <- dir(path=fastq.folder)
 	dir <- dir[grep(".fastq.gz", dir)]
 	cat("\ncopying and unzipping\n")
@@ -105,6 +106,8 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	cat("\n\nRemoving trimmed temporary file ....\n")
 	system(paste("rm -R ",scrat_tmp.folder))
 	system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
+	system(paste("rm  ",fastq.folder,"/tempFolderID", sep=""))
+	
 	#removing temporary folder
 	
 }
