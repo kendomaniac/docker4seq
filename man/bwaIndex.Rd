@@ -29,8 +29,8 @@ This function executes the docker container bwa1 where BWA is installed. The ind
 \examples{
 \dontrun{
     #running bwa index
-    bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/hg38", fasta.file="ucsc.hg19.fasta.gz" ,
-    dbsnp.file="dbsnp_138.b37.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.b37.vcf.gz",
+    bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", fasta.file="ucsc.hg19.fasta.gz" ,
+    dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz",
     gatk=FALSE)
 }
 }

@@ -40,7 +40,7 @@ This function executes the docker container snv.1 where GATK software is used to
     gatkDna(group="sudo",bam.folder=getwd(), scratch.folder="/data/scratch",
     genome.folder="/data/scratch/hg19_exome", gatk.path=getwd(), dbsnp.file="dbsnp_138.b37.vcf.gz",
     g1000.file="Mills_and_1000G_gold_standard.indels.b37.vcf.gz",
-    threads=24, sample.id="exome")
+    threads=24)
 }
 }
 

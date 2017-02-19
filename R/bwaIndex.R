@@ -12,8 +12,8 @@
 #' @examples
 #'\dontrun{
 #'     #running bwa index
-#'     bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/hg38", fasta.file="ucsc.hg19.fasta.gz" ,
-#'     dbsnp.file="dbsnp_138.b37.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.b37.vcf.gz",
+#'     bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", fasta.file="ucsc.hg19.fasta.gz" ,
+#'     dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz",
 #'     gatk=FALSE)
 #' }
 #' @export
@@ -33,21 +33,28 @@ bwaIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), fasta.file,
     cat("\nfasta file is missing\n")
     return(1)
   }else{
+    cat("\nPreparing genome.fa\n")
     system(paste("gzip -d ", fasta.file, sep=""))
     system(paste("mv ", sub(".gz$","",fasta.file)," genome.fa", sep=""))
   }
   if(gatk){
-    if(dir[grep(dbsnp.file,dir)]!=dbsnp.file){
-      cat("\ndbSNP vcf is missing\n")
+    if(length(dir[grep(sub(".vcf.gz$", "", dbsnp.file),dir)])<2){
+      cat("\ndbSNP vcf.gz and/or vcf.idx.gz missing\n")
       return(2)
     }else{
+      cat("\nPreparing dbsnp vcf\n")
       system(paste("gzip -d ", dbsnp.file, sep=""))
+      system(paste("gzip -d ", sub(".vcf.gz$", ".vcf.idx.gz$",dbsnp.file), sep=""))
+      system(paste("mv ", sub(".gz$", "",dbsnp.file), " dbsnp.vcf", sep=""))
     }
-    if(dir[grep(g1000.file,dir)]!=g1000.file){
-      cat("\1000 genomes vcf file is missing\n")
+    if(length(dir[grep(sub(".vcf.gz$", "", g1000.file),dir)])<2){
+      cat("\1000 genomes vcf and/or vcf.idx.gz missing\n")
       return(3)
     }else{
+      cat("\nPreparing 1000 genomes vcf\n")
       system(paste("gzip -d ", g1000.file, sep=""))
+      system(paste("gzip -d ", sub(".vcf.gz$", ".vcf.idx.gz$",g1000.file), sep=""))
+      system(paste("mv ", sub(".gz$", "",g1000.file), " g1k.vcf", sep=""))
     }
   }
 
