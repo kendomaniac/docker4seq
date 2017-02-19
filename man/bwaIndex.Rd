@@ -4,8 +4,8 @@
 \alias{bwaIndex}
 \title{Generating bwa genome index for GATK variant call}
 \usage{
-bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(), fasta.file,
-  dbsnp.file, g1000.file, gatk = FALSE)
+bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(),
+  fasta.file = NULL, dbsnp.file = NULL, g1000.file = NULL, gatk = FALSE)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -31,7 +31,7 @@ This function executes the docker container bwa1 where BWA is installed. The ind
     #running bwa index
     bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", fasta.file="ucsc.hg19.fasta.gz" ,
     dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz",
-    gatk=FALSE)
+    gatk=TRUE)
 }
 }
 
