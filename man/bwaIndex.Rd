@@ -2,29 +2,36 @@
 % Please edit documentation in R/bwaIndex.R
 \name{bwaIndex}
 \alias{bwaIndex}
-\title{Generating bwa genome index}
+\title{Generating bwa genome index for GATK variant call}
 \usage{
-bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(), ensembl.url)
+bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(), fasta.file,
+  dbsnp.file, g1000.file, gatk = FALSE)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
 
 \item{genome.folder, }{a character string indicating the folder where the indexed reference genome for bwa will be located}
 
-\item{ensembl.url, }{a character string indicating the URL from ENSEMBL ftp for the unmasked genome sequence of interest}
+\item{fasta.file, }{a character string indicating the name of fasta file located in the genome folder. This fasta, ucsc.hg19.fasta.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg19/}
+
+\item{dbsnp.file, }{a character string indicating the name of dbSNP vcf located in the genome folder. The dbSNP vcf, dbsnp_138.b37.vcf.gz and dbsnp_138.hg19.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37}
+
+\item{g1000.file, }{a character string indicating the name of 1000 genome vcf located in the genome folder. The 1000 genomes vcf, Mills_and_1000G_gold_standard.indels.b37.vcf.gz and Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/}
+
+\item{gatk, }{a boolean TRUE and FALSE that indicate if the index will be used for GATK analysis}
 }
 \value{
 The indexed bwa genome reference sequence
 }
 \description{
-This function executes the docker container bwa1 where BWA is installed. The index is created using ENSEMBL genome fasta file. User needs to provide the URL for ENSEMBL genome located in the ENSEMBL ftp
+This function executes the docker container bwa1 where BWA is installed. The index is created using GATK bundle data genome fasta file. User needs to dowload the file in the genome folder from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle
 }
 \examples{
 \dontrun{
     #running bwa index
-    bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/hg38",
-    ensembl.url=
-    "ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz")
+    bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/hg38", fasta.file="ucsc.hg19.fasta.gz" ,
+    dbsnp.file="dbsnp_138.b37.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.b37.vcf.gz",
+    gatk=FALSE)
 }
 }
 
