@@ -52,10 +52,10 @@ gatkDNA <- function(group=c("sudo","docker"), bam.folder=getwd(), scratch.folder
   system(paste("cp ",gatk.filename, " ",docker_bam.folder,"/GenomeAnalysisTK.tar.bz2", sep=""))
   if(group=="sudo"){
     system("sudo docker pull docker.io/rcaloger/snv.1")
-    system(paste("sudo docker run --privileged=true --cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/snv.1 sh /bin/bwa.sh ",docker_bam.folder," ", threads," ", bam.folder, sep=""))
+    system(paste("sudo docker run --privileged=true --cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/snv.1 sh /bin/gatk.sh ",docker_bam.folder," ", threads," ", bam.folder, sep=""))
   }else{
     system("docker pull docker.io/rcaloger/snv.1")
-    system(paste("docker run --privileged=true --cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/snv.1 sh /bin/bwa.sh ",docker_bam.folder," ", threads," ", bam.folder, sep=""))
+    system(paste("docker run --privileged=true --cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/snv.1 sh /bin/gatk.sh ",docker_bam.folder," ", threads," ", bam.folder, sep=""))
   }
   out <- "xxxx"
   #waiting for the end of the container work
