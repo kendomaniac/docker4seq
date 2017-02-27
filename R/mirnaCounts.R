@@ -35,9 +35,13 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
   }
 
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
+  
+  scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
+  writeLines(scrat_tmp.folder,paste(fastq.folder,"/tempFolderID", sep=""))
+  
 	cat("\ncreating a folder in scratch folder\n")
     dir.create(file.path(scratch.folder, tmp.folder))
-	dir <- dir()
+	dir <- dir(path=fastq.folder)
 	dir.info <- dir[which(dir=="run.info")]
 	if(length(dir.info)>0){
 	  system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
@@ -45,23 +49,23 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	}
 	dir <- dir[grep(".fastq.gz", dir)]
 	if(length(dir)==0){
-	  cat(paste("It seems that in ", getwd(), "there are not fastq.gz files"))
+	  cat(paste("It seems that in ",fastq.folder, "there are not fastq.gz files"))
 	  return(1)
 	}else{
-	  system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+	  system(paste("chmod 777 -R", scrat_tmp.folder))
 	  for(i in dir){
-	    system(paste("cp ",getwd(),"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
+	    system(paste("cp ",fastq.folder,"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
 	  }
-	  system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+	  system(paste("chmod 777 -R",scrat_tmp.folder))
 	}
-
+	docker_fastq.folder=file.path("/data/scratch", tmp.folder)
 	cat("\nsetting as working dir the scratch folder and running mirna8 docker container\n")
 	if(group=="sudo"){
 		      system("sudo docker pull docker.io/rcaloger/mirnaseq.2017.01")
-		      system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",file.path(scratch.folder, tmp.folder)," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep=""))
+		      system(paste("sudo docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep=""))
 	}else{
 	        system("docker pull docker.io/rcaloger/mirnaseq.2017.01")
-	        system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",file.path(scratch.folder, tmp.folder)," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep=""))
+	        system(paste("docker run --privileged=true --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",	docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep=""))
 
 	}
 
@@ -70,15 +74,15 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
   while(out != "out.info"){
 		Sys.sleep(10)
 		cat(".")
-		out.tmp <- dir(file.path(scratch.folder, tmp.folder))
+		out.tmp <- dir(scrat_tmp.folder)
 		out.tmp <- out.tmp[grep("out.info",out.tmp)]
 
 		if(length(out.tmp)>0){
 			out <- "out.info"
 		}
   }
-	system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-	con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
+	system(paste("chmod 777 -R", scrat_tmp.folder))
+	con <- file(paste(scrat_tmp.folder,"out.info", sep="/"), "r")
 	tmp <- readLines(con)
 	close(con)
 	for(i in tmp){
@@ -93,7 +97,13 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
 	writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
 	#running time 2
-	system(paste("rm ",file.path(scratch.folder, tmp.folder),"/out.info",sep=""))
-
+	system(paste("rm ",scrat_tmp.folder,"/out.info",sep=""))
+	
+	#removing temporary folder
+	cat("\n\nRemoving the rsemStar temporary file ....\n")
+	system(paste("rm -R ",scrat_tmp.folder))
+	system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
+	system(paste("rm  ",fastq.folder,"/tempFolderID", sep=""))
+	#removing temporary folder
 }
 
