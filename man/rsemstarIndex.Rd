@@ -26,13 +26,20 @@ This function executes the docker container rsem-star1 where RSEM and STAR are i
 }
 \examples{
 \dontrun{
-    #running rsemstart index
+    #running rsemstar index for human
     rsemstarIndex(group="sudo",genome.folder="/data/scratch/hg38star",
     ensembl.urlgenome=
     "ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz",
     ensembl.urlgtf=
     "ftp://ftp.ensembl.org/pub/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh38.87.gtf.gz",
     threads=24)
+
+    #running rsemstar index for mouse
+    rsemstarIndex(group="docker",genome.folder="/data/scratch/mm10star",
+    ensembl.urlgenome="ftp://ftp.ensembl.org/pub/release-87/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.toplevel.fa.gz",
+    ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-87/gtf/mus_musculus/Mus_musculus.GRCm38.87.gtf.gz",
+    threads=24)
+
 }
 }
 

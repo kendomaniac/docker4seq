@@ -29,7 +29,7 @@ sample2experiment(experiment.folder = getwd(),
 Returns counts, fpkm, tpm data frames for gene and isoforms, save data frames in experiment.tables.Rda, in counts.txt, log2fpkm.txt and in log2TPM
 }
 \description{
-This function generates counts, FPKM and TPM tables from rnaseqCounts outuputs
+This function generates counts, FPKM and TPM tables from rnaseqCounts outuputs. IMPORTANT the experiment.folder should contain only results folders coming from rnaseqCounts function
 }
 \examples{
 \dontrun{
