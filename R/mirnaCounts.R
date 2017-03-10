@@ -1,4 +1,4 @@
-#' @title Counting miRNAs, Cordero et al. PLoS One. 2012;7(2):e31630
+#' @title Counting miRNAs, Cordero et al. PLoS One. 2012;7:e31630
 #' @description This function executes the docker container mrna8, which allows miRNAs counting.
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
@@ -35,10 +35,10 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
   }
 
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
-  
+
   scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
   writeLines(scrat_tmp.folder,paste(fastq.folder,"/tempFolderID", sep=""))
-  
+
 	cat("\ncreating a folder in scratch folder\n")
     dir.create(file.path(scratch.folder, tmp.folder))
 	dir <- dir(path=fastq.folder)
@@ -98,7 +98,7 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
 	#running time 2
 	system(paste("rm ",scrat_tmp.folder,"/out.info",sep=""))
-	
+
 	#removing temporary folder
 	cat("\n\nRemoving the rsemStar temporary file ....\n")
 	system(paste("rm -R ",scrat_tmp.folder))

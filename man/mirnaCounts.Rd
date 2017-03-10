@@ -2,7 +2,7 @@
 % Please edit documentation in R/mirnaCounts.R
 \name{mirnaCounts}
 \alias{mirnaCounts}
-\title{Counting miRNAs, Cordero et al. PLoS One. 2012;7(2):e31630}
+\title{Counting miRNAs, Cordero et al. PLoS One. 2012;7:e31630}
 \usage{
 mirnaCounts(group = c("sudo", "docker"), fastq.folder = getwd(),
   scratch.folder = "/data/scratch", mirbase.id = c("hsa", "mmu"),
