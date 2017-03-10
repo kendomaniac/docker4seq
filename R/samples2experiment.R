@@ -76,9 +76,9 @@ sample2experiment <- function(sample.folders=list.dirs(recursive=FALSE), bio.typ
   rownames(tpm) <- counts.names
   ls.names <- strsplit(ls.folders, '/')
   ls.names <- sapply(ls.names, function(x)x[length(x)])
-  names(counts) <- ls.folders
-  names(fpkm) <- ls.folders
-  names(tpm) <- ls.folders
+  names(counts) <- ls.names
+  names(fpkm) <- ls.names
+  names(tpm) <- ls.names
   save(counts, fpkm, tpm, file=paste(output.prefix,"_experiment.tables.Rda", sep=""))
   write.table(counts, paste(output.prefix,"_counts.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
   write.table(log2(fpkm+1), paste(output.prefix,"_log2FPKM.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
