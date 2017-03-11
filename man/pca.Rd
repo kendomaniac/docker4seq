@@ -5,7 +5,9 @@
 \title{generating a PCA from counts, FPKM and TPM tables from rnaseqCounts outuputs}
 \usage{
 pca(experiment.table = "_counts.txt", type = c("counts", "FPKM", "TPM"),
-  covariatesInNames = FALSE, principal.components = c(1, 2))
+  covariatesInNames = FALSE, principal.components = c(1, 2),
+  legend.position = c("bottom", "bottomleft", "left", "topleft", "top",
+  "topright", "right", "center"))
 }
 \arguments{
 \item{experiment.table, }{a character string indicating the counts, FPKM or TPM table file name}
@@ -15,6 +17,8 @@ pca(experiment.table = "_counts.txt", type = c("counts", "FPKM", "TPM"),
 \item{covariatesInNames, }{a boolean value indicating if covariates are inserted after \_ in the filename}
 
 \item{principal.components, }{a numerical vector with two values indicating the principal components to be plotted}
+
+\item{legend.position, }{a character string indicating the location of the covariates legend}
 }
 \value{
 Returns a PCA plot

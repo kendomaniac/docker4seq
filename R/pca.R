@@ -4,6 +4,7 @@
 #' @param type, a character value indicating the content of the file: counts, FPKM or TPM
 #' @param covariatesInNames, a boolean value indicating if covariates are inserted after \_ in the filename
 #' @param principal.components, a numerical vector with two values indicating the principal components to be plotted
+#' @param legend.position, a character string indicating the location of the covariates legend
 #' @return Returns a PCA plot
 #' @examples
 #'\dontrun{
@@ -15,7 +16,9 @@
 #' }
 #' @export
 
-pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"), covariatesInNames=FALSE, principal.components=c(1,2)){
+pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
+                covariatesInNames=FALSE, principal.components=c(1,2),
+                legend.position=c("bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center")){
   tmp <- read.table(experiment.table, sep="\t", stringsAsFactors = TRUE, header=T, check.names = FALSE, row.names=1)
   if(covariatesInNames){
     covar.tmp <- strsplit(names(tmp), '_')
@@ -39,6 +42,7 @@ pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"), c
          signif(variance.proportion[principal.components[1]]*100,3),' %',')', sep=""), ylab=paste(dimnames(pca$x)[[2]][principal.components[2]],' (',
          signif(variance.proportion[principal.components[2]]*100,3),'%',')', sep=""))
     text(pca$x[,principal.components], label=sample.names)
+    legend(legend.position, legend=levels(covar), pch=rep(19,length(levels(covar))), col=my.colors)
   }else{
     plot(pca$x[,principal.components], main=experiment.table, pch=19, col="gold", xlab=paste(dimnames(pca$x)[[2]][principal.components[1]],' (',
          signif(variance.proportion[principal.components[1]]*100,3),' %',')', sep=""), ylab=paste(dimnames(pca$x)[[2]][principal.components[2]],' (',
