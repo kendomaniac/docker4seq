@@ -44,4 +44,3 @@ This function executes the docker container mrna8, which allows miRNAs counting.
 
 }
 }
-

@@ -40,4 +40,3 @@ This function executes the two steps STAR as sugested by best practice GATK for 
 
 }
 }
-

@@ -71,4 +71,3 @@ This function executes the docker container chipseq.8 and requires as input two 
     tss.distance=0, max.upstream.distance=10000,remove.duplicates="N")
 }
 }
-

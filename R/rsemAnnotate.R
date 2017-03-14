@@ -30,6 +30,12 @@ rsemanno <- function(group=c("sudo","docker"),rsem.folder=getwd(), scratch.folde
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
+  #########check scratch folder exist###########
+  if (!file.exists(scratch.folder)){
+    cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
+    return(3)
+  }
+  #############################################
   annotation.type="rsemENSEMBL"
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 	cat("\ncreating a folder in scratch folder\n")

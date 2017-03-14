@@ -63,4 +63,3 @@ This function executes a set of docker containers allowing the generation of gen
     org="hg38", truncating.expected.counts=FALSE, annotation.type="gtfENSEMBL")
 }
 }
-

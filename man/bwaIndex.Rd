@@ -34,4 +34,3 @@ This function executes the docker container bwa1 where BWA is installed. The ind
     gatk=TRUE)
 }
 }
-

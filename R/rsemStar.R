@@ -31,7 +31,12 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
-
+  #########check scratch folder exist###########
+  if (!file.exists(scratch.folder)){
+    cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
+    return(3)
+  }
+  #############################################
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
   scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
   writeLines(scrat_tmp.folder,paste(fastq.folder,"/tempFolderID", sep=""))
@@ -177,7 +182,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	               "/xxx.transcript.bam ", file.path(fastq.folder),
 	               "/Aligned.toTranscriptome.out.bam", sep = ""))
 	}
-	
+
 	#removing temporary folder
 	cat("\n\nRemoving the rsemStar temporary file ....\n")
 	system(paste("rm -R ",scrat_tmp.folder))

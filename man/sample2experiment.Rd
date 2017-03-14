@@ -36,4 +36,3 @@ This function generates counts, FPKM and TPM tables from rnaseqCounts outuputs.
     sample2experiment(sample.folders=list.dirs(recursive=FALSE), bio.type="protein_coding", output.prefix="")
 }
 }
-

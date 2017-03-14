@@ -35,7 +35,12 @@ rsemstarIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), ensemb
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
-
+  #########check scratch folder exist###########
+  if (!file.exists(genome.folder)){
+    cat(paste("\nIt seems that the ",genome.folder, "folder does not exist, I create it\n"))
+    dir.create(genome.folder)
+  }
+  #############################################
   cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 
 	if(group=="sudo"){

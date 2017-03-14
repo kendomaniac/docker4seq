@@ -31,4 +31,3 @@ This function executes the docker container annotate.1, where refGenome is used 
 }
 
 }
-

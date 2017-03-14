@@ -29,7 +29,12 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
-
+  #########check scratch folder exist###########
+  if (!file.exists(scratch.folder)){
+    cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
+    return(3)
+  }
+  #############################################
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
   scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
 	cat("\ncreating a folder in scratch folder\n")
@@ -107,8 +112,8 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	system(paste("rm -R ",scrat_tmp.folder))
 	system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
 	system(paste("rm  ",fastq.folder,"/tempFolderID", sep=""))
-	
+
 	#removing temporary folder
-	
+
 }
 

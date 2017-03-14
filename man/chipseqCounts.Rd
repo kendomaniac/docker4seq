@@ -87,4 +87,3 @@ This function executes a set of docker containers allowing the detection of TFs 
     remove.duplicates="N")
 }
 }
-

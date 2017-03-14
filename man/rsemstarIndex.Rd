@@ -42,4 +42,3 @@ This function executes the docker container rsem-star1 where RSEM and STAR are i
 
 }
 }
-

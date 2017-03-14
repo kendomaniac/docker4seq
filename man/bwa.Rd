@@ -40,4 +40,3 @@ This function executes the docker container bwa1 where BWA is installed BWA is a
     threads=24, sample.id="exome")
 }
 }
-
