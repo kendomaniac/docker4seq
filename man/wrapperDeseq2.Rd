@@ -27,7 +27,7 @@ the covariates added in the names of the columns, separated by the names with un
 \examples{
 \dontrun{
     wrapperDeseq2(experiment.table=paste(path.package("docker4seq"),
-    "data/4t1_counts.txt", sep="/"),
+    "examples/4t1_counts.txt", sep="/"),
     log2fc=1, fdr=0.1, ref.covar="0")
 
 }
