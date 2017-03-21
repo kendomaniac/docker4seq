@@ -11,9 +11,9 @@
 #' @import DESeq2
 #' @examples
 #'\dontrun{
-
-#'     wrapperDeseq2(experiment.table=paste(path.package("docker4seq"),
-#'     "examples/4t1_counts.txt", sep="/"),
+#'     system(paste("cp ", path.package("docker4seq"),
+#'     "/examples/4t1_counts.txt .", sep=""))
+#'     wrapperDeseq2(experiment.table="4t1_counts.txt",
 #'     log2fc=1, fdr=0.1, ref.covar="0")
 #'
 #' }
