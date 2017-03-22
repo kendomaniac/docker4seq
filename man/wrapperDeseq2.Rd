@@ -4,7 +4,8 @@
 \alias{wrapperDeseq2}
 \title{A wrapper function for deseq2 for two groups only}
 \usage{
-wrapperDeseq2(experiment.table, log2fc = 1, fdr = 0.1, ref.covar = "0")
+wrapperDeseq2(experiment.table, log2fc = 1, fdr = 0.1, ref.covar = "0",
+  type = c("gene", "isoform"))
 }
 \arguments{
 \item{experiment.table, }{a character string indicating the counts table generated with
@@ -15,6 +16,9 @@ sample3experiment with addition of covariates}
 \item{fdr, }{fdr threshold}
 
 \item{ref.covar, }{covariate to be used as reference}
+
+\item{type, }{character with two options: gene, isoform. if gene is used two files are
+generated for geneset enrichment, the filtered Gene symbols and the background that contains all gene simbols.}
 }
 \value{
 Returns a full table of differentially expressed genes (prefix DEfull), a filtered table
@@ -29,7 +33,7 @@ the covariates added in the names of the columns, separated by the names with un
     system(paste("cp ", path.package("docker4seq"),
     "/examples/4t1_counts.txt .", sep=""))
     wrapperDeseq2(experiment.table="4t1_counts.txt",
-    log2fc=1, fdr=0.1, ref.covar="0")
+    log2fc=1, fdr=0.1, ref.covar="0", type="gene")
 
 }
 }
