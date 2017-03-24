@@ -79,10 +79,47 @@ sample2experiment <- function(sample.folders=list.dirs(recursive=FALSE), bio.typ
   names(counts) <- ls.names
   names(fpkm) <- ls.names
   names(tpm) <- ls.names
-  save(counts, fpkm, tpm, file=paste(output.prefix,"_experiment.tables.Rda", sep=""))
+
+  # creating also transcripts tables
+  counts.iso <- list()
+  fpkm.iso <- list()
+  tpm.iso <- list()
+  for(i in ls.folders){
+    iso <- "isoforms.results"
+    tmp.c <- read.table(paste(i,iso,sep="/"),
+                        sep="\t", header=TRUE,
+                        stringsAsFactors = FALSE,
+                        row.names = 1)
+    counts.iso[[i]] <- trunc(tmp.c$expected_count)
+    fpkm.iso[[i]] <- tmp.c$FPKM
+    tpm.iso[[i]] <- tmp.c$TPM
+  }
+  #adding iso names and iso id to table
+  counts.iso <- as.data.frame(counts.iso)
+  fpkm.iso <- as.data.frame(fpkm.iso)
+  tpm.iso <- as.data.frame(tpm.iso)
+  counts.iso.names <- rownames(tmp.c)
+  rownames(counts.iso) <- counts.iso.names
+  rownames(fpkm.iso) <- counts.iso.names
+  rownames(tpm.iso) <- counts.iso.names
+  ls.names <- strsplit(ls.folders, '/')
+  ls.names <- sapply(ls.names, function(x)x[length(x)])
+  names(counts.iso) <- ls.names
+  names(fpkm.iso) <- ls.names
+  names(tpm.iso) <- ls.names
+
+
+  save(counts, fpkm, tpm, counts.iso, fpkm.iso, tpm.iso, file=paste(output.prefix,"_experiment.tables.Rda", sep=""))
+
   write.table(counts, paste(output.prefix,"_counts.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
   write.table(log2(fpkm+1), paste(output.prefix,"_log2FPKM.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
   write.table(log2(tpm+1), paste(output.prefix,"_log2TPM.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
+
+  write.table(counts.iso, paste(output.prefix,"_isoforms_counts.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
+  write.table(log2(fpkm.iso+1), paste(output.prefix,"_isoforms_log2FPKM.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
+  write.table(log2(tpm.iso+1), paste(output.prefix,"_isoforms_log2TPM.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
+
+
 }
 
 
