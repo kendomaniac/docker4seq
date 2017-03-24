@@ -55,9 +55,10 @@ wrapperDeseq2 <- function(experiment.table, log2fc=1, fdr=0.1, ref.covar="0", ty
      bkgf.df <- data.frame(tmp0, tmp1)
      write.table(bkg.df[,2], paste("bkg4david_",experiment.table,sep="") , sep="\t", row.names = F, col.names = F, quote=FALSE)
      write.table(bkgf.df[,2], paste("genes4david_",experiment.table,sep="") , sep="\t", row.names = F, col.names = F, quote=FALSE)
+   }else if(type=="isoform"){
+       write.table(norm.counts, paste("log2normalized_isoforms_counts_",experiment.table,sep=""), sep="\t", col.names = NA, quote=FALSE)
+       plotMA(res)
+       abline(h=log2fc, col="red", lty=2)
+       abline(h=-log2fc, col="green", lty=2)
    }
-   write.table(norm.counts, paste("log2normalized_counts_",experiment.table,sep=""), sep="\t", col.names = NA, quote=FALSE)
-   plotMA(res)
-   abline(h=log2fc, col="red", lty=2)
-   abline(h=-log2fc, col="green", lty=2)
 }
