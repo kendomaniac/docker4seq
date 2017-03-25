@@ -1,16 +1,20 @@
 #' @title generating counts, FPKM and TPM tables from rnaseqCounts outuputs
 #' @description This function generates counts, FPKM and TPM tables from rnaseqCounts outuputs.
 #' @param sample.folders, a character string indicating the paths of rnaseqCouts output folders
+#' @param covariates, a character string indicating the covariates associated to each sample. Covariates are required for differnetial expression analysis
 #' @param bio.type, a character string indicating the ensemb bio.type. Options: "protein_coding","unitary_pseudogene","unprocessed_pseudogene","processed_pseudogene", "transcribed_unprocessed_pseudogene","processed_transcript","antisense","transcribed_unitary_pseudogene","polymorphic_pseudogene","lincRNA","sense_intronic","transcribed_processed_pseudogene","sense_overlapping","IG_V_pseudogene","pseudogene","TR_V_gene","3prime_overlapping_ncRNA","IG_V_gene","bidirectional_promoter_lncRNA","snRNA","miRNA","misc_RNA","snoRNA","rRNA","IG_C_gene","IG_J_gene","TR_J_gene","TR_C_gene","TR_V_pseudogene","TR_J_pseudogene","IG_D_gene","ribozyme","IG_C_pseudogene","TR_D_gene","TEC","IG_J_pseudogene","scRNA","scaRNA","vaultRNA","sRNA","macro_lncRNA","non_coding","IG_pseudogene"
 #' @param output.prefix, a character value indicating the prefix to be used in the output files
 #'
 #' @return Returns counts, fpkm, tpm data frames for gene and isoforms, save data frames in experiment.tables.Rda, in counts.txt, log2fpkm.txt and in log2TPM
 #' @examples
 #'\dontrun{
-#'     sample2experiment(sample.folders=list.dirs(recursive=FALSE), bio.type="protein_coding", output.prefix="")
+#'     sample2experiment(sample.folders=c("/home/beccuti/e1g","/home/beccuti/e2g",
+#'     "/home/beccuti/p1g", "/home/beccuti/p2g"),
+#'     covariates=c("Cov1","Cov1","Cov2","Cov2"),
+#'     bio.type="protein_coding", output.prefix="")
 #' }
 #' @export
-sample2experiment <- function(sample.folders=list.dirs(recursive=FALSE), bio.type=c("protein_coding","unitary_pseudogene",
+sample2experiment <- function(sample.folders, covariates, bio.type=c("protein_coding","unitary_pseudogene",
                                                            "unprocessed_pseudogene","processed_pseudogene",
                                                            "transcribed_unprocessed_pseudogene","processed_transcript",
                                                            "antisense","transcribed_unitary_pseudogene",
@@ -32,7 +36,14 @@ sample2experiment <- function(sample.folders=list.dirs(recursive=FALSE), bio.typ
                                                            "vaultRNA","sRNA",
                                                            "macro_lncRNA","non_coding",
                                                            "IG_pseudogene"), output.prefix=""){
-
+  if( length(sample.folders)!=length(covariates)){
+      cat("\nCovariates and sample folders have not the same length\n")
+      return(2)
+  }else{
+    tmp.samples <- strsplit(sample.folders, "/")
+    tmp.samples <- sapply( tmp.samples, function(x)x[length(x)])
+    ls.names <- paste(tmp.samples, covariates, sep="_")
+  }
   ls.folders <- sample.folders
   if(length(ls.folders)<2){
     cat("\nThere are less than two samples in the present folder\n")
@@ -74,8 +85,7 @@ sample2experiment <- function(sample.folders=list.dirs(recursive=FALSE), bio.typ
   rownames(counts) <- counts.names
   rownames(fpkm) <- counts.names
   rownames(tpm) <- counts.names
-  ls.names <- strsplit(ls.folders, '/')
-  ls.names <- sapply(ls.names, function(x)x[length(x)])
+
   names(counts) <- ls.names
   names(fpkm) <- ls.names
   names(tpm) <- ls.names
@@ -102,8 +112,7 @@ sample2experiment <- function(sample.folders=list.dirs(recursive=FALSE), bio.typ
   rownames(counts.iso) <- counts.iso.names
   rownames(fpkm.iso) <- counts.iso.names
   rownames(tpm.iso) <- counts.iso.names
-  ls.names <- strsplit(ls.folders, '/')
-  ls.names <- sapply(ls.names, function(x)x[length(x)])
+
   names(counts.iso) <- ls.names
   names(fpkm.iso) <- ls.names
   names(tpm.iso) <- ls.names
