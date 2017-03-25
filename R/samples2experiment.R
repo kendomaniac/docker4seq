@@ -3,7 +3,7 @@
 #' @param sample.folders, a character string indicating the paths of rnaseqCouts output folders
 #' @param covariates, a character string indicating the covariates associated to each sample. Covariates are required for differnetial expression analysis
 #' @param bio.type, a character string indicating the ensemb bio.type. Options: "protein_coding","unitary_pseudogene","unprocessed_pseudogene","processed_pseudogene", "transcribed_unprocessed_pseudogene","processed_transcript","antisense","transcribed_unitary_pseudogene","polymorphic_pseudogene","lincRNA","sense_intronic","transcribed_processed_pseudogene","sense_overlapping","IG_V_pseudogene","pseudogene","TR_V_gene","3prime_overlapping_ncRNA","IG_V_gene","bidirectional_promoter_lncRNA","snRNA","miRNA","misc_RNA","snoRNA","rRNA","IG_C_gene","IG_J_gene","TR_J_gene","TR_C_gene","TR_V_pseudogene","TR_J_pseudogene","IG_D_gene","ribozyme","IG_C_pseudogene","TR_D_gene","TEC","IG_J_pseudogene","scRNA","scaRNA","vaultRNA","sRNA","macro_lncRNA","non_coding","IG_pseudogene"
-#' @param output.prefix, a character value indicating the prefix to be used in the output files
+#' @param output.prefix, a character value indicating the output folder path
 #'
 #' @return Returns counts, fpkm, tpm data frames for gene and isoforms, save data frames in experiment.tables.Rda, in counts.txt, log2fpkm.txt and in log2TPM
 #' @examples
@@ -118,15 +118,15 @@ sample2experiment <- function(sample.folders, covariates, bio.type=c("protein_co
   names(tpm.iso) <- ls.names
 
 
-  save(counts, fpkm, tpm, counts.iso, fpkm.iso, tpm.iso, file=paste(output.prefix,"_experiment.tables.Rda", sep=""))
+  save(counts, fpkm, tpm, counts.iso, fpkm.iso, tpm.iso, file=paste(output.prefix,"_experiment.tables.Rda", sep="/"))
 
-  write.table(counts, paste(output.prefix,"_counts.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
-  write.table(log2(fpkm+1), paste(output.prefix,"_log2FPKM.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
-  write.table(log2(tpm+1), paste(output.prefix,"_log2TPM.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
+  write.table(counts, paste(output.prefix,"_counts.txt", sep="/"), sep="\t", col.names=NA, quote = FALSE)
+  write.table(log2(fpkm+1), paste(output.prefix,"_log2FPKM.txt", sep="/"), sep="\t", col.names=NA, quote = FALSE)
+  write.table(log2(tpm+1), paste(output.prefix,"_log2TPM.txt", sep="/"), sep="\t", col.names=NA, quote = FALSE)
 
-  write.table(counts.iso, paste(output.prefix,"_isoforms_counts.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
-  write.table(log2(fpkm.iso+1), paste(output.prefix,"_isoforms_log2FPKM.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
-  write.table(log2(tpm.iso+1), paste(output.prefix,"_isoforms_log2TPM.txt", sep=""), sep="\t", col.names=NA, quote = FALSE)
+  write.table(counts.iso, paste(output.prefix,"_isoforms_counts.txt", sep="/"), sep="\t", col.names=NA, quote = FALSE)
+  write.table(log2(fpkm.iso+1), paste(output.prefix,"_isoforms_log2FPKM.txt", sep="/"), sep="\t", col.names=NA, quote = FALSE)
+  write.table(log2(tpm.iso+1), paste(output.prefix,"_isoforms_log2TPM.txt", sep="/"), sep="\t", col.names=NA, quote = FALSE)
 
 
 }
