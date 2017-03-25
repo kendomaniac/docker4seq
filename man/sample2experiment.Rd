@@ -15,7 +15,7 @@ sample2experiment(sample.folders, covariates, bio.type = c("protein_coding",
   "TR_V_pseudogene", "TR_J_pseudogene", "IG_D_gene", "ribozyme",
   "IG_C_pseudogene", "TR_D_gene", "TEC", "IG_J_pseudogene", "scRNA", "scaRNA",
   "vaultRNA", "sRNA", "macro_lncRNA", "non_coding", "IG_pseudogene"),
-  output.prefix = "")
+  output.prefix = ".")
 }
 \arguments{
 \item{sample.folders, }{a character string indicating the paths of rnaseqCouts output folders}
@@ -37,6 +37,6 @@ This function generates counts, FPKM and TPM tables from rnaseqCounts outuputs.
     sample2experiment(sample.folders=c("/home/beccuti/e1g","/home/beccuti/e2g",
     "/home/beccuti/p1g", "/home/beccuti/p2g"),
     covariates=c("Cov1","Cov1","Cov2","Cov2"),
-    bio.type="protein_coding", output.prefix="")
+    bio.type="protein_coding", output.prefix=".")
 }
 }
