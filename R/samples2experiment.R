@@ -11,7 +11,7 @@
 #'     sample2experiment(sample.folders=c("/home/beccuti/e1g","/home/beccuti/e2g",
 #'     "/home/beccuti/p1g", "/home/beccuti/p2g"),
 #'     covariates=c("Cov1","Cov1","Cov2","Cov2"),
-#'     bio.type="protein_coding", output.prefix="")
+#'     bio.type="protein_coding", output.prefix=".")
 #' }
 #' @export
 sample2experiment <- function(sample.folders, covariates, bio.type=c("protein_coding","unitary_pseudogene",
@@ -35,7 +35,7 @@ sample2experiment <- function(sample.folders, covariates, bio.type=c("protein_co
                                                            "scRNA","scaRNA",
                                                            "vaultRNA","sRNA",
                                                            "macro_lncRNA","non_coding",
-                                                           "IG_pseudogene"), output.prefix=""){
+                                                           "IG_pseudogene"), output.prefix="."){
   if( length(sample.folders)!=length(covariates)){
       cat("\nCovariates and sample folders have not the same length\n")
       return(2)
