@@ -5,6 +5,7 @@
 #' @param covariatesInNames, a boolean value indicating if covariates are inserted after \_ in the filename
 #' @param principal.components, a numerical vector with two values indicating the principal components to be plotted
 #' @param legend.position, a character string indicating the location of the covariates legend
+#' @param pdf, a boolean value indicating if results has to be saved in a pdf
 #' @return Returns a PCA plot
 #' @examples
 #'\dontrun{
@@ -18,7 +19,7 @@
 
 pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
                 covariatesInNames=FALSE, principal.components=c(1,2),
-                legend.position=c("bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center")){
+                legend.position=c("bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center"), pdf=TRUE){
   tmp <- read.table(experiment.table, sep="\t", stringsAsFactors = TRUE, header=T, check.names = FALSE, row.names=1)
   if(covariatesInNames){
     covar.tmp <- strsplit(names(tmp), '_')
@@ -36,19 +37,36 @@ pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
 
   pca <- prcomp(t(data))
   variance.proportion <- summary(pca)$importance[2,]
-  if(covariatesInNames){
-    my.colors <- rainbow(n=length(levels(covar)))
-    plot(pca$x[,principal.components], main=experiment.table, col=my.colors[covar], pch=19, xlab=paste(dimnames(pca$x)[[2]][principal.components[1]],' (',
-         signif(variance.proportion[principal.components[1]]*100,3),' %',')', sep=""), ylab=paste(dimnames(pca$x)[[2]][principal.components[2]],' (',
-         signif(variance.proportion[principal.components[2]]*100,3),'%',')', sep=""))
-    text(pca$x[,principal.components], label=sample.names)
-    legend(legend.position, legend=levels(covar), pch=rep(19,length(levels(covar))), col=my.colors)
+  if(pdf){
+    pdf("pca.pdf")
+    if(covariatesInNames){
+      my.colors <- rainbow(n=length(levels(covar)))
+      plot(pca$x[,principal.components], main=experiment.table, col=my.colors[covar], pch=19, xlab=paste(dimnames(pca$x)[[2]][principal.components[1]],' (',
+                                                                                                         signif(variance.proportion[principal.components[1]]*100,3),' %',')', sep=""), ylab=paste(dimnames(pca$x)[[2]][principal.components[2]],' (',
+                                                                                                                                                                                                  signif(variance.proportion[principal.components[2]]*100,3),'%',')', sep=""))
+      text(pca$x[,principal.components], label=sample.names)
+      legend(legend.position, legend=levels(covar), pch=rep(19,length(levels(covar))), col=my.colors)
+    }else{
+      plot(pca$x[,principal.components], main=experiment.table, pch=19, col="gold", xlab=paste(dimnames(pca$x)[[2]][principal.components[1]],' (',
+                                                                                               signif(variance.proportion[principal.components[1]]*100,3),' %',')', sep=""), ylab=paste(dimnames(pca$x)[[2]][principal.components[2]],' (',
+                                                                                                                                                                                        signif(variance.proportion[principal.components[2]]*100,3),'%',')', sep=""))
+      text(pca$x[,principal.components], label=sample.names)
+    }
+    dev.off()
   }else{
-    plot(pca$x[,principal.components], main=experiment.table, pch=19, col="gold", xlab=paste(dimnames(pca$x)[[2]][principal.components[1]],' (',
+   if(covariatesInNames){
+     my.colors <- rainbow(n=length(levels(covar)))
+     plot(pca$x[,principal.components], main=experiment.table, col=my.colors[covar], pch=19, xlab=paste(dimnames(pca$x)[[2]][principal.components[1]],' (',
          signif(variance.proportion[principal.components[1]]*100,3),' %',')', sep=""), ylab=paste(dimnames(pca$x)[[2]][principal.components[2]],' (',
          signif(variance.proportion[principal.components[2]]*100,3),'%',')', sep=""))
-    text(pca$x[,principal.components], label=sample.names)
+     text(pca$x[,principal.components], label=sample.names)
+     legend(legend.position, legend=levels(covar), pch=rep(19,length(levels(covar))), col=my.colors)
+   }else{
+     plot(pca$x[,principal.components], main=experiment.table, pch=19, col="gold", xlab=paste(dimnames(pca$x)[[2]][principal.components[1]],' (',
+         signif(variance.proportion[principal.components[1]]*100,3),' %',')', sep=""), ylab=paste(dimnames(pca$x)[[2]][principal.components[2]],' (',
+         signif(variance.proportion[principal.components[2]]*100,3),'%',')', sep=""))
+     text(pca$x[,principal.components], label=sample.names)
+   }
   }
-
 }
 
