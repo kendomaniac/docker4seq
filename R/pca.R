@@ -19,7 +19,7 @@
 
 pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
                 covariatesInNames=FALSE, principal.components=c(1,2),
-                legend.position=c("bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center"), pdf=TRUE){
+                legend.position=c("bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center"), pdf=TRUE, output.folder=getwd()){
   tmp <- read.table(experiment.table, sep="\t", stringsAsFactors = TRUE, header=T, check.names = FALSE, row.names=1)
   if(covariatesInNames){
     covar.tmp <- strsplit(names(tmp), '_')
@@ -38,7 +38,8 @@ pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
   pca <- prcomp(t(data))
   variance.proportion <- summary(pca)$importance[2,]
   if(pdf){
-    pdf("pca.pdf")
+    file_name=paste(output.folder,"pca.dpf",sep="/")
+    pdf(file_name)
     if(covariatesInNames){
       my.colors <- rainbow(n=length(levels(covar)))
       plot(pca$x[,principal.components], main=experiment.table, col=my.colors[covar], pch=19, xlab=paste(dimnames(pca$x)[[2]][principal.components[1]],' (',
@@ -46,12 +47,14 @@ pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
                                                                                                                                                                                                   signif(variance.proportion[principal.components[2]]*100,3),'%',')', sep=""))
       text(pca$x[,principal.components], label=sample.names)
       legend(legend.position, legend=levels(covar), pch=rep(19,length(levels(covar))), col=my.colors)
+     
     }else{
       plot(pca$x[,principal.components], main=experiment.table, pch=19, col="gold", xlab=paste(dimnames(pca$x)[[2]][principal.components[1]],' (',
                                                                                                signif(variance.proportion[principal.components[1]]*100,3),' %',')', sep=""), ylab=paste(dimnames(pca$x)[[2]][principal.components[2]],' (',
                                                                                                                                                                                         signif(variance.proportion[principal.components[2]]*100,3),'%',')', sep=""))
       text(pca$x[,principal.components], label=sample.names)
     }
+    grid()
     dev.off()
   }else{
    if(covariatesInNames){
