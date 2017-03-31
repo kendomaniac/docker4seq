@@ -6,6 +6,7 @@
 #' @param principal.components, a numerical vector with two values indicating the principal components to be plotted
 #' @param legend.position, a character string indicating the location of the covariates legend
 #' @param pdf, a boolean value indicating if results has to be saved in a pdf
+#' @param output.folder, output foldeer
 #' @return Returns a PCA plot
 #' @examples
 #'\dontrun{
