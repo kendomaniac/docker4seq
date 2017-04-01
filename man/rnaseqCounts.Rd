@@ -11,7 +11,7 @@ rnaseqCounts(group = "sudo", fastq.folder = getwd(),
   seq.type = "pe", min.length = 40,
   genome.folder = "/data/scratch/hg38star", strandness = "none",
   save.bam = TRUE, org = "hg38", truncating.expected.counts = FALSE,
-  annotation.type = c("biocENSEMBL", "gtfENSEMBL"))
+  annotation.type = c("biocUCSC", "gtfENSEMBL"))
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
