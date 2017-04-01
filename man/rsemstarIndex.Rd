@@ -5,7 +5,7 @@
 \title{Generating rsem-star genome index}
 \usage{
 rsemstarIndex(group = c("sudo", "docker"), genome.folder = getwd(),
-  ensembl.urlgenome, ensembl.urlgtf, threads = 1)
+  ensembl.urlgenome = NULL, ensembl.urlgtf = NULL, threads = 1)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

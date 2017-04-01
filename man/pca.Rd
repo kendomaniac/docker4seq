@@ -7,7 +7,7 @@
 pca(experiment.table = "_counts.txt", type = c("counts", "FPKM", "TPM"),
   covariatesInNames = FALSE, principal.components = c(1, 2),
   legend.position = c("bottom", "bottomleft", "left", "topleft", "top",
-  "topright", "right", "center"), pdf = TRUE)
+  "topright", "right", "center"), pdf = TRUE, output.folder = getwd())
 }
 \arguments{
 \item{experiment.table, }{a character string indicating the counts, FPKM or TPM table file name}
@@ -21,6 +21,8 @@ pca(experiment.table = "_counts.txt", type = c("counts", "FPKM", "TPM"),
 \item{legend.position, }{a character string indicating the location of the covariates legend}
 
 \item{pdf, }{a boolean value indicating if results has to be saved in a pdf}
+
+\item{output.folder, }{output foldeer}
 }
 \value{
 Returns a PCA plot

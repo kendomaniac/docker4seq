@@ -3,30 +3,33 @@
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa will be located
-#' @param ensembl.urlgenome, a character string indicating the URL from ENSEMBL ftp for the unmasked genome sequence of interest
-#' @param ensembl.urlgtf, a character string indicating the URL from ENSEMBL ftp for the GTF for genome of interest
+#' @param uscs.urlgenome, a character string indicating the URL from uscs download web page for the unmasked genome sequence of interest
+#' @param uscs.gtf, a character string indicating the path of the GTF file for genome of interest
+#' @param uscs.urlknownIsoforms, a character string indicating the URL from uscs download web page for the knowisoforms file for genome of interest
+#' @param uscs.urlknownToLocusLink, a character string indicating the URL from uscs download web page for the knownToLocusLink file for genome of interest
 #' @param threads, a number indicating the number of cores to be used from the application
 #'
 #' @return The indexed bwa genome reference sequence
 #' @examples
 #'\dontrun{
 #'     #running rsemstar index for human
-#'     rsemstarIndex(group="sudo",genome.folder="/data/scratch/hg38star",
-#'     ensembl.urlgenome=
-#'     "ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz",
-#'     ensembl.urlgtf=
-#'     "ftp://ftp.ensembl.org/pub/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh38.87.gtf.gz",
-#'     threads=24)
-#'
-#'     #running rsemstar index for mouse
-#'     rsemstarIndex(group="docker",genome.folder="/data/scratch/mm10star",
-#'     ensembl.urlgenome="ftp://ftp.ensembl.org/pub/release-87/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.toplevel.fa.gz",
-#'     ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-87/gtf/mus_musculus/Mus_musculus.GRCm38.87.gtf.gz",
+#'     rsemstarUscsIndex(group="sudo",genome.folder="/data/scratch/hg19UCSCstar",
+#'     uscs.urlgenome=
+#'     "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz",
+#'     uscs.gtf=
+#'     "/Users/raffaelecalogero/Desktop/hg19_ucsc.gtf.gz",
+#'     uscs.urlknownIsoforms=
+#'     "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/knownIsoforms.txt.gz",
+#'     uscs.urlknownToLocusLink=
+#'     "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/database/knownToLocusLink.txt.gz",
 #'     threads=24)
 #'
 #' }
 #' @export
-rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ensembl.urlgenome=NULL, ensembl.urlgtf=NULL, threads=1){
+rsemstarUscsIndex <- function(group=c("sudo","docker"), genome.folder=getwd(),
+                          uscs.urlgenome=NULL, uscs.gtf=NULL,
+                          uscs.urlknownIsoforms=NULL, uscs.urlknownToLocusLink=NULL,
+                          threads=1){
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -45,11 +48,11 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
 
 	if(group=="sudo"){
 		system("sudo docker pull docker.io/rcaloger/rsemstar.2017.01")
-		     system(paste("sudo docker run  --privileged=true --cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
+		     system(paste("sudo docker run  --privileged=true --cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstarUCSC.index.sh "," ",genome.folder," ",uscs.urlgenome," ",uscs.gtf," ",threads," ",uscs.urlknownIsoforms," ", uscs.urlknownToLocusLink, sep=""))
 	  }else{
 		system("docker pull docker.io/rcaloger/rsemstar.2017.01")
-		      system(paste("docker run  --privileged=true --cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep=""))
-	 }
+	      system(paste("docker run  --privileged=true --cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstarUCSC.index.sh "," ",genome.folder," ",uscs.urlgenome," ",uscs.gtf," ",threads," ",uscs.urlknownIsoforms," ", uscs.urlknownToLocusLink, sep=""))
+	  }
   out <- "xxxx"
   #waiting for the end of the container work
   while(out != "out.info"){

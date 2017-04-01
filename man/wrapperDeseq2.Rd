@@ -5,7 +5,7 @@
 \title{A wrapper function for deseq2 for two groups only}
 \usage{
 wrapperDeseq2(experiment.table, log2fc = 1, fdr = 0.1, ref.covar = "0",
-  type = c("gene", "isoform"))
+  type = c("gene", "isoform"), output.folder = getwd())
 }
 \arguments{
 \item{experiment.table, }{a character string indicating the counts table generated with
@@ -19,6 +19,8 @@ sample3experiment with addition of covariates}
 
 \item{type, }{character with two options: gene, isoform. if gene is used two files are
 generated for geneset enrichment, the filtered Gene symbols and the background that contains all gene simbols.}
+
+\item{output.folder, }{output folder}
 }
 \value{
 Returns a full table of differentially expressed genes (prefix DEfull), a filtered table
