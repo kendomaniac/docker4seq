@@ -48,6 +48,7 @@ rsemstarUscsIndex <- function(group=c("sudo","docker"), genome.folder=getwd(),
 
   cat("\ncopying the gtf in the genome folder\n")
   system(paste("cp ", uscs.gtf," ",genome.folder,"/genome.gtf.gz", sep=""))
+  system(paste("gzip -d ",genome.folder,"/genome.gtf.gz", sep=""))
 
 	if(group=="sudo"){
 		system("sudo docker pull docker.io/rcaloger/rsemstar.2017.01")
