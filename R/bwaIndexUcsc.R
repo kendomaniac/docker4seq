@@ -67,10 +67,10 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
 
 	if(group=="sudo"){
 		system("sudo docker pull docker.io/rcaloger/bwa.2017.01")
-		system(paste("sudo docker run --privileged=true -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, uscs.urlgenome, sep=""))
+		system(paste("sudo docker run --privileged=true -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep=""))
 	}else{
 		system("docker pull docker.io/rcaloger/bwa.2017.01")
-		system(paste("docker run --privileged=true -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, uscs.urlgenome, sep=""))
+		system(paste("docker run --privileged=true -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep=""))
 	}
 	out <- "xxxx"
 	#waiting for the end of the container work
