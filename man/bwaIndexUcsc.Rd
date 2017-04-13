@@ -5,14 +5,15 @@
 \title{Generating bwa genome index for GATK variant call}
 \usage{
 bwaIndexUcsc(group = c("sudo", "docker"), genome.folder = getwd(),
-  fasta.file = NULL, dbsnp.file = NULL, g1000.file = NULL, gatk = FALSE)
+  uscs.urlgenome = NULL, dbsnp.file = NULL, g1000.file = NULL,
+  gatk = FALSE)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
 
 \item{genome.folder, }{a character string indicating the folder where the indexed reference genome for bwa will be located}
 
-\item{fasta.file, }{a character string indicating the name of fasta file located in the genome folder. This fasta, ucsc.hg19.fasta.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg19/}
+\item{uscs.urlgenome, }{a character string indicating the URL from uscs download web page for the unmasked genome sequence of interest}
 
 \item{dbsnp.file, }{a character string indicating the name of dbSNP vcf located in the genome folder. The dbSNP vcf, dbsnp_138.b37.vcf.gz and dbsnp_138.hg19.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37}
 
@@ -29,8 +30,16 @@ This function executes the docker container bwa1 where BWA is installed. The ind
 \examples{
 \dontrun{
     #running bwa index
-    bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", fasta.file="ucsc.hg19.fasta.gz" ,
+    bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", uscs.urlgenome=
+    "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz",
     dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz",
     gatk=TRUE)
+
+    #running bwa index
+    bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", uscs.urlgenome=
+    "http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz",
+    gatk=FALSE)
+
+
 }
 }

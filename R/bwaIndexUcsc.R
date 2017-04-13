@@ -5,19 +5,27 @@
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa will be located
 #' @param dbsnp.file, a character string indicating the name of dbSNP vcf located in the genome folder. The dbSNP vcf, dbsnp_138.b37.vcf.gz and dbsnp_138.hg19.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37
 #' @param g1000.file, a character string indicating the name of 1000 genome vcf located in the genome folder. The 1000 genomes vcf, Mills_and_1000G_gold_standard.indels.b37.vcf.gz and Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/
-#' @param fasta.file, a character string indicating the name of fasta file located in the genome folder. This fasta, ucsc.hg19.fasta.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/hg19/
+#' @param uscs.urlgenome, a character string indicating the URL from uscs download web page for the unmasked genome sequence of interest
 #' @param gatk, a boolean TRUE and FALSE that indicate if the index will be used for GATK analysis
 #'
 #' @return The indexed bwa genome reference sequence
 #' @examples
 #'\dontrun{
 #'     #running bwa index
-#'     bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", fasta.file="ucsc.hg19.fasta.gz" ,
+#'     bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", uscs.urlgenome=
+#'     "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz",
 #'     dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz",
 #'     gatk=TRUE)
+#'
+#'     #running bwa index
+#'     bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", uscs.urlgenome=
+#'     "http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz",
+#'     gatk=FALSE)
+#'
+#'
 #' }
 #' @export
-bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), fasta.file=NULL, dbsnp.file=NULL, g1000.file=NULL, gatk=FALSE){
+bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.urlgenome=NULL, dbsnp.file=NULL, g1000.file=NULL, gatk=FALSE){
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -60,10 +68,10 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), fasta.f
 
 	if(group=="sudo"){
 		system("sudo docker pull docker.io/rcaloger/bwa.2017.01")
-		system(paste("sudo docker run --privileged=true -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, sep=""))
+		system(paste("sudo docker run --privileged=true -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, uscs.urlgenome, sep=""))
 	}else{
 		system("docker pull docker.io/rcaloger/bwa.2017.01")
-		system(paste("docker run --privileged=true -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, sep=""))
+		system(paste("docker run --privileged=true -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, uscs.urlgenome, sep=""))
 	}
 	out <- "xxxx"
 	#waiting for the end of the container work
