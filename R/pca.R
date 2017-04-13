@@ -13,7 +13,7 @@
 #'     # Example of the header of the counts, FPKM or TPM contaning covariate
 #'     # no covariate in the name ctrl1 ctrl2 trt1 trt2
 #'     # no covariate in the name ctrl1_c ctrl2_c trt1_t trt2_t
-#'     pca(experiment.table="_log2FPKM.txt", type="FPKM")
+#'     pca(experiment.table="_log2FPKM.txt", type="FPKM", legend.position="topleft")
 #'
 #' }
 #' @export
@@ -48,7 +48,7 @@ pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
                                                                                                                                                                                                   signif(variance.proportion[principal.components[2]]*100,3),'%',')', sep=""))
       text(pca$x[,principal.components], label=sample.names)
       legend(legend.position, legend=levels(covar), pch=rep(19,length(levels(covar))), col=my.colors)
-     
+
     }else{
       plot(pca$x[,principal.components], main=experiment.table, pch=19, col="gold", xlab=paste(dimnames(pca$x)[[2]][principal.components[1]],' (',
                                                                                                signif(variance.proportion[principal.components[1]]*100,3),' %',')', sep=""), ylab=paste(dimnames(pca$x)[[2]][principal.components[2]],' (',

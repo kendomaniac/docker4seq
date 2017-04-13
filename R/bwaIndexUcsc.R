@@ -12,12 +12,12 @@
 #' @examples
 #'\dontrun{
 #'     #running bwa index
-#'     bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", fasta.file="ucsc.hg19.fasta.gz" ,
+#'     bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", fasta.file="ucsc.hg19.fasta.gz" ,
 #'     dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz",
 #'     gatk=TRUE)
 #' }
 #' @export
-bwaIndex <- function(group=c("sudo","docker"),genome.folder=getwd(), fasta.file=NULL, dbsnp.file=NULL, g1000.file=NULL, gatk=FALSE){
+bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), fasta.file=NULL, dbsnp.file=NULL, g1000.file=NULL, gatk=FALSE){
   #running time 1
   ptm <- proc.time()
   #running time 1
