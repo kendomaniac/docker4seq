@@ -35,16 +35,15 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
     return()
   }
 
-	cat("\nsetting as working dir the genome folder and running bwa docker container\n")
-  dir <- dir(genome.folder)
-  if(dir[grep(fasta.file,dir)]!=fasta.file){
-    cat("\nfasta file is missing\n")
-    return(1)
-  }else{
-    cat("\nPreparing genome.fa\n")
-    system(paste("gzip -d ", fasta.file, sep=""))
-    system(paste("mv ", sub(".gz$","",fasta.file)," genome.fa", sep=""))
+    #########check scratch folder exist###########
+  if (!file.exists(genome.folder)){
+    cat(paste("\nIt seems that the ",genome.folder, "folder does not exist, I create it\n"))
+    dir.create(genome.folder)
   }
+  #############################################
+
+	cat("\nsetting as working dir the genome folder and running bwa docker container\n")
+
   if(gatk){
     if(length(dir[grep(sub(".vcf.gz$", "", dbsnp.file),dir)])<2){
       cat("\ndbSNP vcf.gz and/or vcf.idx.gz missing\n")
