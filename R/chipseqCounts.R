@@ -70,7 +70,7 @@ chipseqCounts <- function( group="docker",output.folder=getwd(), mock.folder, te
 
   #running chipseq
   cat("\nrunning chipseq function\n")
-  chipseq(group=group, bam.folder=output.folder, sample.bam=sample.bam, ctrl.bam=ctrl.bam,
+  chipseq(group=group, bam.folder=output.folder, sample.bam="sample.bam", ctrl.bam="ctrl.bam",
           scratch.folder=scratch.folder, genome=genome, read.size=read.size,
           tool=tool, sicer.wsize=sicer.wsize, sicer.gsize=sicer.gsize, sicer.fdr=sicer.fdr,
           tss.distance=tss.distance, max.upstream.distance=max.upstream.distance,remove.duplicates=remove.duplicates)
