@@ -85,7 +85,7 @@ This function executes a set of docker containers allowing the detection of TFs 
              scratch.folder="/data/scratch", adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
              adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", threads=24, seq.type="se",
              min.length=30, genome.folder="/data/scratch/mm10bwa", mock.id="igg", test.id="tf",
-             ctrl.bam, genome="mm10", read.size=50, tool="macs", macs.min.mfold=10, macs.max.mfold=30,
+             genome="mm10", read.size=50, tool="macs", macs.min.mfold=10, macs.max.mfold=30,
              macs.pval="1e-5", sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10, tss.distance=0,
              max.upstream.distance=10000, remove.duplicates="N")
 }
