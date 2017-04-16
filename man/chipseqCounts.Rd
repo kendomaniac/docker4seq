@@ -4,8 +4,8 @@
 \alias{chipseqCounts}
 \title{Running MACS & SICER workflow}
 \usage{
-chipseqCounts(group = "docker", output.folder = getwd(), mock.folder,
-  test.folder, scratch.folder,
+chipseqCounts(group = c("sudo", "docker"), output.folder = getwd(),
+  mock.folder, test.folder, scratch.folder,
   adapter5 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
   adapter3 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
   threads = 8, seq.type = "se", min.length = 30, genome.folder,

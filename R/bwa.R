@@ -132,10 +132,10 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
     tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
     writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
     #removing temporary folder
-    cat("\n\nRemoving the rsemStar temporary file ....\n")
-#    system(paste("rm -R ",scrat_tmp.folder))
-#    system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
-#    system(paste("rm  ",fastq.folder,"/tempFolderID", sep=""))
+    cat("\n\nRemoving the bwa temporary file ....\n")
+    system(paste("rm -R ",scrat_tmp.folder))
+    system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
+    system(paste("rm  ",fastq.folder,"/tempFolderID", sep=""))
     #removing temporary folder
 
 }

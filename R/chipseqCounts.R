@@ -46,7 +46,7 @@
 #'              max.upstream.distance=10000, remove.duplicates="N")
 #' }
 #' @export
-chipseqCounts <- function( group="docker",output.folder=getwd(), mock.folder, test.folder, scratch.folder,
+chipseqCounts <- function( group=c("sudo","docker"),output.folder=getwd(), mock.folder, test.folder, scratch.folder,
                           adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
                           adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
                           threads=8, seq.type="se", min.length=30,genome.folder,
@@ -54,14 +54,27 @@ chipseqCounts <- function( group="docker",output.folder=getwd(), mock.folder, te
                           tool="macs", macs.min.mfold=10, macs.max.mfold=30, macs.pval="1e-5",
                           sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10,
                           tss.distance=0, max.upstream.distance=10000, remove.duplicates="N"){
-  #trimming adapter
-  cat("\nrunning skewer\n")
-  skewer(group=group,fastq.folder=mock.folder, scratch.folder=scratch.folder, adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
-  skewer(group=group,fastq.folder=test.folder, scratch.folder=scratch.folder, adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
-  #running bwa
-  cat("\nrunning bwa\n")
-  bwa(group=group,fastq.folder=mock.folder, scratch.folder=scratch.folder, genome.folder=genome.folder, seq.type="se", threads=threads, sample.id=mock.id)
-  bwa(group=group,fastq.folder=test.folder, scratch.folder=scratch.folder, genome.folder=genome.folder, seq.type="se", threads=threads, sample.id=test.id)
+  #trimming adapter and bwa
+  cat("\nrunning skewer ctrl\n")
+  check.skewer <- dir(mock.folder)
+  if(length(grep("trimmed", check.skewer))==0){
+       skewer(group=group,fastq.folder=mock.folder, scratch.folder=scratch.folder, adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
+  }
+  cat("\nrunning bwa ctrl\n")
+  check.bwa <- dir(mock.folder)
+  if(length(grep("dedup", check.bwa))==0){
+     bwa(group=group,fastq.folder=mock.folder, scratch.folder=scratch.folder, genome.folder=genome.folder, seq.type="se", threads=threads, sample.id=mock.id)
+  }
+  cat("\nrunning skewer test\n")
+  check.skewer <- dir(mock.folder)
+  if(length(grep("trimmed", check.skewer))==0){
+     skewer(group=group,fastq.folder=test.folder, scratch.folder=scratch.folder, adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
+  }
+  cat("\nrunning bwa test\n")
+  check.bwa <- dir(mock.folder)
+  if(length(grep("dedup", check.bwa))==0){
+     bwa(group=group,fastq.folder=test.folder, scratch.folder=scratch.folder, genome.folder=genome.folder, seq.type="se", threads=threads, sample.id=test.id)
+  }
   cat("\nmoving the bam files in the output folder\n")
   file.copy(from=paste(mock.folder,"/dedup_reads.bam", sep=""), to=paste(output.folder, "/ctrl.bam", sep=""))
   file.copy(from=paste(mock.folder,"/dedup_reads.bai", sep=""), to=paste(output.folder, "/ctrl.bai", sep=""))
