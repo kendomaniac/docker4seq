@@ -49,17 +49,29 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
     return()
   }
 
+  #########check scratch folder exist###########
+  if (!file.exists(scratch.folder)){
+    cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
+    return(3)
+  }
+  #############################################
+
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 	cat("\ncreating a folder in scratch folder\n")
-    dir.create(file.path(scratch.folder, tmp.folder))
+	scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
+	writeLines(scrat_tmp.folder,paste(fastq.folder,"/tempFolderID", sep=""))
+  dir.create(file.path(scratch.folder, tmp.folder))
 
-	dir <- dir()
-	dir.info <- dir[which(dir=="run.info")]
-	if(length(dir.info)>0){
-	  system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-	  system(paste("cp run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
+  docker_chipseq.folder=file.path("/data/scratch", tmp.folder)
 
-	}
+  dir <- dir(path=bam.folder)
+  dir.info <- dir[which(dir=="run.info")]
+  if(length(dir.info)>0){
+    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+    system(paste("cp ",fastq.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
+
+  }
+
 	dir <- dir[grep(".bam$", dir)]
 	dir <- dir[which(dir%in%c(sample.bam, ctrl.bam))]
 	cat("\ncopying \n")
@@ -87,7 +99,7 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 #		             max.upstream.distance," ",remove.duplicates, sep=""))
 
 		system(paste("sudo docker run --privileged=true  --cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
-		             bam.folder," ", ctrl.bam," 000000 ",file.path(scratch.folder, tmp.folder)," ",
+		             bam.folder," ", ctrl.bam," 000000 ",docker_chipseq.folder," ",
 		             genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ",
 		             macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",
 		             max.upstream.distance," ",remove.duplicates, sep=""))
@@ -101,7 +113,7 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 #	               max.upstream.distance," ",remove.duplicates, sep=""))
 
 		system(paste("docker run --privileged=true  --cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
-             bam.folder," ", ctrl.bam," 000000 ",file.path(scratch.folder, tmp.folder)," ",
+             bam.folder," ", ctrl.bam," 000000 ",docker_chipseq.folder," ",
              genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ",
              macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",
              max.upstream.distance," ",remove.duplicates, sep=""))
@@ -136,7 +148,12 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
 	writeLines(tmp.run,paste(bam.folder,"run.info", sep="/"))
 	#running time 2
-#	system(paste("rm ",file.path(scratch.folder, tmp.folder),"/out.info",sep=""))
+	#removing temporary folder
+	cat("\n\nRemoving the rsemStar temporary file ....\n")
+#	system(paste("rm -R ",scrat_tmp.folder))
+#	system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
+#	system(paste("rm  ",fastq.folder,"/tempFolderID", sep=""))
+	#removing temporary folder
 
 }
 
