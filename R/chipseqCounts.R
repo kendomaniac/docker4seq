@@ -59,21 +59,31 @@ chipseqCounts <- function( group=c("sudo","docker"),output.folder=getwd(), mock.
   check.skewer <- dir(mock.folder)
   if(length(grep("trimmed", check.skewer))==0){
        skewer(group=group,fastq.folder=mock.folder, scratch.folder=scratch.folder, adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
+  }else{
+    cat("\nskewer ctrl already done\n")
   }
+  check.skewer <- NULL
   cat("\nrunning bwa ctrl\n")
   check.bwa <- dir(mock.folder)
   if(length(grep("dedup", check.bwa))==0){
      bwa(group=group,fastq.folder=mock.folder, scratch.folder=scratch.folder, genome.folder=genome.folder, seq.type="se", threads=threads, sample.id=mock.id)
+  }else{
+    cat("\nbwa ctrl already done\n")
   }
+  check.bwa <- NULL
   cat("\nrunning skewer test\n")
-  check.skewer <- dir(mock.folder)
+  check.skewer <- dir(test.folder)
   if(length(grep("trimmed", check.skewer))==0){
      skewer(group=group,fastq.folder=test.folder, scratch.folder=scratch.folder, adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
+  }else{
+    cat("\nskewer test already done\n")
   }
   cat("\nrunning bwa test\n")
-  check.bwa <- dir(mock.folder)
+  check.bwa <- dir(test.folder)
   if(length(grep("dedup", check.bwa))==0){
      bwa(group=group,fastq.folder=test.folder, scratch.folder=scratch.folder, genome.folder=genome.folder, seq.type="se", threads=threads, sample.id=test.id)
+  }else{
+    cat("\nbwa test already done\n")
   }
   cat("\nmoving the bam files in the output folder\n")
   file.copy(from=paste(mock.folder,"/dedup_reads.bam", sep=""), to=paste(output.folder, "/ctrl.bam", sep=""))
