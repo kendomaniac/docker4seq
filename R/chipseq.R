@@ -59,7 +59,7 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 	cat("\ncreating a folder in scratch folder\n")
 	scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
-	writeLines(scrat_tmp.folder,paste(fastq.folder,"/tempFolderID", sep=""))
+	writeLines(scrat_tmp.folder,paste(bam.folder,"/tempFolderID", sep=""))
   dir.create(file.path(scratch.folder, tmp.folder))
 
   docker_chipseq.folder=file.path("/data/scratch", tmp.folder)
@@ -68,7 +68,7 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
   dir.info <- dir[which(dir=="run.info")]
   if(length(dir.info)>0){
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-    system(paste("cp ",fastq.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
+    system(paste("cp ",bam.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
 
   }
 
@@ -151,8 +151,8 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	#removing temporary folder
 	cat("\n\nRemoving the rsemStar temporary file ....\n")
 #	system(paste("rm -R ",scrat_tmp.folder))
-#	system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
-#	system(paste("rm  ",fastq.folder,"/tempFolderID", sep=""))
+#	system(paste("rm  ",bam.folder,"/dockerID", sep=""))
+#	system(paste("rm  ",bam.folder,"/tempFolderID", sep=""))
 	#removing temporary folder
 
 }
