@@ -124,18 +124,18 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	while(out != "out.info"){
 		Sys.sleep(10)
 		cat(".")
-		out.tmp <- dir(file.path(scratch.folder, tmp.folder))
+		out.tmp <- dir(scrat_tmp.folder)
 		out.tmp <- out.tmp[grep("out.info",out.tmp)]
 		if(length(out.tmp)>0){
 			out <- "out.info"
 		}
 	}
 #	system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-	con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
+	con <- file(paste(scrat_tmp.folder,"out.info", sep="/"), "r")
 	tmp <- readLines(con)
 	close(con)
 	for(i in tmp){
-		i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
+		i <- sub("cp ",paste("cp ",scrat_tmp.folder,"/",sep=""),i)
 		system(i)
 	}
 	#running time 2
