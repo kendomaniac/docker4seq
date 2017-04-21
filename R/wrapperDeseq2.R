@@ -38,28 +38,30 @@ wrapperDeseq2 <- function(experiment.table, log2fc=1, fdr=0.1, ref.covar="0", ty
    dds$covar <- relevel(dds$covar, ref=ref.covar)
    dds <- DESeq(dds)
    res <- results(dds)
-   write.table(res, paste(output.folder,"DEfull_",sep="/"), sep="\t", col.names = NA, quote=FALSE)
+   write.table(res, paste(output.folder,"DEfull.txt",sep="/"), sep="\t", col.names = NA, quote=FALSE)
    res.filtered0 <- res[!is.na(res$padj),]
    res.filtered1 <- res.filtered0[intersect(which(res.filtered0$padj <= fdr), which(res.filtered0$log2FoldChange >= log2fc)),]
-   write.table(res.filtered1, paste(output.folder,paste("DEfiltered_log2fc_",log2fc,"_fdr_",fdr,sep=""),sep="/"), sep="\t", col.names = NA, quote=FALSE)
+   write.table(res.filtered1, paste(output.folder,paste("DEfiltered_log2fc_",log2fc,"_fdr_",fdr,".txt",sep=""),sep="/"), sep="\t", col.names = NA, quote=FALSE)
    norm.counts <- counts(dds, normalize=T)
    if(type=="gene"){
-     bkg.0 <- rownames(res)
-     bkg.1 <- strsplit(bkg.0, ":")
-     tmp0 <- sapply(bkg.1, function(x)x[2])
-     tmp1 <- sapply(bkg.1, function(x)x[1])
-     bkg.df <- data.frame(tmp0, tmp1)
-     bkgf.0 <- rownames(res.filtered1)
-     bkgf.1 <- strsplit(bkgf.0, ":")#this is not bkg are the genes of interest
-     tmp0 <- sapply(bkgf.1, function(x)x[2])
-     tmp1 <- sapply(bkgf.1, function(x)x[1])
-     bkgf.df <- data.frame(tmp0, tmp1)
-     write.table(bkg.df[,2], paste(output.folder,"bkg4david_",sep="/") , sep="\t", row.names = F, col.names = F, quote=FALSE)
-     write.table(bkgf.df[,2], paste(oputput.folder,"genes4david_",sep="/") , sep="\t", row.names = F, col.names = F, quote=FALSE)
+       bkg.0 <- rownames(res)
+       bkg.1 <- strsplit(bkg.0, ":")
+       tmp0 <- sapply(bkg.1, function(x)x[2])
+       tmp1 <- sapply(bkg.1, function(x)x[1])
+       bkg.df <- data.frame(tmp0, tmp1)
+       bkgf.0 <- rownames(res.filtered1)
+       bkgf.1 <- strsplit(bkgf.0, ":")#this is not bkg are the genes of interest
+       tmp0 <- sapply(bkgf.1, function(x)x[2])
+       tmp1 <- sapply(bkgf.1, function(x)x[1])
+       bkgf.df <- data.frame(tmp0, tmp1)
+       write.table(bkg.df[,2], paste(output.folder,"bkg4david.txt",sep="/") , sep="\t", row.names = F, col.names = F, quote=FALSE)
+       write.table(bkgf.df[,2], paste(output.folder,"genes4david.txt",sep="/") , sep="\t", row.names = F, col.names = F, quote=FALSE)
+       write.table(norm.counts, paste(output.folder,"log2normalized_counts.txt",sep="/"), sep="\t", col.names = NA, quote=FALSE)
    }else if(type=="isoform"){
-       write.table(norm.counts, paste(output.folder,"log2normalized_isoforms_counts_",sep="/"), sep="\t", col.names = NA, quote=FALSE)
-       plotMA(res)
-       abline(h=log2fc, col="red", lty=2)
-       abline(h=-log2fc, col="green", lty=2)
+       write.table(norm.counts, paste(output.folder,"log2normalized_isoforms_counts.txt",sep="/"), sep="\t", col.names = NA, quote=FALSE)
    }
+#   plotMA(res)
+#   abline(h=log2fc, col="red", lty=2)
+#   abline(h=-log2fc, col="green", lty=2)
+
 }
