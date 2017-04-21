@@ -20,7 +20,7 @@
 
 pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
                 covariatesInNames=FALSE, principal.components=c(1,2),
-                legend.position=c("bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center"), pdf=TRUE, output.folder=getwd()){
+                legend.position=c("bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center"), pdf = TRUE, output.folder=getwd()){
   tmp <- read.table(experiment.table, sep="\t", stringsAsFactors = TRUE, header=T, check.names = FALSE, row.names=1)
   if(covariatesInNames){
     covar.tmp <- strsplit(names(tmp), '_')
@@ -38,8 +38,8 @@ pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
 
   pca <- prcomp(t(data))
   variance.proportion <- summary(pca)$importance[2,]
-  if(pdf){
-    file_name=paste(output.folder,"pca.dpf",sep="/")
+  if(pdf == TRUE){
+    file_name=paste(output.folder,"pca.pdf",sep="/")
     pdf(file_name)
     if(covariatesInNames){
       my.colors <- rainbow(n=length(levels(covar)))
