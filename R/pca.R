@@ -13,7 +13,9 @@
 #'     # Example of the header of the counts, FPKM or TPM contaning covariate
 #'     # no covariate in the name ctrl1 ctrl2 trt1 trt2
 #'     # no covariate in the name ctrl1_c ctrl2_c trt1_t trt2_t
-#'     pca(experiment.table="_log2FPKM.txt", type="FPKM", legend.position="topleft")
+#'     pca(experiment.table="_log2FPKM.txt", type="FPKM", legend.position="topleft",
+#'     covariatesInNames=FALSE, principal.components=c(1,2),
+#'     pdf = TRUE, output.folder=getwd())
 #'
 #' }
 #' @export
