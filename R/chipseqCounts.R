@@ -8,7 +8,6 @@
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param adapter5, a character string indicating the fwd adapter
 #' @param adapter3, a character string indicating the rev adapter
-#' @param seq.type, a character string indicating the type of reads to be trimmed. One options: \code{"se"} o for single end sequencing.
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param min.length, a number indicating minimal length required to return a trimmed read
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa is located
@@ -39,7 +38,7 @@
 #'     system("tar xvf prdm51.tar")
 #'     chipseqCounts(group="docker", output.folder="./prdm51.igg", mock.folder="./igg", test.folder="./prdm51",
 #'              scratch.folder="/data/scratch", adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-#'              adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", threads=24, seq.type="se",
+#'              adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", threads=24,
 #'              min.length=30, genome.folder="/data/scratch/mm10bwa", mock.id="igg", test.id="tf",
 #'              genome="mm10", read.size=50, tool="macs", macs.min.mfold=10, macs.max.mfold=30,
 #'              macs.pval="1e-5", sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10, tss.distance=0,
@@ -49,16 +48,17 @@
 chipseqCounts <- function( group=c("sudo","docker"),output.folder=getwd(), mock.folder, test.folder, scratch.folder,
                           adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
                           adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-                          threads=8, seq.type="se", min.length=30,genome.folder,
+                          threads=8, min.length=30,genome.folder,
                           mock.id="igg", test.id="tf", genome, read.size=50,
                           tool="macs", macs.min.mfold=10, macs.max.mfold=30, macs.pval="1e-5",
                           sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10,
                           tss.distance=0, max.upstream.distance=10000, remove.duplicates="N"){
+  
   #trimming adapter and bwa
   cat("\nrunning skewer ctrl\n")
   check.skewer <- dir(mock.folder)
   if(length(grep("trimmed", check.skewer))==0){
-       skewer(group=group,fastq.folder=mock.folder, scratch.folder=scratch.folder, adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
+       skewer(group=group,fastq.folder=mock.folder, scratch.folder=scratch.folder, adapter5=adapter5, adapter3=adapter3, seq.type="se", threads=threads,  min.length=min.length)
   }else{
     cat("\nskewer ctrl already done\n")
   }
@@ -74,7 +74,7 @@ chipseqCounts <- function( group=c("sudo","docker"),output.folder=getwd(), mock.
   cat("\nrunning skewer test\n")
   check.skewer <- dir(test.folder)
   if(length(grep("trimmed", check.skewer))==0){
-     skewer(group=group,fastq.folder=test.folder, scratch.folder=scratch.folder, adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
+     skewer(group=group,fastq.folder=test.folder, scratch.folder=scratch.folder, adapter5=adapter5, adapter3=adapter3, seq.type="se", threads=threads,  min.length=min.length)
   }else{
     cat("\nskewer test already done\n")
   }
