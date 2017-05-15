@@ -3,7 +3,7 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param params, a character string containing all parameters needed to tun the docker container
 #' @param container, a character string downloading the docker container. If no value is inserted the container is already present on the local server
-#' @return 0 if success, 1 if parameters are missing, 2 if the group is neither sudo or docker. In case of 1 or 2 the docker execution is aborted
+#' @return NULL if success, 1 if parameters are missing, 2 if the group is neither sudo or docker. In case of 1 or 2 the docker execution is aborted
 #' @examples
 #'\dontrun{
 ##'     #running runDocker
@@ -24,10 +24,9 @@ runDocker <- function(group="docker",container=NULL, params=NULL){
          system(paste("sudo docker run --privileged=true ",params, sep=""))
      }else if(group=="docker"){
          system(paste("docker pull ",container, sep=""))
-         system(paste("docker run --privileged=true ",params, sep="")) 
+         system(paste("docker run --privileged=true ",params, sep=""))
      }else{
        cat("\nThe group provides is neither sudo or docker\n")
        return(2)
      }
-     
 }
