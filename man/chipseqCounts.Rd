@@ -32,8 +32,6 @@ chipseqCounts(group = c("sudo", "docker"), output.folder = getwd(),
 
 \item{threads, }{a number indicating the number of cores to be used from the application}
 
-\item{seq.type, }{a character string indicating the type of reads to be trimmed. One options: \code{"se"} o for single end sequencing.}
-
 \item{min.length, }{a number indicating minimal length required to return a trimmed read}
 
 \item{genome.folder, }{a character string indicating the folder where the indexed reference genome for bwa is located}
