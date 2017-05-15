@@ -4,7 +4,7 @@ To install it you can use use **devtools**:
 ```
 install.packages("devtools")
 library(devtools)
-install_github("kendomaniac/docker4seq")
+install_github("kendomaniac/docker4seq", ref="devel")
 ```
 
 

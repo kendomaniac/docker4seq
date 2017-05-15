@@ -25,7 +25,6 @@
 #'     genome.folder="/data/scratch/mm10bwa", seq.type="se",
 #'     threads=24, sample.id="igg")
 #'
-#'bwa(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder="/data/scratch/mm10bwa", seq.type="se",threads=24, sample.id="igg")
 #' }
 #' @export
 bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), threads=1, sample.id){
@@ -97,10 +96,10 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
 	}else{
 		system("docker pull docker.io/rcaloger/bwa.2017.01")
 		if(seq.type=="se"){
-		  params <- paste("sudo docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa_se.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
+		  params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa_se.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
 		  runDocker(group="sudo",container="docker.io/rcaloger/bwa.2017.01", params=params)
 		}else{
-		  params <- paste("docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa_se.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
+		  params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa_se.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
 		  runDocker(group="docker",container="docker.io/rcaloger/bwa.2017.01", params=params)
 		}
 	}
