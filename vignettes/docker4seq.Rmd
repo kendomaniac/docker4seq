@@ -46,7 +46,24 @@ At the present time are available the following workflows:
     
 ## chipseq workflow
 
-The chipseq workflow is completely embedded in a unique function:
+The chipseq workflow can be run using 4SeqGUI graphical interface:
+![ChIPseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/chipseq0.jpeg)
+
+
+The ChIPseq is made of two main steps:
+
+- Creating a genome index for BWA (see end of this paragraph)
+
+- Running MACS or SICER analysis
+
+All the parameters needed to run MACS or SICER can be setup using 4SeqGUI
+
+![MACS and SICER analysis](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/chipseq3.jpeg)
+
+
+A detailed description of the parameters is given below.
+
+The chipseq workflow can be also executed using R and it is completely embedded in a unique function:
 
 ```{r, echo=TRUE, eval=FALSE}
 
@@ -97,6 +114,7 @@ The generation of the genome index for ChIP experiment is very simple and it is 
 
 
 ### Creating a BWA index file for Chipseq:
+
 ```{r,  echo=TRUE, eval=FALSE}
 bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", uscs.urlgenome=
 "http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz",
@@ -104,5 +122,10 @@ gatk=FALSE)
 ```
 
 In brief, **bwaIndexUcsc** uses UCSC genomic data. User has to provide the URL (**uscs.urlgenome**) for the file chromFa.tar.gz related to the organism of interest and the path to the folder where the index will be generated (**genome.folder**). The parameter **gatk** has to be set to FALSE because is not used for a genomic index used for ChIPseq.
+
+The index can be easily created using the graphical interface:
+
+![Creating a BWA index with Genome indexing BWA](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/chipseq1.jpeg)
+
 
 
