@@ -18,7 +18,7 @@
 #' }
 #' @export
 
-wrapperDeseq2 <- function(experiment.table, log2fc=1, fdr=0.1, ref.covar="0", type=c("gene","isoform", "mirna"),output.folder=getwd()){
+wrapperDeseq2 <- function(experiment.table, log2fc=1, fdr=0.1, ref.covar="0", type=c("gene","isoform","mirna"),output.folder=getwd()){
    counts <- read.table(experiment.table, sep="\t", header=T, row.names=1)
    covar.tmp <- strsplit(names(counts), "_")
    if(length(covar.tmp[[1]])==1){
