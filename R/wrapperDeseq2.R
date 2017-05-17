@@ -36,7 +36,7 @@ wrapperDeseq2 <- function(experiment.table, log2fc=1, fdr=0.1, ref.covar="0", ty
    res <- results(dds)
    write.table(res, paste(output.folder,"DEfull.txt",sep="/"), sep="\t", col.names = NA, quote=FALSE)
    res.filtered0 <- res[!is.na(res$padj),]
-   res.filtered1 <- res.filtered0[intersect(which(res.filtered0$padj <= fdr), which(res.filtered0$log2FoldChange >= abs(log2fc))),]
+   res.filtered1 <- res.filtered0[intersect(which(res.filtered0$padj <= fdr), which(abs(res.filtered0$log2FoldChange) >= log2fc)),]
    write.table(res.filtered1, paste(output.folder,paste("DEfiltered_log2fc_",log2fc,"_fdr_",fdr,".txt",sep=""),sep="/"), sep="\t", col.names = NA, quote=FALSE)
    norm.counts <- log2(counts(dds, normalize=T)+1)
    if(type=="gene"){
