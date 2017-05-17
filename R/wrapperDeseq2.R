@@ -1,16 +1,12 @@
 #' @title A wrapper function for deseq2 for two groups only
-#' @description This function runs deseq2 on a table genrated with sample2experiment having
-#' the covariates added in the names of the columns, separated by the names with underscore.
-#' @param experiment.table, a character string indicating the counts table generated with
-#' sample3experiment with addition of covariates
+#' @description This function runs deseq2 on a table genrated with sample2experiment having the covariates added in the names of the columns, separated by the names with underscore.
+#' @param experiment.table, a character string indicating the counts table generated with sample3experiment with addition of covariates
 #' @param log2fc, log2fc threshold for differetially expressed genes
 #' @param fdr, fdr threshold
 #' @param ref.covar, covariate to be used as reference
-#' @param type, character with two options: gene, isoform. if gene is used two files are
-#' generated for geneset enrichment, the filtered Gene symbols and the background that contains all gene simbols.
+#' @param type, character with three options: gene, isoform, mirna. if gene is used two files are generated for geneset enrichment, the filtered Gene symbols and the background that contains all gene simbols.
 #' @param output.folder, output folder
-#' @return Returns a full table of differentially expressed genes (prefix DEfull), a filtered table
-#' of differentially expressed genes (prefix DEfiltered) and the normalized counts table (prefix normalized)
+#' @return Returns a full table of differentially expressed genes (prefix DEfull), a filtered table of differentially expressed genes (prefix DEfiltered) and the normalized counts table (prefix normalized)
 #' @import DESeq2
 #' @examples
 #'\dontrun{
@@ -22,7 +18,7 @@
 #' }
 #' @export
 
-wrapperDeseq2 <- function(experiment.table, log2fc=1, fdr=0.1, ref.covar="0", type=c("gene","isoform"),output.folder=getwd()){
+wrapperDeseq2 <- function(experiment.table, log2fc=1, fdr=0.1, ref.covar="0", type=c("gene","isoform", "mirna"),output.folder=getwd()){
    counts <- read.table(experiment.table, sep="\t", header=T, row.names=1)
    covar.tmp <- strsplit(names(counts), "_")
    if(length(covar.tmp[[1]])==1){
@@ -40,9 +36,9 @@ wrapperDeseq2 <- function(experiment.table, log2fc=1, fdr=0.1, ref.covar="0", ty
    res <- results(dds)
    write.table(res, paste(output.folder,"DEfull.txt",sep="/"), sep="\t", col.names = NA, quote=FALSE)
    res.filtered0 <- res[!is.na(res$padj),]
-   res.filtered1 <- res.filtered0[intersect(which(res.filtered0$padj <= fdr), which(res.filtered0$log2FoldChange >= log2fc)),]
+   res.filtered1 <- res.filtered0[intersect(which(res.filtered0$padj <= fdr), which(res.filtered0$log2FoldChange >= abs(log2fc))),]
    write.table(res.filtered1, paste(output.folder,paste("DEfiltered_log2fc_",log2fc,"_fdr_",fdr,".txt",sep=""),sep="/"), sep="\t", col.names = NA, quote=FALSE)
-   norm.counts <- counts(dds, normalize=T)
+   norm.counts <- log2(counts(dds, normalize=T))
    if(type=="gene"){
        bkg.0 <- rownames(res)
        bkg.1 <- strsplit(bkg.0, ":")
@@ -59,6 +55,8 @@ wrapperDeseq2 <- function(experiment.table, log2fc=1, fdr=0.1, ref.covar="0", ty
        write.table(norm.counts, paste(output.folder,"log2normalized_counts.txt",sep="/"), sep="\t", col.names = NA, quote=FALSE)
    }else if(type=="isoform"){
        write.table(norm.counts, paste(output.folder,"log2normalized_isoforms_counts.txt",sep="/"), sep="\t", col.names = NA, quote=FALSE)
+   }else if(type=="mirna"){
+     write.table(norm.counts, paste(output.folder,"log2normalized_miRNAs_counts.txt",sep="/"), sep="\t", col.names = NA, quote=FALSE)
    }
 #   plotMA(res)
 #   abline(h=log2fc, col="red", lty=2)
