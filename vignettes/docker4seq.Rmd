@@ -25,6 +25,9 @@ This approach provides multiple advantages:
 ## Requirements
 The minimal hardware requirements are a 4 core 64 bits linux computer, 32 Gb RAM, one SSD 250GB, with a folder with read/write permission for any users (chmod 777), and [docker](https://www.docker.com/) installed.
 
+**docker4seq** and its graphical interface **4SeqGUI** can fit ideally in the [NUC6I7KYK](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html) equipped with Kingston Technology HyperX Impact 32GB Kit (2x16GB), 2133MHz DDR4 CL13 260-Pin SODIMM and Samsung 850 EVO - 250GB - M.2 SATA III Internal SSD.
+A ready to go fedora installation USB stick, with everything installed to be used with the above hardware configuration, can be requested at: raffaele.calogero\@unito.it
+
 ## Available workflows
 At the present time are available the following workflows:
 
@@ -62,6 +65,8 @@ All the parameters needed to run MACS or SICER can be setup using 4SeqGUI
 
 
 A detailed description of the parameters is given below.
+
+### Chipseq workflow by line command
 
 The chipseq workflow can be also executed using R and it is completely embedded in a unique function:
 
@@ -110,6 +115,25 @@ The generation of the genome index for ChIP experiment is very simple and it is 
 
 **remove.duplicates** is the parameter that indicates if duplicates need to be removed or not. It has two options: **N** duplicates are not removed, **Y** duplicates are removed.
 
+
+### Chipseq workflow output files
+
+The chipseq workflow produces the following output files: 
+
+    + README: A file describing the content of the data folder
+    + mypeaks.xls: All detected peaks alongside the nearest gene and its annotation
+    + mytreat.counts: The total reads count for the provided treatment file
+    + mycontrol.counts: The total reads count for the provided control/background file
+    + peak_report.xls: Aggregate information regarding the peak and their position relative to the nearest gene
+    + chromosome_distribution.pdf: Barplot of the distribution of the peaks on the chromosomes
+    + relative_position_distribution.pdf: Barplot of the distribution of the peaks positions relative to their nearest gene
+    + peak_width_distribution.pdf: Histogram of the distribution of the width of the peaks
+    + distance_from_nearest_gene_distribution.pdf: Histogram of the distribution of the distance of each peak from its nearest gene
+    + cumulative_coverage_total.pdf: Cumulative normalized gene coverage
+    + cumulative_coverage_chrN.pdf: Cumulative normalized gene coverage for the specific chromosome
+    + mycontrol_sorted.bw: bigWig file for UCSC Genome Browser visualization
+    + mytreat_sorted.bw: bigWig file for UCSC Genome Browser visualization
+     
 
 
 

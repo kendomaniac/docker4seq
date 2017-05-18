@@ -32,6 +32,8 @@ chipseqCounts(group = c("sudo", "docker"), output.folder = getwd(),
 
 \item{threads, }{a number indicating the number of cores to be used from the application}
 
+\item{seq.type, }{a character string indicating the type of reads to be trimmed. One options: \code{"se"} for single end sequencing}
+
 \item{min.length, }{a number indicating minimal length required to return a trimmed read}
 
 \item{genome.folder, }{a character string indicating the folder where the indexed reference genome for bwa is located}
@@ -81,7 +83,7 @@ This function executes a set of docker containers allowing the detection of TFs 
     system("tar xvf prdm51.tar")
     chipseqCounts(group="docker", output.folder="./prdm51.igg", mock.folder="./igg", test.folder="./prdm51",
              scratch.folder="/data/scratch", adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-             adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", threads=24, seq.type="se",
+             adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", threads=24,
              min.length=30, genome.folder="/data/scratch/mm10bwa", mock.id="igg", test.id="tf",
              genome="mm10", read.size=50, tool="macs", macs.min.mfold=10, macs.max.mfold=30,
              macs.pval="1e-5", sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10, tss.distance=0,

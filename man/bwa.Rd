@@ -44,6 +44,5 @@ This function executes the docker container bwa1 where BWA is installed BWA is a
     genome.folder="/data/scratch/mm10bwa", seq.type="se",
     threads=24, sample.id="igg")
 
-bwa(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder="/data/scratch/mm10bwa", seq.type="se",threads=24, sample.id="igg")
 }
 }
