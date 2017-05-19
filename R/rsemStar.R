@@ -83,57 +83,54 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 		system("sudo docker pull docker.io/rcaloger/rsemstar.2017.01")
 		if(seq.type=="pe"){
 		  if(strandness=="none"){
-		      system(paste("sudo docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem2_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep=""))
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem2_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep="")
+		    runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
 		  }else if(strandness=="forward"){
-		      system(paste("sudo docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem2_strand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep=""))
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem2_strand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep="")
+		    runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
 		  }else if(strandness=="reverse"){
-		      system(paste("sudo docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem2_access.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep=""))
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem2_access.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep="")
+		    runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
 		  }
-
 		}else{
 		  if(strandness=="none"){
-	        system(paste("sudo docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem1_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep=""))
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem1_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep="")
+		    runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
 		  }else if(strandness=="forward"){
-		      system(paste("sudo docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem1_strand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep=""))
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem1_strand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep="")
+		    runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
 		  }else if(strandness=="reverse"){
-		      system(paste("sudo docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem1_access.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep=""))
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem1_access.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep="")
+		    runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
 		  }
 		}
 	}else{
 	  if(seq.type=="pe"){
 	    if(strandness=="none"){
-	      system(paste("docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem2_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep=""))
+	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem2_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep="")
+	      runDocker(group="docker",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
 	    }else if(strandness=="forward"){
-	      system(paste("docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem2_strand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep=""))
+	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem2_strand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep="")
+	      runDocker(group="docker",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
 	    }else if(strandness=="reverse"){
-	      system(paste("docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem2_access.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep=""))
+	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem2_access.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep="")
+	      runDocker(group="docker",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
 	    }
 
 	  }else{
 	    if(strandness=="none"){
-	      system(paste("docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem1_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep=""))
+	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem1_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep="")
+	      runDocker(group="docker",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
 	    }else if(strandness=="forward"){
-	      system(paste("docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem1_strand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep=""))
+	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem1_strand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep="")
+	      runDocker(group="docker",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
 	    }else if(strandness=="reverse"){
-	      system(paste("docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem1_access.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep=""))
+	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem1_access.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep="")
+	      runDocker(group="docker",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
 	    }
 	  }
 
 	}
-
-## OLD can be removed
-#	star <- "xxxx"
-#	while(star != "Log.final.out"){
-#	  Sys.sleep(10)
-#	  cat("-")
-	  #checking the stas for STAR
-#	  star.tmp <- dir(paste(file.path(scratch.folder, tmp.folder),"/xxx.temp/", sep=""))
-#	  star.tmp <- star.tmp[grep("Log.final.out",star.tmp)]
-#	  if(length(star.tmp)>0){
-#	    star <- "Log.final.out"
-#	    system(paste("cp ",file.path(scratch.folder, tmp.folder),"/xxx.temp/xxxLog.final.out ", file.path(scratch.folder, tmp.folder),"/Log.final.out",sep=""))
-#	  }
-#	}
 
 
 	out <- "xxxx"
@@ -183,6 +180,12 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	               "/Aligned.toTranscriptome.out.bam", sep = ""))
 	}
 
+	#saving log and removing docker container
+	container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""))
+	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+	system(paste("docker rm ", container.id, sep=""))
+	
+	
 	#removing temporary folder
 	cat("\n\nRemoving the rsemStar temporary file ....\n")
 	system(paste("rm -R ",scrat_tmp.folder))
