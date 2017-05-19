@@ -47,9 +47,55 @@ At the present time are available the following workflows:
     + connection of the peak to the nearest gene available in the chosen UCSC genome release,
     + full annotation of the nearest gene.
     
+
+## miRNAseq workflow 
+
+The miRNAseq workflow can be run using **4SeqGUI** graphical interface:
+![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/mirna1.jpeg)
+  
+  
+The miRNAseq docker container executes the following steps:
+![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/mirna3.jpeg)
+
+The full workflow is described in [Cordero et al. Plos ONE 2012](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0031630). In brief, fastq files are trimmed using [cutadapt](https://github.com/marcelm/cutadapt) and the trimmed reads are mapped on miRNA precursors, i.e. harpin.fa file, from [miRBase](http://www.mirbase.org/ftp.shtml) using [SHRIMP](http://compbio.cs.toronto.edu/shrimp/). Using the location of the mature miRNAs in the precursor, countOverlaps function, from the Bioconductor package GenomicRanges is used to quantify the reads mapping on mature miRNAs. 
+
+
+All the parameters needed to run MACS or SICER can be setup using 4SeqGUI
+
+![miRNAseq parameters](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/mirna2.jpeg)
+ 
+ 
+A detailed description of the parameters is given below.
+
+### miRNAseq workflow by line command
+
+The miRNAseq workflow can be also executed using R and it is completely embedded in a unique function:
+
+```{r, echo=TRUE, eval=FALSE}
+mirnaCounts(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch", 
+            mirbase.id="hsa",download.status=FALSE, adapter.type="NEB", trimmed.fastq=FALSE)
+```
+
+Specifically user needs to create the **fastq.folder**, where the fastq.gz files for all miRNAs under analysis are located. 
+The **scratch.folder** is the location where temporary data are created. The results will be then saved in the **fastq.folder**.
+User needs to provide also the identifier of the miRBase organism, e.g. hsa for Homo sapiens, mmu for Mus musculus.  If the **download.status** is set to FALSE it uses release 21 from miRBase if it is set to TRUE the lastest verison of precursor and mature miRNAs will be downloade dform miRBase. users need to provide the name of the producer of the miRNA library prep kit to identify which adapter need to be provided to cutadapt to remove adapters, **adapter.type** parameter. The available adapters are NEB and Illumina, but, upon request, we can add other adapters. Finally if the **trimmed.fastq** is set to FALSE the trimmed fastq are not saved at the end of the analysis.
+
+
+### miRNAseq workflow output files
+
+The miRNAseq workflow produces the following output files: 
+
+    + README: A file describing the content of the data folder
+    + all.counts.txt: miRNAs raw counts, to be used for differential expression analysis
+    + trimmimg.log: adapters trimming statistics
+    + shrimp.log: mapping statistics
+    + all.counts.Rda: miRNAs raw counts ready to be loaded in R.
+    + analysis.log: logs of the full analysis pipeline
+    
+    
 ## chipseq workflow
 
-The chipseq workflow can be run using 4SeqGUI graphical interface:
+The chipseq workflow can be run using **4SeqGUI** graphical interface:
 ![ChIPseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/chipseq0.jpeg)
 
 
