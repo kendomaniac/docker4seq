@@ -33,15 +33,15 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
   #############################################
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
   scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
-  writeLines(scrat_tmp.folder,paste(fastq.folder,"/tempFolderID", sep=""))
+  writeLines(scrat_tmp.folder,paste(bam.folder,"/tempFolderID", sep=""))
   cat("\ncreating a folder in scratch folder\n")
   dir.create(file.path(scratch.folder, tmp.folder))
   dir.create(file.path(scratch.folder, tmp.folder,"/tmp"))
-  dir <- dir(path=fastq.folder)
+  dir <- dir(path=bam.folder)
   dir.info <- dir[which(dir=="run.info")]
   if(length(dir.info)>0){
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-    system(paste("cp ",fastq.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
+    system(paste("cp ",bam.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
     
   }
   dir <- dir[grep(".bam", dir)]
@@ -86,13 +86,13 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
   }
   #running time 2
   ptm <- proc.time() - ptm
-  con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
+  con <- file(paste(bam.folder,"run.info", sep="/"), "r")
   tmp.run <- readLines(con)
   close(con)
   tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
   tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
   tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
-  writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
+  writeLines(tmp.run,paste(bam.folder,"run.info", sep="/"))
   
   #saving log and removing docker container
   container.id <- readLines(paste(bam.folder,"/dockerID", sep=""))
