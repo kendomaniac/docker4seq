@@ -51,11 +51,12 @@ rsemstarUscsIndex <- function(group=c("sudo","docker"), genome.folder=getwd(),
   system(paste("gzip -d ",genome.folder,"/genome.gtf.gz", sep=""))
 
 	if(group=="sudo"){
-		system("sudo docker pull docker.io/rcaloger/rsemstar.2017.01")
-		     system(paste("sudo docker run  --privileged=true --cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstarUCSC.index.sh "," ",genome.folder," ",uscs.urlgenome," ",uscs.gtf," ",threads," ",uscs.urlknownIsoforms," ", uscs.urlknownToLocusLink, sep=""))
+	     params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstarUCSC.index.sh "," ",genome.folder," ",uscs.urlgenome," ",uscs.gtf," ",threads," ",uscs.urlknownIsoforms," ", uscs.urlknownToLocusLink, sep="")
+	     runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
 	  }else{
 		system("docker pull docker.io/rcaloger/rsemstar.2017.01")
-	      system(paste("docker run  --privileged=true --cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstarUCSC.index.sh "," ",genome.folder," ",uscs.urlgenome," ",uscs.gtf," ",threads," ",uscs.urlknownIsoforms," ", uscs.urlknownToLocusLink, sep=""))
+	    params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstarUCSC.index.sh "," ",genome.folder," ",uscs.urlgenome," ",uscs.gtf," ",threads," ",uscs.urlknownIsoforms," ", uscs.urlknownToLocusLink, sep="")
+	    runDocker(group="docker",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
 	  }
   out <- "xxxx"
   #waiting for the end of the container work
@@ -79,6 +80,13 @@ rsemstarUscsIndex <- function(group=c("sudo","docker"), genome.folder=getwd(),
   tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
   tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
   writeLines(tmp.run, paste(genome.folder,"run.info", sep="/"))
+  
+  #saving log and removing docker container
+  container.id <- readLines(paste(genome.folder,"/dockerID", sep=""))
+  system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+  system(paste("docker rm ", container.id, sep=""))
+  
+  
   #running time 2
   system(paste("rm ",genome.folder,"/dockerID", sep=""))
 }
