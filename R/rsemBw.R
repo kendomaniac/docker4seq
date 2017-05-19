@@ -53,7 +53,6 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
   }else{
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
     system(paste("cp ",bam.folder,"/",dir, " ",scratch.folder,"/",tmp.folder,"/",dir, sep=""))
-    system(paste("cp ",bam.folder,"/",sub(".bam$",,".bai",dir), " ",scratch.folder,"/",tmp.folder,"/",sub(".bam$",,".bai",dir), sep=""))
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
   }
   docker_fastq.folder=file.path("/data/scratch", tmp.folder)
