@@ -116,11 +116,6 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
 	system(paste("docker rm ", container.id, sep=""))
 
-	#saving log and removing docker container
-	container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""))
-	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
-	system(paste("docker rm ", container.id, sep=""))
-	
   #removing temporary folder
 	cat("\n\nRemoving trimmed temporary file ....\n")
 	system(paste("rm -R ",scrat_tmp.folder))
