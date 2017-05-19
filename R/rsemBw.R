@@ -10,7 +10,7 @@
 #'\dontrun{
 #'     #downloading fastq files
 #'     #running bwa
-#'     rsemBw(group="sudo",bam.folder=getwd(), scratch.folder="/data/scratch")
+#'     rsemBw(group="docker",bam.folder=getwd(), scratch.folder="/data/scratch")
 #'
 
 #'
@@ -45,13 +45,11 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
     
   }
   dir <- dir[grep(".bam", dir)]
+  dir <- dir[which(dir=="Aligned.out.bam")]
   cat("\ncopying \n")
   if(length(dir)==0){
     cat(paste("It seems that in ", bam.folder, "there is not a bam file"))
     return(1)
-  }else if(length(dir)>1){
-    cat(paste("It seems that in ", bam.folder, "there is more than 1 bam file"))
-    return(2)
   }else{
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
     system(paste("cp ",bam.folder,"/",dir, " ",scratch.folder,"/",tmp.folder,"/",dir, sep=""))
