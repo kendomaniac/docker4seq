@@ -24,7 +24,7 @@ This function executes the docker container rsemstar where RSEM is installed and
 \dontrun{
     #downloading fastq files
     #running bwa
-    rsemBw(group="sudo",bam.folder=getwd(), scratch.folder="/data/scratch")
+    rsemBw(group="docker",bam.folder=getwd(), scratch.folder="/data/scratch")
 
 
 }

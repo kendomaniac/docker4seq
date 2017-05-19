@@ -99,7 +99,7 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
   system(paste("docker rm ", container.id, sep=""))
   
   #removing temporary folder
-  cat("\n\nRemoving the bwa temporary file ....\n")
+  cat("\n\nRemoving the rsem temporary file ....\n")
  #  system(paste("rm -R ",scrat_tmp.folder))
  #  system(paste("rm  -f ",bam.folder,"/dockerID", sep=""))
  #  system(paste("rm  -f ",bam.folder,"/tempFolderID", sep=""))
