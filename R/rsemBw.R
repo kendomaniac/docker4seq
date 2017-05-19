@@ -1,0 +1,111 @@
+#' @title Creating a bigwig using RSEM
+#' @description This function executes the docker container rsemstar where RSEM is installed and create a bigwig file for genomic data visualization
+#'
+#' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
+#' @param bam.folder, a character string indicating where BAM SORTED file is located
+#' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
+#'
+#' @return output.bw, which is the bigwig
+#' @examples
+#'\dontrun{
+#'     #downloading fastq files
+#'     #running bwa
+#'     rsemBw(group="sudo",bam.folder=getwd(), scratch.folder="/data/scratch")
+#'
+
+#'
+#' }
+#' @export
+rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="/data/scratch"){
+  #running time 1
+  ptm <- proc.time()
+  #running time 1
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    return()
+  }
+  #########check scratch folder exist###########
+  if (!file.exists(scratch.folder)){
+    cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
+    return(3)
+  }
+  #############################################
+  tmp.folder <- gsub(":","-",gsub(" ","-",date()))
+  scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
+  writeLines(scrat_tmp.folder,paste(fastq.folder,"/tempFolderID", sep=""))
+  cat("\ncreating a folder in scratch folder\n")
+  dir.create(file.path(scratch.folder, tmp.folder))
+  dir.create(file.path(scratch.folder, tmp.folder,"/tmp"))
+  dir <- dir(path=fastq.folder)
+  dir.info <- dir[which(dir=="run.info")]
+  if(length(dir.info)>0){
+    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+    system(paste("cp ",fastq.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
+    
+  }
+  dir <- dir[grep(".bam", dir)]
+  cat("\ncopying \n")
+  if(length(dir)==0){
+    cat(paste("It seems that in ", bam.folder, "there is not a bam file"))
+    return(1)
+  }else if(length(dir)>1){
+    cat(paste("It seems that in ", bam.folder, "there is more than 1 bam file"))
+    return(2)
+  }else{
+    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+    system(paste("cp ",bam.folder,"/",dir, " ",scratch.folder,"/",tmp.folder,"/",dir, sep=""))
+    system(paste("cp ",bam.folder,"/",sub(".bam$",,".bai",dir), " ",scratch.folder,"/",tmp.folder,"/",sub(".bam$",,".bai",dir), sep=""))
+    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+  }
+  docker_fastq.folder=file.path("/data/scratch", tmp.folder)
+  if(group=="sudo"){
+      params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
+      runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
+    }else{
+      params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
+      runDocker(group="docker",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
+  }
+  out <- "xxxx"
+  #waiting for the end of the container work
+  while(out != "out.info"){
+    Sys.sleep(10)
+    cat(".")
+    out.tmp <- dir(file.path(scratch.folder, tmp.folder))
+    out.tmp <- out.tmp[grep("out.info",out.tmp)]
+    
+    if(length(out.tmp)>0){
+      out <- "out.info"
+    }
+  }
+  #system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+  con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
+  tmp <- readLines(con)
+  close(con)
+  for(i in tmp){
+    i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
+    system(i)
+  }
+  #running time 2
+  ptm <- proc.time() - ptm
+  con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
+  tmp.run <- readLines(con)
+  close(con)
+  tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
+  tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+  tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+  writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
+  
+  #saving log and removing docker container
+  container.id <- readLines(paste(bam.folder,"/dockerID", sep=""))
+  system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+  system(paste("docker rm ", container.id, sep=""))
+  
+  #removing temporary folder
+  cat("\n\nRemoving the bwa temporary file ....\n")
+ #  system(paste("rm -R ",scrat_tmp.folder))
+ #  system(paste("rm  -f ",bam.folder,"/dockerID", sep=""))
+ #  system(paste("rm  -f ",bam.folder,"/tempFolderID", sep=""))
+  
+}
+
