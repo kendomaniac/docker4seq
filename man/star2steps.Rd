@@ -36,7 +36,7 @@ This function executes the two steps STAR as sugested by best practice GATK for 
     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
     #running star2step nostrand pe
     star2steps(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
-    genome.folder="/data/scratch/hg38star", groupid="test", threads=8, opossum.preprocessing==FALSE)
+    genome.folder="/data/scratch/hg38star", groupid="test", threads=8, opossum.preprocessing=FALSE)
 
 }
 }
