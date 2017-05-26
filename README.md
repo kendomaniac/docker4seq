@@ -20,4 +20,4 @@ The functions in docker4seq package require that user is sudo or part of a docke
 See the following document for more info:
 https://docs.docker.com/engine/installation/linux/ubuntulinux/#/manage-docker-as-a-non-root-user
 
-
+More info on the functionalities of the package are available at: http://rpubs.com/rcaloger/279935
