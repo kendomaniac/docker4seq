@@ -66,11 +66,11 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
   }
 
 	if(group=="sudo"){
-		system("sudo docker pull docker.io/rcaloger/bwa.2017.01")
-		system(paste("sudo docker run --privileged=true -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep=""))
+		params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
+		runDocker(group="sudo",container="docker.io/rcaloger/bwa.2017.01", params=params)
 	}else{
-		system("docker pull docker.io/rcaloger/bwa.2017.01")
-		system(paste("docker run --privileged=true -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep=""))
+	  params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
+	  runDocker(group="docker",container="docker.io/rcaloger/bwa.2017.01", params=params)
 	}
 	out <- "xxxx"
 	#waiting for the end of the container work
@@ -96,6 +96,12 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
 	writeLines(tmp.run, paste(genome.folder,"run.info", sep="/"))
   #running time 2
 	system(paste("rm ",genome.folder,"/out.info",sep=""))
+	
+	#saving log and removing docker container
+	container.id <- readLines(paste(genome.folder,"/dockerID", sep=""))
+	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+	system(paste("docker rm ", container.id, sep=""))
+	
 
 }
 

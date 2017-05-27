@@ -61,12 +61,12 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	docker_fastq.folder=file.path("/data/scratch", tmp.folder)
 	cat("\nsetting as working dir the scratch folder and running mirna8 docker container\n")
 	if(group=="sudo"){
-		      system("sudo docker pull docker.io/rcaloger/mirnaseq.2017.01")
-		      system(paste("sudo docker run --privileged=true  --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep=""))
+	    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep="")
+	    runDocker(group="sudo",container="docker.io/rcaloger/mirnaseq.2017.01", params=params)
 	}else{
-	        system("docker pull docker.io/rcaloger/mirnaseq.2017.01")
-	        system(paste("docker run --privileged=true --cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",	docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep=""))
-
+	    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep="")
+	    runDocker(group="docker",container="docker.io/rcaloger/mirnaseq.2017.01", params=params)
+	  
 	}
 
 	out <- "xxxx"
@@ -99,6 +99,11 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	#running time 2
 	system(paste("rm ",scrat_tmp.folder,"/out.info",sep=""))
 
+	#saving log and removing docker container
+	container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""))
+	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+	system(paste("docker rm ", container.id, sep=""))
+	
 	#removing temporary folder
 	cat("\n\nRemoving the rsemStar temporary file ....\n")
 	system(paste("rm -R ",scrat_tmp.folder))
