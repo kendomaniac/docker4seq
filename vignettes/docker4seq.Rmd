@@ -14,7 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Introduction
-The `r Githubpkg("kendomaniac/docker4seq")` package was developed to facilitate the use of computing demanding application in the field of NGS data analysis.
+The `r Githubpkg("kendomaniac/docker4seq")` package was developed to facilitate the use of computing demanding applications in the field of NGS data analysis.
 
 The `r Githubpkg("kendomaniac/docker4seq")` package uses [docker](https://www.docker.com/what-docker) [containers](https://www.docker.com/what-container) that embed demanding computing tasks, e.g. short reads mapping. 
 
@@ -30,7 +30,7 @@ This approach provides multiple advantages:
 The minimal hardware requirements are a 4 core 64 bits linux computer, 32 Gb RAM, one SSD 250GB, with a folder with read/write permission for any users (chmod 777), and [docker](https://www.docker.com/) installed.
 
 [**docker4seq**](https://github.com/kendomaniac/docker4seq) and its graphical interface [**4SeqGUI**](https://github.com/mbeccuti/4SeqGUI) can fit ideally in the [NUC6I7KYK](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html) equipped with Kingston Technology HyperX Impact 32GB Kit (2x16GB), 2133MHz DDR4 CL13 260-Pin SODIMM and Samsung 850 EVO - 250GB - M.2 SATA III Internal SSD.
-A ready to go fedora installation USB stick, with everything installed to be used with the above hardware configuration, can be requested to: raffaele.calogero\@unito.it
+A ready to go fedora installation USB stick, with everything installed to be used with the above hardware configuration, can be requested to: raffaele[dot]calogero[at]unito[dot]it
 
 ## Available workflows
 At the present time are available the following workflows:
@@ -62,10 +62,10 @@ At the present time are available the following workflows:
 
 ## mRNAseq workflow 
 
-The mRNAseq workflow can be run using **4SeqGUI** graphical interface:
+The mRNAseq workflow can be run using **4SeqGUI** graphical interface (linux/MAC):
 ![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/rnaseq1.jpeg)
 
-The mRNAseq workflow is made of these steps:
+Sample quantification is made of these steps:
 
 - Creating a genome index for STAR (see end of this paragraph)
 
@@ -77,17 +77,18 @@ The mRNAseq workflow is made of these steps:
 
 - Annotating genes.
 
-All the parameters needed to run mRNAseq workflow can be setup using 4SeqGUI
+All the parameters can be setup using 4SeqGUI
 
 ![Gene, Isoform counting](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/rnaseq3.jpeg)
 
 A detailed description of the parameters is given below.
 
-### mRNAseq workflow by line command
+### Sample quantification by line command
 
-The miRNAseq workflow can be also executed using R and it is completely embedded in a single function:
+The sample quantification can be also executed using R and it is completely embedded in a single function:
 
 ```{r, echo=TRUE, eval=FALSE}
+library(docker4seq)
 rnaseqCounts(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
 adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
@@ -112,7 +113,7 @@ The generation of the genome index is very simple and it is highlited at the end
 **strandness**, is a parameter referring to the kit used for the library prep. If the kit does not provide strand information it is set to "none", if provides strand information is set to "forward" for  Illumina stranded kit and it set to "reverse" for Illumina ACCESS kit. **save.bam** set to TRUE indicates that genomic bam file and transcriotomic bam files are also saved at the end of the analysis. **truncating.expected.counts** referes to the generation of counts represented by integer number, this parameter is deprecated and will be removed in the next release of docker4seq. **annotation.type** refers to the type of available gene-level annotation. At the present time is only available ENSEMBL annotation defined by the gtf downloaded during the creation of the indexed genome files, see paragraph *at the end*Creating a STAR index file for mRNAseq*.
 
 
-### mRNAseq workflow output files
+### Sample quantification output files
 
 The mRNAseq workflow produces the following output files: 
 
@@ -123,6 +124,8 @@ The mRNAseq workflow produces the following output files:
     + genes.results, the output of RSEM gene quantification
     + isoforms.results, the output of RSEM isoform quantification
     + run.info, some statistics on the run
+    + skewerd_xxxxxxxxxxxx.log, log of the skewer docker container
+    + stard.yyyyyyyyyyyy.log, log of the star docker container
 
 ![gtf_annotated_genes.results](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/rnaseq7.jpeg)
 
@@ -158,6 +161,19 @@ bio.type="protein_coding", output.prefix=".")
 
 User needs to provide the paths of the samples, **sample.folder** parameter, a vector of the covariates, **covariates**, and the biotype(s) of interest, **bio.type** parameter. The parameter **output.prefix** refers to the path where the output will be created, as default this is the actual R working folder.
 
+#### From samples to experiments output files
+
+The samples to experiments produces the following output files: 
+
+    + _counts.txt: gene-level raw counts table for differential expression analysis
+    + _isoforms_counts.txt: isoform-level raw counts table for differential expression analysis
+    + _isoforms_log2TPM.txt: isoform-level log2TPM for visualization purposes
+    + _log2TPM.txt: gene-level log2TPM for visualization purposes
+    + _isoforms_log2FPKM.txt: isoform-level log2FPKM for visualization purposes
+    + _log2FPKM.txt: gene-level log2FPKM for visualization purposes
+    + XXXXX.Rout: logs of the execution
+
+
 
 ### Visualizing experiment data with PCA
 
@@ -178,6 +194,8 @@ pca(experiment.table="_log2FPKM.txt", type="FPKM", legend.position="topleft", co
 User needs to provide the paths of experiment table, **experiment.table** parameter, i.e. the file generated using the samples2experiment function. The **type** parameter indicates if FPKM, TPM or counts are used for the PCA geenration. The parameter **legend.position** defines where to locate the covariates legend. The parameter **covariatesInNames** indicates if the header of the experiment table contains or not covariate information. The parameter **principal.components** indicates which principal components should be plotted. **output.folder** indicates where to save the pca.pdf file.
 
 ![pca.pdf](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/pca2.jpeg)
+
+The values in parentesis on x and y axes are the amount of variance explained by each principal component.
 
 IMPORTANT: The above analysis is suitable also for miRNAseq data
 
