@@ -5,7 +5,7 @@
 \title{A wrapper function for sample_size_distribution function from RnaSeqSampleSize Bioconductor package}
 \usage{
 sampleSize(filename, power = 0.8, FDR = 0.1, genes4dispersion = 200,
-  log2fold.change = 1)
+  log2fold.change = 1, output.folder = getwd())
 }
 \arguments{
 \item{filename, }{a character string indicating the name of the count table file}
@@ -17,6 +17,8 @@ sampleSize(filename, power = 0.8, FDR = 0.1, genes4dispersion = 200,
 \item{genes4dispersion, }{an integer indicating the number of genes used in estimation of read counts and dispersion distribution}
 
 \item{log2fold.change, }{an integer indicating the minimum log2 fold change for prognostic genes between two groups}
+
+\item{output.folder, }{a string indicating the path where to save the output file}
 }
 \value{
 a string with the requested informations. the string is also saved in a file: sample_size_evaluation.txt , power_evaluation.txt

@@ -5,7 +5,8 @@
 \title{A wrapper function for deseq2 for two groups only}
 \usage{
 wrapperDeseq2(experiment.table, log2fc = 1, fdr = 0.1, ref.covar = "0",
-  type = c("gene", "isoform", "mirna"), output.folder = getwd())
+  type = c("gene", "isoform", "mirna"), output.folder = getwd(),
+  batch = FALSE)
 }
 \arguments{
 \item{experiment.table, }{a character string indicating the counts table generated with sample3experiment with addition of covariates}
@@ -19,6 +20,8 @@ wrapperDeseq2(experiment.table, log2fc = 1, fdr = 0.1, ref.covar = "0",
 \item{type, }{character with three options: gene, isoform, mirna. if gene is used two files are generated for geneset enrichment, the filtered Gene symbols and the background that contains all gene simbols.}
 
 \item{output.folder, }{output folder}
+
+\item{batch, }{logical FALSE, TRUE}
 }
 \value{
 Returns a full table of differentially expressed genes (prefix DEfull), a filtered table of differentially expressed genes (prefix DEfiltered) and the normalized counts table (prefix normalized)
