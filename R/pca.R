@@ -26,9 +26,9 @@ pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
   tmp <- read.table(experiment.table, sep="\t", stringsAsFactors = TRUE, header=T, check.names = FALSE, row.names=1)
   if(covariatesInNames){
     covar.tmp <- strsplit(names(tmp), '_')
-    covar <- unlist(sapply(covar.tmp, function(x)x[length(x)]))
+    covar <- unlist(sapply(covar.tmp, function(x)x[2]))
     covar <- as.factor(covar)
-    sample.names <- unlist(sapply(covar.tmp, function(x)x[length(x)-1]))
+    sample.names <- unlist(sapply(covar.tmp, function(x)x[1]))
   }else{
     sample.names <- names(tmp)
   }
