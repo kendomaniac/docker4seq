@@ -29,7 +29,7 @@ This approach provides multiple advantages:
 ## Requirements
 The minimal hardware requirements are a 4 core 64 bits linux computer, 32 Gb RAM, one SSD 250GB, with a folder with read/write permission for any users (chmod 777), and [docker](https://www.docker.com/) installed.
 
-[**docker4seq**](https://github.com/kendomaniac/docker4seq) and its graphical interface [**4SeqGUI**](https://github.com/mbeccuti/4SeqGUI) can fit ideally in the [NUC6I7KYK](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html) equipped with Kingston Technology HyperX Impact 32GB Kit (2x16GB), 2133MHz DDR4 CL13 260-Pin SODIMM and Samsung 850 EVO - 250GB - M.2 SATA III Internal SSD.
+[**docker4seq**](https://github.com/kendomaniac/docker4seq) and its graphical interface [**4SeqGUI**](https://github.com/mbeccuti/4SeqGUI) was tested on a [NUC6I7KYK](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html) equipped with  32GB RAM (2x16GB), 2133MHz DDR4 and 250GB M.2 SATA III Internal SSD disk.
 A ready to go fedora installation USB stick, with everything installed to be used with the above hardware configuration, can be requested to: raffaele[dot]calogero[at]unito[dot]it
 
 ## Available workflows
@@ -60,7 +60,7 @@ At the present time are available the following workflows:
 
 
 
-## mRNAseq workflow 
+## RNAseq workflow 
 
 The mRNAseq workflow can be run using **4SeqGUI** graphical interface (linux/MAC):
 ![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/rnaseq1.jpeg)
