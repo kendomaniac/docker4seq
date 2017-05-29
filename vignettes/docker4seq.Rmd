@@ -60,7 +60,7 @@ At the present time are available the following workflows:
 
 
 
-## mRNAseq workflow 
+## RNAseq workflow 
 
 The mRNAseq workflow can be run using **4SeqGUI** graphical interface (linux/MAC):
 ![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/rnaseq1.jpeg)
