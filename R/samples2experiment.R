@@ -2,6 +2,7 @@
 #' @description This function generates counts, FPKM and TPM tables from rnaseqCounts outuputs.
 #' @param sample.folders, a character string indicating the paths of rnaseqCouts output folders
 #' @param covariates, a character string indicating the covariates associated to each sample. Covariates are required for differnetial expression analysis
+#' @param batch, a character string indicating the batch associated to each sample
 #' @param bio.type, a character string indicating the ensemb bio.type. Options: "protein_coding","unitary_pseudogene","unprocessed_pseudogene","processed_pseudogene", "transcribed_unprocessed_pseudogene","processed_transcript","antisense","transcribed_unitary_pseudogene","polymorphic_pseudogene","lincRNA","sense_intronic","transcribed_processed_pseudogene","sense_overlapping","IG_V_pseudogene","pseudogene","TR_V_gene","3prime_overlapping_ncRNA","IG_V_gene","bidirectional_promoter_lncRNA","snRNA","miRNA","misc_RNA","snoRNA","rRNA","IG_C_gene","IG_J_gene","TR_J_gene","TR_C_gene","TR_V_pseudogene","TR_J_pseudogene","IG_D_gene","ribozyme","IG_C_pseudogene","TR_D_gene","TEC","IG_J_pseudogene","scRNA","scaRNA","vaultRNA","sRNA","macro_lncRNA","non_coding","IG_pseudogene"
 #' @param output.prefix, a character value indicating the output folder path
 #'
@@ -10,11 +11,11 @@
 #'\dontrun{
 #'     sample2experiment(sample.folders=c("/home/beccuti/e1g","/home/beccuti/e2g",
 #'     "/home/beccuti/p1g", "/home/beccuti/p2g"),
-#'     covariates=c("Cov1","Cov1","Cov2","Cov2"),
+#'     covariates=c("Cov1","Cov1","Cov2","Cov2"),batch=c("b1","b21","b1","b2"),
 #'     bio.type="protein_coding", output.prefix=".")
 #' }
 #' @export
-sample2experiment <- function(sample.folders, covariates, bio.type=c("protein_coding","unitary_pseudogene",
+sample2experiment <- function(sample.folders, covariates, batch=NULL, bio.type=c("protein_coding","unitary_pseudogene",
                                                            "unprocessed_pseudogene","processed_pseudogene",
                                                            "transcribed_unprocessed_pseudogene","processed_transcript",
                                                            "antisense","transcribed_unitary_pseudogene",
@@ -36,6 +37,7 @@ sample2experiment <- function(sample.folders, covariates, bio.type=c("protein_co
                                                            "vaultRNA","sRNA",
                                                            "macro_lncRNA","non_coding",
                                                            "IG_pseudogene"), output.prefix="."){
+#preparing covar
   if( length(sample.folders)!=length(covariates)){
       cat("\nCovariates and sample folders have not the same length\n")
       return(2)
@@ -43,6 +45,15 @@ sample2experiment <- function(sample.folders, covariates, bio.type=c("protein_co
     tmp.samples <- strsplit(sample.folders, "/")
     tmp.samples <- sapply( tmp.samples, function(x)x[length(x)])
     ls.names <- paste(tmp.samples, covariates, sep="_")
+  }
+#preparing batch
+  if(!is.null(batch) & length(unique(batch)) > 1){
+    if( length(sample.folders)!=length(batch)){
+       cat("\nBatch and sample folders have not the same length\n")
+       return(4)
+    }else{
+        ls.names <- paste(ls.names, batch, sep="_")
+    }
   }
   ls.folders <- sample.folders
   if(length(ls.folders)<2){
