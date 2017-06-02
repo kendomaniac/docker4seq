@@ -332,7 +332,20 @@ The miRNAseq workflow produces the following output files:
     + all.counts.Rda: miRNAs raw counts ready to be loaded in R.
     + analysis.log: logs of the full analysis pipeline
   
+
+### miRNAseq performances on different hardware configurations
+
+To have an idea of the difference performances that we can achieve with our miRNAseq workflow on different hardware we tested it on:
+
+    + NUC mini PC: CPU i7-6770HQ 3.5 GHz (1 core, 8 threads), 32 Gb RAM, HD 250 Gb SSD
+    + Dell T3500 workstation: CPU E5-1620 3.5 v3 GHz (2 cores, 16 threads), 32 Gb RAM, HD 1 Tb SAS
+    + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
+
+
+We run resepctively 3, 6, 12, and 24 miRNA samples in parallel, increasing the number of threads till reaching the limit of the hardware or 24 threads, i.e. vaules shown in parenthesis in fig. below.
     
+![performance](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/mirna_performace.jpg)    
+
     
 ## chipseq workflow
 
