@@ -76,15 +76,15 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	dir <- dir[which(dir%in%c(sample.bam, ctrl.bam))]
 	cat("\ncopying \n")
 	if(length(dir)==0){
-		cat(paste("It seems that in ", getwd(), "there are not bam files"))
+		cat(paste("It seems that in ", bam.folder, "there are not bam files"))
 		return(1)
 	}else if(length(dir)>2){
-		cat(paste("It seems that in ", getwd(), "there are more than two bam files"))
+		cat(paste("It seems that in ", bam.folder, "there are more than two bam files"))
 		return(2)
 	}else{
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 		for(i in dir){
-		      system(paste("cp ",getwd(),"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
+		      system(paste("cp ",bam.folder,"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
 	    }
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	}
