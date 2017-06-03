@@ -132,6 +132,19 @@ The mRNAseq workflow produces the following output files:
 The first column in **gtf_annotated_genes.results** is the ensembl gene id, the second is the [biotype](http://www.ensembl.org/Help/Faq?id=468), 
 the 3rd is the annotation source, the 4th contains the set of transcripts included in the ensembl gene id. Then there is the length of the gene, the lenght of the gene to which is subtracted the average length of the sequenced fragments, the expected counts are the couts to be used for differentiual expression analysis. [TPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) and [FPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) are normalized gene quantities to be used only for visualization purposes.
 
+### mRNAseq performances on different hardware configurations
+
+The conversion between fastq files to counts is the most time consuming step in RNAseq data analysis and it normally requires high-end server. We have tested our workflow on different hardware:
+
+    + NUC mini PC: CPU i7-6770HQ 3.5 GHz (1 core, 8 threads), 32 Gb RAM, HD 250 Gb SSD
+    + Dell T3500 workstation: CPU E5-1620 3.5 v3 GHz (2 cores, 16 threads), 32 Gb RAM, HD 1 Tb SAS
+    + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
+
+
+We run resepctively 26, 52, 78, and 105 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in fig. below.
+    
+![performance](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/mrna.performace.jpg)  
+
 
 ### From samples to experiment
 
