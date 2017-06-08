@@ -137,13 +137,12 @@ the 3rd is the annotation source, the 4th contains the set of transcripts includ
 The conversion between fastq files to counts is the most time consuming step in RNAseq data analysis and it normally requires high-end server. We have tested our workflow on different hardware:
 
     + NUC mini PC: CPU i7-6770HQ 3.5 GHz (1 core, 8 threads), 32 Gb RAM, HD 250 Gb SSD
-    + Dell T3500 workstation: CPU E5-1620 3.5 v3 GHz (2 cores, 16 threads), 32 Gb RAM, HD 1 Tb SAS
     + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
 
 
 We run resepctively 26, 52, 78, and 105 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in fig. below.
     
-![performance](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/mrna.performace.jpg)  
+![performance](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/mrna_performace.jpg)  
 
 
 ### From samples to experiment
@@ -351,7 +350,6 @@ The miRNAseq workflow produces the following output files:
 To have an idea of the difference performances that we can achieve with our miRNAseq workflow on different hardware we tested it on:
 
     + NUC mini PC: CPU i7-6770HQ 3.5 GHz (1 core, 8 threads), 32 Gb RAM, HD 250 Gb SSD
-    + Dell T3500 workstation: CPU E5-1620 3.5 v3 GHz (2 cores, 16 threads), 32 Gb RAM, HD 1 Tb SAS
     + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
 
 
