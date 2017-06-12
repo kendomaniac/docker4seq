@@ -1,5 +1,5 @@
 ---
-title: "An Introduction to docker4seq package"
+title: "An Introduction to docker4seq package and 4SeqGUI"
 author: "Raffaele A Calogero"
 output: 
   BiocStyle::html_document
@@ -95,6 +95,19 @@ adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 seq.type="pe", threads=8,  min.length=40,
 genome.folder="/data/scratch/hg38star", strandness="none", save.bam=FALSE,
 org="hg38", truncating.expected.counts=FALSE, annotation.type="gtfENSEMBL")
+
+#test example
+system("wget http://130.192.119.59/public/test.mrnaCounts.zip")
+unzip("test.mrnaCounts.zip")
+setwd("./test.mrnaCounts")
+library(docker4seq)
+rnaseqCounts(group="docker",fastq.folder=getwd(), scratch.folder=getwd(),
+adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+seq.type="se", threads=8,  min.length=40,
+genome.folder="/data/scratch/mm10star", strandness="none", save.bam=FALSE,
+org="mm10", truncating.expected.counts=FALSE, annotation.type="gtfENSEMBL")
+
 ```
 
 
@@ -165,10 +178,16 @@ At the present time the batches need to be added manually to the header of the e
 #### From samples to experiments by line command
 
 ```{r, echo=TRUE, eval=FALSE}
-sample2experiment(sample.folders=c("/home/beccuti/e1g","/home/beccuti/e2g",
-"/home/beccuti/p1g", "/home/beccuti/p2g"),
-covariates=c("Cov1","Cov1","Cov2","Cov2"),
+#test exercise
+system("wget http://130.192.119.59/public/test.samples2experiment.zip")
+unzip("test.samples2experiment.zip")
+setwd("test.samples2experiment")
+library(docker4seq)
+sample2experiment(sample.folders=c("./e1g","./e2g","./e3g",
+"./p1g", "./p2g", "./p3g"),
+covariates=c("Cov.1","Cov.1","Cov.1","Cov.2","Cov.2","Cov.2"),
 bio.type="protein_coding", output.prefix=".")
+
 ```
 
 User needs to provide the paths of the samples, **sample.folder** parameter, a vector of the covariates, **covariates**, and the biotype(s) of interest, **bio.type** parameter. The parameter **output.prefix** refers to the path where the output will be created, as default this is the actual R working folder.
@@ -199,8 +218,13 @@ The plot is saved in **pca.pdf** in the selected folder.
 #### PCA by line command
 
 ```{r, echo=TRUE, eval=FALSE}
-
+#test example
+system("wget 130.192.119.59/public/test.analysis.zip")
+unzip("test.analysis.zip")
+setwd("test.analysis")
+library(docker4seq)
 pca(experiment.table="_log2FPKM.txt", type="FPKM", legend.position="topleft", covariatesInNames=FALSE, principal.components=c(1,2), pdf = TRUE, output.folder=getwd())
+
 ```
 
 User needs to provide the paths of experiment table, **experiment.table** parameter, i.e. the file generated using the samples2experiment function. The **type** parameter indicates if FPKM, TPM or counts are used for the PCA geenration. The parameter **legend.position** defines where to locate the covariates legend. The parameter **covariatesInNames** indicates if the header of the experiment table contains or not covariate information. The parameter **principal.components** indicates which principal components should be plotted. **output.folder** indicates where to save the pca.pdf file.
@@ -218,6 +242,11 @@ IMPORTANT: The above analysis is suitable also for miRNAseq data
 Sample size estimation is an important issue in the design of RNA sequencing experiments. We have implemented a wrapper function for sample size estimation using the bioconductor package RnaSeqSampleSize.
 
 ```{r, echo=TRUE, eval=FALSE}
+#test experiment
+system("wget 130.192.119.59/public/test.analysis.zip")
+unzip("test.analysis.zip")
+setwd("test.analysis")
+library(docker4seq)
 sampleSize("_counts.txt", power=0.80, FDR=0.1, genes4dispersion=200, log2fold.change=1)
 
 ```
@@ -236,6 +265,11 @@ IMPORTANT: The above analysis is suitable also for miRNAseq data
 Experiment power provides an indication of which is the fraction of differentially expressed genes that can be detected given a specific number of samples and differential expression detection thresholds. We have implemented a wrapper function for experiment power estimation using the bioconductor package RnaSeqSampleSize.
 
 ```{r, echo=TRUE, eval=FALSE}
+#test experiment
+system("wget 130.192.119.59/public/test.analysis.zip")
+unzip("test.analysis.zip")
+setwd("test.analysis")
+library(docker4seq)
 experimentPower("_counts.txt",replicatesXgroup=7, FDR=0.1, genes4dispersion=200, log2fold.change=1)
 
 ```
@@ -275,8 +309,13 @@ log2normalized_counts.txt, DESeq2 log2 library size normalized counts to be used
 #### DESeq2 by line command
 
 ```{r, echo=TRUE, eval=FALSE}
+#test experiment
+system("wget 130.192.119.59/public/test.analysis.zip")
+unzip("test.analysis.zip")
+setwd("test.analysis")
+library(docker4seq)
+wrapperDeseq2(experiment.table="_counts.txt", log2fc=1, fdr=0.1, ref.covar="Cov.1", type="gene", batch=FALSE)
 
-wrapperDeseq2(experiment.table="4t1_counts.txt", log2fc=1, fdr=0.1, ref.covar="Cov.1", type="gene", batch=FALSE)
 ```
 
 
@@ -445,7 +484,17 @@ The chipseq workflow produces the following output files:
     + mycontrol_sorted.bw: bigWig file for UCSC Genome Browser visualization
     + mytreat_sorted.bw: bigWig file for UCSC Genome Browser visualization
      
+### ChIPseq performances on different hardware configurations
 
+To have an idea of the difference performances that we can achieve with our miRNAseq workflow on different hardware we tested it on:
+
+    + NUC mini PC: CPU i7-6770HQ 3.5 GHz (1 core, 8 threads), 32 Gb RAM, HD 250 Gb SSD
+    + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
+
+
+We run resepctively 37, 70, 111, and 149 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in fig. below.
+    
+![performance](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/chipseq_performance.jpg)   
 
 
 ### Creating a BWA index file for Chipseq:
