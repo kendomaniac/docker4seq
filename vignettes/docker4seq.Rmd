@@ -171,7 +171,7 @@ In case also a batch is present also this is separated by a further underscore, 
 ![counts table with covariates and batch](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/counts2.jpeg)
 
 The addition of the covariates to the various samples can be done using the **4seqGUI** using the button: *From samples to experiment*.
-At the present time the batches need to be added manually to the header of the experiment table by hand.
+Covariates are added to the column name, i.e. sample name, using \_, e.g. mysample\_Cov.1. Batches are added after covariates with \_, e.g. mysample\_Cov.1_batch.1.
 
 ![generating a table with covariates](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/counts3.jpeg)
 
