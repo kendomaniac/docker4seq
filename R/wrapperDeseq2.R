@@ -9,7 +9,7 @@
 #' @param type, character with three options: gene, isoform, mirna. if gene is used two files are generated for geneset enrichment, the filtered Gene symbols and the background that contains all gene simbols.
 #' @param batch, logical FALSE, TRUE
 #' @return Returns a full table of differentially expressed genes (prefix DEfull), a filtered table of differentially expressed genes (prefix DEfiltered) and the normalized counts table (prefix normalized)
-#' @import DESeq2
+
 #' @examples
 #'\dontrun{
 #'     system(paste("cp ", path.package("docker4seq"),

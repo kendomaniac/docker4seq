@@ -1,9 +1,10 @@
 #' @title Annotating RSEM gene.results using ENSEMBL gtf and refGenome CRAN package
 #' @description This function executes the docker container annotate.1, where refGenome is used to annotated gene.results and isoforms.results outputs from RSEM using ENSEMBL GTF annotation
+#' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param rsem.folder, a character string indicating where gene.results file is located
 #' @param genome.folder, a character string indicating the folder for the genome reference used for mapping and counting with \code{"rsemstar"} function. In this folder is present the GTF used for by RSEM
 #' @return one file: annotated_genes.results, which is the annotated version of gene.results.
-#' @import refGenome
+
 #' @import utils
 #' @examples
 #' \dontrun{

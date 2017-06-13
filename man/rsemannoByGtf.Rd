@@ -8,6 +8,8 @@ rsemannoByGtf(group = c("sudo", "docker"), rsem.folder = getwd(),
   genome.folder)
 }
 \arguments{
+\item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
+
 \item{rsem.folder, }{a character string indicating where gene.results file is located}
 
 \item{genome.folder, }{a character string indicating the folder for the genome reference used for mapping and counting with \code{"rsemstar"} function. In this folder is present the GTF used for by RSEM}
