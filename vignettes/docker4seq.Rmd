@@ -88,13 +88,6 @@ A detailed description of the parameters is given below.
 The sample quantification can be also executed using R and it is completely embedded in a single function:
 
 ```{r, echo=TRUE, eval=FALSE}
-library(docker4seq)
-rnaseqCounts(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
-adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-seq.type="pe", threads=8,  min.length=40,
-genome.folder="/data/scratch/hg38star", strandness="none", save.bam=FALSE,
-org="hg38", truncating.expected.counts=FALSE, annotation.type="gtfENSEMBL")
 
 #test example
 system("wget http://130.192.119.59/public/test.mrnaCounts.zip")
@@ -236,6 +229,16 @@ The values in parentesis on x and y axes are the amount of variance explained by
 IMPORTANT: The above analysis is suitable also for miRNAseq data
 
 ### Evaluating experiment power and sample size
+
+[RnaSeqSampleSize](https://www.ncbi.nlm.nih.gov/pubmed/25246651) Bioconductor package provides the possibility to calculate, from a pilot experiment, the statistical power and to define the optimal sample size.
+**4SeqGUI** provides an interface to sample size estimation: 
+
+![sample size estimation](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/ss.jpeg)
+
+and to statistical power estimation:
+
+![stat power estimation](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/es.jpeg)
+
 
 #### Sample size estimation by line command
 
@@ -448,10 +451,12 @@ The chipseq workflow can be also executed using R and it is completely embedded 
 
 ```{r, echo=TRUE, eval=FALSE}
 
+system("wget 130.192.119.59/public/test.chipseqCounts.zip")
+unzip("test.chipseqCounts.zip")
+setwd("test.chipseqCounts")
 library(docker4seq)
-
-chipseqCounts(group = c("sudo", "docker"), output.folder = getwd(),
-  mock.folder, test.folder, scratch.folder,
+chipseqCounts(group = "docker", output.folder = "./prdm51.igg",
+  mock.folder="./igg", test.folder="./prdm51", scratch.folder=getwd(),
   adapter5 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
   adapter3 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
   threads = 8, min.length = 30, genome.folder,
