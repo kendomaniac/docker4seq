@@ -36,7 +36,7 @@ This function executes the docker container bwa1 where BWA is installed. The ind
     gatk=TRUE)
 
     #running bwa index
-    bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", uscs.urlgenome=
+    bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/mm10bwa", uscs.urlgenome=
     "http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz",
     gatk=FALSE)
 

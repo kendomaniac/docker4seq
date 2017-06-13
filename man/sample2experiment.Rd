@@ -4,8 +4,9 @@
 \alias{sample2experiment}
 \title{generating counts, FPKM and TPM tables from rnaseqCounts outuputs}
 \usage{
-sample2experiment(sample.folders, covariates, bio.type = c("protein_coding",
-  "unitary_pseudogene", "unprocessed_pseudogene", "processed_pseudogene",
+sample2experiment(sample.folders, covariates, batch = NULL,
+  bio.type = c("protein_coding", "unitary_pseudogene",
+  "unprocessed_pseudogene", "processed_pseudogene",
   "transcribed_unprocessed_pseudogene", "processed_transcript", "antisense",
   "transcribed_unitary_pseudogene", "polymorphic_pseudogene", "lincRNA",
   "sense_intronic", "transcribed_processed_pseudogene", "sense_overlapping",
@@ -22,6 +23,8 @@ sample2experiment(sample.folders, covariates, bio.type = c("protein_coding",
 
 \item{covariates, }{a character string indicating the covariates associated to each sample. Covariates are required for differnetial expression analysis}
 
+\item{batch, }{a character string indicating the batch associated to each sample}
+
 \item{bio.type, }{a character string indicating the ensemb bio.type. Options: "protein_coding","unitary_pseudogene","unprocessed_pseudogene","processed_pseudogene", "transcribed_unprocessed_pseudogene","processed_transcript","antisense","transcribed_unitary_pseudogene","polymorphic_pseudogene","lincRNA","sense_intronic","transcribed_processed_pseudogene","sense_overlapping","IG_V_pseudogene","pseudogene","TR_V_gene","3prime_overlapping_ncRNA","IG_V_gene","bidirectional_promoter_lncRNA","snRNA","miRNA","misc_RNA","snoRNA","rRNA","IG_C_gene","IG_J_gene","TR_J_gene","TR_C_gene","TR_V_pseudogene","TR_J_pseudogene","IG_D_gene","ribozyme","IG_C_pseudogene","TR_D_gene","TEC","IG_J_pseudogene","scRNA","scaRNA","vaultRNA","sRNA","macro_lncRNA","non_coding","IG_pseudogene"}
 
 \item{output.prefix, }{a character value indicating the output folder path}
@@ -36,7 +39,7 @@ This function generates counts, FPKM and TPM tables from rnaseqCounts outuputs.
 \dontrun{
     sample2experiment(sample.folders=c("/home/beccuti/e1g","/home/beccuti/e2g",
     "/home/beccuti/p1g", "/home/beccuti/p2g"),
-    covariates=c("Cov1","Cov1","Cov2","Cov2"),
+    covariates=c("Cov1","Cov1","Cov2","Cov2"),batch=c("b1","b21","b1","b2"),
     bio.type="protein_coding", output.prefix=".")
 }
 }
