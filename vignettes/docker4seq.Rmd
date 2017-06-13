@@ -178,7 +178,7 @@ Covariates are added to the column name, i.e. sample name, using \_, e.g. mysamp
 #### From samples to experiments by line command
 
 ```{r, echo=TRUE, eval=FALSE}
-#test exercise
+#test example
 system("wget http://130.192.119.59/public/test.samples2experiment.zip")
 unzip("test.samples2experiment.zip")
 setwd("test.samples2experiment")
@@ -242,7 +242,7 @@ IMPORTANT: The above analysis is suitable also for miRNAseq data
 Sample size estimation is an important issue in the design of RNA sequencing experiments. We have implemented a wrapper function for sample size estimation using the bioconductor package RnaSeqSampleSize.
 
 ```{r, echo=TRUE, eval=FALSE}
-#test experiment
+#test example
 system("wget 130.192.119.59/public/test.analysis.zip")
 unzip("test.analysis.zip")
 setwd("test.analysis")
@@ -265,7 +265,7 @@ IMPORTANT: The above analysis is suitable also for miRNAseq data
 Experiment power provides an indication of which is the fraction of differentially expressed genes that can be detected given a specific number of samples and differential expression detection thresholds. We have implemented a wrapper function for experiment power estimation using the bioconductor package RnaSeqSampleSize.
 
 ```{r, echo=TRUE, eval=FALSE}
-#test experiment
+#test example
 system("wget 130.192.119.59/public/test.analysis.zip")
 unzip("test.analysis.zip")
 setwd("test.analysis")
@@ -309,7 +309,7 @@ log2normalized_counts.txt, DESeq2 log2 library size normalized counts to be used
 #### DESeq2 by line command
 
 ```{r, echo=TRUE, eval=FALSE}
-#test experiment
+#test example
 system("wget 130.192.119.59/public/test.analysis.zip")
 unzip("test.analysis.zip")
 setwd("test.analysis")

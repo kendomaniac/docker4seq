@@ -136,7 +136,7 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	#running time 2
 
 	#saving log and removing docker container
-	container.id <- readLines(paste(bam.folder,"/dockerID", sep=""))
+	container.id <- readLines(paste(bam.folder,"/dockerID", sep=""), warn = FALSE)
 	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
 	system(paste("docker rm ", container.id, sep=""))
 	

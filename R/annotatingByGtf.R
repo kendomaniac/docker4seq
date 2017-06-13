@@ -67,7 +67,7 @@ rsemannoByGtf <- function(group=c("sudo", "docker"), rsem.folder=getwd(), genome
   }
 
   #saving log and removing docker container
-  container.id <- readLines(paste(rsem.folder,"/dockerID", sep=""))
+  container.id <- readLines(paste(rsem.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
   system("rm -fR anno.info")

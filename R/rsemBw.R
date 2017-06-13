@@ -94,7 +94,7 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
   writeLines(tmp.run,paste(bam.folder,"run.info", sep="/"))
   
   #saving log and removing docker container
-  container.id <- readLines(paste(bam.folder,"/dockerID", sep=""))
+  container.id <- readLines(paste(bam.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
   

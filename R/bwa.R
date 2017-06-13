@@ -133,7 +133,7 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
     writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
 
     #saving log and removing docker container
-    container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""))
+    container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
     system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
     system(paste("docker rm ", container.id, sep=""))
     

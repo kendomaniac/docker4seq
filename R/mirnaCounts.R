@@ -81,7 +81,7 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 			out <- "out.info"
 		}
   }
-	system(paste("chmod 777 -R", scrat_tmp.folder))
+#	system(paste("chmod 777 -R", scrat_tmp.folder))
 	con <- file(paste(scrat_tmp.folder,"out.info", sep="/"), "r")
 	tmp <- readLines(con)
 	close(con)
@@ -100,7 +100,7 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	system(paste("rm ",scrat_tmp.folder,"/out.info",sep=""))
 
 	#saving log and removing docker container
-	container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""))
+	container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
 	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
 	system(paste("docker rm ", container.id, sep=""))
 	
