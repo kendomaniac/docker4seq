@@ -363,8 +363,14 @@ A detailed description of the parameters is given below.
 The miRNAseq workflow can be also executed using R and it is completely embedded in a unique function:
 
 ```{r, echo=TRUE, eval=FALSE}
+#test example
+system("wget 130.192.119.59/public/test.mirnaCounts.zip")
+unzip("test.mirnaCounts.zip")
+setwd("test.mirnaCounts")
+library(docker4seq)
 mirnaCounts(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch", 
             mirbase.id="hsa",download.status=FALSE, adapter.type="NEB", trimmed.fastq=FALSE)
+
 ```
 
 User needs to create the **fastq.folder**, where the fastq.gz files for all miRNAs under analysis are located. 
@@ -395,6 +401,26 @@ To have an idea of the difference performances that we can achieve with our miRN
 We run resepctively 3, 6, 12, and 24 miRNA samples in parallel, increasing the number of threads till reaching the limit of the hardware or 24 threads, i.e. vaules shown in parenthesis in fig. below.
     
 ![performance](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/mirna_performace.jpg)    
+
+
+## Adding covariates and batches to mirnaCounts output: all.counts.txt
+
+The funnction **mirnaCovar** add to the header of all.counts.txt covariates and batches or covariates only.
+
+```{r, echo=TRUE, eval=FALSE}
+#test example
+system("wget 130.192.119.59/public/test.mirna.analysis.zip")
+unzip("test.mirna.analysis.zip")
+setwd("test.mirna.analysis")
+library(docker4seq)
+mirnaCovar(experiment.folder=getwd(),
+     covariates=c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.1", 
+                  "Cov.2", "Cov.2", "Cov.2", "Cov.2", "Cov.2", "Cov.2"),
+     batches=c("bath.1", "bath.1", "bath.2", "bath.2", "batch.1", "batch.1", 
+               "batch.2", "batch.2","batch.1", "batch.1","bath.2", "bath.2"))
+
+```
+
 
     
 ## chipseq workflow
