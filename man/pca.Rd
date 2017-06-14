@@ -32,12 +32,14 @@ This function generates PCA plot from counts, FPKM and TPM tables from rnaseqCou
 }
 \examples{
 \dontrun{
-    # Example of the header of the counts, FPKM or TPM contaning covariate
-    # no covariate in the name ctrl1 ctrl2 trt1 trt2
-    # no covariate in the name ctrl1_c ctrl2_c trt1_t trt2_t
-    pca(experiment.table="_log2FPKM.txt", type="FPKM", legend.position="topleft",
-    covariatesInNames=FALSE, principal.components=c(1,2),
-    pdf = TRUE, output.folder=getwd())
+  system("wget 130.192.119.59/public/test.analysis.zip")
+  unzip("test.analysis.zip")
+  setwd("test.analysis")
+  library(docker4seq)
+  pca(experiment.table="_log2FPKM.txt", type="FPKM", 
+      legend.position="topleft", covariatesInNames=FALSE, 
+      principal.components=c(1,2), pdf = TRUE, 
+      output.folder=getwd())
 
 }
 }

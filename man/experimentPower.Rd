@@ -28,6 +28,11 @@ This function evaluate the statistical power of a pilot experiment
 }
 \examples{
 \dontrun{
- experimentPower("_counts.txt",replicatesXgroup=3, FDR=0.1, genes4dispersion=200, log2fold.change=1)
+ system("wget 130.192.119.59/public/test.analysis.zip")
+ unzip("test.analysis.zip")
+ setwd("test.analysis")
+ library(docker4seq)
+ experimentPower("_counts.txt",replicatesXgroup=7, 
+ FDR=0.1, genes4dispersion=200, log2fold.change=1)
 }
 }

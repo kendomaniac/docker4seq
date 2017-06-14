@@ -37,9 +37,14 @@ This function generates counts, FPKM and TPM tables from rnaseqCounts outuputs.
 }
 \examples{
 \dontrun{
-    sample2experiment(sample.folders=c("/home/beccuti/e1g","/home/beccuti/e2g",
-    "/home/beccuti/p1g", "/home/beccuti/p2g"),
-    covariates=c("Cov1","Cov1","Cov2","Cov2"),batch=c("b1","b21","b1","b2"),
-    bio.type="protein_coding", output.prefix=".")
+  system("wget http://130.192.119.59/public/test.samples2experiment.zip")
+  unzip("test.samples2experiment.zip")
+  setwd("test.samples2experiment")
+  library(docker4seq)
+  sample2experiment(sample.folders=c("./e1g","./e2g","./e3g",
+                 "./p1g", "./p2g", "./p3g"),
+                 covariates=c("Cov.1","Cov.1","Cov.1",
+                 "Cov.2","Cov.2","Cov.2"),
+                 bio.type="protein_coding", output.prefix=".")
 }
 }

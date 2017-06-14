@@ -33,10 +33,12 @@ This function runs deseq2 on a table genrated with sample2experiment having the 
 }
 \examples{
 \dontrun{
-    system(paste("cp ", path.package("docker4seq"),
-    "/examples/4t1_counts.txt .", sep=""))
-    wrapperDeseq2(experiment.table="4t1_counts.txt",
-    log2fc=1, fdr=0.1, ref.covar="0", type="gene")
+    system("wget 130.192.119.59/public/test.analysis.zip")
+    unzip("test.analysis.zip")
+    setwd("test.analysis")
+    library(docker4seq)
+    wrapperDeseq2(experiment.table="_counts.txt", log2fc=1, 
+    fdr=0.1, ref.covar="Cov.1", type="gene", batch=FALSE)
 
 }
 }
