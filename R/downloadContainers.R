@@ -5,12 +5,12 @@
 #' @examples
 #'\dontrun{
 ##'     #running runDocker
-#'      downloadContainers(group="docker", container.file)
+#'      downloadContainers(group="docker", containers.file)
 #'     
 #' }
 #' @export
-downloadContainers <- function(group="docker", container.file=paste(path.package(package="docker4seq"),"contaniers/contaniers.txt",sep="/")){
-   containers <- readLines(container.file)
+downloadContainers <- function(group="docker", containers.file=paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")){
+   containers <- readLines(containers.file)
    for(i in containers){
      if(group=="sudo"){
        system(paste("sudo docker pull ",i, sep=""))
