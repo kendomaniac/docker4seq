@@ -269,7 +269,7 @@ system("wget 130.192.119.59/public/test.analysis.zip")
 unzip("test.analysis.zip")
 setwd("test.analysis")
 library(docker4seq)
-sampleSize("_counts.txt", power=0.80, FDR=0.1, genes4dispersion=200, log2fold.change=1)
+sampleSize(filename="_counts.txt", power=0.80, FDR=0.1, genes4dispersion=200, log2fold.change=1)
 
 ```
 
@@ -292,7 +292,7 @@ system("wget 130.192.119.59/public/test.analysis.zip")
 unzip("test.analysis.zip")
 setwd("test.analysis")
 library(docker4seq)
-experimentPower("_counts.txt",replicatesXgroup=7, FDR=0.1, genes4dispersion=200, log2fold.change=1)
+experimentPower(filename="_counts.txt",replicatesXgroup=7, FDR=0.1, genes4dispersion=200, log2fold.change=1)
 
 ```
 
@@ -586,6 +586,9 @@ In case of updates required to solve bugs, which do not affect the calculation d
 
 In case of updates which affect the calculation, e.g. new release of Bioconductor libraries, the field YYYY will be updated. Previous versions will be maintained to allow reproducibility.
 
+### Reproducibility
+
+Within any folder generated with docker4seq functions it is saved the file **containers.txt**, which indicates the containers available in the local release of docker4seq.
 
 
 
