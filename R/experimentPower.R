@@ -64,10 +64,10 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
     writeLines(tmp.run,"run.info")
   }else{
     tmp.run <- NULL
-    tmp.run[1] <- paste("DESeq2 user run time mins ",ptm[1]/60, sep="")
+    tmp.run[1] <- paste("experimentPower user run time mins ",ptm[1]/60, sep="")
     tmp.run[length(tmp.run)+1] <- paste("experimentPower system run time mins ",ptm[2]/60, sep="")
     tmp.run[length(tmp.run)+1] <- paste("experimentPower elapsed run time mins ",ptm[3]/60, sep="")
   } 
     writeLines(tmp.run,"run.info")
-    
+    system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",output.folder, sep=""))
 }

@@ -99,6 +99,8 @@ chipseqCounts <- function( group=c("sudo","docker"),output.folder=getwd(), mock.
           scratch.folder=scratch.folder, genome=genome, read.size=read.size,
           tool=tool, sicer.wsize=sicer.wsize, sicer.gsize=sicer.gsize, sicer.fdr=sicer.fdr,
           tss.distance=tss.distance, max.upstream.distance=max.upstream.distance,remove.duplicates=remove.duplicates)
+
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",output.folder, sep=""))
 }
 
 

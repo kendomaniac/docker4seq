@@ -51,6 +51,7 @@ org="hg38", truncating.expected.counts=FALSE, annotation.type=c("biocUCSC","gtfE
     cat("\nERROR: an annotatin function not implemented was selected\n")
     return(1)
   }
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
   return(0)
 }
 

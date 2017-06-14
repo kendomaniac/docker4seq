@@ -73,4 +73,5 @@ rsemannoByGtf <- function(group=c("sudo", "docker"), rsem.folder=getwd(), genome
   system(paste("docker rm ", container.id, sep=""))
   system("rm -fR anno.info")
   system("rm -fR dockerID")
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",rsem.folder, sep=""))
 }

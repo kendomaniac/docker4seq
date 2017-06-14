@@ -32,6 +32,25 @@ The minimal hardware requirements are a 4 core 64 bits linux computer, 32 Gb RAM
 [**docker4seq**](https://github.com/kendomaniac/docker4seq) and its graphical interface [**4SeqGUI**](https://github.com/mbeccuti/4SeqGUI) can fit ideally in the [NUC6I7KYK](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html) equipped with Kingston Technology HyperX Impact 32GB Kit (2x16GB), 2133MHz DDR4 CL13 260-Pin SODIMM and Samsung 850 EVO - 250GB - M.2 SATA III Internal SSD.
 A ready to go fedora installation USB stick, with everything installed to be used with the above hardware configuration, can be requested to: raffaele[dot]calogero[at]unito[dot]it
 
+**IMPORTANT** The first time *docker4seq* is installed the **downloadContainers** needs to be executed  to download to the local repository the containers that are needed for the use of *docker4seq*
+
+```{r, echo=TRUE, eval=FALSE}
+downloadContainers(group="docker")
+```
+
+In case dockers containers different from those provided as part of the package those needs to be described in a file with the following format which is passed to downloadContainers:
+
+![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/containers.jpeg)
+
+```{r, echo=TRUE, eval=FALSE}
+downloadContainers(group="docker", containers.file="/somewhere/containers.txt")
+```
+Any update of the local containers will be saved in:
+```{r, echo=TRUE, eval=FALSE}
+paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")
+```
+
+
 ## Available workflows
 At the present time are available the following workflows:
 

@@ -146,6 +146,6 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
   system(paste("rm  ",bam.folder,"/dockerID", sep=""))
   system(paste("rm  ",bam.folder,"/tempFolderID", sep=""))
 	#removing temporary folder
-
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",bam.folder, sep=""))
 }
 

@@ -89,5 +89,6 @@ rsemstarUscsIndex <- function(group=c("sudo","docker"), genome.folder=getwd(),
   
   #running time 2
   system(paste("rm ",genome.folder,"/dockerID", sep=""))
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",genome.folder, sep=""))
 }
 

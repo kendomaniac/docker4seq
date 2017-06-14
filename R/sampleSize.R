@@ -63,11 +63,11 @@ sampleSize <- function(group=c("sudo","docker"), filename, power=0.80, FDR=0.1, 
     writeLines(tmp.run,"run.info")
   }else{
     tmp.run <- NULL
-    tmp.run[1] <- paste("DESeq2 user run time mins ",ptm[1]/60, sep="")
+    tmp.run[1] <- paste("sampleSize user run time mins ",ptm[1]/60, sep="")
     tmp.run[length(tmp.run)+1] <- paste("sampleSize system run time mins ",ptm[2]/60, sep="")
     tmp.run[length(tmp.run)+1] <- paste("sampleSize elapsed run time mins ",ptm[3]/60, sep="")
   } 
   writeLines(tmp.run,"run.info")
-  
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",output.folder, sep=""))
 }
 
