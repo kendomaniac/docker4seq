@@ -11,7 +11,7 @@ install_github("kendomaniac/docker4seq", ref="devel")
 ##Requirements
 You need to have docker installed on your machine, for more info see this document:
 https://docs.docker.com/engine/installation/. 
-**docker4seq** package is expected to run on 64 bits machine with at least 4 cores and 32 Gb RAM.
+**docker4seq** package is expected to run on 64 bits linux machine with at least 4 cores and 32 Gb RAM.
 A scratch folder should be present, e.g. /data/scratch and it should be writable from everybody:
 ```
 chmod 777 /data/scratch
@@ -21,3 +21,6 @@ See the following document for more info:
 https://docs.docker.com/engine/installation/linux/ubuntulinux/#/manage-docker-as-a-non-root-user
 
 More info on the functionalities of the package are available at: http://rpubs.com/rcaloger/279935
+
+In case you wish to use MAC OS you need to install https://www.docker.com/products/docker-toolbox and run within the Docker Quickstart Terminal.app
+
