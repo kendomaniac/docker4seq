@@ -1,5 +1,5 @@
 ---
-title: "An Introduction to docker4seq package"
+title: "An Introduction to docker4seq package and 4SeqGUI"
 author: "Raffaele A Calogero"
 output: 
   BiocStyle::html_document
@@ -29,8 +29,27 @@ This approach provides multiple advantages:
 ## Requirements
 The minimal hardware requirements are a 4 core 64 bits linux computer, 32 Gb RAM, one SSD 250GB, with a folder with read/write permission for any users (chmod 777), and [docker](https://www.docker.com/) installed.
 
-[**docker4seq**](https://github.com/kendomaniac/docker4seq) and its graphical interface [**4SeqGUI**](https://github.com/mbeccuti/4SeqGUI) was tested on a [NUC6I7KYK](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html) equipped with  32GB RAM (2x16GB), 2133MHz DDR4 and 250GB M.2 SATA III Internal SSD disk.
+[**docker4seq**](https://github.com/kendomaniac/docker4seq) and its graphical interface [**4SeqGUI**](https://github.com/mbeccuti/4SeqGUI) can fit ideally in the [NUC6I7KYK](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html) equipped with Kingston Technology HyperX Impact 32GB Kit (2x16GB), 2133MHz DDR4 CL13 260-Pin SODIMM and Samsung 850 EVO - 250GB - M.2 SATA III Internal SSD.
 A ready to go fedora installation USB stick, with everything installed to be used with the above hardware configuration, can be requested to: raffaele[dot]calogero[at]unito[dot]it
+
+**IMPORTANT** The first time *docker4seq* is installed the **downloadContainers** needs to be executed  to download to the local repository the containers that are needed for the use of *docker4seq*
+
+```{r, echo=TRUE, eval=FALSE}
+downloadContainers(group="docker")
+```
+
+In case dockers containers different from those provided as part of the package those needs to be described in a file with the following format which is passed to downloadContainers:
+
+![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/containers.jpeg)
+
+```{r, echo=TRUE, eval=FALSE}
+downloadContainers(group="docker", containers.file="/somewhere/containers.txt")
+```
+Any update of the local containers will be saved in:
+```{r, echo=TRUE, eval=FALSE}
+paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")
+```
+
 
 ## Available workflows
 At the present time are available the following workflows:
@@ -88,13 +107,19 @@ A detailed description of the parameters is given below.
 The sample quantification can be also executed using R and it is completely embedded in a single function:
 
 ```{r, echo=TRUE, eval=FALSE}
+
+#test example
+system("wget http://130.192.119.59/public/test.mrnaCounts.zip")
+unzip("test.mrnaCounts.zip")
+setwd("./test.mrnaCounts")
 library(docker4seq)
-rnaseqCounts(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
+rnaseqCounts(group="docker",fastq.folder=getwd(), scratch.folder=getwd(),
 adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-seq.type="pe", threads=8,  min.length=40,
-genome.folder="/data/scratch/hg38star", strandness="none", save.bam=FALSE,
-org="hg38", truncating.expected.counts=FALSE, annotation.type="gtfENSEMBL")
+seq.type="se", threads=8,  min.length=40,
+genome.folder="/data/scratch/mm10star", strandness="none", save.bam=FALSE,
+org="mm10", truncating.expected.counts=FALSE, annotation.type="gtfENSEMBL")
+
 ```
 
 
@@ -132,6 +157,18 @@ The mRNAseq workflow produces the following output files:
 The first column in **gtf_annotated_genes.results** is the ensembl gene id, the second is the [biotype](http://www.ensembl.org/Help/Faq?id=468), 
 the 3rd is the annotation source, the 4th contains the set of transcripts included in the ensembl gene id. Then there is the length of the gene, the lenght of the gene to which is subtracted the average length of the sequenced fragments, the expected counts are the couts to be used for differentiual expression analysis. [TPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) and [FPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) are normalized gene quantities to be used only for visualization purposes.
 
+### mRNAseq performances on different hardware configurations
+
+The conversion between fastq files to counts is the most time consuming step in RNAseq data analysis and it normally requires high-end server. We have tested our workflow on different hardware:
+
+    + NUC mini PC: CPU i7-6770HQ 3.5 GHz (1 core, 8 threads), 32 Gb RAM, HD 250 Gb SSD
+    + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
+
+
+We run resepctively 26, 52, 78, and 105 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in fig. below.
+    
+![performance](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/mrna_performace.jpg)  
+
 
 ### From samples to experiment
 
@@ -146,17 +183,23 @@ In case also a batch is present also this is separated by a further underscore, 
 ![counts table with covariates and batch](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/counts2.jpeg)
 
 The addition of the covariates to the various samples can be done using the **4seqGUI** using the button: *From samples to experiment*.
-At the present time the batches need to be added manually to the header of the experiment table by hand.
+Covariates are added to the column name, i.e. sample name, using \_, e.g. mysample\_Cov.1. Batches are added after covariates with \_, e.g. mysample\_Cov.1_batch.1.
 
 ![generating a table with covariates](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/counts3.jpeg)
 
 #### From samples to experiments by line command
 
 ```{r, echo=TRUE, eval=FALSE}
-sample2experiment(sample.folders=c("/home/beccuti/e1g","/home/beccuti/e2g",
-"/home/beccuti/p1g", "/home/beccuti/p2g"),
-covariates=c("Cov1","Cov1","Cov2","Cov2"),
+#test example
+system("wget http://130.192.119.59/public/test.samples2experiment.zip")
+unzip("test.samples2experiment.zip")
+setwd("test.samples2experiment")
+library(docker4seq)
+sample2experiment(sample.folders=c("./e1g","./e2g","./e3g",
+"./p1g", "./p2g", "./p3g"),
+covariates=c("Cov.1","Cov.1","Cov.1","Cov.2","Cov.2","Cov.2"),
 bio.type="protein_coding", output.prefix=".")
+
 ```
 
 User needs to provide the paths of the samples, **sample.folder** parameter, a vector of the covariates, **covariates**, and the biotype(s) of interest, **bio.type** parameter. The parameter **output.prefix** refers to the path where the output will be created, as default this is the actual R working folder.
@@ -187,8 +230,13 @@ The plot is saved in **pca.pdf** in the selected folder.
 #### PCA by line command
 
 ```{r, echo=TRUE, eval=FALSE}
-
+#test example
+system("wget 130.192.119.59/public/test.analysis.zip")
+unzip("test.analysis.zip")
+setwd("test.analysis")
+library(docker4seq)
 pca(experiment.table="_log2FPKM.txt", type="FPKM", legend.position="topleft", covariatesInNames=FALSE, principal.components=c(1,2), pdf = TRUE, output.folder=getwd())
+
 ```
 
 User needs to provide the paths of experiment table, **experiment.table** parameter, i.e. the file generated using the samples2experiment function. The **type** parameter indicates if FPKM, TPM or counts are used for the PCA geenration. The parameter **legend.position** defines where to locate the covariates legend. The parameter **covariatesInNames** indicates if the header of the experiment table contains or not covariate information. The parameter **principal.components** indicates which principal components should be plotted. **output.folder** indicates where to save the pca.pdf file.
@@ -201,12 +249,27 @@ IMPORTANT: The above analysis is suitable also for miRNAseq data
 
 ### Evaluating experiment power and sample size
 
+[RnaSeqSampleSize](https://www.ncbi.nlm.nih.gov/pubmed/25246651) Bioconductor package provides the possibility to calculate, from a pilot experiment, the statistical power and to define the optimal sample size.
+**4SeqGUI** provides an interface to sample size estimation: 
+
+![sample size estimation](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/ss.jpeg)
+
+and to statistical power estimation:
+
+![stat power estimation](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/es.jpeg)
+
+
 #### Sample size estimation by line command
 
 Sample size estimation is an important issue in the design of RNA sequencing experiments. We have implemented a wrapper function for sample size estimation using the bioconductor package RnaSeqSampleSize.
 
 ```{r, echo=TRUE, eval=FALSE}
-sampleSize("_counts.txt", power=0.80, FDR=0.1, genes4dispersion=200, log2fold.change=1)
+#test example
+system("wget 130.192.119.59/public/test.analysis.zip")
+unzip("test.analysis.zip")
+setwd("test.analysis")
+library(docker4seq)
+sampleSize(group="docker", filename="_counts.txt", power=0.80, FDR=0.1, genes4dispersion=200, log2fold.change=1)
 
 ```
 
@@ -224,7 +287,12 @@ IMPORTANT: The above analysis is suitable also for miRNAseq data
 Experiment power provides an indication of which is the fraction of differentially expressed genes that can be detected given a specific number of samples and differential expression detection thresholds. We have implemented a wrapper function for experiment power estimation using the bioconductor package RnaSeqSampleSize.
 
 ```{r, echo=TRUE, eval=FALSE}
-experimentPower("_counts.txt",replicatesXgroup=7, FDR=0.1, genes4dispersion=200, log2fold.change=1)
+#test example
+system("wget 130.192.119.59/public/test.analysis.zip")
+unzip("test.analysis.zip")
+setwd("test.analysis")
+library(docker4seq)
+experimentPower(group="docker", filename="_counts.txt",replicatesXgroup=7, FDR=0.1, genes4dispersion=200, log2fold.change=1)
 
 ```
 
@@ -263,8 +331,13 @@ log2normalized_counts.txt, DESeq2 log2 library size normalized counts to be used
 #### DESeq2 by line command
 
 ```{r, echo=TRUE, eval=FALSE}
+#test example
+system("wget 130.192.119.59/public/test.analysis.zip")
+unzip("test.analysis.zip")
+setwd("test.analysis")
+library(docker4seq)
+wrapperDeseq2(output.folder=getwd(), group="docker", experiment.table="_counts.txt", log2fc=1, fdr=0.1, ref.covar="Cov.1", type="gene", batch=FALSE)
 
-wrapperDeseq2(experiment.table="4t1_counts.txt", log2fc=1, fdr=0.1, ref.covar="Cov.1", type="gene", batch=FALSE)
 ```
 
 
@@ -312,8 +385,14 @@ A detailed description of the parameters is given below.
 The miRNAseq workflow can be also executed using R and it is completely embedded in a unique function:
 
 ```{r, echo=TRUE, eval=FALSE}
+#test example
+system("wget 130.192.119.59/public/test.mirnaCounts.zip")
+unzip("test.mirnaCounts.zip")
+setwd("test.mirnaCounts")
+library(docker4seq)
 mirnaCounts(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch", 
             mirbase.id="hsa",download.status=FALSE, adapter.type="NEB", trimmed.fastq=FALSE)
+
 ```
 
 User needs to create the **fastq.folder**, where the fastq.gz files for all miRNAs under analysis are located. 
@@ -332,7 +411,39 @@ The miRNAseq workflow produces the following output files:
     + all.counts.Rda: miRNAs raw counts ready to be loaded in R.
     + analysis.log: logs of the full analysis pipeline
   
+
+### miRNAseq performances on different hardware configurations
+
+To have an idea of the difference performances that we can achieve with our miRNAseq workflow on different hardware we tested it on:
+
+    + NUC mini PC: CPU i7-6770HQ 3.5 GHz (1 core, 8 threads), 32 Gb RAM, HD 250 Gb SSD
+    + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
+
+
+We run resepctively 3, 6, 12, and 24 miRNA samples in parallel, increasing the number of threads till reaching the limit of the hardware or 24 threads, i.e. vaules shown in parenthesis in fig. below.
     
+![performance](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/mirna_performace.jpg)    
+
+
+## Adding covariates and batches to mirnaCounts output: all.counts.txt
+
+The funnction **mirnaCovar** add to the header of all.counts.txt covariates and batches or covariates only.
+
+```{r, echo=TRUE, eval=FALSE}
+#test example
+system("wget 130.192.119.59/public/test.mirna.analysis.zip")
+unzip("test.mirna.analysis.zip")
+setwd("test.mirna.analysis")
+library(docker4seq)
+mirnaCovar(experiment.folder=getwd(),
+     covariates=c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.1", 
+                  "Cov.2", "Cov.2", "Cov.2", "Cov.2", "Cov.2", "Cov.2"),
+     batches=c("bath.1", "bath.1", "bath.2", "bath.2", "batch.1", "batch.1", 
+               "batch.2", "batch.2","batch.1", "batch.1","bath.2", "bath.2"))
+
+```
+
+
     
 ## chipseq workflow
 
@@ -359,10 +470,12 @@ The chipseq workflow can be also executed using R and it is completely embedded 
 
 ```{r, echo=TRUE, eval=FALSE}
 
+system("wget 130.192.119.59/public/test.chipseqCounts.zip")
+unzip("test.chipseqCounts.zip")
+setwd("test.chipseqCounts")
 library(docker4seq)
-
-chipseqCounts(group = c("sudo", "docker"), output.folder = getwd(),
-  mock.folder, test.folder, scratch.folder,
+chipseqCounts(group = "docker", output.folder = "./prdm51.igg",
+  mock.folder="./igg", test.folder="./prdm51", scratch.folder=getwd(),
   adapter5 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
   adapter3 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
   threads = 8, min.length = 30, genome.folder,
@@ -421,13 +534,23 @@ The chipseq workflow produces the following output files:
     + mycontrol_sorted.bw: bigWig file for UCSC Genome Browser visualization
     + mytreat_sorted.bw: bigWig file for UCSC Genome Browser visualization
      
+### ChIPseq performances on different hardware configurations
 
+To have an idea of the difference performances that we can achieve with our miRNAseq workflow on different hardware we tested it on:
+
+    + NUC mini PC: CPU i7-6770HQ 3.5 GHz (1 core, 8 threads), 32 Gb RAM, HD 250 Gb SSD
+    + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
+
+
+We run resepctively 37, 70, 111, and 149 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in fig. below.
+    
+![performance](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/chipseq_performance.jpg)   
 
 
 ### Creating a BWA index file for Chipseq:
 
 ```{r,  echo=TRUE, eval=FALSE}
-bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", uscs.urlgenome=
+bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/mm10bwa", uscs.urlgenome=
 "http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz",
 gatk=FALSE)
 ```
@@ -437,6 +560,37 @@ In brief, **bwaIndexUcsc** uses UCSC genomic data. User has to provide the URL (
 The index can be easily created using the graphical interface:
 
 ![Creating a BWA index with Genome indexing BWA](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/chipseq1.jpeg)
+
+## Dockers containers
+
+At the present time all functions requiring some sort of calculation are embedded in the following docker containers:
+
+
+- docker.io/rcaloger/annotate.2017.01 used by rnaseqCounts, rsemanno 
+
+- docker.io/rcaloger/bwa.2017.01 used by bwaIndexUcsc, bwa 
+
+- docker.io/rcaloger/chipseq.2017.01 used by chipseqCounts, chipseq
+
+- docker.io/rcaloger/r332.2017.01 used by experimentPower, sampleSize, wrapperDeseq2
+
+- docker.io/rcaloger/mirnaseq.2017.01 used by mirnaCounts
+
+- docker.io/rcaloger/rsemstar.2017.01 used by rnaseqCounts, rsemstarIndex, rsemstarUscsIndex
+
+- docker.io/rcaloger/skewer.2017.01 used by skewer
+
+### docker container nomenclature
+
+In case of updates required to solve bugs, which do not affect the calculation docker.io/rcaloger/XXXXX.YYYY.ZZ the fiels ZZ will be updated.
+
+In case of updates which affect the calculation, e.g. new release of Bioconductor libraries, the field YYYY will be updated. Previous versions will be maintained to allow reproducibility.
+
+### Reproducibility
+
+Within any folder generated with docker4seq functions it is saved the file **containers.txt**, which indicates the containers available in the local release of docker4seq.
+
+
 
 
 

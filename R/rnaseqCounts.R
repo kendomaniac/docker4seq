@@ -20,14 +20,16 @@
 #' @return Returns the output of skewer, rsemstar, rsemannos' functions
 #' @examples
 #'\dontrun{
-#'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
-#'     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
-#'     rnaseqCounts(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
-#'     adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-#'     adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-#'     seq.type="pe", threads=8,  min.length=40,
-#'     genome.folder="/data/scratch/hg38star", strandness="none", save.bam=TRUE,
-#'     org="hg38", truncating.expected.counts=FALSE, annotation.type="gtfENSEMBL")
+#'     system("wget http://130.192.119.59/public/test.mrnaCounts.zip")
+#'     unzip("test.mrnaCounts.zip")
+#'     setwd("./test.mrnaCounts")
+#'     library(docker4seq)
+#'     rnaseqCounts(group="docker",fastq.folder=getwd(), scratch.folder=getwd(),
+#'             adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+#'             adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+#'             seq.type="se", threads=8,  min.length=40,
+#'             genome.folder="/data/scratch/mm10star", strandness="none", save.bam=FALSE,
+#'             org="mm10", truncating.expected.counts=FALSE, annotation.type="gtfENSEMBL")
 #' }
 #' @export
 rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch", threads=4,
@@ -49,6 +51,7 @@ org="hg38", truncating.expected.counts=FALSE, annotation.type=c("biocUCSC","gtfE
     cat("\nERROR: an annotatin function not implemented was selected\n")
     return(1)
   }
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
   return(0)
 }
 

@@ -1,31 +1,76 @@
 #' @title A wrapper function for experiment_power from RnaSeqSampleSize Bioconductor package
 #' @description This function evaluate the statistical power of a pilot experiment
+#' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param filename, a character string indicating the name of the count table file
 #' @param replicatesXgroup, an integer indicating the number of samples used in each group
 #' @param FDR, false discovery rate
 #' @param genes4dispersion, an integer indicating the number of genes used in estimation of read counts and dispersion distribution
 #' @param log2fold.change, an integer indicating the minimum log2 fold change for prognostic genes between two groups
 #' @param output.folder, a string indicating the path where to save the output file
-#' @import RnaSeqSampleSize
 #' @return a string with the requested informations. The string is also saved in a file: power_evaluation.txt
 #' @examples
 #'\dontrun{
-#'  experimentPower("_counts.txt",replicatesXgroup=3, FDR=0.1, genes4dispersion=200, log2fold.change=1)
+#'  system("wget 130.192.119.59/public/test.analysis.zip")
+#'  unzip("test.analysis.zip")
+#'  setwd("test.analysis")
+#'  library(docker4seq)
+#'  experimentPower("_counts.txt",replicatesXgroup=7, 
+#'  FDR=0.1, genes4dispersion=200, log2fold.change=1)
 #'}
 #' @export
 
 
-experimentPower <- function(filename, replicatesXgroup=3, FDR=0.1, genes4dispersion=200, log2fold.change=1,  output.folder=getwd()){
-  dataset <- read.table(filename, sep="\t", header=T, row.names=1, stringsAsFactors = F)
-  col.n <- strsplit(names(dataset), "_")
-  if(length(col.n[[1]])==1){
-    cat("\nIt seems that covariates are not added to the count table\n")
-    return("error 1")
+experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup=3, FDR=0.1, genes4dispersion=200, log2fold.change=1,  output.folder=getwd()){
+  #running time 1
+  ptm <- proc.time()
+  #running time 1
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    return()
   }
-  covar <- sapply(col.n, function(x)x[2])
-  dataMatrixDistribution<-est_count_dispersion(dataset, group=covar)
-  exp.power <- est_power_distribution(n=replicatesXgroup,f=FDR,rho=2^log2fold.change, distributionObject=dataMatrixDistribution,repNumber=genes4dispersion)
-  power.result <- paste("The power of the experiment with FDR=", FDR, " ,log2FC=", log2fold.change," and ", replicatesXgroup, " replicates x group is ", exp.power, "\n", sep="")
-  writeLines(power.result, paste(output.folder, "power_evaluation.txt", sep="/"))
-  return(power.result)
+  
+  if(group=="sudo"){
+    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
+    runDocker(group="sudo",container="docker.io/rcaloger/r332.2017.01", params=params)
+  }else{
+    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
+    runDocker(group="docker",container="docker.io/rcaloger/r332.2017.01", params=params)
+  }
+  
+  out <- "xxxx"
+  #waiting for the end of the container work
+  while(out != "anno.info"){
+    Sys.sleep(10)
+    cat(".")
+    out.tmp <- dir(file.path(output.folder))
+    out.tmp <- out.tmp[grep("anno.info",out.tmp)]
+    if(length(out.tmp)>0){
+      out <- "anno.info"
+    }
+  }
+  
+  #running time 2
+  ptm <- proc.time() - ptm
+  dir <- dir(output.folder)
+  dir <- dir[grep("run.info",dir)]
+  if(length(dir)>0){
+    con <- file("run.info", "r")
+    tmp.run <- readLines(con)
+    close(con)
+    tmp.run[length(tmp.run)+1] <- paste("experimentPower user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("experimentPower system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("experimentPower elapsed run time mins ",ptm[3]/60, sep="")
+    writeLines(tmp.run,"run.info")
+  }else{
+    tmp.run <- NULL
+    tmp.run[1] <- paste("experimentPower user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("experimentPower system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("experimentPower elapsed run time mins ",ptm[3]/60, sep="")
+  } 
+    writeLines(tmp.run,"run.info")
+    system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",output.folder, sep=""))
+    system("rm -fR anno.info")
+    system("rm -fR dockerID")
+    
 }

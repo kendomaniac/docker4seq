@@ -76,15 +76,15 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	dir <- dir[which(dir%in%c(sample.bam, ctrl.bam))]
 	cat("\ncopying \n")
 	if(length(dir)==0){
-		cat(paste("It seems that in ", getwd(), "there are not bam files"))
+		cat(paste("It seems that in ", bam.folder, "there are not bam files"))
 		return(1)
 	}else if(length(dir)>2){
-		cat(paste("It seems that in ", getwd(), "there are more than two bam files"))
+		cat(paste("It seems that in ", bam.folder, "there are more than two bam files"))
 		return(2)
 	}else{
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 		for(i in dir){
-		      system(paste("cp ",getwd(),"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
+		      system(paste("cp ",bam.folder,"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
 	    }
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	}
@@ -136,7 +136,7 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	#running time 2
 
 	#saving log and removing docker container
-	container.id <- readLines(paste(bam.folder,"/dockerID", sep=""))
+	container.id <- readLines(paste(bam.folder,"/dockerID", sep=""), warn = FALSE)
 	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
 	system(paste("docker rm ", container.id, sep=""))
 	
@@ -146,6 +146,6 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
   system(paste("rm  ",bam.folder,"/dockerID", sep=""))
   system(paste("rm  ",bam.folder,"/tempFolderID", sep=""))
 	#removing temporary folder
-
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",bam.folder, sep=""))
 }
 

@@ -4,15 +4,15 @@
 \alias{rsemannoByGtf}
 \title{Annotating RSEM gene.results using ENSEMBL gtf and refGenome CRAN package}
 \usage{
-rsemannoByGtf(rsem.folder = getwd(), genome.folder,
-  truncating.expected.counts = FALSE)
+rsemannoByGtf(group = c("sudo", "docker"), rsem.folder = getwd(),
+  genome.folder)
 }
 \arguments{
+\item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
+
 \item{rsem.folder, }{a character string indicating where gene.results file is located}
 
 \item{genome.folder, }{a character string indicating the folder for the genome reference used for mapping and counting with \code{"rsemstar"} function. In this folder is present the GTF used for by RSEM}
-
-\item{truncating.expected.counts, }{a boolean logical variable indicating if the expected counts calculated by RSEM need to be converted in integer to be compliant with differential expression Bioconductor packages as DESeq2. Default is FALSE}
 }
 \value{
 one file: annotated_genes.results, which is the annotated version of gene.results.
@@ -24,10 +24,9 @@ This function executes the docker container annotate.1, where refGenome is used 
 \dontrun{
     #downloading fastq files
     system("wget http://130.192.119.59/public/genes.results.gz")
-    gzip -d genes.results.gz
+    system("gzip -d genes.results.gz")
     #running rsemannoByGtf
-    rsemannoByGtf(rsem.folder=getwd(), genome.folder="/data/scratch/hg38star",
-    truncating.expected.counts=FALSE)
+    rsemannoByGtf(group="docker", rsem.folder=getwd(), genome.folder="/data/scratch/hg38star")
 }
 
 }

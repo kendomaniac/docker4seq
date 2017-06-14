@@ -82,12 +82,13 @@ rsemstarUscsIndex <- function(group=c("sudo","docker"), genome.folder=getwd(),
   writeLines(tmp.run, paste(genome.folder,"run.info", sep="/"))
   
   #saving log and removing docker container
-  container.id <- readLines(paste(genome.folder,"/dockerID", sep=""))
+  container.id <- readLines(paste(genome.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
   
   
   #running time 2
   system(paste("rm ",genome.folder,"/dockerID", sep=""))
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",genome.folder, sep=""))
 }
 

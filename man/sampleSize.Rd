@@ -4,10 +4,12 @@
 \alias{sampleSize}
 \title{A wrapper function for sample_size_distribution function from RnaSeqSampleSize Bioconductor package}
 \usage{
-sampleSize(filename, power = 0.8, FDR = 0.1, genes4dispersion = 200,
-  log2fold.change = 1, output.folder = getwd())
+sampleSize(group = c("sudo", "docker"), filename, power = 0.8, FDR = 0.1,
+  genes4dispersion = 200, log2fold.change = 1, output.folder = getwd())
 }
 \arguments{
+\item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
+
 \item{filename, }{a character string indicating the name of the count table file}
 
 \item{power, }{expected statistical power required to detect prognostic genes}
@@ -28,6 +30,11 @@ This function executes sample_size_distribution to identify the number of sample
 }
 \examples{
 \dontrun{
- sampleSize("_counts.txt", power=0.80, FDR=0.1, genes4dispersion=200, log2fold.change=1)
+   system("wget 130.192.119.59/public/test.analysis.zip")
+   unzip("test.analysis.zip")
+   setwd("test.analysis")
+   library(docker4seq)
+   sampleSize("_counts.txt", power=0.80, FDR=0.1, 
+   genes4dispersion=200, log2fold.change=1)
 }
 }
