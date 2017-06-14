@@ -12,15 +12,14 @@
 #' @return one file: annotated_genes.results, which is the annotated version of gene.results.
 #' @examples
 #'\dontrun{
-#'     #downloading fastq files
-#'     system("wget http://130.192.119.59/public/ctrl1_R1.fastq.gz")
-#'     system("wget http://130.192.119.59/public/ctrl2_R1.fastq.gz")
-#'     system("wget http://130.192.119.59/public/ctrl3_R1.fastq.gz")
-#'     system("wget http://130.192.119.59/public/trt1_R1.fastq.gz")
-#'     system("wget http://130.192.119.59/public/trt2_R1.fastq.gz")
-#'     #running mirnaCounts
-#'     mirnaCounts(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
-#'     mirbase.id="hsa",download.status=FALSE, adapter.type="NEB", trimmed.fastq=FALSE)
+#'    system("wget 130.192.119.59/public/test.mirnaCounts.zip")
+#'    unzip("test.mirnaCounts.zip")
+#'    setwd("test.mirnaCounts")
+#'    library(docker4seq)
+#'    mirnaCounts(group="docker",fastq.folder=getwd(), 
+#'              scratch.folder="/data/scratch", 
+#'              mirbase.id="hsa",download.status=FALSE, 
+#'              adapter.type="NEB", trimmed.fastq=FALSE)
 #'
 #' }
 #' @export

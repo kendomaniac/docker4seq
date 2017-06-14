@@ -10,7 +10,12 @@
 #' @return a string with the requested informations. the string is also saved in a file: sample_size_evaluation.txt , power_evaluation.txt
 #' @examples
 #'\dontrun{
-#'  sampleSize("_counts.txt", power=0.80, FDR=0.1, genes4dispersion=200, log2fold.change=1)
+#'    system("wget 130.192.119.59/public/test.analysis.zip")
+#'    unzip("test.analysis.zip")
+#'    setwd("test.analysis")
+#'    library(docker4seq)
+#'    sampleSize("_counts.txt", power=0.80, FDR=0.1, 
+#'    genes4dispersion=200, log2fold.change=1)
 #'}
 #' @export
 

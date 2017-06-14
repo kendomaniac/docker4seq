@@ -7,13 +7,15 @@
 #' @return Returns 0 and a count file, i.e. all.counts.txt, with the prefix "w_covar" or w_covar_batch depending if only covariates were added or also batch info were added
 #' @examples
 #'\dontrun{
-#'     mirnaCovar(experiment.folder="/home/beccuti/e1g",
-#'     covariates=c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.2", "Cov.2", "Cov.2", "Cov.2"),
-#'     batches=NULL)
-#'     
-#'     mirnaCovar(experiment.folder="/Users/raffaelecalogero/Desktop",
-#'     covariates=c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.2", "Cov.2", "Cov.2", "Cov.2"),
-#'     batches=c("bath.1", "bath.1", "bath.2", "bath.2", "batch.1", "batch.1", "batch.2", "batch.2"))
+#'    system("wget 130.192.119.59/public/test.mirna.analysis.zip")
+#'    unzip("test.mirna.analysis.zip")
+#'    setwd("test.mirna.analysis")
+#'    library(docker4seq)
+#'    mirnaCovar(experiment.folder=getwd(),
+#'           covariates=c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.1", 
+#'                        "Cov.2", "Cov.2", "Cov.2", "Cov.2", "Cov.2", "Cov.2"),
+#'           batches=c("bath.1", "bath.1", "bath.2", "bath.2", "batch.1", "batch.1", 
+#'                     "batch.2", "batch.2","batch.1", "batch.1","bath.2", "bath.2"))
 #' }
 #' @export
 mirnaCovar <- function(experiment.folder, covariates=NULL, batches=NULL){
