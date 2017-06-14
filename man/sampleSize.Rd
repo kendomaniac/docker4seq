@@ -19,6 +19,8 @@ sampleSize(filename, power = 0.8, FDR = 0.1, genes4dispersion = 200,
 \item{log2fold.change, }{an integer indicating the minimum log2 fold change for prognostic genes between two groups}
 
 \item{output.folder, }{a string indicating the path where to save the output file}
+
+\item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
 }
 \value{
 a string with the requested informations. the string is also saved in a file: sample_size_evaluation.txt , power_evaluation.txt

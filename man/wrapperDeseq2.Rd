@@ -37,7 +37,7 @@ This function runs deseq2 on a table genrated with sample2experiment having the 
     unzip("test.analysis.zip")
     setwd("test.analysis")
     library(docker4seq)
-    wrapperDeseq2(experiment.table="_counts.txt", log2fc=1, 
+    wrapperDeseq2(output.folder=getwd(), group="docker", experiment.table="_counts.txt", log2fc=1, 
     fdr=0.1, ref.covar="Cov.1", type="gene", batch=FALSE)
 
 }
