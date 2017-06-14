@@ -269,7 +269,7 @@ system("wget 130.192.119.59/public/test.analysis.zip")
 unzip("test.analysis.zip")
 setwd("test.analysis")
 library(docker4seq)
-sampleSize(filename="_counts.txt", power=0.80, FDR=0.1, genes4dispersion=200, log2fold.change=1)
+sampleSize(group="docker", filename="_counts.txt", power=0.80, FDR=0.1, genes4dispersion=200, log2fold.change=1)
 
 ```
 
@@ -292,7 +292,7 @@ system("wget 130.192.119.59/public/test.analysis.zip")
 unzip("test.analysis.zip")
 setwd("test.analysis")
 library(docker4seq)
-experimentPower(filename="_counts.txt",replicatesXgroup=7, FDR=0.1, genes4dispersion=200, log2fold.change=1)
+experimentPower(group="docker", filename="_counts.txt",replicatesXgroup=7, FDR=0.1, genes4dispersion=200, log2fold.change=1)
 
 ```
 

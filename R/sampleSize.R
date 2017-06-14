@@ -69,5 +69,8 @@ sampleSize <- function(group=c("sudo","docker"), filename, power=0.80, FDR=0.1, 
   } 
   writeLines(tmp.run,"run.info")
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",output.folder, sep=""))
+  system("rm -fR anno.info")
+  system("rm -fR dockerID")
+  
 }
 

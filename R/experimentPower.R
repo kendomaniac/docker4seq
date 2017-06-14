@@ -70,4 +70,7 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
   } 
     writeLines(tmp.run,"run.info")
     system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",output.folder, sep=""))
+    system("rm -fR anno.info")
+    system("rm -fR dockerID")
+    
 }
