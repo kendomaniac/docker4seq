@@ -19,7 +19,7 @@
 #'}
 #' @export
 
-sampleSize <- function(filename, power=0.80, FDR=0.1, genes4dispersion=200, log2fold.change=1, output.folder=getwd()){
+sampleSize <- function(group=c("sudo","docker"), filename, power=0.80, FDR=0.1, genes4dispersion=200, log2fold.change=1, output.folder=getwd()){
   #running time 1
   ptm <- proc.time()
   #running time 1
