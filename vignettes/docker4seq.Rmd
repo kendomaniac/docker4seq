@@ -542,5 +542,33 @@ The index can be easily created using the graphical interface:
 
 ![Creating a BWA index with Genome indexing BWA](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq_devel/docker4seq_devel/inst/img/chipseq1.jpeg)
 
+## Dockers containers
+
+At the present time all functions requiring some sort of calculation are embedded in the following docker containers:
+
+
+- docker.io/rcaloger/annotate.2017.01 used by rnaseqCounts, rsemanno 
+
+- docker.io/rcaloger/bwa.2017.01 used by bwaIndexUcsc, bwa 
+
+- docker.io/rcaloger/chipseq.2017.01 used by chipseqCounts, chipseq
+
+- docker.io/rcaloger/r332.2017.01 used by experimentPower, sampleSize, wrapperDeseq2
+
+- docker.io/rcaloger/mirnaseq.2017.01 used by mirnaCounts
+
+- docker.io/rcaloger/rsemstar.2017.01 used by rnaseqCounts, rsemstarIndex, rsemstarUscsIndex
+
+- docker.io/rcaloger/skewer.2017.01 used by skewer
+
+### docker container nomenclature
+
+In case of updates required to solve bugs, which do not affect the calculation docker.io/rcaloger/XXXXX.YYYY.ZZ the fiels ZZ will be updated.
+
+In case of updates which affect the calculation, e.g. new release of Bioconductor libraries, the field YYYY will be updated. Previous versions will be maintained to allow reproducibility.
+
+
+
+
 
 

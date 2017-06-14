@@ -1,0 +1,7 @@
+docker.io/rcaloger/annotate.2017.01 
+docker.io/rcaloger/bwa.2017.01
+docker.io/rcaloger/chipseq.2017.01
+docker.io/rcaloger/r332.2017.01
+docker.io/rcaloger/mirnaseq.2017.01
+docker.io/rcaloger/rsemstar.2017.01
+docker.io/rcaloger/skewer.2017.01
