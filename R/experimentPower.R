@@ -14,7 +14,7 @@
 #'  unzip("test.analysis.zip")
 #'  setwd("test.analysis")
 #'  library(docker4seq)
-#'  experimentPower("_counts.txt",replicatesXgroup=7, 
+#'  experimentPower("_counts.txt",replicatesXgroup=7,
 #'  FDR=0.1, genes4dispersion=200, log2fold.change=1)
 #'}
 #' @export
@@ -29,7 +29,7 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
-  
+
   if(group=="sudo"){
     params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
     runDocker(group="sudo",container="docker.io/rcaloger/r332.2017.01", params=params)
@@ -37,7 +37,7 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
     params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
     runDocker(group="docker",container="docker.io/rcaloger/r332.2017.01", params=params)
   }
-  
+
   out <- "xxxx"
   #waiting for the end of the container work
   while(out != "anno.info"){
@@ -49,7 +49,7 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
       out <- "anno.info"
     }
   }
-  
+
   #running time 2
   ptm <- proc.time() - ptm
   dir <- dir(output.folder)
@@ -67,10 +67,16 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
     tmp.run[1] <- paste("experimentPower user run time mins ",ptm[1]/60, sep="")
     tmp.run[length(tmp.run)+1] <- paste("experimentPower system run time mins ",ptm[2]/60, sep="")
     tmp.run[length(tmp.run)+1] <- paste("experimentPower elapsed run time mins ",ptm[3]/60, sep="")
-  } 
+  }
     writeLines(tmp.run,"run.info")
     system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",output.folder, sep=""))
+
+    #saving log and removing docker container
+    container.id <- readLines(paste(output.folder,"/dockerID", sep=""), warn = FALSE)
+    system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+    system(paste("docker rm ", container.id, sep=""))
+
     system("rm -fR anno.info")
     system("rm -fR dockerID")
-    
+
 }

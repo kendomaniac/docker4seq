@@ -118,7 +118,7 @@ adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
 seq.type="se", threads=8,  min.length=40,
 genome.folder="/data/scratch/mm10star", strandness="none", save.bam=FALSE,
-org="mm10", truncating.expected.counts=FALSE, annotation.type="gtfENSEMBL")
+org="mm10", annotation.type="gtfENSEMBL")
 
 ```
 

@@ -35,7 +35,7 @@ This function evaluate the statistical power of a pilot experiment
  unzip("test.analysis.zip")
  setwd("test.analysis")
  library(docker4seq)
- experimentPower("_counts.txt",replicatesXgroup=7, 
+ experimentPower("_counts.txt",replicatesXgroup=7,
  FDR=0.1, genes4dispersion=200, log2fold.change=1)
 }
 }
