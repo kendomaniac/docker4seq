@@ -16,7 +16,7 @@
 #' }
 #'
 #' @export
-rsemannoByGtf <- function(group=c("sudo", "docker"), rsem.folder=getwd(), genome.folder){
+rsemannoByGtf <- function(group="docker", rsem.folder=getwd(), genome.folder){
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -25,7 +25,7 @@ rsemannoByGtf <- function(group=c("sudo", "docker"), rsem.folder=getwd(), genome
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
-  
+
   if(group=="sudo"){
     params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",rsem.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.rsemannoByGtf.R", sep="")
     runDocker(group="sudo",container="docker.io/rcaloger/r332.2017.01", params=params)
@@ -33,7 +33,7 @@ rsemannoByGtf <- function(group=c("sudo", "docker"), rsem.folder=getwd(), genome
     params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",rsem.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.rsemannoByGtf.R", sep="")
     runDocker(group="docker",container="docker.io/rcaloger/r332.2017.01", params=params)
   }
-  
+
   out <- "xxxx"
   #waiting for the end of the container work
   while(out != "anno.info"){
@@ -45,7 +45,7 @@ rsemannoByGtf <- function(group=c("sudo", "docker"), rsem.folder=getwd(), genome
       out <- "anno.info"
     }
   }
-  
+
   #running time 2
   ptm <- proc.time() - ptm
   dir <- dir(rsem.folder)
@@ -63,7 +63,7 @@ rsemannoByGtf <- function(group=c("sudo", "docker"), rsem.folder=getwd(), genome
     tmp.run[1] <- paste("rsemannoByGtf user run time mins ",ptm[1]/60, sep="")
     tmp.run[length(tmp.run)+1] <- paste("rsemannoByGtf system run time mins ",ptm[2]/60, sep="")
     tmp.run[length(tmp.run)+1] <- paste("rsemannoByGtf elapsed run time mins ",ptm[3]/60, sep="")
-    
+
     writeLines(tmp.run,"run.info")
   }
 

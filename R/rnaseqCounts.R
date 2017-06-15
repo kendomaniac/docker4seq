@@ -45,7 +45,7 @@ org="hg38", annotation.type=c("biocUCSC","gtfENSEMBL")){
   if(annotation.type=="biocUCSC"){
 #    rsemanno(group=group,rsem.folder=fastq.folder, scratch.folder=scratch.folder, org=org, truncating.expected.counts=truncating.expected.counts, protein.anno=FALSE)
   }else if(annotation.type=="gtfENSEMBL"){
-    rsemannoByGtf(rsem.folder=fastq.folder, genome.folder=genome.folder)
+    rsemannoByGtf(group=group, rsem.folder=fastq.folder, genome.folder=genome.folder)
   }else{
     cat("\nERROR: an annotatin function not implemented was selected\n")
     return(1)
