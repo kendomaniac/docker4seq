@@ -4,8 +4,7 @@
 \alias{rsemannoByGtf}
 \title{Annotating RSEM gene.results using ENSEMBL gtf and refGenome CRAN package}
 \usage{
-rsemannoByGtf(group = c("sudo", "docker"), rsem.folder = getwd(),
-  genome.folder)
+rsemannoByGtf(group = "docker", rsem.folder = getwd(), genome.folder)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

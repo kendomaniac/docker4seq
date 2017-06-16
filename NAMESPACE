@@ -2,6 +2,7 @@
 
 export(bwa)
 export(bwaIndexUcsc)
+export(cascStep1)
 export(chipseq)
 export(chipseqCounts)
 export(dockerTest)
