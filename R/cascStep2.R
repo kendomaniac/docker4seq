@@ -1,5 +1,5 @@
-#' @title Running CASC step1 identification of the optimal number of clusters
-#' @description This function executes CASC step1 identification of the optimal number of clusters
+#' @title Running CASC step2 identification of the optimal number of clusters
+#' @description This function executes CASC step2 identification of the optimal number of clusters
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param data.folder, a character string indicating the folder where comma separated file of cells log10 counts is saved

@@ -2,6 +2,7 @@
 
 export(bwa)
 export(bwaIndexUcsc)
+export(cascKoptimization)
 export(cascStep1)
 export(cascStep2)
 export(chipseq)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/cascStep2.R
 \name{cascStep2}
 \alias{cascStep2}
-\title{Running CASC step1 identification of the optimal number of clusters}
+\title{Running CASC step2 identification of the optimal number of clusters}
 \usage{
 cascStep2(group = c("sudo", "docker"), scratch.folder,
   data.folder = getwd(), totIdentity = 80, clusterIdentity = 80, k.min,
@@ -29,7 +29,7 @@ cascStep2(group = c("sudo", "docker"), scratch.folder,
 a folder with .....
 }
 \description{
-This function executes CASC step1 identification of the optimal number of clusters
+This function executes CASC step2 identification of the optimal number of clusters
 }
 \examples{
 \dontrun{
