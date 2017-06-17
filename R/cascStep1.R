@@ -103,6 +103,7 @@ cascStep1 <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   system(paste("rm -R ",scrat_tmp.folder))
   system("rm -fR anno.info")
   system("rm -fR dockerID")
+  system("rm  -fR tempFolderID")
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
 
 }

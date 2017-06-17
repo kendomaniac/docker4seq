@@ -92,7 +92,9 @@ cascStep2 <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
+  system(paste("rm -R ",scrat_tmp.folder))
   system("rm -fR anno.info")
   system("rm -fR dockerID")
+  system("rm  -fR tempFolderID")
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
 }

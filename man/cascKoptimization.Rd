@@ -5,8 +5,8 @@
 \title{Running CASC step1 identification of the optimal number of clusters}
 \usage{
 cascKoptimization(group = c("sudo", "docker"), scratch.folder,
-  data.folder = getwd(), counts.matrix, permutations = 100,
-  blocks.permutations = 10, core = 0, bootstrap.fraction = 10, k.min,
+  data.folder = getwd(), counts.matrix, permutations = 20,
+  blocks.permutations = 2, core = 0, bootstrap.fraction = 10, k.min,
   k.max, totIdentity = 80, clusterIdentity = 80)
 }
 \arguments{
@@ -45,7 +45,7 @@ This function executes CASC step1 identification of the optimal number of cluste
     #downloading fastq files
     system("wget http://130.192.119.59/public/log10_singlecells_counts.csv.gz")
     system("gzip -d log10_singlecells_counts.csv.gz")
-    #running casc step1
+    #running cascKoptimization
     cascKoptimization(group="docker", scratch.folder="/Users/raffaelecalogero/Desktop/scratch", data.folder=getwd(),
     counts.matrix="log10_singlecells_counts.csv", permutations=20, blocks.permutations=2, core=0, bootstrap.fraction=10, k.min=2, k.max=4, totIdentity=80, clusterIdentity=80)
 }
