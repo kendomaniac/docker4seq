@@ -17,12 +17,12 @@
 #'     system("wget http://130.192.119.59/public/log10_singlecells_counts.csv.gz")
 #'     system("gzip -d log10_singlecells_counts.csv.gz")
 #'     #running casc step1
-#'     cascStep1(group="docker", scratch.folder="/Users/raffaelecalogero/Desktop/scratch", data.folder=getwd(),
-#'     counts.matrix="log10_singlecells_counts.csv", permutations=20, blocks.permutations=2, core=0, bootstrap.fraction=10, k.min=2, k.max=4)
+#'     cascStep2(group="docker", scratch.folder="/Users/raffaelecalogero/Desktop/scratch", data.folder=getwd(),
+#'     totIdentity=80, clusterIdentity=80, k.min=2, k.max=4, counts.matrix="log10_singlecells_counts.csv")
 #' }
 #'
 #' @export
-cascStep1 <- function(group=c("sudo","docker"), scratch.folder, data.folder=getwd(), counts.matrix, permutations=100, blocks.permutations=10, core=0, bootstrap.fraction=10, k.min, k.max){
+cascStep2 <- function(group=c("sudo","docker"), scratch.folder, data.folder=getwd(), totIdentity=80, clusterIdentity=80, k.min, k.max, counts.matrix){
 
   #running time 1
   ptm <- proc.time()
@@ -44,20 +44,16 @@ cascStep1 <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   writeLines(scrat_tmp.folder,paste(data.folder,"/tempFolderID", sep=""))
   cat("\ncreating a folder in scratch folder\n")
   dir.create(file.path(scratch.folder, tmp.folder))
-  dir.create(file.path(scratch.folder, tmp.folder,"/Data"))
-  system(paste("cp ",counts.matrix, " ", scrat_tmp.folder,"/Data",sep=""))
+  system(paste("cp -R Data ", scrat_tmp.folder,sep=""))
+  system(paste("cp -R Result ", scrat_tmp.folder,sep=""))
+  system(paste("cp -R output ", scrat_tmp.folder,sep=""))
 
-#  writeLines(file.path(scratch.folder, tmp.folder),"path.txt")
-
-#  system(paste(path.package(package="docker4seq"),"/inst/script/1_perm.sh ",counts.matrix," ",permutations," ",blocks.permutations," ",core," ",bootstrap.fraction," ",k.min," ",k.max, sep=""))
-#D=$(docker run -i -t -d -v /Users/raffaelecalogero/Desktop/single-celll_Buettner:/data -v /Users/raffaelecalogero/Desktop/scratch:/scratch docker.io/rcaloger/casc /bin/bash)
-#Rscript /home/CASC/Main_cra.R log10_singlecells_counts.csv 100 10 0 10 2 4
 
   if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/casc Rscript /home/CASC/Main_cra.R ",counts.matrix," ",permutations," ",blocks.permutations," ",core," ",bootstrap.fraction," ",k.min," ",k.max, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/casc Rscript /home/CASC/Analysis_cra.R ",totIdentity," ",clusterIdentity," ",k.min," ",k.max," ",counts.matrix, sep="")
     runDocker(group="sudo",container="docker.io/rcaloger/casc", params=params)
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/casc Rscript /home/CASC/Main_cra.R ",counts.matrix," ",permutations," ",blocks.permutations," ",core," ",bootstrap.fraction," ",k.min," ",k.max, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/casc Rscript /home/CASC/Analysis_cra.R ",totIdentity," ",clusterIdentity," ",k.min," ",k.max," ",counts.matrix, sep="")
     runDocker(group="docker",container="docker.io/rcaloger/casc", params=params)
   }
 
@@ -81,15 +77,15 @@ cascStep1 <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
     con <- file("run.info", "r")
     tmp.run <- readLines(con)
     close(con)
-    tmp.run[length(tmp.run)+1] <- paste("casc user run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("casc system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("casc elapsed run time mins ",ptm[3]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("casc step2 user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("casc step2 system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("casc step2 elapsed run time mins ",ptm[3]/60, sep="")
     writeLines(tmp.run,"run.info")
   }else{
     tmp.run <- NULL
-    tmp.run[1] <- paste("casc user run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("casc system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("casc elapsed run time mins ",ptm[3]/60, sep="")
+    tmp.run[1] <- paste("casc step2 user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("casc step2 system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("casc step2 elapsed run time mins ",ptm[3]/60, sep="")
 
     writeLines(tmp.run,"run.info")
   }
@@ -98,11 +94,7 @@ cascStep1 <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
-  #removing temporary folder
-  cat("\n\nRemoving the temporary file ....\n")
-  system(paste("rm -R ",scrat_tmp.folder))
   system("rm -fR anno.info")
   system("rm -fR dockerID")
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
-
 }

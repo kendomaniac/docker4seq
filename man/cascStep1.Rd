@@ -31,7 +31,7 @@ cascStep1(group = c("sudo", "docker"), scratch.folder,
 \item{k.max, }{min number of clusters.}
 }
 \value{
-.....
+a folder with the name of the cell data set under analysis, e.g. log10_singlecells_counts. In this folder there are a set of folder named by the number of k clusters in use. A file named SilhouetteValue.csv for cluster evaluation and a pdf ViolinPlot.pdf which is the representation of the SilhouetteValue.csv. best clusters are represented by a SilhouetteValue distribution skewed versus 1 values.
 }
 \description{
 This function executes CASC step1 identification of the optimal number of clusters
@@ -42,7 +42,8 @@ This function executes CASC step1 identification of the optimal number of cluste
     system("wget http://130.192.119.59/public/log10_singlecells_counts.csv.gz")
     system("gzip -d log10_singlecells_counts.csv.gz")
     #running casc step1
-    cascStep1(group="docker", scratch.folder="/Users/raffaelecalogero/Desktop/scratch", data.folder=getwd(), counts.matrix="log10_singlecells_counts.csv", permutations=2, blocks.permutations=1, core=0, bootstrap.fraction=10, k.min=2, k.max=4)
+    cascStep1(group="docker", scratch.folder="/Users/raffaelecalogero/Desktop/scratch", data.folder=getwd(),
+    counts.matrix="log10_singlecells_counts.csv", permutations=20, blocks.permutations=2, core=0, bootstrap.fraction=10, k.min=2, k.max=4)
 }
 
 }
