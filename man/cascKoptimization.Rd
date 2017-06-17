@@ -7,7 +7,7 @@
 cascKoptimization(group = c("sudo", "docker"), scratch.folder,
   data.folder = getwd(), counts.matrix, permutations = 100,
   blocks.permutations = 10, core = 0, bootstrap.fraction = 10, k.min,
-  k.max)
+  k.max, totIdentity = 80, clusterIdentity = 80)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

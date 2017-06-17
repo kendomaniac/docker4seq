@@ -24,7 +24,7 @@
 #' }
 #'
 #' @export
-cascKoptimization <- function(group=c("sudo","docker"), scratch.folder, data.folder=getwd(), counts.matrix, permutations=100, blocks.permutations=10, core=0, bootstrap.fraction=10, k.min, k.max){
+cascKoptimization <- function(group=c("sudo","docker"), scratch.folder, data.folder=getwd(), counts.matrix, permutations=100, blocks.permutations=10, core=0, bootstrap.fraction=10, k.min, k.max,  totIdentity=80, clusterIdentity=80){
 
   cat("\ncascStep1 start \n)")
   cascStep1(group=group, scratch.folder=scratch.folder, data.folder=data.folder, counts.matrix=counts.matrix, permutations=20, blocks.permutations=permutations, core=core, bootstrap.fraction=bootstrap.fraction, k.min=k.min, k.max=k.max)
