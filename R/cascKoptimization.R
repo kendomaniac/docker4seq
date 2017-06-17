@@ -18,16 +18,16 @@
 #'     #downloading fastq files
 #'     system("wget http://130.192.119.59/public/log10_singlecells_counts.csv.gz")
 #'     system("gzip -d log10_singlecells_counts.csv.gz")
-#'     #running casc step1
+#'     #running cascKoptimization
 #'     cascKoptimization(group="docker", scratch.folder="/Users/raffaelecalogero/Desktop/scratch", data.folder=getwd(),
 #'     counts.matrix="log10_singlecells_counts.csv", permutations=20, blocks.permutations=2, core=0, bootstrap.fraction=10, k.min=2, k.max=4, totIdentity=80, clusterIdentity=80)
 #' }
 #'
 #' @export
-cascKoptimization <- function(group=c("sudo","docker"), scratch.folder, data.folder=getwd(), counts.matrix, permutations=100, blocks.permutations=10, core=0, bootstrap.fraction=10, k.min, k.max,  totIdentity=80, clusterIdentity=80){
+cascKoptimization <- function(group=c("sudo","docker"), scratch.folder, data.folder=getwd(), counts.matrix, permutations=20, blocks.permutations=2, core=0, bootstrap.fraction=10, k.min, k.max,  totIdentity=80, clusterIdentity=80){
 
   cat("\ncascStep1 start \n)")
-  cascStep1(group=group, scratch.folder=scratch.folder, data.folder=data.folder, counts.matrix=counts.matrix, permutations=20, blocks.permutations=permutations, core=core, bootstrap.fraction=bootstrap.fraction, k.min=k.min, k.max=k.max)
+  cascStep1(group=group, scratch.folder=scratch.folder, data.folder=data.folder, counts.matrix=counts.matrix, permutations=permutations, blocks.permutations=blocks.permutations, core=core, bootstrap.fraction=bootstrap.fraction, k.min=k.min, k.max=k.max)
   cat("\ncascStep1 end \n)")
   cat("\ncascStep2\n)")
   cascStep2(group=group, scratch.folder=scratch.folder, data.folder=data.folder, totIdentity=totIdentity, clusterIdentity=clusterIdentity, k.min=k.min, k.max=k.max, counts.matrix=counts.matrix)
