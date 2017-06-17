@@ -4,13 +4,11 @@
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param data.folder, a character string indicating the folder where comma separated file of cells log10 counts is saved
 #' @param counts.matrix, a character string indicating the the name of csv  file of cells log10 counts
-#' @param permutations, a integer indicating how main permutations of SIMLR are going to be executed.
-#' @param blocks.permutations, a integer indicating how many SIMLR permutation are going to be run in parallel. e.g. 10 indicates that 100 permutatin will be run in 10 groups of 10 permutations.
-#' @param core, a integer between 0 to 1 to define the fraction of cores to be used by SIMLR, default 0, other values will generate an error in specific hadrware configurations.
-#' @param bootstrap.fraction, a integer between 1 and 100, which indicate the fraction of cell to be removed during boostrap.
-#' @param k.min, min number of clusters.
-#' @param k.max, min number of clusters.
-#' @return a folder with the name of the cell data set under analysis, e.g. log10_singlecells_counts. In this folder there are a set of folder named by the number of k clusters in use. A file named SilhouetteValue.csv for cluster evaluation and a pdf ViolinPlot.pdf which is the representation of the SilhouetteValue.csv. best clusters are represented by a SilhouetteValue distribution skewed versus 1 values.
+#' @param totIdentity, an integer between 1 to 100 which indicates the percentage of identity required to consider the results of two permutations identical.
+#' @param clusterIdentity, an integer between 1 to 100 which indicates the percentage of identity required to consider two clusters identical.
+#' @param k.min, min number of clusters, should be the same of those passes to cascStep1.
+#' @param k.max, min number of clusters, should be the same of those passes to cascStep1.
+#' @return a folder with .....
 #' @examples
 #' \dontrun{
 #'     #downloading fastq files
