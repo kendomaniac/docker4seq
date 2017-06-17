@@ -58,7 +58,42 @@ A ready to go fedora installation USB stick, with everything installed to be use
 downloadContainers(group="docker")
 ```
 
+## Converting a count table in log10
 
+The function **counts2log** can convert a count table in a log10 values saved in a comma separated file which is the input of CASC.
+
+```{r, echo=TRUE, eval=FALSE}
+#downloading fastq files
+system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
+system("gzip -d singlecells_counts.txt.gz")
+counts2log(counts.matrix="singlecells_counts.txt", data.folder=getwd(), log.base=10, type="txt")
+```
+
+## Defining the optimal number of clusters
+
+
+```{r, echo=TRUE, eval=FALSE}
+#downloading fastq files
+system("wget http://130.192.119.59/public/log10_singlecells_counts.csv.gz")
+system("gzip -d log10_singlecells_counts.csv.gz")
+
+cascKoptimization(group="docker", scratch.folder="/Users/raffaelecalogero/Desktop/scratch", data.folder=getwd(),
+counts.matrix="log10_singlecells_counts.csv", permutations=20, blocks.permutations=2, core=0, bootstrap.fraction=10, k.min=2, k.max=4, totIdentity=80, clusterIdentity=80)
+
+```
+
+The function **cascKoptimization** run SIMLR [4] using a range of clusters and produces as output two violin plots:
+
+- silhouette.pdf: Silhouette refers to a method of interpretation and validation of consistency within clusters of data. The technique provides a succinct graphical representation of how well each object lies within its cluster. Here instead of using the average silhouette we represent the silhouette values distribution using a violin plot. Thus, silhouette distributions being skewed to the positive values and with short negative tail is representative of a consistent cluster. In the example below, fig. A, it seems that 4 clusters are the most consistent by silhouette analysis.
+
+
+- cell.stability.pdf: Cell stability plot represent the distribution of the fraction of times, given a N number of permutations, that the cell are stabily localized in a cluster. The example below, fig. B, 3 clusters are characterized by an higher cell stability with respect to 4 clusters. 
+
+Taking in account the two plots and the clusters structure observed for 3 and 4 clusters, fig C and D, it is clear that 4 clusters provide a better separation between cells but keeping very high the cell permanence in a cluster.
+
+![cluster decision](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq/inst/img/silhouette.stability.jpg)
+
+silhouette.stability.jpg
 
 
 ## References
