@@ -33,5 +33,4 @@ This function executes CASC step1 identification of the optimal number of cluste
     system("gzip -d singlecells_counts.txt.gz")
     checkCountDepth(group="docker", data.folder=getwd(), counts.matrix="singlecells_counts.txt", conditions=NULL, outputName="singlecells_counts", nCores=8)
 }
-
 }
