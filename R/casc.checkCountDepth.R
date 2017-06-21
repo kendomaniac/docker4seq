@@ -1,5 +1,5 @@
 #' @title Running SCnorm  checkCountDepth
-#' @description This function executes CASC step1 identification of the optimal number of clusters
+#' @description This function executes check the data count-depth relationship
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param data.folder, a character string indicating the folder where comma separated file of cells log10 counts is saved
 #' @param counts.matrix, a character string indicating the the name of tab delimited file  file of cells un-normalized expression counts
