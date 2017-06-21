@@ -19,7 +19,7 @@ filterZeros <- function(data.folder=getwd(), counts.matrix){
   counts.n0 <- counts[which(counts.sum > 0),]
   cat("\n",paste("Out of ", dim(counts)[1]," genes ",dim(counts.n0)[1]," are left after removing genes with no counts", sep=""),"\n")
   pdf(paste("zeros distribution_",sub(".txt$","",counts.matrix),".pdf",sep=""))
-      hist(log10(counts.sum), main="Zeros distribution in genes", xlab="log10 # cells wo zeros")
+      hist(log10(counts.sum), xlab="log10 # cells wo zeros")
   dev.off()
   write.table(counts.n0, paste("filtered_",counts.matrix,sep=""), sep="\t", col.names=NA)
 }
