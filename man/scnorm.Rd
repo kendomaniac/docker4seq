@@ -23,10 +23,10 @@ scnorm(group = c("sudo", "docker"), data.folder = getwd(), counts.matrix,
 \item{filtercellNum, }{the number of non-zero expression estimate required to include the genes into the SCnorm fitting (default = 10). The initial grouping fits a quantile regression to each gene, making this value too low gives unstable fits.}
 }
 \value{
-a folder with the name of the cell data set under analysis, e.g. log10_singlecells_counts. In this folder there are a set of folder named by the number of k clusters in use. A file named SilhouetteValue.csv for cluster evaluation and a pdf ViolinPlot.pdf which is the representation of the SilhouetteValue.csv. best clusters are represented by a SilhouetteValue distribution skewed versus 1 values.
+a PDF providing a view of effects of normalization, a Rda file containing the full output of **SCnorm** and a tab delimited file containing the normalized data.
 }
 \description{
-This function executes CASC step1 identification of the optimal number of clusters
+This function normalizes  across  cells  to  remove  the effect  of  sequencing  depth  on  the  counts  and  return  the  normalized expression count
 }
 \examples{
 \dontrun{

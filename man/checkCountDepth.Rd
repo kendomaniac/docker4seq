@@ -24,7 +24,7 @@ checkCountDepth(group = c("sudo", "docker"), data.folder = getwd(),
 pdf with the cells counts distributions
 }
 \description{
-This function executes CASC step1 identification of the optimal number of clusters
+This function executes check the data count-depth relationship
 }
 \examples{
 \dontrun{

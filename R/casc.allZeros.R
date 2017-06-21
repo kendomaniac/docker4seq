@@ -22,4 +22,5 @@ filterZeros <- function(data.folder=getwd(), counts.matrix){
       hist(log10(counts.sum), xlab="log10 # cells wo zeros")
   dev.off()
   write.table(counts.n0, paste("filtered_",counts.matrix,sep=""), sep="\t", col.names=NA)
+
 }

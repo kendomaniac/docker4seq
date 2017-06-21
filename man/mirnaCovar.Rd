@@ -4,14 +4,17 @@
 \alias{mirnaCovar}
 \title{Adding covariates and batch information to miRNAseq raw counts output}
 \usage{
-mirnaCovar(experiment.folder, covariates = NULL, batches = NULL)
+mirnaCovar(experiment.folder, covariates = NULL, batches = NULL,
+  output.folder)
 }
 \arguments{
-\item{experiment.folder, }{a character string indicating the paths to miRNAseq output folder}
+\item{experiment.folder, }{a character string indicating the paths to miRNAseq input folder}
 
 \item{covariates, }{a character vector indicating the covariates associated to each sample, e.g. c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.2", "Cov.2", "Cov.2", "Cov.2"). Covariates are required for differential expression analysis}
 
 \item{batches, }{a character vector indicating the covariates associated to each sample, e.g. c("bath.1", "bath.1", "bath.2", "bath.2", "batch.1", "batch.1", "batch.2", "batch.2"). Batch info might be required for differential expression analysis}
+
+\item{output.folder, }{a character vector indicating the paths to miRNAseq output folder}
 }
 \value{
 Returns 0 and a count file, i.e. all.counts.txt, with the prefix "w_covar" or w_covar_batch depending if only covariates were added or also batch info were added
@@ -26,9 +29,9 @@ This function modifies the all.counts.txt table generated from miRNAseq adding c
    setwd("test.mirna.analysis")
    library(docker4seq)
    mirnaCovar(experiment.folder=getwd(),
-          covariates=c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.1", 
+          covariates=c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.1",
                        "Cov.2", "Cov.2", "Cov.2", "Cov.2", "Cov.2", "Cov.2"),
-          batches=c("bath.1", "bath.1", "bath.2", "bath.2", "batch.1", "batch.1", 
-                    "batch.2", "batch.2","batch.1", "batch.1","bath.2", "bath.2"))
+          batches=c("bath.1", "bath.1", "bath.2", "bath.2", "batch.1", "batch.1",
+                    "batch.2", "batch.2","batch.1", "batch.1","bath.2", "bath.2"), output.folder=getwd())
 }
 }
