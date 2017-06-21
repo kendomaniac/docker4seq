@@ -17,12 +17,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Data normalization
 
-SCnorm (as detailed in Bacher et al) performs is a quantile-regression based approach for robust normal-
+SCnorm (as detailed in Bacher et al.) performs a quantile-regression based approach for robust normal-
 ization of single-cell RNA-seq data.  SCnorm groups genes based on their count-depth relationship then applies a quantile regression to each group in order to estimate scaling factors which will remove the effect of sequencing depth from the counts.
 
 #### Check counts-depth relationship
 
-Before normalizing using SCnorm, it is advised to check the count-depth relationship in your data. **checkCountDepth** provides a wrapper in docker4seq for the checkCountDepth of the [**SCnorm package**](https://github.com/rhondabacher/SCnorm), which estimates the count-depth relationship for all genes.
+Before normalizing using **scnorm**, it is advised to check the data count-depth relationship. **checkCountDepth** provides a wrapper, in docker4seq, for the checkCountDepth of the [**SCnorm package**](https://github.com/rhondabacher/SCnorm), which estimates the count-depth relationship for all genes.
 
 ```{r, echo=TRUE, eval=FALSE}
 #downloading fastq files
@@ -33,6 +33,7 @@ checkCountDepth(group="docker", data.folder=getwd(), counts.matrix="singlecells_
 
 The output is a PDF that provides a view of the counts distribution of the data.
 
+### scnorm
 
 ### Converting a count table in log10
 

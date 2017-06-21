@@ -12,8 +12,9 @@
 #'     #downloading fastq files
 #'     system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
 #'     system("gzip -d singlecells_counts.txt.gz")
+#'     conditions=rep(1,288)
 #'     checkCountDepth(group="docker", data.folder=getwd(),
-#'     counts.matrix="singlecells_counts.txt", conditions=NULL,
+#'     counts.matrix="singlecells_counts.txt", conditions=conditions,
 #'     outputName="singlecells_counts", nCores=8)
 #' }
 #' @export
@@ -29,7 +30,7 @@ checkCountDepth <- function(group=c("sudo","docker"), data.folder=getwd(), count
   }
   setwd(data.folder)
   if(is.null(conditions)){
-    conditions <- "NULL"
+    cat("\nERROR: Conditions are missing\n")
   }else{
     conditions <- paste(conditions, collapse = "_")
   }

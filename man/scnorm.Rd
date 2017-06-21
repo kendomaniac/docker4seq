@@ -33,7 +33,8 @@ This function executes CASC step1 identification of the optimal number of cluste
     #downloading fastq files
     system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
     system("gzip -d singlecells_counts.txt.gz")
-    conditions=c(rep(1,288))
-    scnorm(group="docker", data.folder=getwd(),counts.matrix="singlecells_counts.txt", conditions=conditions,outputName="singlecells_counts", nCores=8, filtercellNum=10)
+    conditions=rep(1,288)
+    scnorm(group="docker", data.folder=getwd(),counts.matrix="singlecells_counts.txt",
+    conditions=conditions,outputName="singlecells_counts", nCores=8, filtercellNum=10)
 }
 }
