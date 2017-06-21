@@ -15,6 +15,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Single Cell workflow
 
+
+### Removing non informative genes
+
+The function **allZeros** removed all genes that are without counts in all cells and plot the frequence distribution of genes with counts in the cells.
+
+```{r, echo=TRUE, eval=FALSE}
+#downloading fastq files
+system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
+system("gzip -d singlecells_counts.txt.gz")
+filterZeros(data.folder=getwd(),counts.matrix="singlecells_counts.txt")
+
+```
+
+
 ### Data normalization
 
 SCnorm (as detailed in Bacher et al.) performs a quantile-regression based approach for robust normal-
