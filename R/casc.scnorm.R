@@ -13,9 +13,8 @@
 #'     #downloading fastq files
 #'     system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
 #'     system("gzip -d singlecells_counts.txt.gz")
-#'     scnorm(group="docker", data.folder=getwd(),
-#'     counts.matrix="singlecells_counts.txt", conditions=NULL,
-#'     outputName="singlecells_counts", nCores=8, filtercellNum=10)
+#'     conditions=rep(1,288)
+#'     scnorm(group="docker", data.folder=getwd(),counts.matrix="singlecells_counts.txt", conditions=conditions,outputName="singlecells_counts", nCores=8, filtercellNum=10)
 #' }
 #' @export
 scnorm <- function(group=c("sudo","docker"), data.folder=getwd(), counts.matrix, conditions=NULL, outputName, nCores=8, filtercellNum = 10){
@@ -31,13 +30,15 @@ scnorm <- function(group=c("sudo","docker"), data.folder=getwd(), counts.matrix,
   setwd(data.folder)
   if(is.null(conditions)){
     conditions <- "NULL"
+  }else{
+    conditions <- paste(conditions, collapse = "_")
   }
   if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum, sep="")
-    runDocker(group="sudo",container="docker.io/rcaloger/r340.2017.01", params=params)
+        params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum, sep="")
+        runDocker(group="sudo",container="docker.io/rcaloger/r340.2017.01", params=params)
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum, sep="")
-    runDocker(group="docker",container="docker.io/rcaloger/r340.2017.01", params=params)
+        params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum, sep="")
+        runDocker(group="docker",container="docker.io/rcaloger/r340.2017.01", params=params)
   }
 
   out <- "xxxx"

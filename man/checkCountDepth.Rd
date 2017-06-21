@@ -21,7 +21,7 @@ checkCountDepth(group = c("sudo", "docker"), data.folder = getwd(),
 \item{nCores, }{number of cores to use, default is detectCores() - 1.}
 }
 \value{
-a folder with the name of the cell data set under analysis, e.g. log10_singlecells_counts. In this folder there are a set of folder named by the number of k clusters in use. A file named SilhouetteValue.csv for cluster evaluation and a pdf ViolinPlot.pdf which is the representation of the SilhouetteValue.csv. best clusters are represented by a SilhouetteValue distribution skewed versus 1 values.
+pdf with the cells counts distributions
 }
 \description{
 This function executes CASC step1 identification of the optimal number of clusters
@@ -31,6 +31,8 @@ This function executes CASC step1 identification of the optimal number of cluste
     #downloading fastq files
     system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
     system("gzip -d singlecells_counts.txt.gz")
-    checkCountDepth(group="docker", data.folder=getwd(), counts.matrix="singlecells_counts.txt", conditions=NULL, outputName="singlecells_counts", nCores=8)
+    checkCountDepth(group="docker", data.folder=getwd(),
+    counts.matrix="singlecells_counts.txt", conditions=NULL,
+    outputName="singlecells_counts", nCores=8)
 }
 }

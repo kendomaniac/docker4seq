@@ -30,6 +30,8 @@ checkCountDepth <- function(group=c("sudo","docker"), data.folder=getwd(), count
   setwd(data.folder)
   if(is.null(conditions)){
     conditions <- "NULL"
+  }else{
+    conditions <- paste(conditions, collapse = "_")
   }
   if(group=="sudo"){
     params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/checkCountDepth.R ",counts.matrix," ",conditions," ",outputName," ",nCores, sep="")
