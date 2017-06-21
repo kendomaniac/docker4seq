@@ -13,26 +13,59 @@ vignette: >
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## CASC Classification Analysis of Single Cell Sequencing Data
+## Single Cell workflow
 
-Genome-wide single-cell measurements such as transcriptome sequencing enable the characterization of cellular composition as well as functional variation in homogenic/heterogenic cell populations. An important step in the single-cell transcriptome analysis is to group cells that belong to the same sub-type based on gene expression patterns [1-3]. Critical issues in cell clustering are:
+### Data normalization
+
+SCnorm (as detailed in Bacher et al) performs is a quantile-regression based approach for robust normal-
+ization of single-cell RNA-seq data.  SCnorm groups genes based on their count-depth relationship then applies a quantile regression to each group in order to estimate scaling factors which will remove the effect of sequencing depth from the counts.
+
+#### Check counts-depth relationship
+
+Before normalizing using SCnorm, it is advised to check the count-depth relationship in your data. **checkCountDepth** provides a wrapper in docker4seq for the checkCountDepth of the [**SCnorm package**](https://github.com/rhondabacher/SCnorm), which estimates the count-depth relationship for all genes.
+
+```{r, echo=TRUE, eval=FALSE}
+#downloading fastq files
+system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
+system("gzip -d singlecells_counts.txt.gz")
+checkCountDepth(group="docker", data.folder=getwd(), counts.matrix="singlecells_counts.txt", conditions=NULL, outputName="singlecells_counts", nCores=8)
+```
+
+The output is a PDF that provides a view of the counts distribution of the data.
+
+
+### Converting a count table in log10
+
+The function **counts2log** can convert a count table in a log10 values saved in a comma separated file which is the input of CASC.
+
+```{r, echo=TRUE, eval=FALSE}
+#downloading fastq files
+system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
+system("gzip -d singlecells_counts.txt.gz")
+counts2log(counts.matrix="singlecells_counts.txt", data.folder=getwd(), log.base=10, type="txt")
+```
+
+
+### CASC Classification Analysis of Single Cell Sequencing Data
+
+Genome-wide single-cell measurements such as transcriptome sequencing enable the characterization of cellular composition as well as functional variation in homogenic/heterogenic cell populations. An important step in the single-cell transcriptome analysis is to group cells that belong to the same sub-type based on gene expression patterns [Usoskin et al, Pollen et al, Kolodziejczyk et al]. Critical issues in cell clustering are:
 
 - cluster stability
 
 - feature selection, i.e. the identification genes playing the major role in cluster formation. 
 
-To address the above issues, we have developed CASC, a tool implemented in a docker container, that uses as core application to detect cell clusters the “kernel based similarity learning” [4] and allows: 
+To address the above issues, we have developed CASC, a tool implemented in a docker container, that uses as core application to detect cell clusters the “kernel based similarity learning” [Wang et al] and allows: 
 
 - identification of the optimal number of clusters for cell partitioning using “silhouette method”. 
 
 - The evaluation of clusters stability, measuring the permanence of a cell in a cluster upon random removal of subsets of cells. 
 
--Feature selection via “nearest shrunken centroid method” [5], applied to the gene Index Of Dispersion [6]. 
+-Feature selection via “nearest shrunken centroid method” [Tibshirani et al], applied to the gene Index Of Dispersion [Diaz et al]. 
 
-CASC was tested on previously published data sets [1-3]. CASC feature selection procedure efficiently allows the identification of the subpopulation of genes playing the main role in discriminating between cell subpopulations.
+CASC was tested on previously published data sets [Usoskin et al, Pollen et al, Kolodziejczyk et al]. CASC feature selection procedure efficiently allows the identification of the subpopulation of genes playing the main role in discriminating between cell subpopulations.
 
 
-## Introduction
+#### Introduction
 
 **CASC** is controlled by a set of functions embedded in `r Githubpkg("kendomaniac/docker4seq")` package,
 which was developed to facilitate the use of computing demanding applications in the field of NGS data analysis.
@@ -46,7 +79,7 @@ This approach provides multiple advantages:
 
 - reproducible research is guarantee by the possibility of sharing the docker containers used for the analysis 
 
-## Requirements
+#### Requirements
 The minimal hardware requirements are a 4 core 64 bits linux computer, 32 Gb RAM, one SSD 250GB, with a folder with read/write permission for any users (chmod 777), and [docker](https://www.docker.com/) installed.
 
 [**docker4seq**](https://github.com/kendomaniac/docker4seq) can fit ideally in the [NUC6I7KYK](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html) equipped with Kingston Technology HyperX Impact 32GB Kit (2x16GB), 2133MHz DDR4 CL13 260-Pin SODIMM and Samsung 850 EVO - 250GB - M.2 SATA III Internal SSD.
@@ -58,18 +91,8 @@ A ready to go fedora installation USB stick, with everything installed to be use
 downloadContainers(group="docker")
 ```
 
-## Converting a count table in log10
 
-The function **counts2log** can convert a count table in a log10 values saved in a comma separated file which is the input of CASC.
-
-```{r, echo=TRUE, eval=FALSE}
-#downloading fastq files
-system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
-system("gzip -d singlecells_counts.txt.gz")
-counts2log(counts.matrix="singlecells_counts.txt", data.folder=getwd(), log.base=10, type="txt")
-```
-
-## Defining the optimal number of clusters
+#### Defining the optimal number of clusters
 
 
 ```{r, echo=TRUE, eval=FALSE}
@@ -82,7 +105,7 @@ counts.matrix="log10_singlecells_counts.csv", permutations=20, blocks.permutatio
 
 ```
 
-The function **cascKoptimization** run SIMLR [4] using a range of clusters and produces as output two violin plots:
+The function **cascKoptimization** run SIMLR [Wang et al] using a range of clusters and produces as output two violin plots:
 
 - silhouette.pdf: Silhouette refers to a method of interpretation and validation of consistency within clusters of data. The technique provides a succinct graphical representation of how well each object lies within its cluster. Here instead of using the average silhouette we represent the silhouette values distribution using a violin plot. Thus, silhouette distributions being skewed to the positive values and with short negative tail is representative of a consistent cluster. In the example below, fig. A, it seems that 4 clusters are the most consistent by silhouette analysis.
 
@@ -93,20 +116,23 @@ Taking in account the two plots and the clusters structure observed for 3 and 4 
 
 ![cluster decision](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq/inst/img/silhouette.stability.jpg)
 
-silhouette.stability.jpg
+
 
 
 ## References
 
-[1] Usoskin et al. Nat. Neurosci. 2014, 18:145–153
+Usoskin et al. Nat. Neurosci. 2014, 18:145–153
 
-[2] Pollen et al. Nat. Biotechnol. 2014, 32:1–37
+Pollen et al. Nat. Biotechnol. 2014, 32:1–37
 
-[3] Kolodziejczyk et al. Cell Stem Cell 2015, 17:471–485
+Kolodziejczyk et al. Cell Stem Cell 2015, 17:471–485
 
-[4] Wang et al. Nat Methods. 2017 14:414-416
+Wang et al. Nat Methods. 2017 14:414-416
 
-[5] Tibshirani et al. PNAS 2002, 99:6567-6572
+Tibshirani et al. PNAS 2002, 99:6567-6572
 
-[6] Diaz et al. Bioinformatics 2016, 32: 2219-2220
+Diaz et al. Bioinformatics 2016, 32: 2219-2220
+
+Bacher et al. Nat. Methods  2017, 14:584–586
+
 

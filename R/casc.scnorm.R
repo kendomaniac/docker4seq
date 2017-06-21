@@ -1,4 +1,4 @@
-#' @title Running SCnorm  checkCountDepth
+#' @title Running SCnorm  normalization
 #' @description This function executes CASC step1 identification of the optimal number of clusters
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param data.folder, a character string indicating the folder where comma separated file of cells log10 counts is saved
@@ -6,18 +6,19 @@
 #' @param conditions, vector of condition labels, this should correspond to the columns of the un-normalized expression matrix. If not provided data is assumed to come from same condition/batch.
 #' @param outputName, specify the path and/or name of output files.
 #' @param nCores, number of cores to use, default is detectCores() - 1.
-#' @return pdf with the cells counts distributions
+#' @param filtercellNum, the number of non-zero expression estimate required to include the genes into the SCnorm fitting (default = 10). The initial grouping fits a quantile regression to each gene, making this value too low gives unstable fits.
+#' @return a folder with the name of the cell data set under analysis, e.g. log10_singlecells_counts. In this folder there are a set of folder named by the number of k clusters in use. A file named SilhouetteValue.csv for cluster evaluation and a pdf ViolinPlot.pdf which is the representation of the SilhouetteValue.csv. best clusters are represented by a SilhouetteValue distribution skewed versus 1 values.
 #' @examples
 #' \dontrun{
 #'     #downloading fastq files
 #'     system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
 #'     system("gzip -d singlecells_counts.txt.gz")
-#'     checkCountDepth(group="docker", data.folder=getwd(),
+#'     scnorm(group="docker", data.folder=getwd(),
 #'     counts.matrix="singlecells_counts.txt", conditions=NULL,
-#'     outputName="singlecells_counts", nCores=8)
+#'     outputName="singlecells_counts", nCores=8, filtercellNum=10)
 #' }
 #' @export
-checkCountDepth <- function(group=c("sudo","docker"), data.folder=getwd(), counts.matrix, conditions=NULL, outputName, nCores=8){
+scnorm <- function(group=c("sudo","docker"), data.folder=getwd(), counts.matrix, conditions=NULL, outputName, nCores=8, filtercellNum = 10){
 
   #running time 1
   ptm <- proc.time()
@@ -32,10 +33,10 @@ checkCountDepth <- function(group=c("sudo","docker"), data.folder=getwd(), count
     conditions <- "NULL"
   }
   if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/checkCountDepth.R ",counts.matrix," ",conditions," ",outputName," ",nCores, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum, sep="")
     runDocker(group="sudo",container="docker.io/rcaloger/r340.2017.01", params=params)
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/checkCountDepth.R ",counts.matrix," ",conditions," ",outputName," ",nCores, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum, sep="")
     runDocker(group="docker",container="docker.io/rcaloger/r340.2017.01", params=params)
   }
 
@@ -59,15 +60,15 @@ checkCountDepth <- function(group=c("sudo","docker"), data.folder=getwd(), count
     con <- file("run.info", "r")
     tmp.run <- readLines(con)
     close(con)
-    tmp.run[length(tmp.run)+1] <- paste("casc checkCountDepth user run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("casc checkCountDepth system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("casc checkCountDepth elapsed run time mins ",ptm[3]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("casc SCnorm user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("casc SCnorm system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("casc SCnorm elapsed run time mins ",ptm[3]/60, sep="")
     writeLines(tmp.run,"run.info")
   }else{
     tmp.run <- NULL
     tmp.run[1] <- paste("casc user run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("casc checkCountDepth system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("casc checkCountDepth elapsed run time mins ",ptm[3]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("casc SCnorm system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("casc SCnorm elapsed run time mins ",ptm[3]/60, sep="")
 
     writeLines(tmp.run,"run.info")
   }
