@@ -7,7 +7,7 @@
 #' @param outputName, specify the path and/or name of output files.
 #' @param nCores, number of cores to use, default is detectCores() - 1.
 #' @param filtercellNum, the number of non-zero expression estimate required to include the genes into the SCnorm fitting (default = 10). The initial grouping fits a quantile regression to each gene, making this value too low gives unstable fits.
-#' @return a folder with the name of the cell data set under analysis, e.g. log10_singlecells_counts. In this folder there are a set of folder named by the number of k clusters in use. A file named SilhouetteValue.csv for cluster evaluation and a pdf ViolinPlot.pdf which is the representation of the SilhouetteValue.csv. best clusters are represented by a SilhouetteValue distribution skewed versus 1 values.
+#' @return a PDF providing a view of effects of normalization, a Rda file containing the full output of **SCnorm** and a tab delimited file containing the normalized data.
 #' @examples
 #' \dontrun{
 #'     #downloading fastq files

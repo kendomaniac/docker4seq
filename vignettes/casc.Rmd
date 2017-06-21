@@ -28,12 +28,28 @@ Before normalizing using **scnorm**, it is advised to check the data count-depth
 #downloading fastq files
 system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
 system("gzip -d singlecells_counts.txt.gz")
-checkCountDepth(group="docker", data.folder=getwd(), counts.matrix="singlecells_counts.txt", conditions=NULL, outputName="singlecells_counts", nCores=8)
+conditions=rep(1,288)
+checkCountDepth(group="docker", data.folder=getwd(), counts.matrix="singlecells_counts.txt", conditions=conditions, outputName="singlecells_counts", nCores=8)
+
 ```
 
 The output is a PDF that provides a view of the counts distribution of the data.
 
 ### scnorm
+
+the **scnorm** function execute SCnorm of the [**SCnorm package**](https://github.com/rhondabacher/SCnorm), which normalizes  across  cells  to  remove  the effect  of  sequencing  depth  on  the  counts  and  return  the  normalized expression count.
+
+```{r, echo=TRUE, eval=FALSE}
+#downloading fastq files
+system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
+system("gzip -d singlecells_counts.txt.gz")
+conditions=rep(1,288)
+scnorm(group="docker", data.folder=getwd(),counts.matrix="singlecells_counts.txt", conditions=conditions,outputName="singlecells_counts", nCores=8, filtercellNum=10)
+
+```
+
+The output is a PDF that provides a view of effects of normalization, and Rda file containing the full output of **SCnorm** and a tab delimited file containing the normalized data.
+
 
 ### Converting a count table in log10
 
