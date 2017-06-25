@@ -17,10 +17,10 @@
 #'     system("gzip -d singlecells_counts.txt.gz")
 #'     conditions=rep(1,288)
 #'     scnorm(group="docker", data.folder=getwd(),counts.matrix="singlecells_counts.txt",
-#'     conditions=conditions,outputName="singlecells_counts", nCores=8, filtercellNum=10, ditherCount=FALSE)
+#'     conditions=conditions,outputName="singlecells_counts", nCores=8, filtercellNum=10, ditherCount=TRUE, PropToUse=0.1)
 #' }
 #' @export
-scnorm <- function(group=c("sudo","docker"), data.folder=getwd(), counts.matrix, conditions=NULL, outputName, nCores=8, filtercellNum = 10, ditherCount=FALSE, PropToUse=0.25){
+scnorm <- function(group=c("sudo","docker"), data.folder=getwd(), counts.matrix, conditions=NULL, outputName, nCores=8, filtercellNum = 10, ditherCount=FALSE, PropToUse=0.1){
 
   #running time 1
   ptm <- proc.time()
