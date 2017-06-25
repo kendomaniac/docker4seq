@@ -15,10 +15,10 @@
 #'     system("gzip -d singlecells_counts.txt.gz")
 #'     conditions=rep(1,288)
 #'     scnorm(group="docker", data.folder=getwd(),counts.matrix="singlecells_counts.txt",
-#'     conditions=conditions,outputName="singlecells_counts", nCores=8, filtercellNum=10)
+#'     conditions=conditions,outputName="singlecells_counts", nCores=8, filtercellNum=10, ditherCount=FALSE)
 #' }
 #' @export
-scnorm <- function(group=c("sudo","docker"), data.folder=getwd(), counts.matrix, conditions=NULL, outputName, nCores=8, filtercellNum = 10){
+scnorm <- function(group=c("sudo","docker"), data.folder=getwd(), counts.matrix, conditions=NULL, outputName, nCores=8, filtercellNum = 10, ditherCount=FALSE){
 
   #running time 1
   ptm <- proc.time()
@@ -35,10 +35,10 @@ scnorm <- function(group=c("sudo","docker"), data.folder=getwd(), counts.matrix,
     conditions <- paste(conditions, collapse = "_")
   }
   if(group=="sudo"){
-        params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum, sep="")
+        params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum, " ",ditherCount, sep="")
         runDocker(group="sudo",container="docker.io/rcaloger/r340.2017.01", params=params)
   }else{
-        params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum, sep="")
+        params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum," ",ditherCount, sep="")
         runDocker(group="docker",container="docker.io/rcaloger/r340.2017.01", params=params)
   }
 
