@@ -7,6 +7,8 @@
 #' @param outputName, specify the path and/or name of output files.
 #' @param nCores, number of cores to use, default is detectCores() - 1.
 #' @param filtercellNum, the number of non-zero expression estimate required to include the genes into the SCnorm fitting (default = 10). The initial grouping fits a quantile regression to each gene, making this value too low gives unstable fits.
+#' @param ditherCount, FALSE of TRUE. Settin gto TRUE might improve results with UMI data
+#' @param PropToUse, as default is set to 0.25 but to increase speed with large data set could be reduced, e.g. 0.1
 #' @return a PDF providing a view of effects of normalization, a Rda file containing the full output of **SCnorm** and a tab delimited file containing the normalized data.
 #' @examples
 #' \dontrun{
@@ -18,7 +20,7 @@
 #'     conditions=conditions,outputName="singlecells_counts", nCores=8, filtercellNum=10, ditherCount=FALSE)
 #' }
 #' @export
-scnorm <- function(group=c("sudo","docker"), data.folder=getwd(), counts.matrix, conditions=NULL, outputName, nCores=8, filtercellNum = 10, ditherCount=FALSE){
+scnorm <- function(group=c("sudo","docker"), data.folder=getwd(), counts.matrix, conditions=NULL, outputName, nCores=8, filtercellNum = 10, ditherCount=FALSE, PropToUse=0.25){
 
   #running time 1
   ptm <- proc.time()
@@ -35,10 +37,10 @@ scnorm <- function(group=c("sudo","docker"), data.folder=getwd(), counts.matrix,
     conditions <- paste(conditions, collapse = "_")
   }
   if(group=="sudo"){
-        params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum, " ",ditherCount, sep="")
+        params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum, " ",ditherCount," ",PropToUse, sep="")
         runDocker(group="sudo",container="docker.io/rcaloger/r340.2017.01", params=params)
   }else{
-        params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum," ",ditherCount, sep="")
+        params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum," ",ditherCount," ",PropToUse, sep="")
         runDocker(group="docker",container="docker.io/rcaloger/r340.2017.01", params=params)
   }
 
