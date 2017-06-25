@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Removing non informative genes
 
-The function **allZeros** removed all genes that are without counts in all cells and plot the frequence distribution of genes with counts in the cells.
+The function **allZeros** removed all genes that are without counts in all cells and plot the frequency distribution of genes with counts in the cells.
 
 ```{r, echo=TRUE, eval=FALSE}
 #downloading fastq files
@@ -31,8 +31,7 @@ filterZeros(data.folder=getwd(),counts.matrix="singlecells_counts.txt")
 
 ### Data normalization
 
-SCnorm (as detailed in Bacher et al.) performs a quantile-regression based approach for robust normal-
-ization of single-cell RNA-seq data.  SCnorm groups genes based on their count-depth relationship then applies a quantile regression to each group in order to estimate scaling factors which will remove the effect of sequencing depth from the counts.
+SCnorm (as detailed in Bacher et al.) performs a quantile-regression based approach for robust normalization of single-cell RNA-seq data.  SCnorm groups genes based on their count-depth relationship then applies a quantile regression to each group in order to estimate scaling factors which will remove the effect of sequencing depth from the counts.
 
 #### Check counts-depth relationship
 

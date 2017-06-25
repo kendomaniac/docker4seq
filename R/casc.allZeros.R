@@ -2,21 +2,23 @@
 #' @description This function plots the zeros distributions in cells and removes genes without counts
 #' @param data.folder, a character string indicating the folder where comma separated file of cells log10 counts is saved
 #' @param counts.matrix, a character string indicating the the name of tab delimited file  file of cells un-normalized expression counts
+#' @param threshold, an nuer from 0 to 1 indicating the fraction of max accepted zeros in each gene
 #' @return a PDF providing zeros distributions before removal of all genes without counts, a file with the pre
 #' @examples
 #' \dontrun{
 #'     #downloading fastq files
 #'     system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
 #'     system("gzip -d singlecells_counts.txt.gz")
-#'     filterZeros(data.folder=getwd(),counts.matrix="singlecells_counts.txt")
+#'     filterZeros(data.folder=getwd(),counts.matrix="singlecells_counts.txt", threshold=0.1)
 #' }
 #' @export
-filterZeros <- function(data.folder=getwd(), counts.matrix){
+filterZeros <- function(data.folder=getwd(), counts.matrix, threshold){
   counts <- read.table(counts.matrix, sep="\t", header=T, row.names = 1)
   counts.sum <- apply(counts, 1, function(x){
     length(which(x > 0))
   })
-  counts.n0 <- counts[which(counts.sum > 0),]
+  max.zeros <- dim(counts)[2]*threshold
+  counts.n0 <- counts[which(counts.sum > max.zeros),]
   cat("\n",paste("Out of ", dim(counts)[1]," genes ",dim(counts.n0)[1]," are left after removing genes with no counts", sep=""),"\n")
   pdf(paste("zeros_distribution_",sub(".txt$","",counts.matrix),".pdf",sep=""))
       hist(log10(counts.sum), xlab="log10 # cells wo zeros")
