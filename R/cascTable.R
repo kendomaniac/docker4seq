@@ -20,19 +20,19 @@ counts2log <- function(counts.matrix, data.folder=getwd(), log.base=c(2,10), typ
        tmp <- read.table(counts.matrix, sep="\t", stringsAsFactors = TRUE, header=T, check.names = FALSE, row.names=1)
        if(log.base==2){
            tmpl <- log2(tmp +1)
-           write.table(paste("log2_",sub(".txt","", counts.matrix), ".csv", sep=""), sep=",", col.names=NA)
+           write.table(tmpl, paste("log2_",sub(".txt","", counts.matrix), ".csv", sep=""), sep=",", col.names=NA)
        }else if(log.base==10){
            tmpl <- log10(tmp +1)
-           write.table(paste("log10_",sub(".txt","", counts.matrix), ".csv", sep=""), sep=",", col.names=NA)
+           write.table(tmpl, paste("log10_",sub(".txt","", counts.matrix), ".csv", sep=""), sep=",", col.names=NA)
        }
    }else if(type=="csv"){
       tmp <- read.table(counts.matrix, sep=",", stringsAsFactors = TRUE, header=T, check.names = FALSE, row.names=1)
       if(log.base==2){
          tmpl <- log2(tmp +1)
-         write.table(paste("log2_",sub(".csv","", counts.matrix), ".csv", sep=""), sep=",", col.names=NA)
+         write.table(tmpl, paste("log2_",sub(".csv","", counts.matrix), ".csv", sep=""), sep=",", col.names=NA)
       }else if(log.base==10){
          tmpl <- log10(tmp +1)
-         write.table(paste("log10_",sub(".csv","", counts.matrix), ".csv", sep=""), sep=",", col.names=NA)
+         write.table(tmpl, paste("log10_",sub(".csv","", counts.matrix), ".csv", sep=""), sep=",", col.names=NA)
       }
    }
 }
