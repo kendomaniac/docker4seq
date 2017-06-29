@@ -4,12 +4,14 @@
 \alias{filterZeros}
 \title{Plotting the distribution of zeros in cells eliminating all genes without counts}
 \usage{
-filterZeros(data.folder = getwd(), counts.matrix)
+filterZeros(data.folder = getwd(), counts.matrix, threshold)
 }
 \arguments{
 \item{data.folder, }{a character string indicating the folder where comma separated file of cells log10 counts is saved}
 
 \item{counts.matrix, }{a character string indicating the the name of tab delimited file  file of cells un-normalized expression counts}
+
+\item{threshold, }{an nuer from 0 to 1 indicating the fraction of max accepted zeros in each gene}
 }
 \value{
 a PDF providing zeros distributions before removal of all genes without counts, a file with the pre
@@ -22,6 +24,6 @@ This function plots the zeros distributions in cells and removes genes without c
     #downloading fastq files
     system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
     system("gzip -d singlecells_counts.txt.gz")
-    filterZeros(data.folder=getwd(),counts.matrix="singlecells_counts.txt")
+    filterZeros(data.folder=getwd(),counts.matrix="singlecells_counts.txt", threshold=0.1)
 }
 }

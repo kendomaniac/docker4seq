@@ -148,7 +148,17 @@ Taking in account the two plots and the clusters structure observed for 3 and 4 
 
 ![cluster decision](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq/inst/img/silhouette.stability.jpg)
 
+The function **cascOutputReformat** use SilhouetteParameters.csv (the file containing the cell silhouette scores), mainVector.csv (the file that associates each cell to a specific SIMLR cluster), scoreVector.csv (the file associating each cell to a specific cell stability score), dataPlot.csv (containing SIMLR component 1 and 2 cohordinates) to generate a summary file called **summary_table.csv**.
 
+```{r, echo=TRUE, eval=FALSE}
+ #downloading fastq files
+system("wget http://130.192.119.59/public/example.zip")
+unzip("example.zip")
+setwd("./example")
+cascOutputReformat(data.folder=getwd())
+```
+
+![summary_table](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq/inst/img/summary_table.jpeg)
 
 
 ## References
