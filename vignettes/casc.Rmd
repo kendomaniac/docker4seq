@@ -48,7 +48,7 @@ checkCountDepth(group="docker", data.folder=getwd(), counts.matrix="singlecells_
 
 The output is a PDF that provides a view of the counts distribution of the data.
 
-### scnorm
+#### scnorm
 
 the **scnorm** function execute SCnorm of the [**SCnorm package**](https://github.com/rhondabacher/SCnorm), which normalizes  across  cells  to  remove  the effect  of  sequencing  depth  on  the  counts  and  return  the  normalized expression count.
 
@@ -65,7 +65,7 @@ The output is a PDF that provides a view of effects of normalization, and Rda fi
 
 Setting PropToUse to 0.1 was particularly useful with large UMI based datasets. Proportion of genes closest to the slope mode used for the group fitting. This number affects a lot speed.
 
-### Imputing imputing the dropouts
+### Imputing dropouts
 
 the **cascImpute** function execute scImpute of the [**scImpute package**](https://github.com/Vivianstats/scImpute), which impute the dropout values in scRNA-seq data.
 
@@ -131,9 +131,6 @@ This approach provides multiple advantages:
 #### Requirements
 The minimal hardware requirements are a 4 core 64 bits linux computer, 32 Gb RAM, one SSD 250GB, with a folder with read/write permission for any users (chmod 777), and [docker](https://www.docker.com/) installed.
 
-[**docker4seq**](https://github.com/kendomaniac/docker4seq) can fit ideally in the [NUC6I7KYK](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html) equipped with Kingston Technology HyperX Impact 32GB Kit (2x16GB), 2133MHz DDR4 CL13 260-Pin SODIMM and Samsung 850 EVO - 250GB - M.2 SATA III Internal SSD.
-A ready to go fedora installation USB stick, with everything installed to be used with the above hardware configuration, can be requested to: raffaele[dot]calogero[at]unito[dot]it
-
 **IMPORTANT** The first time *docker4seq* is installed the **downloadContainers** needs to be executed  to download to the local repository the containers that are needed for the use of *docker4seq*
 
 ```{r, echo=TRUE, eval=FALSE}
@@ -176,6 +173,11 @@ cascOutputReformat(data.folder=getwd())
 ```
 
 ![summary_table](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq/inst/img/summary_table.jpeg)
+
+
+
+
+
 
 
 ## References
