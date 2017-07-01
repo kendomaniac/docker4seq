@@ -2,6 +2,7 @@
 
 export(bwa)
 export(bwaIndexUcsc)
+export(cascImpute)
 export(cascKoptimization)
 export(cascOutputReformat)
 export(cascStep1)
