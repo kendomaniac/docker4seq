@@ -5,7 +5,7 @@
 #' @param counts.matrix, a character string indicating the  tab separated file of cells  counts
 #' @param drop.thre, A number between 0 and 1, specifying the threshold to determine dropout values
 #' @param cores, a integer specifying the number of cores used for parallel computation.
-#' @param refining, boolean FALSE, TRUE, if TRUE it execute again scImpute but setting a different drop.thre.
+#' @param refining, boolean FALSE, TRUE, if TRUE it execute again scImpute but setting a different drop.thre. Rerunning to change drop.thre hase to be done in the same folder where the first run was done.
 #' @return A matrix file with imputed data.
 #' @examples
 #' \dontrun{
