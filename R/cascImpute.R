@@ -19,10 +19,10 @@ cascImpute <- function(group=c("sudo","docker"), data.folder, counts.matrix, dro
 
   counts.path <- paste(data.folder,counts.matrix, sep="/")
   if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder, ":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/cascimpute.R ",counts.path," ",drop.thre," ",cores, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder, ":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scimpute.R ",counts.path," ",drop.thre," ",cores, sep="")
     runDocker(group="sudo",container="docker.io/rcaloger/r340.2017.01", params=params)
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder, ":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/cascimpute.R ",counts.path," ",drop.thre," ",cores, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder, ":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scimpute.R ",counts.path," ",drop.thre," ",cores, sep="")
     runDocker(group="docker",container="docker.io/rcaloger/r340.2017.01", params=params)
   }
 
