@@ -31,7 +31,7 @@ scnorm(group = c("sudo", "docker"), data.folder = getwd(), counts.matrix,
 a PDF providing a view of effects of normalization, a Rda file containing the full output of **SCnorm** and a tab delimited file containing the normalized data.
 }
 \description{
-This function normalizes  across  cells  to  remove  the effect  of  sequencing  depth  on  the  counts  and  return  the  normalized expression count
+This function is a wrapper for SCnorm: robust normalization of single-cell RNA-seq data (Bacher et al. Nature Methods 2017, 14:584–586)
 }
 \examples{
 \dontrun{

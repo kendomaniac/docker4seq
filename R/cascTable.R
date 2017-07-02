@@ -17,7 +17,7 @@
 
 counts2log <- function(counts.matrix, data.folder=getwd(), log.base=c(2,10), type=c("txt","csv")){
   if(type=="txt"){
-       tmp <- read.table(counts.matrix, sep="\t", stringsAsFactors = TRUE, header=T, check.names = FALSE, row.names=1)
+       tmp <- read.table(counts.matrix, sep="\t", stringsAsFactors = FALSE, header=T, check.names = FALSE, row.names=1)
        if(log.base==2){
            tmpl <- log2(tmp +1)
            write.table(tmpl, paste("log2_",sub(".txt","", counts.matrix), ".csv", sep=""), sep=",", col.names=NA)

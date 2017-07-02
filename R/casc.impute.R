@@ -58,6 +58,10 @@ cascImpute <- function(group=c("sudo","docker"), data.folder, counts.matrix, dro
     writeLines(tmp.run,"run.info")
   }
 
+  #converting table
+  tmp <- read.table("scimpute_count.txt", sep = " ", stringsAsFactors = FALSE ,header = T, check.names = FALSE, row.names = 1)
+  write.table(tmp, "scimpute_count_tab.txt", sep="\t", col.names=NA, quote = FALSE)
+
   #saving log and removing docker container
   container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
@@ -66,7 +70,6 @@ cascImpute <- function(group=c("sudo","docker"), data.folder, counts.matrix, dro
   cat("\n\nRemoving the temporary file ....\n")
   system("rm -fR anno.info")
   system("rm -fR dockerID")
-  system("rm  -fR tempFolderID")
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
 
 

@@ -85,7 +85,6 @@ scnorm <- function(group=c("sudo","docker"), data.folder=getwd(), counts.matrix,
   cat("\n\nRemoving the temporary file ....\n")
   system("rm -fR anno.info")
   system("rm -fR dockerID")
-  system("rm  -fR tempFolderID")
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
 
   system(paste("docker rm ", container.id, sep=""))
