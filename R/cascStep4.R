@@ -25,6 +25,7 @@
 #' @export
 cascStep4 <- function(group=c("sudo","docker"), scratch.folder, data.folder=getwd(), counts.matrix, k, dispersion.min=NULL, dispersion.max=NULL, specific.genes=c("n", "y")){
 
+  counts.matrix <- sub(".csv", "", counts.matrix)
   #running time 1
   ptm <- proc.time()
   #running time 1
