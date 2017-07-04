@@ -2,7 +2,7 @@
 #' @description This function executes CASC step1 identification of the optimal number of clusters
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
-#' @param data.folder, a character string indicating the folder where comma separated file of cells log10 counts is saved
+#' @param data.folder, a character string indicating the folder where the results of cascKoptimization: Data, Results, output
 #' @param counts.matrix, a character string indicating the the name of csv  file of cells log10 counts
 #' @param k, optimal number of clusters.
 #' @param dispersion.min, min dispersion.
