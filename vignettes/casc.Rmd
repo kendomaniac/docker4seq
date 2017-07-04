@@ -172,7 +172,7 @@ setwd("./example")
 cascOutputReformat(data.folder=getwd())
 ```
 
-![summary_table](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/summary_table.jpeg)
+![summary_table](../inst/img/summary_table.jpeg)
 
 
 

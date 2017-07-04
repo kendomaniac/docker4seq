@@ -40,7 +40,7 @@ downloadContainers(group="docker")
 
 In case dockers containers different from those provided as part of the package those needs to be described in a file with the following format which is passed to downloadContainers:
 
-![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/containers.jpeg)
+![miRNAseq workflow](../inst/img/containers.jpeg)
 
 ```{r, echo=TRUE, eval=FALSE}
 downloadContainers(group="docker", containers.file="/somewhere/containers.txt")
@@ -82,7 +82,7 @@ At the present time are available the following workflows:
 ## RNAseq workflow 
 
 The mRNAseq workflow can be run using **4SeqGUI** graphical interface (linux/MAC):
-![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/rnaseq1.jpeg)
+![miRNAseq workflow](../inst/img/rnaseq1.jpeg)
 
 Sample quantification is made of these steps:
 
@@ -98,7 +98,7 @@ Sample quantification is made of these steps:
 
 All the parameters can be setup using 4SeqGUI
 
-![Gene, Isoform counting](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/rnaseq3.jpeg)
+![Gene, Isoform counting](../inst/img/rnaseq3.jpeg)
 
 A detailed description of the parameters is given below.
 
@@ -152,7 +152,7 @@ The mRNAseq workflow produces the following output files:
     + skewerd_xxxxxxxxxxxx.log, log of the skewer docker container
     + stard.yyyyyyyyyyyy.log, log of the star docker container
 
-![gtf_annotated_genes.results](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/rnaseq7.jpeg)
+![gtf_annotated_genes.results](../inst/img/rnaseq7.jpeg)
 
 The first column in **gtf_annotated_genes.results** is the ensembl gene id, the second is the [biotype](http://www.ensembl.org/Help/Faq?id=468), 
 the 3rd is the annotation source, the 4th contains the set of transcripts included in the ensembl gene id. Then there is the length of the gene, the lenght of the gene to which is subtracted the average length of the sequenced fragments, the expected counts are the couts to be used for differentiual expression analysis. [TPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) and [FPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) are normalized gene quantities to be used only for visualization purposes.
@@ -167,7 +167,7 @@ The conversion between fastq files to counts is the most time consuming step in 
 
 We run resepctively 26, 52, 78, and 105 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in fig. below.
     
-![performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mrna_performace.jpg)  
+![performance](../inst/img/mrna_performace.jpg)  
 
 
 ### From samples to experiment
@@ -175,17 +175,17 @@ We run resepctively 26, 52, 78, and 105 million reads increasing the number of t
 The RSEM output is sample specific, thus it is necessary to assemble the single sample in an experiment table including in the header of the column both the covariates and the batch, if any.
 The header sample name is separated by the covariate with an underscore, e.g. mysample1\_Cov1, mysample2\_Cov2. 
 
-![counts table with covariates](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/counts1.jpeg)
+![counts table with covariates](../inst/img/counts1.jpeg)
 
 
 In case also a batch is present also this is separated by a further underscore, e.g. mysample1\_Cov1\_batch1, mysample2\_Cov\_batch2.
 
-![counts table with covariates and batch](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/counts2.jpeg)
+![counts table with covariates and batch](../inst/img/counts2.jpeg)
 
 The addition of the covariates to the various samples can be done using the **4seqGUI** using the button: *From samples to experiment*.
 Covariates are added to the column name, i.e. sample name, using \_, e.g. mysample\_Cov.1. Batches are added after covariates with \_, e.g. mysample\_Cov.1_batch.1.
 
-![generating a table with covariates](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/counts3.jpeg)
+![generating a table with covariates](../inst/img/counts3.jpeg)
 
 #### From samples to experiments by line command
 
@@ -223,7 +223,7 @@ The samples to experiments produces the following output files:
 [PCA](https://georgemdallas.wordpress.com/2013/10/30/principal-component-analysis-4-dummies-eigenvectors-eigenvalues-and-dimension-reduction/) finds the principal components of data. Principal components are the underlying structure in the data. They are the directions where there is the most variance, the directions where the data is most spread out.
 **4SeqGUI** provides an interface to the generation experiment samples PCA
 
-![PCA](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/pca1.jpeg)
+![PCA](../inst/img/pca1.jpeg)
 
 The plot is saved in **pca.pdf** in the selected folder.
 
@@ -241,7 +241,7 @@ pca(experiment.table="_log2FPKM.txt", type="FPKM", legend.position="topleft", co
 
 User needs to provide the paths of experiment table, **experiment.table** parameter, i.e. the file generated using the samples2experiment function. The **type** parameter indicates if FPKM, TPM or counts are used for the PCA geenration. The parameter **legend.position** defines where to locate the covariates legend. The parameter **covariatesInNames** indicates if the header of the experiment table contains or not covariate information. The parameter **principal.components** indicates which principal components should be plotted. **output.folder** indicates where to save the pca.pdf file.
 
-![pca.pdf](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/pca2.jpeg)
+![pca.pdf](../inst/img/pca2.jpeg)
 
 The values in parentesis on x and y axes are the amount of variance explained by each principal component.
 
@@ -252,11 +252,11 @@ IMPORTANT: The above analysis is suitable also for miRNAseq data
 [RnaSeqSampleSize](https://www.ncbi.nlm.nih.gov/pubmed/25246651) Bioconductor package provides the possibility to calculate, from a pilot experiment, the statistical power and to define the optimal sample size.
 **4SeqGUI** provides an interface to sample size estimation: 
 
-![sample size estimation](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/ss.jpeg)
+![sample size estimation](../inst/img/ss.jpeg)
 
 and to statistical power estimation:
 
-![stat power estimation](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/es.jpeg)
+![stat power estimation](../inst/img/es.jpeg)
 
 
 #### Sample size estimation by line command
@@ -277,7 +277,7 @@ The requested parameters are the path to the counts experiment table generated b
 
 The output file is **sample_size_evaluation.txt** is saved in the R working folder, below an example of the file content:
 
-![sample_size_evaluation.txt](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/samplesize1.jpeg)
+![sample_size_evaluation.txt](../inst/img/samplesize1.jpeg)
 
 IMPORTANT: The above analysis is suitable also for miRNAseq data
 
@@ -301,7 +301,7 @@ The requested parameters are the path to the counts experiment table generated b
 
 The output file is **power_estimation.txt** is saved in the R working folder, below an example of the file content: 
 
-![power_estimation.txt](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/expp1.jpeg)
+![power_estimation.txt](../inst/img/expp1.jpeg)
 
 IMPORTANT: The above analysis is suitable also for miRNAseq data
 
@@ -310,18 +310,18 @@ IMPORTANT: The above analysis is suitable also for miRNAseq data
 A basic task in the analysis of count data from RNA-seq is the detection of differentially expressed genes.
 **4SeqGUI** provides an interface to DESeq2 to simplify differential expression analysis.
 
-![DESeq2](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/de1.jpeg)
+![DESeq2](../inst/img/de1.jpeg)
 
 The output files are:
 
 **DEfull.txt** containing the full set of results generated by DESeq2
 
-![DEfull.txt](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/de2.jpeg)
+![DEfull.txt](../inst/img/de2.jpeg)
 
 
 **DEfiltered_log2fc_X_fdr_Y.Y.txt** containing the set of differentially expressed genes passing the indicated thresholds
 
-![DEfiltered_log2fc_1_fdr_0.1.txt](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/de3.jpeg)
+![DEfiltered_log2fc_1_fdr_0.1.txt](../inst/img/de3.jpeg)
 
 
 **genes4david.txt** a file containing only the gene symbols to be used as input for [DAVID](https://david.ncifcrf.gov/) or [ENRICHR](http://amp.pharm.mssm.edu/Enrichr/)
@@ -357,25 +357,25 @@ In brief, **rsemstarIndex** uses ENSEMBL genomic data. User has to provide the U
 
 The index can be easily created using the graphical interface:
 
-![Creating a STAR genome index](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/rnaseq2.jpeg)
+![Creating a STAR genome index](../inst/img/rnaseq2.jpeg)
 
     
 
 ## miRNAseq workflow 
 
 The miRNAseq workflow can be run using **4SeqGUI** graphical interface:
-![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirna1.jpeg)
+![miRNAseq workflow](../inst/img/mirna1.jpeg)
   
   
 The miRNAseq docker container executes the following steps:
-![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirna3.jpeg)
+![miRNAseq workflow](../inst/img/mirna3.jpeg)
 
 The full workflow is described in [Cordero et al. Plos ONE 2012](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0031630). In brief, fastq files are trimmed using [cutadapt](https://github.com/marcelm/cutadapt) and the trimmed reads are mapped on miRNA precursors, i.e. harpin.fa file, from [miRBase](http://www.mirbase.org/ftp.shtml) using [SHRIMP](http://compbio.cs.toronto.edu/shrimp/). Using the location of the mature miRNAs in the precursor, countOverlaps function, from the Bioconductor package GenomicRanges is used to quantify the reads mapping on mature miRNAs. 
 
 
 All the parameters needed to run the miRNAseq workflow can be setup using 4SeqGUI
 
-![miRNAseq parameters](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirna2.jpeg)
+![miRNAseq parameters](../inst/img/mirna2.jpeg)
  
  
 A detailed description of the parameters is given below.
@@ -422,7 +422,7 @@ To have an idea of the difference performances that we can achieve with our miRN
 
 We run resepctively 3, 6, 12, and 24 miRNA samples in parallel, increasing the number of threads till reaching the limit of the hardware or 24 threads, i.e. vaules shown in parenthesis in fig. below.
     
-![performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirna_performace.jpg)    
+![performance](../inst/img/mirna_performace.jpg)    
 
 
 ## Adding covariates and batches to mirnaCounts output: all.counts.txt
@@ -448,7 +448,7 @@ mirnaCovar(experiment.folder=getwd(),
 ## chipseq workflow
 
 The chipseq workflow can be run using **4SeqGUI** graphical interface:
-![ChIPseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/chipseq0.jpeg)
+![ChIPseq workflow](../inst/img/chipseq0.jpeg)
 
 
 The ChIPseq is made of two main steps:
@@ -459,7 +459,7 @@ The ChIPseq is made of two main steps:
 
 All the parameters needed to run MACS or SICER can be setup using 4SeqGUI
 
-![MACS and SICER analysis](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/chipseq3.jpeg)
+![MACS and SICER analysis](../inst/img/chipseq3.jpeg)
 
 
 A detailed description of the parameters is given below.
@@ -544,7 +544,7 @@ To have an idea of the difference performances that we can achieve with our miRN
 
 We run resepctively 37, 70, 111, and 149 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in fig. below.
     
-![performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/chipseq_performance.jpg)   
+![performance](../inst/img/chipseq_performance.jpg)   
 
 
 ### Creating a BWA index file for Chipseq:
@@ -559,7 +559,7 @@ In brief, **bwaIndexUcsc** uses UCSC genomic data. User has to provide the URL (
 
 The index can be easily created using the graphical interface:
 
-![Creating a BWA index with Genome indexing BWA](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/chipseq1.jpeg)
+![Creating a BWA index with Genome indexing BWA](../inst/img/chipseq1.jpeg)
 
 ## Dockers containers
 
