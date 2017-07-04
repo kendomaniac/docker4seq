@@ -47,7 +47,9 @@ cascStep4 <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   cat("\ncreating a folder in scratch folder\n")
   dir.create(file.path(scratch.folder, tmp.folder))
   dir.create(file.path(scratch.folder, tmp.folder,"/Data"))
-  system(paste("cp ",counts.matrix, " ", scrat_tmp.folder,"/Data",sep=""))
+  system(paste("cp -R ./Data", scrat_tmp.folder,sep=""))
+  system(paste("cp -R ./Results", scrat_tmp.folder,sep=""))
+  system(paste("cp -R ./output", scrat_tmp.folder,sep=""))
 
 #  writeLines(file.path(scratch.folder, tmp.folder),"path.txt")
 
