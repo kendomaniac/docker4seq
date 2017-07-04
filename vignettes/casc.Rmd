@@ -160,7 +160,7 @@ The function **cascKoptimization** run SIMLR [Wang et al] using a range of clust
 
 Taking in account the two plots and the clusters structure observed for 3 and 4 clusters, fig C and D, it is clear that 4 clusters provide a better separation between cells but keeping very high the cell permanence in a cluster.
 
-![cluster decision](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq/inst/img/silhouette.stability.jpg)
+![cluster decision](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/silhouette.stability.jpg)
 
 The function **cascOutputReformat** use SilhouetteParameters.csv (the file containing the cell silhouette scores), mainVector.csv (the file that associates each cell to a specific SIMLR cluster), scoreVector.csv (the file associating each cell to a specific cell stability score), dataPlot.csv (containing SIMLR component 1 and 2 cohordinates) to generate a summary file called **summary_table.csv**.
 
@@ -172,7 +172,7 @@ setwd("./example")
 cascOutputReformat(data.folder=getwd())
 ```
 
-![summary_table](/Users/raffaelecalogero/Dropbox/data/docker/docker4seq/inst/img/summary_table.jpeg)
+![summary_table](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/summary_table.jpeg)
 
 
 
