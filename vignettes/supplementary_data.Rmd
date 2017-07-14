@@ -494,6 +494,7 @@ mirnaCovar(experiment.folder=getwd(),
 ## chipseq workflow
 
 The chipseq workflow can be run using **4SeqGUI** graphical interface:
+
 ![ChIPseq workflow](../inst/img/chipseq0.jpeg)
 
 
