@@ -1,12 +1,9 @@
 ---
-title: "An Introduction to docker4seq package and 4SeqGUI"
-author: "Raffaele A Calogero"
-output: 
-  BiocStyle::html_document
-vignette: >
-  %\VignetteIndexEntry{Vignette Title}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}  
+title: " Supplementary data SeqBox: RNAseq/ChIPseq reproducible analysis on a consumer game computer"
+author: "Marco Beccuti, Francesca Cordero, Maddalena Arigoni, Riccardo Panero, Susanna Donatelli and Raffaele A Calogero"
+date: "7/14/2017"
+output: pdf_document
+
 ---
 
 ```{r setup, include=FALSE}
@@ -14,9 +11,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## Introduction
-The `r Githubpkg("kendomaniac/docker4seq")` package was developed to facilitate the use of computing demanding applications in the field of NGS data analysis.
+The docker4seq package was developed to facilitate the use of computing demanding applications in the field of NGS data analysis.
 
-The `r Githubpkg("kendomaniac/docker4seq")` package uses [docker](https://www.docker.com/what-docker) [containers](https://www.docker.com/what-container) that embed demanding computing tasks, e.g. short reads mapping. 
+The docker4seq package uses [docker](https://www.docker.com/what-docker) [containers](https://www.docker.com/what-container) that embed demanding computing tasks, e.g. short reads mapping. 
 
 This approach provides multiple advantages: 
 
@@ -29,60 +26,127 @@ This approach provides multiple advantages:
 ## Requirements
 The minimal hardware requirements are a 4 core 64 bits linux computer, 32 Gb RAM, one SSD 250GB, with a folder with read/write permission for any users (chmod 777), and [docker](https://www.docker.com/) installed.
 
-[**docker4seq**](https://github.com/kendomaniac/docker4seq) and its graphical interface [**4SeqGUI**](https://github.com/mbeccuti/4SeqGUI) can fit ideally in the [NUC6I7KYK](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html) equipped with Kingston Technology HyperX Impact 32GB Kit (2x16GB), 2133MHz DDR4 CL13 260-Pin SODIMM and Samsung 850 EVO - 250GB - M.2 SATA III Internal SSD.
-A ready to go fedora installation USB stick, with everything installed to be used with the above hardware configuration, can be requested to: raffaele[dot]calogero[at]unito[dot]it
+[**docker4seq**](https://github.com/kendomaniac/docker4seq) and its graphical interface [**4SeqGUI**](https://github.com/mbeccuti/4SeqGUI) can fit ideally in the [NUC6I7KYK, Intel mini-computer](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html) equipped with Kingston Technology HyperX Impact 32GB Kit (2x16GB), 2133MHz DDR4 CL13 260-Pin SODIMM and Samsung 850 EVO - 250GB - M.2 SATA III Internal SSD.
 
-**IMPORTANT** The first time *docker4seq* is installed the **downloadContainers** needs to be executed  to download to the local repository the containers that are needed for the use of *docker4seq*
+
+**MANDATORY:** The first time *docker4seq* is installed the **downloadContainers** function needs to be executed to download in the local repository the docker containers that are needed by *docker4seq*.
 
 ```{r, echo=TRUE, eval=FALSE}
 downloadContainers(group="docker")
 ```
 
-In case dockers containers different from those provided as part of the package those needs to be described in a file with the following format which is passed to downloadContainers:
 
-![miRNAseq workflow](../inst/img/containers.jpeg)
+## Dockers containers
+
+At the present time all functions requiring some sort of calculation are embedded in the following docker containers:
+
+- docker.io/rcaloger/annotate.2017.01 used by rnaseqCounts, rsemanno 
+
+- docker.io/rcaloger/bwa.2017.01 used by bwaIndexUcsc, bwa 
+
+- docker.io/rcaloger/chipseq.2017.01 used by chipseqCounts, chipseq
+
+- docker.io/rcaloger/r332.2017.01 used by experimentPower, sampleSize, wrapperDeseq2
+
+- docker.io/rcaloger/mirnaseq.2017.01 used by mirnaCounts
+
+- docker.io/rcaloger/rsemstar.2017.01 used by rnaseqCounts, rsemstarIndex, rsemstarUscsIndex
+
+- docker.io/rcaloger/skewer.2017.01 used by skewer
+
+### docker container nomenclature
+
+In case of updates required to solve bugs, which do not affect the calculation docker.io/rcaloger/XXXXX.YYYY.ZZ the fiels ZZ will be updated.
+
+In case of updates which affect the calculation, e.g. new release of Bioconductor libraries, the field YYYY will be updated. Previous versions will be maintained to allow reproducibility.
+
+### Reproducibility
+
+Within any folder generated with docker4seq functions it is saved the file **containers.txt**, which indicates the containers available in the local release of docker4seq.
+
+In case, user would like to download a set of dockers containers different from those provided as part of the package those needs to be described in a file with the following format, **docker.repository/user/docker.name** which is passed to downloadContainers:
 
 ```{r, echo=TRUE, eval=FALSE}
-downloadContainers(group="docker", containers.file="/somewhere/containers.txt")
+downloadContainers(group="docker", containers.file="my_containers.txt")
+#an example of the my_containers.txt file content
+docker.io/rcaloger/bwa.2017.01
+docker.io/rcaloger/chipseq.2017.01
 ```
-Any update of the local containers will be saved in:
-```{r, echo=TRUE, eval=FALSE}
-paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")
-```
+
+
+
+
+
+
 
 
 ## Available workflows
 At the present time are available the following workflows:
 
-- **rnaseqCounts**, which allows:
+- **mRNAseq**, which allows:
     + adapter trimming with [skewer](https://github.com/relipmoc/skewer)
     + mapping with [STAR](https://github.com/alexdobin/STAR)
     + counting genes and isoforms with [RSEM](http://deweylab.github.io/RSEM/)
     + ENSEMBL gene annotation.
-    + organizing the output of RSEM in tables to be used for differential epxression analysis
+    + organizing the output of RSEM in tables to be used for differential expression analysis
     + visualizing experiment data with PCA
     + evaluating experiment power and sample size
     + detecting differentially expressed genes/isoforms
-- **mirnaCounts** executes the workflow described in Cordero et al. PLoS One. 2012;7(2):e31630, which embeds the following steps:
+- **miRNAseq**, which executes the workflow described in Cordero et al. PLoS One. 2012;7(2):e31630, embedding the following steps:
     + trimming adapters with [cutadapt](http://cutadapt.readthedocs.io/en/stable/guide.html)
     + miRNAs mapping on [mirbase](http://www.mirbase.org/) hairpins using [SHRiMP](http://compbio.cs.toronto.edu/shrimp/)
     + quantification of mature miRNAs.
     + visualizing experiment data with PCA
     + evaluating experiment power and sample size
     + detecting differentially expressed miRNAs
-- **ChiPseq**, which allows:
+- **ChIPseq**, which allows:
     + adapter trimming with [skewer](https://github.com/relipmoc/skewer)
     + mapping with [BWA](http://bio-bwa.sourceforge.net/bwa.shtml)
     + peak calling using either MACS v 1.4 or SICER v 1.1
-    + connection of each peak to the nearest gene available in the chosen UCSC genome release,
-    + full annotation of the nearest gene.
+    + associating peaks to the nearest gene, UCSC annotation
+    + full annotation of the nearest gene
+
+
+The most computing expensive steps of the analyses are embedded in the following docker4seq functions: **rnaseqCounts**, **mirnaCounts**, **chipseqCounts**. These functions are also the only one that have RAM and computing power requirements not usually available in consumer computers. Below its shown the time required to run the above three functions increasing the number of sequenced reads.
+
+### rnaseqCounts performances on different hardware configurations
+
+The conversion between fastq files to counts is the most time consuming step in RNAseq data analysis and it normally requires high-end server. We tested **rnaseqCounts** on different hardware:
+
+    + SeqBox: NUC6I7KYK CPU i7-6770HQ 3.5 GHz (1 core, 8 threads), 32 Gb RAM, HD 250 Gb SSD
+    + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
+
+
+We run resepctively 26, 52, 78, and 105 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in Figure 1. It is notable that SeqBox, mapping in 5 hours more than 100 milion reads, is able to handle can handle, in 20 hours, the throughput of the Illumina benchtop sequencer NextSeq 500, which produces up to 400 milion reads in a 30 hours run.
+    
+![rnaseqCounts overall performance](../inst/img/mrna_performace.jpg)
+
+
+### mirnaCounts performances on different hardware configurations
+
+We run resepctively 3, 6, 12, and 24 miRNA samples in parallel using **mirnaCounts**, increasing the number of threads till reaching the limit of the hardware or 24 threads, i.e. vaules shown in parenthesis in Figure 2.
+    
+![mirnaCounts overall performance](../inst/img/mirna_performace.jpg) 
 
 
 
-## RNAseq workflow 
+### chipseqCounts performances on different hardware configurations
+
+We run resepctively 37, 70, 111, and 149 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in Figure 3.
+    
+![chipseqCounts overall performance](../inst/img/chipseq_performance.jpg) 
+
+
+
+From the point of view of parallelization the **rnaseqCounts** is the one that embeds the most parallelized tools: i) mapping with STAR and ii) quantifying transcripts with RSEM. Both these tools have a massive I/O requirement. On the basis of the results shown in Figure 1 parallelization does not improve very much the overall performaces, but compensate the poor I/O of the RAID based on SATA disk array. On the other side the presence of an SSD with very high I/O compensate in the limited amount of cores of SeqBox.
+
+In the case of **mirnaCounts** and **chipseqCounts** the parallelization is very little and it is only available for the reads mapping procedure. On the otherside both functions have a massive I/O. The reduced parallelization of these two analyses combined with the higher I/O of the SSD with respect to the SATA array makes SeqBox extremely effective even with very high number of reads to be processed, Figure 2 and 3.
+
+## RNAseq workflow: Howto
 
 The mRNAseq workflow can be run using **4SeqGUI** graphical interface (linux/MAC):
-![miRNAseq workflow](../inst/img/rnaseq1.jpeg)
+
+![mRNAseq workflow](../inst/img/rnaseq1.jpeg)
 
 Sample quantification is made of these steps:
 
@@ -98,11 +162,33 @@ Sample quantification is made of these steps:
 
 All the parameters can be setup using 4SeqGUI
 
+### Creating a STAR index file for mRNAseq:
+
+The index can be easily created using the graphical interface:
+
+![Creating a STAR genome index](../inst/img/rnaseq2.jpeg)
+
+A detailed description of the parameters is given below.
+
+#### Creating a STAR index file by line command
+
+\fontsize{8}{8}\selectfont
+```{r,  echo=TRUE, eval=FALSE}
+rsemstarIndex(group="docker",genome.folder="/data/scratch/hg38star",
+ensembl.urlgenome="ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz",
+ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh38.87.gtf.gz")
+```
+
+In brief, **rsemstarIndex** uses ENSEMBL genomic data. User has to provide the URL (**ensembl.urlgenome**) for the file XXXXX_dna.toplevel.fa.gz related to the organism of interest, the URL (**ensembl.urlgtf**) for the annotation GTF XXX.gtf.gz and the path to the folder where the index will be generated (**genome.folder**). The parameter **threads** indicate the number of cores dedicated to this task.
+
+
+### Quantifying genes/isoforms:
+
 ![Gene, Isoform counting](../inst/img/rnaseq3.jpeg)
 
 A detailed description of the parameters is given below.
 
-### Sample quantification by line command
+#### Sample quantification by line command
 
 The sample quantification can be also executed using R and it is completely embedded in a single function:
 
@@ -126,7 +212,7 @@ org="mm10", annotation.type="gtfENSEMBL")
 User needs to create the **fastq.folder**, where the fastq.gz file(s) for the sample under analysis are located. 
 The **scratch.folder** is the location where temporary data are created. The results will be then saved in the **fastq.folder**.
 
-User needs to provide also the sequence of the sequencing adapters, **adapter5** and **adapter3** parameters. In case Illumina platform is used the adapters sequences can be easily recovered [here](https://support.illumina.com/content/dam/illumina-support/documents/documentation/chemistry_documentation/experiment-design/illumina-adapter-sequences_1000000002694-01.pdf). 
+User needs to provide also the sequence of the sequencing adapters, **adapter5** and **adapter3** parameters. In case Illumina platform is used the adapters sequences can be easily recovered [**here**](https://support.illumina.com/content/dam/illumina-support/documents/documentation/chemistry_documentation/experiment-design/illumina-adapter-sequences_1000000002694-01.pdf). 
 
 **seq.type** indicates if single end (se) or pair-end (pe) data are provided, **threads** indicates the max number of cores used by *skewer* and *STAR*, all the other steps are done on a single core.
 
@@ -156,19 +242,6 @@ The mRNAseq workflow produces the following output files:
 
 The first column in **gtf_annotated_genes.results** is the ensembl gene id, the second is the [biotype](http://www.ensembl.org/Help/Faq?id=468), 
 the 3rd is the annotation source, the 4th contains the set of transcripts included in the ensembl gene id. Then there is the length of the gene, the lenght of the gene to which is subtracted the average length of the sequenced fragments, the expected counts are the couts to be used for differentiual expression analysis. [TPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) and [FPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) are normalized gene quantities to be used only for visualization purposes.
-
-### mRNAseq performances on different hardware configurations
-
-The conversion between fastq files to counts is the most time consuming step in RNAseq data analysis and it normally requires high-end server. We have tested our workflow on different hardware:
-
-    + NUC mini PC: CPU i7-6770HQ 3.5 GHz (1 core, 8 threads), 32 Gb RAM, HD 250 Gb SSD
-    + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
-
-
-We run resepctively 26, 52, 78, and 105 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in fig. below.
-    
-![performance](../inst/img/mrna_performace.jpg)  
-
 
 ### From samples to experiment
 
@@ -345,29 +418,16 @@ User needs to provide experiment table, **experiment.table** param, i.e. the cou
 
 IMPORTANT: the above analysis can be also applied to miRNAseq data.
 
-### Creating a STAR index file for mRNAseq:
-
-```{r,  echo=TRUE, eval=FALSE}
-rsemstarIndex(group="docker",genome.folder="/data/scratch/hg38star",
-ensembl.urlgenome="ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz",
-ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh38.87.gtf.gz")
-```
-
-In brief, **rsemstarIndex** uses ENSEMBL genomic data. User has to provide the URL (**ensembl.urlgenome**) for the file XXXXX_dna.toplevel.fa.gz related to the organism of interest, the URL (**ensembl.urlgtf**) for the annotation GTF XXX.gtf.gz and the path to the folder where the index will be generated (**genome.folder**). The parameter **threads** indicate the number of cores dedicated to this task.
-
-The index can be easily created using the graphical interface:
-
-![Creating a STAR genome index](../inst/img/rnaseq2.jpeg)
-
-    
-
 ## miRNAseq workflow 
 
 The miRNAseq workflow can be run using **4SeqGUI** graphical interface:
+
 ![miRNAseq workflow](../inst/img/mirna1.jpeg)
   
   
 The miRNAseq docker container executes the following steps:
+
+
 ![miRNAseq workflow](../inst/img/mirna3.jpeg)
 
 The full workflow is described in [Cordero et al. Plos ONE 2012](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0031630). In brief, fastq files are trimmed using [cutadapt](https://github.com/marcelm/cutadapt) and the trimmed reads are mapped on miRNA precursors, i.e. harpin.fa file, from [miRBase](http://www.mirbase.org/ftp.shtml) using [SHRIMP](http://compbio.cs.toronto.edu/shrimp/). Using the location of the mature miRNAs in the precursor, countOverlaps function, from the Bioconductor package GenomicRanges is used to quantify the reads mapping on mature miRNAs. 
@@ -411,20 +471,7 @@ The miRNAseq workflow produces the following output files:
     + all.counts.Rda: miRNAs raw counts ready to be loaded in R.
     + analysis.log: logs of the full analysis pipeline
   
-
-### miRNAseq performances on different hardware configurations
-
-To have an idea of the difference performances that we can achieve with our miRNAseq workflow on different hardware we tested it on:
-
-    + NUC mini PC: CPU i7-6770HQ 3.5 GHz (1 core, 8 threads), 32 Gb RAM, HD 250 Gb SSD
-    + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
-
-
-We run resepctively 3, 6, 12, and 24 miRNA samples in parallel, increasing the number of threads till reaching the limit of the hardware or 24 threads, i.e. vaules shown in parenthesis in fig. below.
-    
-![performance](../inst/img/mirna_performace.jpg)    
-
-
+  
 ## Adding covariates and batches to mirnaCounts output: all.counts.txt
 
 The funnction **mirnaCovar** add to the header of all.counts.txt covariates and batches or covariates only.
@@ -444,7 +491,6 @@ mirnaCovar(experiment.folder=getwd(),
 ```
 
 
-    
 ## chipseq workflow
 
 The chipseq workflow can be run using **4SeqGUI** graphical interface:
@@ -457,10 +503,27 @@ The ChIPseq is made of two main steps:
 
 - Running MACS or SICER analysis
 
+### Creating a BWA index file for Chipseq:
+
+
+The index can be easily created using the graphical interface:
+
+![Creating a BWA index with Genome indexing BWA](../inst/img/chipseq1.jpeg)
+
+```{r,  echo=TRUE, eval=FALSE}
+bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/mm10bwa", uscs.urlgenome=
+"http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz",
+gatk=FALSE)
+```
+
+In brief, **bwaIndexUcsc** uses UCSC genomic data. User has to provide the URL (**uscs.urlgenome**) for the file chromFa.tar.gz related to the organism of interest and the path to the folder where the index will be generated (**genome.folder**). The parameter **gatk** has to be set to FALSE because is not used for a genomic index used for ChIPseq.
+
+
+### Calling peaks and annotating:
+
 All the parameters needed to run MACS or SICER can be setup using 4SeqGUI
 
 ![MACS and SICER analysis](../inst/img/chipseq3.jpeg)
-
 
 A detailed description of the parameters is given below.
 
@@ -534,62 +597,6 @@ The chipseq workflow produces the following output files:
     + mycontrol_sorted.bw: bigWig file for UCSC Genome Browser visualization
     + mytreat_sorted.bw: bigWig file for UCSC Genome Browser visualization
      
-### ChIPseq performances on different hardware configurations
-
-To have an idea of the difference performances that we can achieve with our miRNAseq workflow on different hardware we tested it on:
-
-    + NUC mini PC: CPU i7-6770HQ 3.5 GHz (1 core, 8 threads), 32 Gb RAM, HD 250 Gb SSD
-    + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
-
-
-We run resepctively 37, 70, 111, and 149 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in fig. below.
-    
-![performance](../inst/img/chipseq_performance.jpg)   
-
-
-### Creating a BWA index file for Chipseq:
-
-```{r,  echo=TRUE, eval=FALSE}
-bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/mm10bwa", uscs.urlgenome=
-"http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz",
-gatk=FALSE)
-```
-
-In brief, **bwaIndexUcsc** uses UCSC genomic data. User has to provide the URL (**uscs.urlgenome**) for the file chromFa.tar.gz related to the organism of interest and the path to the folder where the index will be generated (**genome.folder**). The parameter **gatk** has to be set to FALSE because is not used for a genomic index used for ChIPseq.
-
-The index can be easily created using the graphical interface:
-
-![Creating a BWA index with Genome indexing BWA](../inst/img/chipseq1.jpeg)
-
-## Dockers containers
-
-At the present time all functions requiring some sort of calculation are embedded in the following docker containers:
-
-
-- docker.io/rcaloger/annotate.2017.01 used by rnaseqCounts, rsemanno 
-
-- docker.io/rcaloger/bwa.2017.01 used by bwaIndexUcsc, bwa 
-
-- docker.io/rcaloger/chipseq.2017.01 used by chipseqCounts, chipseq
-
-- docker.io/rcaloger/r332.2017.01 used by experimentPower, sampleSize, wrapperDeseq2
-
-- docker.io/rcaloger/mirnaseq.2017.01 used by mirnaCounts
-
-- docker.io/rcaloger/rsemstar.2017.01 used by rnaseqCounts, rsemstarIndex, rsemstarUscsIndex
-
-- docker.io/rcaloger/skewer.2017.01 used by skewer
-
-### docker container nomenclature
-
-In case of updates required to solve bugs, which do not affect the calculation docker.io/rcaloger/XXXXX.YYYY.ZZ the fiels ZZ will be updated.
-
-In case of updates which affect the calculation, e.g. new release of Bioconductor libraries, the field YYYY will be updated. Previous versions will be maintained to allow reproducibility.
-
-### Reproducibility
-
-Within any folder generated with docker4seq functions it is saved the file **containers.txt**, which indicates the containers available in the local release of docker4seq.
-
 
 
 
