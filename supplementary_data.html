@@ -270,25 +270,25 @@ docker.io/rcaloger/r340.2017.01
 + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
 </code></pre>
 
-<p>We run resepctively 26, 52, 78, and 105 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in Figure 1. It is notable that SeqBox, mapping in 5 hours more than 100 milion reads, is able to handle can handle, in 20 hours, the throughput of the Illumina benchtop sequencer NextSeq 500, which produces up to 400 milion reads in a 30 hours run.</p>
+<p>We run respctively 26, 52, 78, and 105 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in next figure. It is notable that SeqBox, mapping in 5 hours more than 100 milion reads, is able to handle can handle, in 20 hours, the throughput of the Illumina benchtop sequencer NextSeq 500, which produces up to 400 milion reads in a 30 hours run.</p>
 
 <p><img src="/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mrna_performace.jpg" alt="rnaseqCounts overall performance"></p>
 
 <h3>mirnaCounts performances on different hardware configurations</h3>
 
-<p>We run resepctively 3, 6, 12, and 24 miRNA samples in parallel using <strong>mirnaCounts</strong>, increasing the number of threads till reaching the limit of the hardware or 24 threads, i.e. vaules shown in parenthesis in Figure 2.</p>
+<p>We run resepctively 3, 6, 12, and 24 miRNA samples in parallel using <strong>mirnaCounts</strong>, increasing the number of threads till reaching the limit of the hardware or 24 threads, i.e. vaules shown in parenthesis in next figure.</p>
 
 <p><img src="/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirna_performace.jpg" alt="mirnaCounts overall performance"> </p>
 
 <h3>chipseqCounts performances on different hardware configurations</h3>
 
-<p>We run resepctively 37, 70, 111, and 149 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in Figure 3.</p>
+<p>We run resepctively 37, 70, 111, and 149 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in next figure.</p>
 
 <p><img src="/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/chipseq_performance.jpg" alt="chipseqCounts overall performance"> </p>
 
-<p>From the point of view of parallelization the <strong>rnaseqCounts</strong> is the one that embeds the most parallelized tools: i) mapping with STAR and ii) quantifying transcripts with RSEM. Both these tools have a massive I/O requirement. On the basis of the results shown in Figure 1 parallelization does not improve very much the overall performaces, but compensate the poor I/O of the RAID based on SATA disk array. On the other side the presence of an SSD with very high I/O compensate in the limited amount of cores of SeqBox.</p>
+<p>From the point of view of parallelization the <strong>rnaseqCounts</strong> is the one that embeds the most parallelized tools: i) mapping with STAR and ii) quantifying transcripts with RSEM. Both these tools have a massive I/O requirement. On the basis of the results shown above parallelization does not improve very much the overall performaces, but compensate the poor I/O of the RAID based on SATA disk array. On the other side the presence of an SSD with very high I/O compensate in the limited amount of cores of SeqBox.</p>
 
-<p>In the case of <strong>mirnaCounts</strong> and <strong>chipseqCounts</strong> the parallelization is very little and it is only available for the reads mapping procedure. On the otherside both functions have a massive I/O. The reduced parallelization of these two analyses combined with the higher I/O of the SSD with respect to the SATA array makes SeqBox extremely effective even with very high number of reads to be processed, Figure 2 and 3.</p>
+<p>In the case of <strong>mirnaCounts</strong> and <strong>chipseqCounts</strong> the parallelization is very little and it is only available for the reads mapping procedure. On the otherside both functions have a massive I/O. The reduced parallelization of these two analyses combined with the higher I/O of the SSD with respect to the SATA array makes SeqBox extremely effective even with very high number of reads to be processed.</p>
 
 <h2>RNAseq workflow: Howto</h2>
 
