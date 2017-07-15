@@ -32,6 +32,7 @@ The minimal hardware requirements are a 4 core 64 bits linux computer, 32 Gb RAM
 **MANDATORY:** The first time *docker4seq* is installed the **downloadContainers** function needs to be executed to download in the local repository the docker containers that are needed by *docker4seq*.
 
 ```{r, echo=TRUE, eval=FALSE}
+library(docker4seq)
 downloadContainers(group="docker")
 ```
 
