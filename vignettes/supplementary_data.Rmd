@@ -72,6 +72,7 @@ downloadContainers(group="docker", containers.file="my_containers.txt")
 #an example of the my_containers.txt file content
 docker.io/rcaloger/bwa.2017.01
 docker.io/rcaloger/chipseq.2017.01
+docker.io/rcaloger/r340.2017.01
 ```
 
 
