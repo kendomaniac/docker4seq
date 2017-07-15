@@ -3,7 +3,7 @@ title: " Supplementary data SeqBox: RNAseq/ChIPseq reproducible analysis on a co
 author: "Marco Beccuti, Francesca Cordero, Maddalena Arigoni, Riccardo Panero, Susanna Donatelli and Raffaele A Calogero"
 date: "7/14/2017"
 output: pdf_document
-
+toc: true
 ---
 
 ```{r setup, include=FALSE}
