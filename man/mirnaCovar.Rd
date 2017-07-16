@@ -8,7 +8,7 @@ mirnaCovar(experiment.folder, covariates = NULL, batches = NULL,
   output.folder)
 }
 \arguments{
-\item{experiment.folder, }{a character string indicating the paths to miRNAseq input folder}
+\item{experiment.folder, }{a character string indicating the full paths to miRNAseq input file}
 
 \item{covariates, }{a character vector indicating the covariates associated to each sample, e.g. c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.2", "Cov.2", "Cov.2", "Cov.2"). Covariates are required for differential expression analysis}
 
@@ -28,7 +28,7 @@ This function modifies the all.counts.txt table generated from miRNAseq adding c
    unzip("test.mirna.analysis.zip")
    setwd("test.mirna.analysis")
    library(docker4seq)
-   mirnaCovar(experiment.folder=getwd(),
+   mirnaCovar(experiment.folder=paste(getwd(), "all.counts.txt", sep="/"),
           covariates=c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.1",
                        "Cov.2", "Cov.2", "Cov.2", "Cov.2", "Cov.2", "Cov.2"),
           batches=c("bath.1", "bath.1", "bath.2", "bath.2", "batch.1", "batch.1",
