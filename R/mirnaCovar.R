@@ -1,6 +1,6 @@
 #' @title Adding covariates and batch information to miRNAseq raw counts output
 #' @description This function modifies the all.counts.txt table generated from miRNAseq adding covariates and batch information
-#' @param experiment.folder, a character string indicating the paths to miRNAseq input folder
+#' @param experiment.folder, a character string indicating the full paths to miRNAseq input file
 #' @param covariates, a character vector indicating the covariates associated to each sample, e.g. c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.2", "Cov.2", "Cov.2", "Cov.2"). Covariates are required for differential expression analysis
 #' @param batches, a character vector indicating the covariates associated to each sample, e.g. c("bath.1", "bath.1", "bath.2", "bath.2", "batch.1", "batch.1", "batch.2", "batch.2"). Batch info might be required for differential expression analysis
 #' @param output.folder, a character vector indicating the paths to miRNAseq output folder
@@ -12,7 +12,7 @@
 #'    unzip("test.mirna.analysis.zip")
 #'    setwd("test.mirna.analysis")
 #'    library(docker4seq)
-#'    mirnaCovar(experiment.folder=getwd(),
+#'    mirnaCovar(experiment.folder=paste(getwd(), "all.counts.txt", sep="/"),
 #'           covariates=c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.1",
 #'                        "Cov.2", "Cov.2", "Cov.2", "Cov.2", "Cov.2", "Cov.2"),
 #'           batches=c("bath.1", "bath.1", "bath.2", "bath.2", "batch.1", "batch.1",
@@ -20,7 +20,8 @@
 #' }
 #' @export
 mirnaCovar <- function(experiment.folder, covariates=NULL, batches=NULL, output.folder){
-       tmp <- read.table(paste(experiment.folder, "all.counts.txt", sep="/"), sep="\t", header=T, stringsAsFactors = F, row.names = 1)
+#       tmp <- read.table(paste(experiment.folder, "all.counts.txt", sep="/"), sep="\t", header=T, stringsAsFactors = F, row.names = 1)
+       tmp <- read.table(experiment.folder, sep="\t", header=T, stringsAsFactors = F, row.names = 1)
        if(!is.null(covariates)){
            tmp.n <- names(tmp)
            tmp.n <- sapply(strsplit(tmp.n, "_"),function(x)x[1])
