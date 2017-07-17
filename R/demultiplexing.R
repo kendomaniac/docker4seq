@@ -9,7 +9,7 @@
 #'\dontrun{
 #'     #running rsemstar index for human
 #'     demultiplexing(group="docker",
-#'     data.folder="/home/calogero/Documents/data/lollini/2a_run/170620_NB501050_0092_AH5MM2BGX2",
+#'     data.folder="/home/calogero/Documents/data/lollini/3a_run/170712_NB501050_0097_AH3FGNBGX3",
 #'     threads=24)
 #'
 #' }
@@ -37,10 +37,10 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, threads=8){
 
 	if(group=="sudo"){
 	      params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/rcaloger/demultiplexing.1 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
-	      runDocker(group="sudo",container="docker.io/rcaloger/demultiplexing.1", params=params)
+	      runDocker(group="sudo",container="docker.io/rcaloger/demultiplexing.2017.1", params=params)
 	}else{
 	  params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/rcaloger/demultiplexing.1 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
-	  runDocker(group="docker",container="docker.io/rcaloger/demultiplexing.1", params=params)
+	  runDocker(group="docker",container="docker.io/rcaloger/demultiplexing.2017.01", params=params)
 	}
   out <- "xxxx"
   #waiting for the end of the container work
