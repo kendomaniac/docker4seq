@@ -1,7 +1,7 @@
 ---
 title: " Supplementary data SeqBox: RNAseq/ChIPseq reproducible analysis on a consumer game computer"
 author: "Marco Beccuti, Francesca Cordero, Maddalena Arigoni, Riccardo Panero, Elvio G. Amparore, Susanna Donatelli and Raffaele A Calogero"
-date: "7/15/2017"
+date: "7/16/2017"
 output: pdf_document
 toc: true
 fig_caption: true
@@ -120,9 +120,9 @@ The count generation from fastq files  is the most time consuming step in RNAseq
     + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
 
 
-We run respctively 26, 52, 78, and 105 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in *Figure  1*. It is notable that SeqBox, mapping in 5 hours more than 100 milion reads, it is able to handle in 20 hours the throughput of the Illumina benchtop sequencer NextSeq 500, which produces up to 400 milion reads in a run of 30 hours.
+We run respectively 26, 52, 78, and 105 million reads increasing the number of threads till reaching the limit of the hardware or up to 64 threads, i.e. vaules shown in parenthesis in *Figure  1*. It is notable that SeqBox, mapping in 5 hours more than 100 milion reads, it is able to handle in 20 hours the throughput of the Illumina benchtop sequencer NextSeq 500, which produces up to 400 milion reads in a run of 30 hours.
     
-![rnaseqCounts overall performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mrna_performace.jpg)
+![rnaseqCounts overall performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mrna_performance_bis.jpg)
 
 
 ### mirnaCounts performances
