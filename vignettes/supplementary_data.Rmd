@@ -77,12 +77,6 @@ docker.io/rcaloger/r340.2017.01
 ```
 
 
-
-
-
-
-
-
 ## Available workflows
 At the present time are available the following workflows:
 
@@ -129,7 +123,7 @@ We run respectively 26, 52, 78, and 105 million reads increasing the number of t
 
 We run resepctively 3, 6, 12, and 24 miRNA samples in parallel using **mirnaCounts**, increasing the number of threads till reaching the limit of the hardware or 24 threads, i.e. vaules shown in parenthesis in *Figure 2*.
     
-![mirnaCounts overall performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirna_performace.jpg) 
+![mirnaCounts overall performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirnaseq_performance_bis.jpg) 
 
 
 

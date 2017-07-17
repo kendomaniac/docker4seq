@@ -54,17 +54,17 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, threads=8){
     }
   }
   #running time 2
-  system(paste("mv ",  data.folder,"/Data/Intensities/BaseCalls/*.fastq.gz ",main.folder), sep="")
+  system(paste("mv ",  data.folder,"/Data/Intensities/BaseCalls/*.fastq.gz ",main.folder, sep=""))
   ptm <- proc.time() - ptm
   con <- file(paste(main.folder,"run.info", sep="/"), "r")
   tmp.run <- readLines(con)
   close(con)
 
   tmp.run <- NULL
-  tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
-  tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-  tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
-  writeLines(tmp.run, paste(genome.folder,"run.info", sep="/"))
+  tmp.run[length(tmp.run)+1] <- paste("demultiplexing user run time mins ",ptm[1]/60, sep="")
+  tmp.run[length(tmp.run)+1] <- paste("demultiplexing system run time mins ",ptm[2]/60, sep="")
+  tmp.run[length(tmp.run)+1] <- paste("demultiplexing elapsed run time mins ",ptm[3]/60, sep="")
+  writeLines(tmp.run, paste(main.folder,"run.info", sep="/"))
 
   #saving log and removing docker container
   container.id <- readLines(paste(main.folder,"/dockerID", sep=""), warn = FALSE)
