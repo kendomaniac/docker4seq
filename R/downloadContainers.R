@@ -10,7 +10,7 @@
 #' }
 #' @export
 downloadContainers <- function(group="docker", containers.file=NULL){
-   if(i.null(containers.file)){
+   if(is.null(containers.file)){
      containers.file=paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")
    }
    containers <- readLines(containers.file)
