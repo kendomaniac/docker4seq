@@ -23,7 +23,7 @@ This function executes the Illumina bcl2fastq program
 \dontrun{
     #running rsemstar index for human
     demultiplexing(group="docker",
-    data.folder="/home/calogero/Documents/data/lollini/2a_run/170620_NB501050_0092_AH5MM2BGX2",
+    data.folder="/home/calogero/Documents/data/lollini/3a_run/170712_NB501050_0097_AH3FGNBGX3",
     threads=24)
 
 }
