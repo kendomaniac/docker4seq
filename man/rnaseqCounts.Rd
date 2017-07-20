@@ -10,8 +10,8 @@ rnaseqCounts(group = "sudo", fastq.folder = getwd(),
   adapter3 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
   seq.type = "pe", min.length = 40,
   genome.folder = "/data/scratch/hg38star", strandness = "none",
-  save.bam = TRUE, org = "hg38", truncating.expected.counts = FALSE,
-  annotation.type = c("biocUCSC", "gtfENSEMBL"))
+  save.bam = TRUE, org = "hg38", annotation.type = c("biocUCSC",
+  "gtfENSEMBL"))
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -40,8 +40,6 @@ rnaseqCounts(group = "sudo", fastq.folder = getwd(),
 
 \item{org, }{a character string indicating the genome assembly used for mapping and counting with \code{"rsemstar"} function only required for biocENSEMBL based annotation}
 
-\item{truncating.expected.counts, }{a boolean logical variable indicating if the expected counts calculated by RSEM need to be converted in integer to be compliant with differnetial expression Bioconductor packages as DESeq2. Default is FALSE}
-
 \item{annotation.type, }{a character string. Two options: \code{"biocENSEMBL"} or \code{"gtfENSEMBL"}. \code{"biocENSEMBL"} will annotate by Bioconductor only protein coding genes. \code{"gtfENSEMBL"} will annotate all RNAs described in \code{"annotation.type"}}
 }
 \value{
@@ -62,6 +60,6 @@ This function executes a set of docker containers allowing the generation of gen
             adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
             seq.type="se", threads=8,  min.length=40,
             genome.folder="/data/scratch/mm10star", strandness="none", save.bam=FALSE,
-            org="mm10", truncating.expected.counts=FALSE, annotation.type="gtfENSEMBL")
+            org="mm10", annotation.type="gtfENSEMBL")
 }
 }

@@ -1,0 +1,199 @@
+---
+title: "CASC"
+author: "Raffaele A Calogero"
+output: 
+  BiocStyle::html_document
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Single Cell workflow
+
+
+### Removing non informative genes
+
+The function **allZeros** removed all genes that are without counts in all cells and plot the frequency distribution of genes with counts in the cells.
+
+```{r, echo=TRUE, eval=FALSE}
+#downloading fastq files
+system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
+system("gzip -d singlecells_counts.txt.gz")
+filterZeros(data.folder=getwd(),counts.matrix="singlecells_counts.txt")
+
+```
+
+
+### Data normalization
+
+SCnorm (as detailed in Bacher et al.) performs a quantile-regression based approach for robust normalization of single-cell RNA-seq data.  SCnorm groups genes based on their count-depth relationship then applies a quantile regression to each group in order to estimate scaling factors which will remove the effect of sequencing depth from the counts.
+
+#### Check counts-depth relationship
+
+Before normalizing using **scnorm**, it is advised to check the data count-depth relationship. **checkCountDepth** provides a wrapper, in docker4seq, for the checkCountDepth of the [**SCnorm package**](https://github.com/rhondabacher/SCnorm), which estimates the count-depth relationship for all genes.
+
+```{r, echo=TRUE, eval=FALSE}
+#downloading fastq files
+system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
+system("gzip -d singlecells_counts.txt.gz")
+conditions=rep(1,288)
+checkCountDepth(group="docker", data.folder=getwd(), counts.matrix="singlecells_counts.txt", conditions=conditions, outputName="singlecells_counts", nCores=8)
+
+```
+
+The output is a PDF that provides a view of the counts distribution of the data.
+
+#### scnorm
+
+the **scnorm** function execute SCnorm of the [**SCnorm package**](https://github.com/rhondabacher/SCnorm), which normalizes  across  cells  to  remove  the effect  of  sequencing  depth  on  the  counts  and  return  the  normalized expression count.
+
+```{r, echo=TRUE, eval=FALSE}
+#downloading fastq files
+system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
+system("gzip -d singlecells_counts.txt.gz")
+conditions=rep(1,288)
+scnorm(group="docker", data.folder=getwd(),counts.matrix="singlecells_counts.txt", conditions=conditions,outputName="singlecells_counts", nCores=8, filtercellNum=10, PropToUse=0.1)
+
+```
+
+The output is a PDF that provides a view of effects of normalization, and Rda file containing the full output of **SCnorm** and a tab delimited file containing the normalized data.
+
+Setting PropToUse to 0.1 was particularly useful with large UMI based datasets. Proportion of genes closest to the slope mode used for the group fitting. This number affects a lot speed.
+
+### Imputing dropouts
+
+the **cascImpute** function execute scImpute of the [**scImpute package**](https://github.com/Vivianstats/scImpute), which impute the dropout values in scRNA-seq data.
+
+```{r, echo=TRUE, eval=FALSE}
+#downloading fastq files
+system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
+system("gzip -d singlecells_counts.txt.gz")
+cascImpute(group="docker", data.folder=getwd(), counts.matrix="singlecells_counts.txt", drop.thre=0.5, cores=8)
+
+#Modifying drop.thre value A quick version of the imputing can be used to refine drop.thre values indicating refining=TRUE. It has to be done in the same folder where the frst run was done.
+cascImpute(group="docker", data.folder=getwd(), counts.matrix="singlecells_counts.txt", drop.thre=0.3, cores=8, refining=TRUE)
+```
+
+The output is a matrix file containing the imputed data. 
+
+
+
+### Converting a count table in log10
+
+The function **counts2log** can convert a count table in a log10 values saved in a comma separated file which is the input of CASC.
+
+```{r, echo=TRUE, eval=FALSE}
+#downloading fastq files
+system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
+system("gzip -d singlecells_counts.txt.gz")
+counts2log(counts.matrix="singlecells_counts.txt", data.folder=getwd(), log.base=10, type="txt")
+```
+
+
+### CASC Classification Analysis of Single Cell Sequencing Data
+
+Genome-wide single-cell measurements such as transcriptome sequencing enable the characterization of cellular composition as well as functional variation in homogenic/heterogenic cell populations. An important step in the single-cell transcriptome analysis is to group cells that belong to the same sub-type based on gene expression patterns [Usoskin et al, Pollen et al, Kolodziejczyk et al]. Critical issues in cell clustering are:
+
+- cluster stability
+
+- feature selection, i.e. the identification genes playing the major role in cluster formation. 
+
+To address the above issues, we have developed CASC, a tool implemented in a docker container, that uses as core application to detect cell clusters the “kernel based similarity learning” [Wang et al] and allows: 
+
+- identification of the optimal number of clusters for cell partitioning using “silhouette method”. 
+
+- The evaluation of clusters stability, measuring the permanence of a cell in a cluster upon random removal of subsets of cells. 
+
+-Feature selection via “nearest shrunken centroid method” [Tibshirani et al], applied to the gene Index Of Dispersion [Diaz et al]. 
+
+CASC was tested on previously published data sets [Usoskin et al, Pollen et al, Kolodziejczyk et al]. CASC feature selection procedure efficiently allows the identification of the subpopulation of genes playing the main role in discriminating between cell subpopulations.
+
+
+#### Introduction
+
+**CASC** is controlled by a set of functions embedded in `r Githubpkg("kendomaniac/docker4seq")` package,
+which was developed to facilitate the use of computing demanding applications in the field of NGS data analysis.
+
+
+This approach provides multiple advantages: 
+
+- user does not need to install all the software on its local server
+
+- results generated by different containers can be organized in pipelines
+
+- reproducible research is guarantee by the possibility of sharing the docker containers used for the analysis 
+
+#### Requirements
+The minimal hardware requirements are a 4 core 64 bits linux computer, 32 Gb RAM, one SSD 250GB, with a folder with read/write permission for any users (chmod 777), and [docker](https://www.docker.com/) installed.
+
+**IMPORTANT** The first time *docker4seq* is installed the **downloadContainers** needs to be executed  to download to the local repository the containers that are needed for the use of *docker4seq*
+
+```{r, echo=TRUE, eval=FALSE}
+downloadContainers(group="docker")
+```
+
+
+#### Defining the optimal number of clusters
+
+
+```{r, echo=TRUE, eval=FALSE}
+#downloading fastq files
+system("wget http://130.192.119.59/public/log10_singlecells_counts.csv.gz")
+system("gzip -d log10_singlecells_counts.csv.gz")
+
+cascKoptimization(group="docker", scratch.folder="/Users/raffaelecalogero/Desktop/scratch", data.folder=getwd(),
+counts.matrix="log10_singlecells_counts.csv", permutations=20, blocks.permutations=2, core=0, bootstrap.fraction=10, k.min=2, k.max=4, totIdentity=80, clusterIdentity=80)
+
+```
+
+The function **cascKoptimization** run SIMLR [Wang et al] using a range of clusters and produces as output two violin plots:
+
+- silhouette.pdf: Silhouette refers to a method of interpretation and validation of consistency within clusters of data. The technique provides a succinct graphical representation of how well each object lies within its cluster. Here instead of using the average silhouette we represent the silhouette values distribution using a violin plot. Thus, silhouette distributions being skewed to the positive values and with short negative tail is representative of a consistent cluster. In the example below, fig. A, it seems that 4 clusters are the most consistent by silhouette analysis.
+
+
+- cell.stability.pdf: Cell stability plot represent the distribution of the fraction of times, given a N number of permutations, that the cell are stabily localized in a cluster. The example below, fig. B, 3 clusters are characterized by an higher cell stability with respect to 4 clusters. 
+
+Taking in account the two plots and the clusters structure observed for 3 and 4 clusters, fig C and D, it is clear that 4 clusters provide a better separation between cells but keeping very high the cell permanence in a cluster.
+
+![cluster decision](/Users/raffaelecalogero/Dropbox/data/docker/devel/docker4seq_devel/inst/img/silhouette.stability.jpg)
+
+The function **cascOutputReformat** use SilhouetteParameters.csv (the file containing the cell silhouette scores), mainVector.csv (the file that associates each cell to a specific SIMLR cluster), scoreVector.csv (the file associating each cell to a specific cell stability score), dataPlot.csv (containing SIMLR component 1 and 2 cohordinates) to generate a summary file called **summary_table.csv**.
+
+```{r, echo=TRUE, eval=FALSE}
+ #downloading fastq files
+system("wget http://130.192.119.59/public/example.zip")
+unzip("example.zip")
+setwd("./example")
+cascOutputReformat(data.folder=getwd())
+```
+
+![summary_table](../inst/img/summary_table.jpeg)
+
+
+
+
+
+
+
+## References
+
+Usoskin et al. Nat. Neurosci. 2014, 18:145–153
+
+Pollen et al. Nat. Biotechnol. 2014, 32:1–37
+
+Kolodziejczyk et al. Cell Stem Cell 2015, 17:471–485
+
+Wang et al. Nat Methods. 2017 14:414-416
+
+Tibshirani et al. PNAS 2002, 99:6567-6572
+
+Diaz et al. Bioinformatics 2016, 32: 2219-2220
+
+Bacher et al. Nat. Methods  2017, 14:584–586
+
+

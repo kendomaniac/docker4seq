@@ -4,9 +4,7 @@
 \alias{downloadContainers}
 \title{Download for the first time all containers embedded in the workflows}
 \usage{
-downloadContainers(group = "docker",
-  containers.file = paste(path.package(package = "docker4seq"),
-  "containers/containers.txt", sep = "/"))
+downloadContainers(group = "docker", containers.file = NULL)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -20,6 +18,6 @@ This is a functin that preapre the docker environment to be used for the first t
 \dontrun{
     #running runDocker
      downloadContainers(group="docker", containers.file)
-    
+
 }
 }
