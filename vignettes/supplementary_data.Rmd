@@ -143,6 +143,12 @@ From the point of view of parallelization the **rnaseqCounts** is the one that e
 
 In the case of **mirnaCounts** and **chipseqCounts** the parallelization is very little and it is only available for the reads mapping procedure. Moreover, both functions have a massive I/O. The reduced parallelization of these two analyses combined with the higher I/O throughput of the SSD with respect to the SATA array makes SeqBox extremely effective even with very high number of reads to be processed, *Figure 2  and 3*.
 
+## Test sets
+
+A folder including a set do dataset to test each of the workflows available in docker4seq/4SeqGUI can be found [**here**](http://130.192.119.59/public/test.zip)
+
+
+
 ## RNAseq workflow: Howto
 
 The mRNAseq workflow can be run using **4SeqGUI** graphical interface (linux/MAC):
@@ -181,6 +187,13 @@ ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-87/gtf/homo_sapiens/Homo_sapie
 ```
 
 In brief, **rsemstarIndex** uses ENSEMBL genomic data. User has to provide the URL (**ensembl.urlgenome**) for the file XXXXX_dna.toplevel.fa.gz related to the organism of interest, the URL (**ensembl.urlgtf**) for the annotation GTF XXX.gtf.gz and the path to the folder where the index will be generated (**genome.folder**). The parameter **threads** indicate the number of cores dedicated to this task.
+
+Precompiled index folders are available:
+
+- [hg38star](http://130.192.119.59/public/hg38star.tar.gz)
+
+- [mm10star](http://130.192.119.59/public/mm10star.tar.gz)
+
 
 
 ### Quantifying genes/isoforms:
@@ -523,7 +536,11 @@ bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/mm10bwa", uscs.urlge
 gatk=FALSE)
 ```
 
-In brief, **bwaIndexUcsc** uses UCSC genomic data. User has to provide the URL (**uscs.urlgenome**) for the file chromFa.tar.gz related to the organism of interest and the path to the folder where the index will be generated (**genome.folder**). The parameter **gatk** has to be set to FALSE when it is not used for a genomic index used for ChIPseq. ?? non capisco la frase
+In brief, **bwaIndexUcsc** uses UCSC genomic data. User has to provide the URL (**uscs.urlgenome**) for the file chromFa.tar.gz related to the organism of interest and the path to the folder where the index will be generated (**genome.folder**). The parameter **gatk** has to be set to FALSE, it is not required for ChIPseq genomic index creation. 
+
+Precompiled index folders are available:
+
+- [mm10bwa](http://130.192.119.59/public/mm10bwa.tar.gz)
 
 
 ### Calling peaks and annotating:
