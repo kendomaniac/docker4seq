@@ -57,11 +57,11 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
   }
   docker_fastq.folder=file.path("/data/scratch", tmp.folder)
   if(group=="sudo"){
-      params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
-      runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
+      params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
+      runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
     }else{
-      params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
-      runDocker(group="docker",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
+      params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
+      runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
   }
   out <- "xxxx"
   #waiting for the end of the container work

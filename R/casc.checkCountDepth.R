@@ -35,11 +35,11 @@ checkCountDepth <- function(group=c("sudo","docker"), data.folder=getwd(), count
     conditions <- paste(conditions, collapse = "_")
   }
   if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/checkCountDepth.R ",counts.matrix," ",conditions," ",outputName," ",nCores, sep="")
-    runDocker(group="sudo",container="docker.io/rcaloger/r340.2017.01", params=params)
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/checkCountDepth.R ",counts.matrix," ",conditions," ",outputName," ",nCores, sep="")
+    runDocker(group="sudo",container="docker.io/repbioinfo/r340.2017.01", params=params)
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/checkCountDepth.R ",counts.matrix," ",conditions," ",outputName," ",nCores, sep="")
-    runDocker(group="docker",container="docker.io/rcaloger/r340.2017.01", params=params)
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/checkCountDepth.R ",counts.matrix," ",conditions," ",outputName," ",nCores, sep="")
+    runDocker(group="docker",container="docker.io/repbioinfo/r340.2017.01", params=params)
   }
 
   out <- "xxxx"
