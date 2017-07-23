@@ -592,6 +592,40 @@ The **genome.folder** parameter refers to the location of the genomic index gene
 
 **mock.id** and **test.id** identify the type of sample and are assigned to the ID parameter in the RG field of the bam file.
 
+**genome** is the parameter referring to the annotation used to associate ChIP peaks with genes. In the present implementation  hg38, hg19 for human and mm10 and mm9 for mouse annotations are available.
+
+**read.size** is a parameter requested by MACS and SICER for their analysis. 
+**macs.min.mfold**, **macs.max.mfold**, **macs.pval**  are the default parameters requested for  peaks definition for more info please refer to the documentation of MACS 1.4.
+**sicer.wsize**, **sicer.gsize**, **sicer.fdr** are the default parameters requested for  peaks definition for more info please refer to the documentation of SICER 1.1.
+**IMPORTANT**: The optimal value for **sicer.gsize** in case of H3K4Me3 ChIP is 200 and in case of ChIP H3K27Me3 is 600.   
+
+**tss.distance** and **max.upstream.distance** are parameters required by ChIPseqAnno, which is the Bioconductor package used to assign the peaks to specific genes. Specifically max.upstream.distance refers to the max distance in nts that allows the association of a peak to a specific gene.
+
+**remove.duplicates** is the parameter that indicates if duplicates have to be removed or not. It has two options: **N** duplicates are not removed, **Y** duplicates are removed.
+
+
+### Chipseq workflow output files
+
+The chipseq workflow produces the following output files: 
+
+    + README: A file describing the content of the data folder
+    + mypeaks.xls: All detected peaks alongside the nearest gene and its annotation
+    + mytreat.counts: The total reads count for the provided treatment file
+    + mycontrol.counts: The total reads count for the provided control/background file
+    + peak_report.xls: Aggregate information regarding the peak and their position relative to the nearest gene
+    + chromosome_distribution.pdf: Barplot of the distribution of the peaks on the chromosomes
+    + relative_position_distribution.pdf: Barplot of the distribution of the peaks positions relative to their nearest gene
+    + peak_width_distribution.pdf: Histogram of the distribution of the width of the peaks
+    + distance_from_nearest_gene_distribution.pdf: Histogram of the distribution of the distance of each peak from its nearest gene
+    + cumulative_coverage_total.pdf: Cumulative normalized gene coverage
+    + cumulative_coverage_chrN.pdf: Cumulative normalized gene coverage for the specific chromosome
+    + mycontrol_sorted.bw: bigWig file for UCSC Genome Browser visualization
+    + mytreat_sorted.bw: bigWig file for UCSC Genome Browser visualization
+     
+
+
+
+
 
 
 

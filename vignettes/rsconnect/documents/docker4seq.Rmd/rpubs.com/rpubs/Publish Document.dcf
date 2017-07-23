@@ -4,5 +4,5 @@ account: rpubs
 server: rpubs.com
 appId: https://api.rpubs.com/api/v1/document/293366/e1445e347845419881f4b87265e6574f
 bundleId: https://api.rpubs.com/api/v1/document/293366/e1445e347845419881f4b87265e6574f
-url: http://rpubs.com/publish/claim/293366/117ff6d9234e4a69b88bdcbaa32ff804
-when: 1500791212.62518
+url: http://rpubs.com/rcaloger/293366
+when: 1500791560.04818
