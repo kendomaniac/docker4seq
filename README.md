@@ -22,7 +22,7 @@ https://docs.docker.com/engine/installation/linux/ubuntulinux/#/manage-docker-as
 
 **IMPORTANT** The first time *docker4seq* is installed the **downloadContainers** needs to be executed  to download to the local repository the containers that are needed for the use of *docker4seq*
 
-More info on the functionalities of the package are available at: http://rpubs.com/rcaloger/279935
+More info on the functionalities of the package are available at: [docker4seq/4seqGUI vignette](http://rpubs.com/rcaloger/279935)
 
 In case you wish to use MAC OS or windows you need to install https://www.docker.com/products/docker-toolbox and run within the Docker Quickstart Terminal.app
 
