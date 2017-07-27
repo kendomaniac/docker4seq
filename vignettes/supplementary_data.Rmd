@@ -1,7 +1,7 @@
 ---
 title: " Supplementary data SeqBox: RNAseq/ChIPseq reproducible analysis on a consumer game computer"
 author: "Marco Beccuti, Francesca Cordero, Maddalena Arigoni, Riccardo Panero, Elvio G. Amparore, Susanna Donatelli and Raffaele A Calogero"
-date: "7/16/2017"
+date: "7/27/2017"
 output: pdf_document
 toc: true
 fig_caption: true
@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-The docker4seq package was developed to facilitate the use of computing demanding applications in the field of NGS data analysis.
+The docker4seq package is a R control engine, which is at the core of the  SeqBox ecosystem, which was developed to facilitate the use of computing demanding applications in the field of NGS data analysis.
 
 The docker4seq package uses [docker](https://www.docker.com/what-docker) [containers](https://www.docker.com/what-container) that embed demanding computing tasks (e.g. short reads mapping) into isolated containers. 
 
@@ -123,18 +123,20 @@ We run respectively 26, 52, 78, and 105 million reads using different number of 
 ![rnaseqCounts overall performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mrna_performance_bis.jpg)
 
 
+
 ### mirnaCounts performances
 
 We run resepctively 3, 6, 12, and 24 miRNA samples in parallel using **mirnaCounts**, with different number of threads, values shown in parenthesis in *Figure 2*.
     
-![mirnaCounts overall performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirnaseq_performance_bis.jpg) 
+![mirnaCounts overall performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirnaseq_performance_bis.jpg)
 
 
 
 ### chipseqCounts performances
 
 We run respectively 37, 70, 111, and 149 million reads using different number of threads, values shown in parenthesis in *Figure 3*.
-    
+
+
 ![chipseqCounts overall performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/chipseq_performance_bis.jpg) 
 
 
