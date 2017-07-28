@@ -11,7 +11,7 @@ filterZeros(data.folder = getwd(), counts.matrix, threshold)
 
 \item{counts.matrix, }{a character string indicating the the name of tab delimited file  file of cells un-normalized expression counts}
 
-\item{threshold, }{an nuer from 0 to 1 indicating the fraction of max accepted zeros in each gene}
+\item{threshold, }{an number from 0 to 1 indicating the fraction of max accepted zeros in each gene}
 }
 \value{
 a PDF providing zeros distributions before removal of all genes without counts, a file with the pre

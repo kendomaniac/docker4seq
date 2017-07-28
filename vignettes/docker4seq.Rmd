@@ -108,6 +108,10 @@ At the present time are available the following workflows:
     + peak calling using either MACS v 1.4 or SICER v 1.1
     + associating peaks to the nearest gene, UCSC annotation
     + full annotation of the nearest gene
+- **PDX Exomeseq hg19/mm10**, which allows:
+     + adapter trimming with [skewer](https://github.com/relipmoc/skewer)
+     + mouse sequence removal with xenome
+     + mapping with [BWA](http://bio-bwa.sourceforge.net/bwa.shtml)
 
 
 The most expensive computing  steps of the analyses are embedded in the following docker4seq functions: **rnaseqCounts**, **mirnaCounts**, **chipseqCounts**. These functions are also the only having RAM and computing power requirements not usually available in consumer computers. Hereafter it is shown the time required to run the above three functions increasing the number of sequenced reads.
