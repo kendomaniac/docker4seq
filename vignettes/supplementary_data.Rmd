@@ -259,18 +259,17 @@ The mRNAseq workflow produces the following output files:
 
 ![gtf_annotated_genes.results](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/rnaseq7.jpeg)
 
-The first column in **gtf_annotated_genes.results** is the ensembl gene id, the second is the [biotype](http://www.ensembl.org/Help/Faq?id=468), 
-the 3rd is the annotation source, the 4th contains the set of transcripts included in the ensembl gene id. Then there is the length of the gene, the lenght of the gene to which is subtracted the average length of the sequenced fragments, the expected counts are the counts to be used for differential expression analysis. [TPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) and [FPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) are normalized gene quantities to be used only for visualization purposes.
+The first column in **gtf_annotated_genes.results** is the ensembl gene id, the second column is the [biotype](http://www.ensembl.org/Help/Faq?id=468), 
+the third column is the annotation source, the fourth column contains the set of transcripts included in the ensembl gene id. Then there is the length of the gene, the length of the gene to which is subtracted the average length of the sequenced fragments, the expected counts are the counts to be used for differential expression analysis. [TPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) and [FPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) are normalized gene quantities to be used only for visualization purposes.
 
 ### From samples to experiment
 
-The RSEM output is sample specific, thus it is necessary to assemble the single sample in an experiment table including in the header of the column both the covariates and the batch, if any.
+The RSEM output is sample specific, thus it is necessary to assemble the single sample in an experiment table including in the header of the columns both the covariates and the batches, if any.
 The header sample name is separated by the covariate with an underscore, e.g. mysample1\_Cov1, mysample2\_Cov2. 
 
 ![counts table with covariates](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/counts1.jpeg)
 
-
-In case also a batch is present also this is added to the sample name through a further underscore, e.g. mysample1\_Cov1\_batch1, mysample2\_Cov\_batch2.
+A batch can be added to the sample name through a further underscore, e.g. mysample1\_Cov1\_batch1, mysample2\_Cov\_batch2.
 
 ![counts table with covariates and batch](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/counts2.jpeg)
 
@@ -297,7 +296,7 @@ User needs to provide the paths of the samples, **sample.folder** parameter, a v
 
 #### From samples to experiments output files
 
-The samples to experiments produces the following output files: 
+This task produces the following output files: 
 
     + _counts.txt: gene-level raw counts table for differential expression analysis
     + _isoforms_counts.txt: isoform-level raw counts table for differential expression analysis
@@ -330,13 +329,13 @@ pca(experiment.table="_log2FPKM.txt", type="FPKM", legend.position="topleft", co
 
 ```
 
-User needs to provide the paths of experiment table, **experiment.table** parameter, i.e. the file generated using the samples2experiment function. The **type** parameter indicates if FPKM, TPM or counts are used for the PCA generation. The parameter **legend.position** defines where to locate the covariates legend. The parameter **covariatesInNames** indicates if the header of the experiment table contains or not covariate information. The parameter **principal.components** indicates which principal components should be plotted. **output.folder** indicates where to save the pca.pdf file.
+User needs to provide the paths of experiment table, **experiment.table** parameter, i.e. the file generated using the samples2experiment function. The **type** parameter indicates if FPKM, TPM or counts are used by the PCA generation. The parameter **legend.position** defines where to locate the covariates legend. The parameter **covariatesInNames** indicates if the header of the experiment table contains or not covariate information. The parameter **principal.components** indicates which principal components should be plotted. **output.folder** indicates where to save the pca.pdf file.
 
 ![pca.pdf](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/pca2.jpeg)
 
 The values in parentesis on x and y axes are the amount of variance explained by each principal component.
 
-IMPORTANT: The above analysis is suitable also for miRNAseq data
+IMPORTANT: The above analysis is suitable for miRNAseq data too.
 
 ### Evaluating sample size and experiment power
 
