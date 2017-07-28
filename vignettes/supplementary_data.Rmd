@@ -125,7 +125,7 @@ We run respectively 26, 52, 78, and 105 million reads using different number of 
     
 ![rnaseqCounts overall performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mrna_performance_bis.jpg)
 
-
+\newpage
 
 ### mirnaCounts performances
 
@@ -133,7 +133,7 @@ We run resepctively 3, 6, 12, and 24 miRNA samples in parallel using **mirnaCoun
     
 ![mirnaCounts overall performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirnaseq_performance_bis.jpg)
 
-
+\newpage
 
 ### chipseqCounts performances
 
@@ -153,6 +153,7 @@ In the case of **mirnaCounts** and **chipseqCounts** the parallelization is very
 A folder including a set of datasets to test each of the workflows available in docker4seq/4SeqGUI can be found [**here**](http://130.192.119.59/public/test.zip)
 
 
+\newpage
 
 ## RNAseq workflow: Howto
 
@@ -173,6 +174,8 @@ Sample quantification is made of these steps:
 - Annotating genes.
 
 All the parameters can be setup using 4SeqGUI
+
+\newpage
 
 ### Creating a STAR index file for mRNAseq:
 
@@ -199,7 +202,7 @@ Precompiled index folders are available:
 
 - [mm10star](http://130.192.119.59/public/mm10star.tar.gz)
 
-
+\newpage
 
 ### Quantifying genes/isoforms:
 
@@ -262,6 +265,8 @@ The mRNAseq workflow produces the following output files:
 The first column in **gtf_annotated_genes.results** is the ensembl gene id, the second column is the [biotype](http://www.ensembl.org/Help/Faq?id=468), 
 the third column is the annotation source, the fourth column contains the set of transcripts included in the ensembl gene id. Then there is the length of the gene, the length of the gene to which is subtracted the average length of the sequenced fragments, the expected counts are the counts to be used for differential expression analysis. [TPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) and [FPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) are normalized gene quantities to be used only for visualization purposes.
 
+\newpage
+
 ### From samples to experiment
 
 The RSEM output is sample specific, thus it is necessary to assemble the single sample in an experiment table including in the header of the columns both the covariates and the batches, if any.
@@ -306,7 +311,8 @@ This task produces the following output files:
     + _log2FPKM.txt: gene-level log2FPKM for visualization purposes
     + XXXXX.Rout: logs of the execution
 
-
+\newpage
+\newpage
 
 ### Visualizing experiment data with PCA
 
@@ -325,17 +331,22 @@ system("wget 130.192.119.59/public/test.analysis.zip")
 unzip("test.analysis.zip")
 setwd("test.analysis")
 library(docker4seq)
-pca(experiment.table="_log2FPKM.txt", type="FPKM", legend.position="topleft", covariatesInNames=FALSE, principal.components=c(1,2), pdf = TRUE, output.folder=getwd())
+pca(experiment.table="_log2FPKM.txt", type="FPKM", legend.position="topleft", 
+    covariatesInNames=FALSE, principal.components=c(1,2), pdf = TRUE, output.folder=getwd())
 
 ```
 
 User needs to provide the paths of experiment table, **experiment.table** parameter, i.e. the file generated using the samples2experiment function. The **type** parameter indicates if FPKM, TPM or counts are used by the PCA generation. The parameter **legend.position** defines where to locate the covariates legend. The parameter **covariatesInNames** indicates if the header of the experiment table contains or not covariate information. The parameter **principal.components** indicates which principal components should be plotted. **output.folder** indicates where to save the pca.pdf file.
+
+\newpage
 
 ![pca.pdf](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/pca2.jpeg)
 
 The values in parentesis on x and y axes are the amount of variance explained by each principal component.
 
 IMPORTANT: The above analysis is suitable for miRNAseq data too.
+
+\newpage
 
 ### Evaluating sample size and experiment power
 
@@ -374,6 +385,7 @@ The output file is **sample_size_evaluation.txt** and it is saved in the R worki
 IMPORTANT: The above analysis is suitable  for miRNAseq data too.
 
 
+
 #### Experiment statistical power estimation by line command
 
 ```{r, echo=TRUE, eval=FALSE}
@@ -394,6 +406,8 @@ The output file is **power_estimation.txt** and it is saved in the R working fol
 ![power_estimation.txt](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/expp1.jpeg)
 
 IMPORTANT: The above analysis is suitable  for miRNAseq data too.
+
+\newpage
 
 ### Differential expression analysis with DESeq2
 
@@ -436,6 +450,8 @@ User has to provide experiment table, **experiment.table** param, i.e. the count
 
 IMPORTANT: the above analysis can be applied to miRNAseq data too.
 
+\newpage
+
 ## miRNAseq workflow: Howto 
 
 The miRNAseq workflow can be run using **4SeqGUI** graphical interface:
@@ -450,6 +466,7 @@ The miRNAseq docker container executes the following steps:
 
 The full workflow is described in [Cordero et al. Plos ONE 2012](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0031630). In brief, fastq files are trimmed using [cutadapt](https://github.com/marcelm/cutadapt) and the trimmed reads are mapped on miRNA precursors, i.e. harpin.fa file, from [miRBase](http://www.mirbase.org/ftp.shtml) using [SHRIMP](http://compbio.cs.toronto.edu/shrimp/). Using the location of the mature miRNAs in the precursor, countOverlaps function, from the Bioconductor package GenomicRanges is used to quantify the reads mapping on mature miRNAs. 
 
+\newpage
 
 All the parameters needed to run the miRNAseq workflow can be setup using 4SeqGUI
 
@@ -489,6 +506,8 @@ The miRNAseq workflow produces the following output files:
     + all.counts.Rda: miRNAs raw counts ready to be loaded in R.
     + analysis.log: logs of the full analysis pipeline
   
+
+\newpage
   
 ### Adding covariates and batches to mirnaCounts output: all.counts.txt
 
@@ -514,6 +533,8 @@ mirnaCovar(experiment.folder=paste(getwd(), "all.counts.txt", sep="/"),
 
 The output of **mirnaCovar**, i.e. w\_covar\_batch\_all.counts.txt, is compliant with PCA, Sample size estimator, Experiment stat. power and DEseq2 analysis.
 
+\newpage
+
 ## chipseq workflow: HowTo
 
 The chipseq workflow can be ran using **4SeqGUI** graphical interface:
@@ -526,6 +547,8 @@ The ChIPseq consists of two main steps:
 - Creating a genome index for BWA (see end of this paragraph)
 
 - Running MACS or SICER analysis
+
+\newpage
 
 ### Creating a BWA index file for Chipseq:
 
@@ -546,6 +569,7 @@ Precompiled index folders are available:
 
 - [mm10bwa](http://130.192.119.59/public/mm10bwa.tar.gz)
 
+\newpage
 
 ### Calling peaks and annotating:
 
@@ -579,7 +603,8 @@ chipseqCounts(group = "docker", output.folder = "./prdm51.igg",
 
 Specifically user needs to create three folders:
 
-    + mock.folder, where the fastq.gz file for the control sample is located. For control sample we refer to ChIP with IgG only or input DNA.
+    + mock.folder, where the fastq.gz file for the control sample is located. 
+      For control sample we refer to ChIP with IgG only or input DNA.
     + test.folder, where the fastq.gz file for the ChIP of the sample to be analysed.
     + output.folder, where the R script embedding the above script is located.
 
