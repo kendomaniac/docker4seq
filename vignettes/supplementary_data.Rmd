@@ -118,7 +118,7 @@ The most expensive computing  steps of the analyses are embedded in the followin
 Counts generation from fastq files  is the most time consuming step in RNAseq data analysis and it is usually calculated using high-end servers. We compare the behabiour of **rnaseqCounts** on SeqBox and on a high-end server:
 
     + SeqBox: NUC6I7KYK CPU i7-6770HQ 3.5 GHz (1 core, 8 threads), 32 Gb RAM, HD 250 Gb SSD
-    + SGI UV200 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
+    + SGI UV2000 server: CPU E5-4650 v2 2.40GHz (8 cores, 160 threads), 1 Tb RAM, RAID 6, 100 Tb SATA
 
 
 We run respectively 26, 52, 78, and 105 million reads using different number of threads, values shown in parenthesis in *Figure  1*. It is notable that SeqBox, mapping in 5 hours more than 100 milion reads, it is able to handle in 20 hours the throughput of the Illumina benchtop sequencer NextSeq 500, which produces up to 400 milion reads in a run of 30 hours.
