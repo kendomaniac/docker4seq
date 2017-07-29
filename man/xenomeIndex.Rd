@@ -26,7 +26,7 @@ This function executes the docker container xenome.2017.01 where xenome is insta
 }
 \examples{
 \dontrun{
-    #running bwa index
+    #running xenome index
     xenomeIndex(group="docker",xenome.folder="/data/scratch/test", hg.urlgenome=
     "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz",
     mm.urlgenome="http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz")

@@ -16,12 +16,8 @@
 #'     system("wget http://130.192.119.59/public/mcf7_mouse_1m_R2.fastq.gz")
 #'     #running xenome
 #'     xenome(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
-#'     genome.folder="/data/scratch/hg19_exome", seq.type="pe",
-#'     threads=24, sample.id="exome")
-#'
-#'     #running xenome
-#'     xenome(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
-#'     xenome.folder="/data/scratch/hg19.mm10", seq.type="pe", threads=24)
+#'     xenome.folder="/data/scratch/hg19.mm10", seq.type="pe",
+#'     threads=24)
 #'
 #' }
 #' @export
