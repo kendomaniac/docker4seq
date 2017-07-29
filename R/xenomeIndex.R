@@ -9,7 +9,7 @@
 #' @return The indexed xenome genomes reference sequences
 #' @examples
 #'\dontrun{
-#'     #running bwa index
+#'     #running xenome index
 #'     xenomeIndex(group="docker",xenome.folder="/data/scratch/test", hg.urlgenome=
 #'     "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz",
 #'     mm.urlgenome="http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz")
@@ -71,7 +71,7 @@ xenomeIndex <- function(group=c("sudo","docker"),xenome.folder=getwd(), hg.urlge
 	container.id <- readLines(paste(xenome.folder,"/dockerID", sep=""), warn = FALSE)
 	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
 	system(paste("docker rm ", container.id, sep=""))
-	
+	system(paste("rm  -f ",xenome.folder,"/dockerID", sep=""))
 	system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",xenome.folder, sep=""))
 }
 

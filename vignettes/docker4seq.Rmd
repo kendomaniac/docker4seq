@@ -62,6 +62,8 @@ At the present time all functions requiring some sort of calculation are embedde
 
 - docker.io/rcaloger/skewer.2017.01 used by skewer
 
+- docker.io/rcaloger/xenome.2017.01 used by xemone, xenomeIndex
+
 ### docker container nomenclature
 
 In case of updates required to solve bugs, which do not affect the calculation docker.io/rcaloger/XXXXX.YYYY.ZZ the fiels ZZ will be updated.
@@ -108,9 +110,9 @@ At the present time are available the following workflows:
     + peak calling using either MACS v 1.4 or SICER v 1.1
     + associating peaks to the nearest gene, UCSC annotation
     + full annotation of the nearest gene
-- **PDX Exomeseq hg19/mm10**, which allows:
+- **PDX Exomeseq**, which allows:
+     + mouse sequence removal with [xenome](https://github.com/data61/gossamer)
      + adapter trimming with [skewer](https://github.com/relipmoc/skewer)
-     + mouse sequence removal with xenome
      + mapping with [BWA](http://bio-bwa.sourceforge.net/bwa.shtml)
 
 
@@ -627,4 +629,25 @@ The chipseq workflow produces the following output files:
     + mytreat_sorted.bw: bigWig file for UCSC Genome Browser visualization
      
 
+## PDX Exomeseq workflow
 
+Patient derived tumor xenografts (PDTX) are created when cancerous tissue from a patient's primary tumor is implanted directly into an immunodeficient mouse. PDTX models are providing solutions to the challenges that researchers face in cancer drug research such as positive tumor responses in mouse models but not translating over when the study is implemented in humans. As a result, PDTX cancer models are popular models to use in cancer drug research.
+Exome sequencing is an importnat step of the PCX characterization. IN PDX we have the human tumor mixex with the mouse stroma and it is necessary to remove the mouse information from the exome data.
+One way of removing the mouse component is the use of [xenome](https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/bts236), which performs fast, accurate and specific classification of xenograft-derived sequence read data [gossamer](https://github.com/data61/gossamer/blob/master/docs/xenome.md).
+
+### Creating Xenome index files
+
+
+The index can be easily created using the the following function:
+
+
+```{r,  echo=TRUE, eval=FALSE}
+xenomeIndex(group="docker",xenome.folder="/data/scratch/test", 
+    hg.urlgenome="http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz",
+    mm.urlgenome="http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz", threads=8)
+```
+
+In brief, **xenomeIndex** uses UCSC genomic data. User has to provide the **hg.urlgenome** for the human chromFa.tar.gz, the **mm.urlgenome** for the mouse chromFa.tar.gz and the path to the folder where the index will be generated (**xenome.folder**). The parameter **threads** indicates how many threads the user would like to use. 
+
+
+### Running Xenome
