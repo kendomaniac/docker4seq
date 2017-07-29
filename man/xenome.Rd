@@ -22,7 +22,7 @@ xenome(group = c("sudo", "docker"), fastq.folder = getwd(),
 \item{threads, }{a number indicating the number of cores to be used from the application}
 }
 \value{
-three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
+ambiguous, both, neither, hs and mm fastq.gz files. xeno_hs_R1.fastq.gz and xeno_hs_R2.fastq.gz are fastq file free of mouse reads and are used for further analysis.
 }
 \description{
 This function executes the docker container bwa1 where BWA is installed BWA is a read alignment package that efficiently align short sequencing reads against a large reference sequence This aligner provides optimal results with DNA-seq data
@@ -33,13 +33,9 @@ This function executes the docker container bwa1 where BWA is installed BWA is a
     system("wget http://130.192.119.59/public/mcf7_mouse_1m_R1.fastq.gz")
     system("wget http://130.192.119.59/public/mcf7_mouse_1m_R2.fastq.gz")
     #running xenome
-    xenome(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
-    genome.folder="/data/scratch/hg19_exome", seq.type="pe",
-    threads=24, sample.id="exome")
-
-    #running xenome
     xenome(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
-    xenome.folder="/data/scratch/hg19.mm10", seq.type="pe", threads=24)
+    xenome.folder="/data/scratch/hg19.mm10", seq.type="pe",
+    threads=24)
 
 }
 }

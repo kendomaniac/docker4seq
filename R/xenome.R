@@ -8,14 +8,14 @@
 #' @param seq.type, a character string indicating the type of reads to be trimmed. Two options: \code{"se"} or \code{"pe"} respectively for single end and pair end sequencing
 #' @param threads, a number indicating the number of cores to be used from the application
 #'
-#' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
+#' @return ambiguous, both, neither, hs and mm fastq.gz files. xeno_hs_R1.fastq.gz and xeno_hs_R2.fastq.gz are fastq file free of mouse reads and are used for further analysis.
 #' @examples
 #'\dontrun{
 #'     #downloading examples 1 million reads of mcf7 exome mixed with 1 million of mouse derived by human exome capturing
 #'     system("wget http://130.192.119.59/public/mcf7_mouse_1m_R1.fastq.gz")
 #'     system("wget http://130.192.119.59/public/mcf7_mouse_1m_R2.fastq.gz")
 #'     #running xenome
-#'     xenome(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
+#'     xenome(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
 #'     xenome.folder="/data/scratch/hg19.mm10", seq.type="pe",
 #'     threads=24)
 #'
@@ -62,6 +62,10 @@ xenome <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
         system(paste("cp ",fastq.folder,"/",dir[1], " ",scratch.folder,"/",tmp.folder,"/data_R1.fastq.gz", sep=""))
         system(paste("cp ",fastq.folder,"/",dir[2], " ",scratch.folder,"/",tmp.folder,"/data_R2.fastq.gz", sep=""))
         system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+    }else if(length(dir)==1 & seq.type=="se"){
+      system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+      system(paste("cp ",fastq.folder,"/",dir[1], " ",scratch.folder,"/",tmp.folder,"/data_R1.fastq.gz", sep=""))
+      system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
     }
     #fastq  linking fpr docker
     docker_fastq.folder=file.path("/data/scratch", tmp.folder)

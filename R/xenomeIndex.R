@@ -6,7 +6,7 @@
 #' @param mm.urlgenome, a character string indicating the URL from uscs download web page for the unmasked mouse genome sequence of interest
 #' @param threads, an integer indicating how many threads are used by xenome
 #'
-#' @return The indexed xenome genomes reference sequences
+#' @return The indexed xenome genomes references
 #' @examples
 #'\dontrun{
 #'     #running xenome index

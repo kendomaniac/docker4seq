@@ -19,7 +19,7 @@ xenomeIndex(group = c("sudo", "docker"), xenome.folder = getwd(),
 \item{threads, }{an integer indicating how many threads are used by xenome}
 }
 \value{
-The indexed xenome genomes reference sequences
+The indexed xenome genomes references
 }
 \description{
 This function executes the docker container xenome.2017.01 where xenome is installed.
