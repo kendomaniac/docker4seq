@@ -46,8 +46,8 @@ wrapperPdx <- function(group=c("sudo","docker"),fastq.folder, scratch.folder, xe
          xenome.folder=xenome.folder, seq.type=seq.type,threads=threads)
   dir.create(paste(fastq.folder,"xenome.files", sep="/"))
   system(paste("mv *.gz ",paste(fastq.folder,"xenome.files", sep="/"), sep=""))
-  system(paste("mv ",paste(fastq.folder,"xenome.files/xeno_hs_1.fastq.gz", sep="/")," ",paste(fastq.folder,"xeno_hs_R1.fastq.gz", sep="/"), sep=""))
-  system(paste("mv ",paste(fastq.folder,"xenome.files/xeno_hs_2.fastq.gz", sep="/")," ",paste(fastq.folder,"xeno_hs_R2.fastq.gz", sep="/"), sep=""))
+  system(paste("mv ",paste(fastq.folder,"xenome.files/xeno_hs_R1.fastq.gz", sep="/")," ",paste(fastq.folder,"xeno_hs_R1.fastq.gz", sep="/"), sep=""))
+  system(paste("mv ",paste(fastq.folder,"xenome.files/xeno_hs_R2.fastq.gz", sep="/")," ",paste(fastq.folder,"xeno_hs_R2.fastq.gz", sep="/"), sep=""))
 
   cat("\nrunning skewer\n")
   skewer(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder,

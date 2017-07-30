@@ -121,13 +121,16 @@ xenome <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
     #saving log and removing docker container
     container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
     system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
-#    system(paste("docker rm ", container.id, sep=""))
+    system(paste("docker logs ", container.id, " >& ","xenome.stats", sep=""))
+    system(paste("docker rm ", container.id, sep=""))
+    
+    
     
     #removing temporary folder
-    cat("\n\nRemoving the bwa temporary file ....\n")
-#    system(paste("rm -R ",scrat_tmp.folder))
-#    system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))
-#    system(paste("rm  -f ",fastq.folder,"/tempFolderID", sep=""))
+    cat("\n\nRemoving the xenome temporary file ....\n")
+    system(paste("rm -R ",scrat_tmp.folder))
+    system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))
+    system(paste("rm  -f ",fastq.folder,"/tempFolderID", sep=""))
     
     system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
 }
