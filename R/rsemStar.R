@@ -80,7 +80,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	cat("\nsetting as working dir the scratch folder and running  docker container\n")
 
 	if(group=="sudo"){
-		system("sudo docker pull docker.io/rcaloger/rsemstar.2017.01")
+#		system("sudo docker pull docker.io/rcaloger/rsemstar.2017.01")
 		if(seq.type=="pe"){
 		  if(strandness=="none"){
 		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem2_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep="")
@@ -184,8 +184,8 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
 	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
 	system(paste("docker rm ", container.id, sep=""))
-	
-	
+
+
 	#removing temporary folder
 	cat("\n\nRemoving the rsemStar temporary file ....\n")
 	system(paste("rm -R ",scrat_tmp.folder))

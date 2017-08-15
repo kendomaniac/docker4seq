@@ -62,7 +62,7 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	cat("\nsetting as working dir the scratch folder and running skewer docker container\n")
 
 	if(group=="sudo"){
-		system("sudo docker pull docker.io/rcaloger/skewer.2017.01")
+#		system("sudo docker pull docker.io/rcaloger/skewer.2017.01")
 		if(seq.type=="pe"){
 		      params <- paste("--cidfile ",fastq.folder,"/dockerID   -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/skewer.2017.01 sh /bin/trim2.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep="")
 		      runDocker(group="sudo",container="docker.io/rcaloger/skewer.2017.01", params=params)
