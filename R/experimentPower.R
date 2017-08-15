@@ -29,6 +29,9 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
+  #removing the path from filename
+  filename.tmp <- unlist(strsplit(filename,'/'))
+  filename <-  filename.tmp[length(filename.tmp)]
 
   if(group=="sudo"){
     params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
