@@ -33,7 +33,7 @@ This function executes the docker container annotate.1, where Bioconductor is us
     system("wget http://130.192.119.59/public/genes.results.gz")
     gzip -d genes.results.gz
     #running rsemanno
-    rsemanno(group="sudo",rsem.folder=getwd(), scratch.folder="/data/scratch",
+    rsemanno(group="docker",rsem.folder=getwd(), scratch.folder="/data/scratch",
     org="hg38", truncating.expected.counts=FALSE,
     protein.anno=FALSE)
 

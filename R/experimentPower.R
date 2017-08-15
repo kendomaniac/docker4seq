@@ -22,8 +22,6 @@
 
 experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup=3, FDR=0.1, genes4dispersion=200, log2fold.change=1,  output.folder=getwd()){
 
-  home <- getwd()
-  setwd(output.folder)
 
   #running time 1
   ptm <- proc.time()
@@ -56,6 +54,10 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
       out <- "anno.info"
     }
   }
+
+  home <- getwd()
+  setwd(output.folder)
+
 
   #running time 2
   ptm <- proc.time() - ptm
