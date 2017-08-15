@@ -17,6 +17,12 @@
 #'
 #' @export
 rsemannoByGtf <- function(group="docker", rsem.folder=getwd(), genome.folder){
+
+  #remembering actual folder
+  home <- getwd()
+  #setting rsem output folder as working dir
+  setwd(rsem.folder)
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -46,12 +52,6 @@ rsemannoByGtf <- function(group="docker", rsem.folder=getwd(), genome.folder){
     }
   }
 
-
-  #remembering actual folder
-  home <- getwd()
-  #setting rsem output folder as working dir
-  setwd(rsem.folder)
-
   #running time 2
   ptm <- proc.time() - ptm
   dir <- dir(rsem.folder)
@@ -80,5 +80,6 @@ rsemannoByGtf <- function(group="docker", rsem.folder=getwd(), genome.folder){
   system("rm -fR anno.info")
   system("rm -fR dockerID")
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",rsem.folder, sep=""))
+
   setwd(home)
 }
