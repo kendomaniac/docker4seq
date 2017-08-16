@@ -88,7 +88,7 @@ sample2experiment <- function(sample.folders, covariates, batch=NULL, bio.type=c
                         stringsAsFactors = FALSE,
                         row.names = 1)
     tmp.c <- tmp.c[which(tmp.c$annotation.gene_biotype %in% bio.type),]
-    counts[[i]] <- tmp.c$expected_count
+    counts[[i]] <- trunc(tmp.c$expected_count)
     fpkm[[i]] <- tmp.c$FPKM
     tpm[[i]] <- tmp.c$TPM
   }
