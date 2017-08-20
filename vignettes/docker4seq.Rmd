@@ -1,6 +1,7 @@
 ---
 title: "An Introduction to docker4seq package and 4SeqGUI"
-author: "Raffaele A Calogero"
+author: "Marco Beccuti, Francesca Cordero, Maddalena Arigoni, Riccardo Panero, Elvio G. Amparore, Susanna Donatelli and Raffaele A Calogero"
+date: "8/20/2017"
 output: 
   BiocStyle::html_document
 vignette: >
@@ -15,7 +16,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-The docker4seq package was developed to facilitate the use of computing demanding applications in the field of NGS data analysis.
+The docker4seq package was developed to facilitate the use of computing demanding applications in the field of NGS data analysis. docker4seq package is part of the [Reproducible Bioinformatics Project](http://reproducible-bioinformatics.org/)
 
 The docker4seq package uses [docker](https://www.docker.com/what-docker) [containers](https://www.docker.com/what-container) that embed demanding computing tasks (e.g. short reads mapping) into isolated containers. 
 
@@ -34,6 +35,15 @@ The minimal hardware requirements are a 4 cores 64 bits linux computer, 32 Gb RA
 ### Setup
 
 [**docker4seq**](https://github.com/kendomaniac/docker4seq) and its graphical interface (optional) [**4SeqGUI**](https://github.com/mbeccuti/4SeqGUI) can fit ideally in the [NUC6I7KYK, Intel mini-computer](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html) equipped with Kingston Technology HyperX Impact 32GB Kit (2x16GB), 2133MHz DDR4 CL13 260-Pin SODIMM and Samsung 850 EVO - 250GB - M.2 SATA III Internal SSD.
+
+[SeqBox Project](http://www.seqbox.com/)
+
+[SeqBox Overview](https://www.youtube.com/playlist?list=PLN48SoNXrLRhn8Qn5ZjJiLwDqkJTtfw9f)
+
+[Getting started with SeqBox - MAC VNC](https://www.youtube.com/playlist?list=PLN48SoNXrLRhsDZZo8Mee4uHEiSm9KSQW)
+
+[Getting started with SeqBox - WIN10 VNC](https://www.youtube.com/playlist?list=PLN48SoNXrLRh9Sp0EiKRLBVoQ05libYND)
+
 
 
 **MANDATORY:** The first time *docker4seq* is installed the **downloadContainers** function needs to be executed to download, in the local repository, the docker images that are needed by *docker4seq*.
@@ -156,6 +166,8 @@ A folder including a set do dataset to test each of the workflows available in d
 The mRNAseq workflow can be run using **4SeqGUI** graphical interface (linux/MAC):
 
 ![mRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/rnaseq1.jpeg)
+
+A complete video tutorial on mRNAseq workflow is available [**here**](https://www.youtube.com/playlist?list=PLN48SoNXrLRhTi9MYMysNI3O4fR0wt46D)
 
 Sample quantification is made of these steps:
 
@@ -440,6 +452,8 @@ The miRNAseq workflow can be run using **4SeqGUI** graphical interface:
 
 ![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirna1.jpeg)
   
+
+A complete video tutorial on miRNAseq workflow is available [**here**](https://www.youtube.com/playlist?list=PLN48SoNXrLRix-Er5unoze68qE8vW46s-)
   
 The miRNAseq docker container executes the following steps:
 
