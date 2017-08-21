@@ -18,6 +18,14 @@
 #' @export
 cascImpute <- function(group=c("sudo","docker"), data.folder, counts.matrix, drop.thre, cores, refining=FALSE){
 
+  #running time 1
+  ptm <- proc.time()
+  #running time 1
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    return()
+  }
   if(group=="sudo"){
     params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder, ":/data -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/scimpute.R ",counts.matrix," ",drop.thre," ",cores," ", refining, sep="")
     runDocker(group="sudo",container="docker.io/repbioinfo/r340.2017.01", params=params)

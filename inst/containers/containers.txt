@@ -8,4 +8,5 @@ docker.io/repbioinfo/skewer.2017.01
 docker.io/repbioinfo/r340.2017.01
 docker.io/repbioinfo/demultiplexing.2017.01
 docker.io/repbioinfo/xenome.2017.01
+docker.io/repbioinfo/ubuntu
 
