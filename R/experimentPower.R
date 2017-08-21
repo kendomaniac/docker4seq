@@ -21,6 +21,8 @@
 
 
 experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup=3, FDR=0.1, genes4dispersion=200, log2fold.change=1,  output.folder=getwd()){
+
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -29,13 +31,16 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
+  #removing the path from filename
+  filename.tmp <- unlist(strsplit(filename,'/'))
+  filename <-  filename.tmp[length(filename.tmp)]
 
   if(group=="sudo"){
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
-    runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
+    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
+    runDocker(group="sudo",container="docker.io/rcaloger/r332.2017.01", params=params)
   }else{
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
-    runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
+    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
+    runDocker(group="docker",container="docker.io/rcaloger/r332.2017.01", params=params)
   }
 
   out <- "xxxx"
@@ -49,6 +54,10 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
       out <- "anno.info"
     }
   }
+
+  home <- getwd()
+  setwd(output.folder)
+
 
   #running time 2
   ptm <- proc.time() - ptm
@@ -79,4 +88,5 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
     system("rm -fR anno.info")
     system("rm -fR dockerID")
 
+    setwd(home)
 }

@@ -16,7 +16,7 @@
 #'     unzip("test.analysis.zip")
 #'     setwd("test.analysis")
 #'     library(docker4seq)
-#'     wrapperDeseq2(output.folder=getwd(), group="docker", experiment.table="_counts.txt", log2fc=1, 
+#'     wrapperDeseq2(output.folder=getwd(), group="docker", experiment.table="_counts.txt", log2fc=1,
 #'     fdr=0.1, ref.covar="Cov.1", type="gene", batch=FALSE)
 #'
 #' }
@@ -31,15 +31,20 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
-  
+
+  #removing the path from filename
+  filename.tmp <- unlist(strsplit(experiment.table,'/'))
+  experiment.table <-  filename.tmp[length(filename.tmp)]
+
+
   if(group=="sudo"){
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
-    runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
+    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
+    runDocker(group="sudo",container="docker.io/rcaloger/r332.2017.01", params=params)
   }else{
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
-    runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
+    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
+    runDocker(group="docker",container="docker.io/rcaloger/r332.2017.01", params=params)
   }
-  
+
   out <- "xxxx"
   #waiting for the end of the container work
   while(out != "anno.info"){
@@ -51,7 +56,11 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
       out <- "anno.info"
     }
   }
-  
+
+  home <- getwd()
+  setwd(output.folder)
+
+
   #running time 2
   ptm <- proc.time() - ptm
   dir <- dir(output.folder)
@@ -69,10 +78,10 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
     tmp.run[1] <- paste("DESeq2 user run time mins ",ptm[1]/60, sep="")
     tmp.run[length(tmp.run)+1] <- paste("DESeq2 system run time mins ",ptm[2]/60, sep="")
     tmp.run[length(tmp.run)+1] <- paste("DESeq2 elapsed run time mins ",ptm[3]/60, sep="")
-    
+
     writeLines(tmp.run,"run.info")
   }
-  
+
   #saving log and removing docker container
   container.id <- readLines(paste(output.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
@@ -80,4 +89,6 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
   system("rm -fR anno.info")
   system("rm -fR dockerID")
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",output.folder, sep=""))
+
+  setwd(home)
 }

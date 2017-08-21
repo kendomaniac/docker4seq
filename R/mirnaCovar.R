@@ -1,6 +1,6 @@
 #' @title Adding covariates and batch information to miRNAseq raw counts output
 #' @description This function modifies the all.counts.txt table generated from miRNAseq adding covariates and batch information
-#' @param experiment.folder, a character string indicating the full paths to miRNAseq input file
+#' @param experiment.folder, a character string indicating the full paths to miRNAseq input file, i.e. including the name of the file
 #' @param covariates, a character vector indicating the covariates associated to each sample, e.g. c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.2", "Cov.2", "Cov.2", "Cov.2"). Covariates are required for differential expression analysis
 #' @param batches, a character vector indicating the covariates associated to each sample, e.g. c("bath.1", "bath.1", "bath.2", "bath.2", "batch.1", "batch.1", "batch.2", "batch.2"). Batch info might be required for differential expression analysis
 #' @param output.folder, a character vector indicating the paths to miRNAseq output folder
@@ -48,7 +48,7 @@ mirnaCovar <- function(experiment.folder, covariates=NULL, batches=NULL, output.
          names(tmp) <- tmp.n
          write.table(tmp, "w_covar_all.counts.txt", sep="\t", col.names = NA, quote = F)
        }
-       setwd(experiment.folder)
+
        return(0)
 }
 

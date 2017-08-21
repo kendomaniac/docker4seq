@@ -15,7 +15,7 @@
 #'     system("wget http://130.192.119.59/public/genes.results.gz")
 #'     gzip -d genes.results.gz
 #'     #running rsemanno
-#'     rsemanno(group="sudo",rsem.folder=getwd(), scratch.folder="/data/scratch",
+#'     rsemanno(group="docker",rsem.folder=getwd(), scratch.folder="/data/scratch",
 #'     org="hg38", truncating.expected.counts=FALSE,
 #'     protein.anno=FALSE)
 #'
@@ -62,11 +62,11 @@ rsemanno <- function(group=c("sudo","docker"),rsem.folder=getwd(), scratch.folde
 	cat("\nsetting as working dir the scratch folder and running annotate docker container\n")
   rsem.results <- dir
 	if(group=="sudo"){
-		      system("sudo docker pull docker.io/repbioinfo/annotate.2017.01")
-		      system(paste("sudo docker run --privileged=true -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/annotate.2017.01 sh /bin/annotate.sh ", file.path(scratch.folder, tmp.folder)," ",rsem.results," ",org," ",truncating.expected.counts," ",annotation.type," ", protein.anno, " ", rsem.folder, sep=""))
+#		      system("sudo docker pull docker.io/rcaloger/annotate.2017.01")
+		      system(paste("sudo docker run --privileged=true -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/annotate.2017.01 sh /bin/annotate.sh ", file.path(scratch.folder, tmp.folder)," ",rsem.results," ",org," ",truncating.expected.counts," ",annotation.type," ", protein.anno, " ", rsem.folder, sep=""))
 	}else{
-	        system("docker pull docker.io/repbioinfo/annotate.2017.01")
-	        system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/annotate.2017.01 sh /bin/annotate.sh ", file.path(scratch.folder, tmp.folder)," ",rsem.results," ",org," ",truncating.expected.counts," ",annotation.type," ", protein.anno, " ", rsem.folder, sep=""))
+#	        system("docker pull docker.io/rcaloger/annotate.2017.01")
+	        system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/annotate.2017.01 sh /bin/annotate.sh ", file.path(scratch.folder, tmp.folder)," ",rsem.results," ",org," ",truncating.expected.counts," ",annotation.type," ", protein.anno, " ", rsem.folder, sep=""))
 
 	}
 	out <- "xxxx"

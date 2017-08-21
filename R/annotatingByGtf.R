@@ -17,6 +17,12 @@
 #'
 #' @export
 rsemannoByGtf <- function(group="docker", rsem.folder=getwd(), genome.folder){
+
+  #remembering actual folder
+  home <- getwd()
+  #setting rsem output folder as working dir
+  setwd(rsem.folder)
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -27,11 +33,11 @@ rsemannoByGtf <- function(group="docker", rsem.folder=getwd(), genome.folder){
   }
 
   if(group=="sudo"){
-    params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",rsem.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.rsemannoByGtf.R", sep="")
-    runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
+    params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",rsem.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.rsemannoByGtf.R", sep="")
+    runDocker(group="sudo",container="docker.io/rcaloger/r332.2017.01", params=params)
   }else{
-    params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",rsem.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.rsemannoByGtf.R", sep="")
-    runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
+    params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",rsem.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.rsemannoByGtf.R", sep="")
+    runDocker(group="docker",container="docker.io/rcaloger/r332.2017.01", params=params)
   }
 
   out <- "xxxx"
@@ -74,4 +80,6 @@ rsemannoByGtf <- function(group="docker", rsem.folder=getwd(), genome.folder){
   system("rm -fR anno.info")
   system("rm -fR dockerID")
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",rsem.folder, sep=""))
+
+  setwd(home)
 }

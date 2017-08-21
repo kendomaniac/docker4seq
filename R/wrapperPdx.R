@@ -20,8 +20,8 @@
 #' @examples
 #'\dontrun{
 #'     #downloading examples 1 million reads of mcf7 exome mixed with 1 million of mouse derived by human exome capturing
-#'     system("wget http://130.192.119.59/public/mcf7_mouse_1m_R1.fastq.gz")
-#'     system("wget http://130.192.119.59/public/mcf7_mouse_1m_R2.fastq.gz")
+#'     system("wget http://130.192.119.59/public/hs1m_mm1m_R1.fastq.gz")
+#'     system("wget http://130.192.119.59/public/hs1m_mm1m_R2.fastq.gz")
 #'     
 #'     #required for bwa 61Gb At the present time this is required to run mutect1
 #'     system("wget http://130.192.119.59/public/hg19_exome.tar.gz")

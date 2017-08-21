@@ -8,7 +8,7 @@ mirnaCovar(experiment.folder, covariates = NULL, batches = NULL,
   output.folder)
 }
 \arguments{
-\item{experiment.folder, }{a character string indicating the full paths to miRNAseq input file}
+\item{experiment.folder, }{a character string indicating the full paths to miRNAseq input file, i.e. including the name of the file}
 
 \item{covariates, }{a character vector indicating the covariates associated to each sample, e.g. c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.2", "Cov.2", "Cov.2", "Cov.2"). Covariates are required for differential expression analysis}
 
