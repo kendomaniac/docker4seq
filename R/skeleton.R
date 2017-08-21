@@ -2,8 +2,7 @@
 #' @description This function executes a ubuntu docker that produces as output helloworld.txt file
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
-#' @param data.folder, a character string indicating the folder where comma separated file of cells log10 counts is saved
-#' @return A file: helloworld.txt
+#' @param data.folder, a character string indicating the folder where input data are located and where output will be written
 #' @examples
 #' \dontrun{
 #'     #running skeleton
@@ -14,16 +13,16 @@
 #' @export
 skeleton <- function(group=c("sudo","docker"), scratch.folder, data.folder){
 
-  #storing the position of the home folder  
-  home <- getwd()
-  #running time 1
-  ptm <- proc.time()
   #testing if docker is running
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
+  #storing the position of the home folder  
+  home <- getwd()
+  #running time 1
+  ptm <- proc.time()
   #setting the data.folder as working folder
   if (!file.exists(data.folder)){
     cat(paste("\nIt seems that the ",data.folder, " folder does not exist\n"))
