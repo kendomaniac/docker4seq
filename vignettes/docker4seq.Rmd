@@ -1,7 +1,7 @@
 ---
 title: "An Introduction to docker4seq package and 4SeqGUI"
 author: "Marco Beccuti, Francesca Cordero, Maddalena Arigoni, Riccardo Panero, Elvio G. Amparore, Susanna Donatelli and Raffaele A Calogero"
-date: "8/20/2017"
+date: "8/21/2017"
 output: 
   BiocStyle::html_document
 vignette: >
@@ -35,6 +35,8 @@ The minimal hardware requirements are a 4 cores 64 bits linux computer, 32 Gb RA
 ### Setup
 
 [**docker4seq**](https://github.com/kendomaniac/docker4seq) and its graphical interface (optional) [**4SeqGUI**](https://github.com/mbeccuti/4SeqGUI) can fit ideally in the [NUC6I7KYK, Intel mini-computer](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html) equipped with Kingston Technology HyperX Impact 32GB Kit (2x16GB), 2133MHz DDR4 CL13 260-Pin SODIMM and Samsung 850 EVO - 250GB - M.2 SATA III Internal SSD.
+
+#### SeqBox 
 
 [SeqBox Project](http://www.seqbox.com/)
 
@@ -167,7 +169,12 @@ The mRNAseq workflow can be run using **4SeqGUI** graphical interface (linux/MAC
 
 ![mRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/rnaseq1.jpeg)
 
+### video tutorial
+
 A complete video tutorial on mRNAseq workflow is available [**here**](https://www.youtube.com/playlist?list=PLN48SoNXrLRhTi9MYMysNI3O4fR0wt46D)
+
+
+### Samples quantification
 
 Sample quantification is made of these steps:
 
@@ -446,14 +453,18 @@ User has to provide experiment table, **experiment.table** param, i.e. the count
 
 IMPORTANT: the above analysis can be also applied to miRNAseq data.
 
-## miRNAseq workflow 
+## miRNAseq workflow: HowTo 
 
 The miRNAseq workflow can be run using **4SeqGUI** graphical interface:
 
 ![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirna1.jpeg)
   
+### Video tutorial
 
 A complete video tutorial on miRNAseq workflow is available [**here**](https://www.youtube.com/playlist?list=PLN48SoNXrLRix-Er5unoze68qE8vW46s-)
+ 
+
+### Samples quantification
   
 The miRNAseq docker container executes the following steps:
 
@@ -526,12 +537,17 @@ mirnaCovar(experiment.folder=paste(getwd(), "all.counts.txt", sep="/"),
 
 The output of **mirnaCovar**, i.e. w\_covar\_batch\_all.counts.txt, is compliant with PCA, Sample size estimator, Experiment stat. power and DEseq2 analysis.
 
-## chipseq workflow
+## chipseq workflow: HowTo
 
 The chipseq workflow can be run using **4SeqGUI** graphical interface:
 
 ![ChIPseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/chipseq0.jpeg)
 
+### Video tutorial
+
+A video tutorial for ChIPseq workflow is available [**here**](https://www.youtube.com/playlist?list=PLN48SoNXrLRhqjyPBGkDRTf0wNi4Y9Va2)
+
+### Peaks calling
 
 The ChIPseq is made of two main steps:
 
