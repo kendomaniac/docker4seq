@@ -24,6 +24,14 @@ https://docs.docker.com/engine/installation/linux/ubuntulinux/#/manage-docker-as
 
 More info on the functionalities of the package are available at: [docker4seq/4seqGUI vignette](http://rpubs.com/rcaloger/279935)
 
+- **docker4seq/4SeqGUI Video Tutorials:**
+
+    + [HowTo run a full RNAseq analysis](https://www.youtube.com/playlist?list=PLN48SoNXrLRhTi9MYMysNI3O4fR0wt46D)
+    
+    + [HowTo run a full miRNAseq analysis](https://www.youtube.com/playlist?list=PLN48SoNXrLRix-Er5unoze68qE8vW46s-)
+    
+    + [HowTo run a full ChIPseq analysis](https://www.youtube.com/playlist?list=PLN48SoNXrLRhqjyPBGkDRTf0wNi4Y9Va2)
+
 In case you wish to use MAC OS or windows you need to install https://www.docker.com/products/docker-toolbox and run within the Docker Quickstart Terminal.app
 
 
