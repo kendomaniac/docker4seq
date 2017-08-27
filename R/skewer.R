@@ -9,6 +9,8 @@
 #' @param seq.type, a character string indicating the type of reads to be trimmed. Two options: \code{"se"} or \code{"pe"} respectively for single end and pair end sequencing.
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param min.length, a number indicating minimal length required to return a trimmed read
+#' @author Raffaele Calogero
+#' 
 #' @return One or two gzip fastq files ending with trimmed-pair1.fastq.gz and trimmed-pair1.fastq.gz, a log file of the trimming with the extensione trimmed.log, run.info file descring the analysis steps done by the docker. The latter file is useful to understand where the docker stop in case of unexpected end
 #' @examples
 #'\dontrun{

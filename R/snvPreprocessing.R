@@ -7,6 +7,7 @@
 #' @param genome.folder, a character string indicating the folder where the index reference genome for bwa is located
 #' @param gatk.file, a character string for GenomeAnalysisTK-X.Y.tar.bz2, this file should be located in the bam.folder
 #' @param threads, a number indicating the number of cores to be used by the application
+#' @author Raffaele Calogero
 #'
 #' @return bam and bai after indel relignment and quality recalibration.
 #' @examples

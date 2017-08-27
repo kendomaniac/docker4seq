@@ -1,5 +1,6 @@
 #' @title Testing if Docker is installed
 #' @description This function check that docker is installed
+#' @author Raffaele Calogero
 #'
 #' @return a character string indicating the version of the docker installed in the system
 #' @examples

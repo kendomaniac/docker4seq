@@ -8,6 +8,7 @@
 #' @param download.status, a boolean logical variable indicating if the latest mirbase database will be downloaded or the local mirbase 21 will be used. Default is FALSE
 #' @param adapter.type, a character string. Two options: \code{"ILLUMINA"} or \code{"NEB"}, depending to which miRNA library prep was used: ILLUMINA or NEB
 #' @param trimmed.fastq, a boolean logical variable indicating if trimmed fastq are saved. Default is FALSE
+#' @author Raffaele Calogero
 #'
 #' @return one file: annotated_genes.results, which is the annotated version of gene.results.
 #' @examples

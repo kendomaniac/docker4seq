@@ -4,6 +4,8 @@
 #' @param params, a character string containing all parameters needed to tun the docker container
 #' @param container, a character string downloading the docker container. If no value is inserted the container is already present on the local server
 #' @return NULL if success, 1 if parameters are missing, 2 if the group is neither sudo or docker. In case of 1 or 2 the docker execution is aborted
+#' @author Raffaele Calogero
+#' 
 #' @examples
 #'\dontrun{
 ##'     #running runDocker

@@ -16,6 +16,8 @@
 #' #params rsemanno
 #' @param org, a character string indicating the genome assembly used for mapping and counting with \code{"rsemstar"} function only required for biocENSEMBL based annotation
 #' @param annotation.type, a character string. Two options: \code{"biocENSEMBL"} or \code{"gtfENSEMBL"}. \code{"biocENSEMBL"} will annotate by Bioconductor only protein coding genes. \code{"gtfENSEMBL"} will annotate all RNAs described in \code{"annotation.type"}
+#' @author Raffaele Calogero
+#' 
 #' @return Returns the output of skewer, rsemstar, rsemannos' functions
 #' @examples
 #'\dontrun{

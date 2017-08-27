@@ -3,6 +3,7 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param data.folder, a character string indicating the Illumina folder where the Samplesheet.csv is located, and example of Samplesheet.cvs is in inst/examples folder
 #' @param threads, a number indicating the number of cores to be used from the application
+#' @author Raffaele Calogero
 #'
 #' @return Fastq files
 #' @examples

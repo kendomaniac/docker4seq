@@ -6,6 +6,7 @@
 #' @param ensembl.urlgenome, a character string indicating the URL from ENSEMBL ftp for the unmasked genome sequence of interest
 #' @param ensembl.urlgtf, a character string indicating the URL from ENSEMBL ftp for the GTF for genome of interest
 #' @param threads, a number indicating the number of cores to be used from the application
+#' @author Raffaele Calogero
 #'
 #' @return The indexed bwa genome reference sequence
 #' @examples

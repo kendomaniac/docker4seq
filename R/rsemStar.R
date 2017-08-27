@@ -9,6 +9,8 @@
 #' @param strandness, a character string indicating the type ofsequencing protocol used for the analysis. Three options: \code{"none"}, \code{"forward"}, \code{"reverse"} respectively for non strand selection, forward for Illumina strandness protocols, reverse for ACCESS Illumina protocol
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param save.bam, a boolean TRUE FALSE to decide if bam files are saved
+#' @author Raffaele Calogero
+#' 
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
 #' @examples
 #'\dontrun{

@@ -3,6 +3,8 @@
 #' @param data.folder, a character string indicating the folder where comma separated file of cells log10 counts is saved
 #' @param counts.matrix, a character string indicating the the name of tab delimited file  file of cells un-normalized expression counts
 #' @param threshold, an number from 0 to 1 indicating the fraction of max accepted zeros in each gene
+#' @author Raffaele Calogero, Luca Alessandri
+
 #' @return a PDF providing zeros distributions before removal of all genes without counts, a file with the pre
 #' @examples
 #' \dontrun{

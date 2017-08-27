@@ -1,6 +1,8 @@
 #' @title Organizing in a unique table for each K the output of cascKoptimization function
 #' @description This function converts organize in a table each output of cascKoptimization function
 #' @param data.folder, a character string indicating the cascKoptimization output folder containing K folders, SilhouetteValue.csv, cell.stability.pdf and silhouette.pdf
+#' @author Raffaele Calogero, Luca Alessandri
+#' 
 #' @return Returns in each K folder a tab delimited file called summary_table.txt, including the SilhouetteParameters (Silhouette score for each cell: extraScore, intraScore, ClusterBelong, Neighbor, SilhouetteValue), SIMLR.cluster, cell.stability.score, SIMLR component 1, SIMLR component 2.
 #' @examples
 #'\dontrun{

@@ -14,7 +14,8 @@
 #' 
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa is located
 #' @param sample.id, a character string indicating the unique id to be associated to the bam that will be created. IMPORTANT it is necessary to have a sample.id for each sample for further analysis.
-
+#' @author Raffaele Calogero
+#'
 #'
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
 #' @examples

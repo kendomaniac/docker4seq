@@ -7,6 +7,7 @@
 #' @param org, a character string indicating the genome assembly used for mapping and counting with \code{"rsemstar"} function
 #' @param truncating.expected.counts, a boolean logical variable indicating if the expected counts calculated by RSEM need to be converted in integer to be compliant with differnetial expression Bioconductor packages as DESeq2. Default is FALSE
 #' @param protein.anno, a boolean logical variable indicating if instead of gene SYMBOL SWISSPROT symbol are used. This option is useful for integrating transcriptomics data with proteomics data
+#' @author Raffaele Calogero
 #'
 #' @return one file: annotated_genes.results, which is the annotated version of gene.results.
 #' @examples

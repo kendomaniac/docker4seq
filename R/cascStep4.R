@@ -9,6 +9,7 @@
 #' @param dispersion.min, min dispersion.
 #' @param dispersion.max, max dispersion.
 #' @param specific.genes, character with two option:  n, y
+#' @author Raffaele Calogero, Luca Alessandri
 
 #' @return ....
 #' @examples

@@ -6,6 +6,8 @@
 #' @param conditions, vector of condition labels, this should correspond to the columns of the un-normalized expression matrix. If not provided data is assumed to come from same condition/batch.
 #' @param outputName, specify the path and/or name of output files.
 #' @param nCores, number of cores to use, default is detectCores() - 1.
+#' @author Raffaele Calogero, Luca Alessandri
+#' 
 #' @return pdf with the cells counts distributions
 #' @examples
 #' \dontrun{

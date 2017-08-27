@@ -7,6 +7,8 @@
 #' @param genes4dispersion, an integer indicating the number of genes used in estimation of read counts and dispersion distribution
 #' @param log2fold.change, an integer indicating the minimum log2 fold change for prognostic genes between two groups
 #' @param output.folder, a string indicating the path where to save the output file
+#' @author Raffaele Calogero
+#' 
 #' @return a string with the requested informations. the string is also saved in a file: sample_size_evaluation.txt , power_evaluation.txt
 #' @examples
 #'\dontrun{

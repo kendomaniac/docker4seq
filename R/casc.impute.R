@@ -6,6 +6,8 @@
 #' @param drop.thre, A number between 0 and 1, specifying the threshold to determine dropout values
 #' @param cores, a integer specifying the number of cores used for parallel computation.
 #' @param refining, boolean FALSE, TRUE, if TRUE it execute again scImpute but setting a different drop.thre. Rerunning to change drop.thre hase to be done in the same folder where the first run was done.
+#' @author Raffaele Calogero, Luca Alessandri
+#'
 #' @return A matrix file with imputed data.
 #' @examples
 #' \dontrun{

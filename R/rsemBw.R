@@ -4,6 +4,7 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param bam.folder, a character string indicating where BAM SORTED file is located
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
+#' @author Raffaele Calogero
 #'
 #' @return output.bw, which is the bigwig
 #' @examples

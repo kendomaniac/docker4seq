@@ -26,7 +26,7 @@
 #' @param tss.distance, an integer indicating the distance of TSS with respect to gene start
 #' @param max.upstream.distance, an integer indicating the maximum distance to associate a gene ID to a peak
 #' @param remove.duplicates, a character string indicating if duplicated reads have to be removed. Available options: Y, to remove douplicates, N to keep duplicates
-
+#' @author Raffaele Calogero
 
 #' @return Returns the output of skewer, bwa, chipseq
 #' @examples

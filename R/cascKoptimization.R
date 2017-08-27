@@ -12,6 +12,8 @@
 #' @param k.max, min number of clusters.
 #' @param totIdentity, an integer between 1 to 100 which indicates the percentage of identity required to consider the results of two permutations identical.
 #' @param clusterIdentity, an integer between 1 to 100 which indicates the percentage of identity required to consider two clusters identical.
+#' @author Raffaele Calogero, Luca Alessandri
+#' 
 #' @return ...
 #' @examples
 #' \dontrun{

@@ -4,6 +4,7 @@
 #' @param covariates, a character vector indicating the covariates associated to each sample, e.g. c("Cov.1", "Cov.1", "Cov.1", "Cov.1", "Cov.2", "Cov.2", "Cov.2", "Cov.2"). Covariates are required for differential expression analysis
 #' @param batches, a character vector indicating the covariates associated to each sample, e.g. c("bath.1", "bath.1", "bath.2", "bath.2", "batch.1", "batch.1", "batch.2", "batch.2"). Batch info might be required for differential expression analysis
 #' @param output.folder, a character vector indicating the paths to miRNAseq output folder
+#' @author Raffaele Calogero
 #'
 #' @return Returns 0 and a count file, i.e. all.counts.txt, with the prefix "w_covar" or w_covar_batch depending if only covariates were added or also batch info were added
 #' @examples

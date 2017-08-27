@@ -8,6 +8,7 @@
 #' @param seq.type, a character string indicating the type of reads to be trimmed. Two options: \code{"se"} or \code{"pe"} respectively for single end and pair end sequencing
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param sample.id, a character string indicating the unique id to be associated to the bam that will be created
+#' @author Raffaele Calogero
 #'
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
 #' @examples

@@ -8,6 +8,7 @@
 #' @param uscs.urlknownIsoforms, a character string indicating the URL from uscs download web page for the knowisoforms file for genome of interest
 #' @param uscs.urlknownToLocusLink, a character string indicating the URL from uscs download web page for the knownToLocusLink file for genome of interest
 #' @param threads, a number indicating the number of cores to be used from the application
+#' @author Raffaele Calogero
 #'
 #' @return The indexed bwa genome reference sequence
 #' @examples

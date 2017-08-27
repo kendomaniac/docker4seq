@@ -8,6 +8,7 @@
 #' @param clusterIdentity, an integer between 1 to 100 which indicates the percentage of identity required to consider two clusters identical.
 #' @param k.min, min number of clusters, should be the same of those passes to cascStep1.
 #' @param k.max, min number of clusters, should be the same of those passes to cascStep1.
+#' @author Raffaele Calogero, Luca Alessandri
 #' @return a folder with .....
 #' @examples
 #' \dontrun{

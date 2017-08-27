@@ -7,6 +7,7 @@
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa is located
 #' @param threads, a number indicating the number of cores to be used from the application
+#' @author Raffaele Calogero
 #'
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
 #' @examples

@@ -5,6 +5,7 @@
 #' @param hg.urlgenome, a character string indicating the URL from uscs download web page for the unmasked human genome sequence of interest
 #' @param mm.urlgenome, a character string indicating the URL from uscs download web page for the unmasked mouse genome sequence of interest
 #' @param threads, an integer indicating how many threads are used by xenome
+#' @author Raffaele Calogero
 #'
 #' @return The indexed xenome genomes references
 #' @examples

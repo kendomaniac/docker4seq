@@ -10,6 +10,8 @@
 #' @param bootstrap.fraction, a integer between 1 and 100, which indicate the fraction of cell to be removed during boostrap.
 #' @param k.min, min number of clusters.
 #' @param k.max, min number of clusters.
+#' @author Raffaele Calogero, Luca Alessandri
+#' 
 #' @return a folder with the name of the cell data set under analysis, e.g. log10_singlecells_counts. In this folder there are a set of folder named by the number of k clusters in use. A file named SilhouetteValue.csv for cluster evaluation and a pdf ViolinPlot.pdf which is the representation of the SilhouetteValue.csv. best clusters are represented by a SilhouetteValue distribution skewed versus 1 values.
 #' @examples
 #' \dontrun{
