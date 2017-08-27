@@ -37,3 +37,6 @@ This function executes check the data count-depth relationship
     outputName="singlecells_counts", nCores=8)
 }
 }
+\author{
+Raffaele Calogero, Luca Alessandri
+}

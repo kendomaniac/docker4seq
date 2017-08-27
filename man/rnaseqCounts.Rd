@@ -63,3 +63,6 @@ This function executes a set of docker containers allowing the generation of gen
             org="mm10", annotation.type="gtfENSEMBL")
 }
 }
+\author{
+Raffaele Calogero
+}

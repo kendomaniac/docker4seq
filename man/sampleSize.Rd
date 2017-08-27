@@ -38,3 +38,6 @@ This function executes sample_size_distribution to identify the number of sample
    genes4dispersion=200, log2fold.change=1)
 }
 }
+\author{
+Raffaele Calogero
+}

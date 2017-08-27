@@ -31,3 +31,6 @@ This function converts raw counts table in CASC suitable table.
 
 }
 }
+\author{
+Raffaele Calogero, Luca Alessandri
+}

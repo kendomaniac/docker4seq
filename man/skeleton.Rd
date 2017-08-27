@@ -24,3 +24,6 @@ This function executes a ubuntu docker that produces as output helloworld.txt fi
 }
 
 }
+\author{
+Name Family name, myemail [at] somewhere [dot] org, Affiliation
+}

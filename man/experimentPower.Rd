@@ -39,3 +39,6 @@ This function evaluate the statistical power of a pilot experiment
  FDR=0.1, genes4dispersion=200, log2fold.change=1)
 }
 }
+\author{
+Raffaele Calogero
+}

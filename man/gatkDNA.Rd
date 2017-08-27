@@ -38,3 +38,6 @@ This function executes the docker container snv.1 where GATK software is used to
     genome.folder="/data/scratch/hg19_bwa", threads=24)
 }
 }
+\author{
+Raffaele Calogero
+}

@@ -44,3 +44,6 @@ This function executes the docker container rsemstar1, where RSEM is used to cal
 
 }
 }
+\author{
+Raffaele Calogero
+}

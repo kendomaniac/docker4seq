@@ -48,3 +48,6 @@ This function generates counts, FPKM and TPM tables from rnaseqCounts outuputs.
                  bio.type="protein_coding", output.prefix=".")
 }
 }
+\author{
+Raffaele Calogero
+}

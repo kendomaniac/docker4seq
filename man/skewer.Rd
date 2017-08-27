@@ -41,3 +41,6 @@ This function executes the docker container skewer1 to remove sequencing adapter
     seq.type="pe", threads=10,  min.length=40)
 }
 }
+\author{
+Raffaele Calogero
+}

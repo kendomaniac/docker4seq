@@ -29,3 +29,6 @@ This function executes the docker container rsemstar where RSEM is installed and
 
 }
 }
+\author{
+Raffaele Calogero
+}

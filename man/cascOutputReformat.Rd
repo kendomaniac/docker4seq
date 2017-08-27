@@ -25,3 +25,6 @@ This function converts organize in a table each output of cascKoptimization func
 
 }
 }
+\author{
+Raffaele Calogero, Luca Alessandri
+}

@@ -58,3 +58,6 @@ This function executes xenome, to remove mouse data, skewer, to trim adapters, b
 
 }
 }
+\author{
+Raffaele Calogero
+}

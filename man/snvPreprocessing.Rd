@@ -44,3 +44,6 @@ This function executes the docker container snvPreprocessing. IMPORTANT: the wor
 
 }
 }
+\author{
+Raffaele Calogero
+}

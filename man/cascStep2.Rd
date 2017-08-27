@@ -42,3 +42,6 @@ This function executes CASC step2 identification of the optimal number of cluste
 }
 
 }
+\author{
+Raffaele Calogero, Luca Alessandri
+}

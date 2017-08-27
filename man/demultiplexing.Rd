@@ -28,3 +28,6 @@ This function executes the Illumina bcl2fastq program
 
 }
 }
+\author{
+Raffaele Calogero
+}

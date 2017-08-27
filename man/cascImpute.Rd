@@ -35,3 +35,6 @@ This function executes a wrapper for scImpute: Accurate And Robust Imputation Fo
 }
 
 }
+\author{
+Raffaele Calogero, Luca Alessandri
+}

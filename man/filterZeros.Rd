@@ -27,3 +27,6 @@ This function plots the zeros distributions in cells and removes genes without c
     filterZeros(data.folder=getwd(),counts.matrix="singlecells_counts.txt", threshold=0.1)
 }
 }
+\author{
+Raffaele Calogero, Luca Alessandri
+}

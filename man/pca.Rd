@@ -22,7 +22,7 @@ pca(experiment.table = "_counts.txt", type = c("counts", "FPKM", "TPM"),
 
 \item{pdf, }{a boolean value indicating if results has to be saved in a pdf}
 
-\item{output.folder, }{output foldeer}
+\item{output.folder, }{output folder}
 }
 \value{
 Returns a PCA plot
@@ -42,4 +42,7 @@ This function generates PCA plot from counts, FPKM and TPM tables from rnaseqCou
       output.folder=getwd())
 
 }
+}
+\author{
+Raffaele Calogero
 }

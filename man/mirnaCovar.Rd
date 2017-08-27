@@ -35,3 +35,6 @@ This function modifies the all.counts.txt table generated from miRNAseq adding c
                     "batch.2", "batch.2","batch.1", "batch.1","bath.2", "bath.2"), output.folder=getwd())
 }
 }
+\author{
+Raffaele Calogero
+}
