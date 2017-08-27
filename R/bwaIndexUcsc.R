@@ -66,11 +66,11 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
   }
 
 	if(group=="sudo"){
-		params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
-		runDocker(group="sudo",container="docker.io/rcaloger/bwa.2017.01", params=params)
+		params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
+		runDocker(group="sudo",container="docker.io/repbioinfo/bwa.2017.01", params=params)
 	}else{
-	  params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
-	  runDocker(group="docker",container="docker.io/rcaloger/bwa.2017.01", params=params)
+	  params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
+	  runDocker(group="docker",container="docker.io/repbioinfo/bwa.2017.01", params=params)
 	}
 	out <- "xxxx"
 	#waiting for the end of the container work

@@ -44,11 +44,11 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
   cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 
 	if(group=="sudo"){
-	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
-	      runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
+	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
+	      runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
 	}else{
-	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
-	      runDocker(group="docker",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
+	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
+	      runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
   }
   out <- "xxxx"
   #waiting for the end of the container work

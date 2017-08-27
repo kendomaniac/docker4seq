@@ -11,10 +11,7 @@ skeleton(group = c("sudo", "docker"), scratch.folder, data.folder)
 
 \item{scratch.folder, }{a character string indicating the path of the scratch folder}
 
-\item{data.folder, }{a character string indicating the folder where comma separated file of cells log10 counts is saved}
-}
-\value{
-A file: helloworld.txt
+\item{data.folder, }{a character string indicating the folder where input data are located and where output will be written}
 }
 \description{
 This function executes a ubuntu docker that produces as output helloworld.txt file

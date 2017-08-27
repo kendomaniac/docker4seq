@@ -91,19 +91,19 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	cat("\nsetting as working dir the scratch folder and running chipseq docker container\n")
 
 	if(group=="sudo"){
-		   params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
+		   params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
 		             bam.folder," ", ctrl.bam," 000000 ",docker_chipseq.folder," ",
 		             genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ",
 		             macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",
 		             max.upstream.distance," ",remove.duplicates, sep="")
-	     runDocker(group="sudo",container="docker.io/rcaloger/chipseq.2017.01", params=params)
+	     runDocker(group="sudo",container="docker.io/repbioinfo/chipseq.2017.01", params=params)
 		}else{
-		  params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
+		  params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
              bam.folder," ", ctrl.bam," 000000 ",docker_chipseq.folder," ",
              genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ",
              macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",
              max.upstream.distance," ",remove.duplicates, sep="")
-		  runDocker(group="docker",container="docker.io/rcaloger/chipseq.2017.01", params=params)
+		  runDocker(group="docker",container="docker.io/repbioinfo/chipseq.2017.01", params=params)
 	}
 	out <- "xxxx"
 	#waiting for the end of the container work
