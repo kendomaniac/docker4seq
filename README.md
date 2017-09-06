@@ -35,5 +35,7 @@ More info on the functionalities of the package are available at: [**docker4seq/
 
 In case you wish to use MAC OS or windows you need to install https://www.docker.com/products/docker-toolbox and run within the Docker Quickstart Terminal.app
 
+##Diclaimer:
+docker4seq developers have no liability for any use of docker4seq functions, including without limitation, any loss of data, incorrect results, or any costs, liabilities, or damages that result from use of docker4seq. 
 
 
