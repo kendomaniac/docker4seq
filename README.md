@@ -8,7 +8,7 @@ install_github("kendomaniac/docker4seq", ref="devel")
 ```
 
 
-##Requirements
+## Requirements
 You need to have docker installed on your machine, for more info see this document:
 https://docs.docker.com/engine/installation/. 
 **docker4seq** package is expected to run on 64 bits linux machine with at least 4 cores and 32 Gb RAM.
@@ -34,7 +34,7 @@ More info on the functionalities of the package are available at: [docker4seq/4s
 
 In case you wish to use MAC OS or windows you need to install https://www.docker.com/products/docker-toolbox and run within the Docker Quickstart Terminal.app
 
-##Diclaimer:
+## Diclaimer:
 docker4seq developers have no liability for any use of docker4seq functions, including without limitation, any loss of data, incorrect results, or any costs, liabilities, or damages that result from use of docker4seq. 
 
 
