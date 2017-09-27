@@ -1,7 +1,7 @@
 ---
 title: " Supplementary data SeqBox: RNAseq/ChIPseq reproducible analysis on a consumer game computer"
 author: "Marco Beccuti, Francesca Cordero, Maddalena Arigoni, Riccardo Panero, Elvio G. Amparore, Susanna Donatelli and Raffaele A Calogero"
-date: "7/27/2017"
+date: "9/26/2017"
 output: pdf_document
 toc: true
 fig_caption: true
@@ -265,6 +265,13 @@ The mRNAseq workflow produces the following output files:
 The first column in **gtf_annotated_genes.results** is the ensembl gene id, the second column is the [biotype](http://www.ensembl.org/Help/Faq?id=468), 
 the third column is the annotation source, the fourth column contains the set of transcripts included in the ensembl gene id. Then there is the length of the gene, the length of the gene to which is subtracted the average length of the sequenced fragments, the expected counts are the counts to be used for differential expression analysis. [TPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) and [FPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) are normalized gene quantities to be used only for visualization purposes.
 
+
+### Alignment-dependent tools versus aligner-free methods
+Recently Zhang and coworkers (BMC Genomics 2017, 18,583) compared at transcript level alignment-dependent tools Salmon_aln, eXpress, RSEM and TIGAR2 and the aligner-free methods Salmon, Sailfish and Kallisto. In their paper, STAR was used for all alignment-dependent tools as instead the three alignment-free methods used their own mappers for pseudo-alignment or quasi-mapping. The results obtained by isoform quantification with the analysed tools, indicate that there is strong concordance among quantification results from RSEM, Salmon, Salmon_aln, Kallisto and Sailfish (R2 > 0.89), indicating that the impact of mappers on isoform quantification is small. Furthermore, the paper of Teng and coworkers (Genome Biology 2016, 17,74) indicates that at gene-level differences between different methods are shrinking with respect to transcripts level analysis.
+On the basis of the above papers it seems that fro m the quantification point of view the difference between alignment free and alignment-dependent tools are very limited. 
+However, aligner-free methods have low memory requirements and we have added Salmon in the devel version of docker4seq. We are planning to introduce Salmon in the stable version of docker4seq in the first quarter of 2018. Salmon implementation will allow to increase the sample throughput, allowing to run multiple samples in parallel as instead serially as it happen now because of the high RAM requirement of STAR.
+
+
 \newpage
 
 ### From samples to experiment
@@ -449,6 +456,10 @@ wrapperDeseq2(output.folder=getwd(), group="docker",
 User has to provide experiment table, **experiment.table** param, i.e. the counts table generated with **samples2experiment** function, the thresholds for the differential expression analysis, **log2fc** and **fdr** params, the reference covariate, **ref.covar** param, i.e. the covariate that is used as reference for differential expression detection, the **type** param, which refers to the type of experiment table in use: *gene*, *isoform*, *mirna*, **batch** parameter that indicates, if it is set to **TRUE** that the header of the experiment table also contains the extra information for the batch effect (see above). 
 
 IMPORTANT: the above analysis can be applied to miRNAseq data too.
+
+#### Why DESeq2 was chosen as differential expression tool
+
+Love and coworkers, in their paper on DESeq2, showed that DESeq2 had comparable sensitivity to edgeR and voom. We introduced in our workflow DESEq2 because it has some specific features which increase the strength of the differential expression analysis and are not available in other tools. Specifically, the Empirical Bayes shrinkage for fold-change estimation shrinks log fold change estimates toward zero in a manner such that shrinkage is stronger when the available information for a gene is low, which may be because counts are low, dispersion is high or there are few degrees of freedom. Furthermore, DESeq2 flags genes characterized by the presence of counts outliers, which are estimated with the standard outlier diagnostic Cook’s distance (Love at al. Genome Biol. 2014; 15, 550) and might represent a source false positives.
 
 \newpage
 
@@ -650,6 +661,89 @@ The chipseq workflow produces the following output files:
     + mytreat_sorted.bw: bigWig file for UCSC Genome Browser visualization
      
 
+## Tutorials
+
+### RNAseq workflow
+
+[**Tutorial experiment downloadable here**](http://130.192.119.59/public/test.mrnaCounts_full.zip): 
+
+    + Three replicates for two experimental conditions 
+    
+    + single-end mode sequencing 
+    
+    + 1 million reads for each sample
+
+**Experiment description**: 
+
+    + 4T1 mouse cell line grown in standard DMEM medium (e) is compared with the same cells grown in low attachment medium (p)
+
+The following data are available for download:
+
+- [Fastq files for 3 samples grown in standard DMEM medium (e) and for 3 samples grown in low attachment medium (p) to be used to calculate samples counts](http://130.192.119.59/public/test.mrnaCounts_full.zip). 
+
+    + This data set allows running all the steps required to detect differentially expressed genes. The first step is the quantification of genes and isoforms via mapping reads to the reference genome via STAR and using this mapping information to quantify genes and transcripts using RSEM, i.e. *this section*. 
+    
+    + The RSEM counts table, generated for all samples, are combined in a unique table, see *From samples to experiment* section. This table is used for differential expression genes detection. For visualization purposes  log2 FPKM and log2 TPM tables are also generated, see *From samples to experiment* section. More info on the FPKM and TPM are available [here](http://www.rna-seqblog.com/rpkm-fpkm-and-tpm-clearly-explained/). 
+    
+    + Subsequently the overall characteristics of the dataset can be explore via [PCA](https://www.youtube.com/watch?v=BfTMmoDFXyE), *Visualizing experiment data with PCA* section. 
+    
+    + It is also possible to evaluate which is the statistical power of the experiment, i.e. identifying the fraction of genes/transcripts that can be identify giving the statistical structure of the experiment, or identify the optimal number of samples required to detect differentially expressed genes. More info in *Evaluating sample size and experiment power* section. 
+    
+    + Differential expression can be then evaluate using the DESeq2 module, *Differential expression analysis with DESeq2*. 
 
 
+- Furthermore, also intermediate results are provided:
 
+    + [The counts tables generated by STAR+RSEM analysis to be used to assemble counts, TPM and FPKM experiment tables](http://130.192.119.59/public/test.samples2experiment.zip)
+
+    + [The experiment tables that can be used to study samples organization via PCA or the statistical characteristics of the experiment, i.e. the statistical power and the optimal sample size of the experiment](http://130.192.119.59/public/test.analysis.zip)
+
+    + The above data set can be used also to detect differentially expressed genes and isoforms using the DESeq2 module.
+
+### miRNAseq workflow
+
+[**Tutorial experiment downloadable here**](http://130.192.119.59/public/test.mirnaCounts.zip): 
+
+- Six specimens for two experimental conditions
+    
+- single-end mode sequencing, 
+    
+- 1 million reads for each sample.
+
+**Experiment description**: 
+
+- Six blood circulating exosomes miRNA samples from healthy donors (hd) and six blood circulating exosomes miRNA samples from tumor patients (tum)
+    
+- from 1 to 3 hd and tum samples were harvested on day 1, from 5 to 6 hd and tum samples were harvested on day 2. Thus the data are require the addition of the batch effect in differential expression analysis.
+
+The following data are available for download:
+
+- [Fastq files for 6 miRNA samples from healthy donors (hd), and six miRNA samples from tumor patients (tum) to be used to calculate samples counts and organize them in a counts table](http://130.192.119.59/public/test.mrnaCounts_full.zip). 
+
+    + This data set allows running all the steps required to detect differentially expressed genes. The first step is the quantification of mature annotated miRNA and the generation of counts table to be used for differential expression, i.e. *this section*. 
+    
+    + The covariates and batch effects can be added to the counts table (all.counts.txt), see *From samples to experiment* section. This table is used for differential expression genes detection.  
+    
+    + Subsequently the overall characteristics of the dataset can be explore via [PCA](https://www.youtube.com/watch?v=BfTMmoDFXyE), *Visualizing experiment data with PCA* section. 
+    
+    + It is also possible to evaluate which is the statistical power of the experiment, i.e. identifying the fraction of genes/transcripts that can be identify giving the statistical structure of the experiment, or identify the optimal number of samples required to detect differentially expressed genes. More info in *Evaluating sample size and experiment power* section. 
+    
+    + Differential expression can be then evaluate using the DESeq2 module, *Differential expression analysis with DESeq2*.
+
+### ChIPseq workflow
+
+[**Tutorial experiment downloadable here**](http://130.192.119.59/public/test.chipseqCounts.zip): 
+
+    + Two ChIPseq one IgG control and an other Prdm5 TF moAb (mouse)
+    
+    + single-end mode sequencing, 
+    
+    + 1 million reads for each sample.
+
+**Experiment description**: 
+
+- PRDM family members are transcriptional regulators involved in tissue specific differentiation. PRDM5 has been reported to predominantly repress transcription, but a characterization of its molecular functions in a relevant biological context is lacking. Prdm5 controls both Collagen I transcription and fibrillogenesis by binding inside the Col1a1 gene body and maintaining RNA polymerase II occupancy (Galli et al. PLoS Genet. 2012,e1002711).
+    
+- The toy experiment is organized in three folders: i. one for IgG (igg, containing the igg pool down fastq); ii. one for Prdm5 (prdm5, containing the Prdm5 pool down fastq) and iii. the other for analysis output prdm5.igg, where MACS results will be located. The execution of the ChIPseq workflow using GUI or line command will provide the final annotated table of peaks (mypeaks.xls)
+    
+    
