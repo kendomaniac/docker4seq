@@ -69,7 +69,7 @@ xenome <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
       system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
     }
     #fastq  linking fpr docker
-    docker_fastq.folder=file.path("/data/scratch", tmp.folder)
+    docker_fastq.folder=file.path(scratch.folder, tmp.folder)
     cat("\nsetting as working dir the scratch folder and running xenome docker container\n")
     
     if(seq.type=="pe"){
