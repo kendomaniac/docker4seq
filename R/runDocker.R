@@ -22,7 +22,7 @@ runDocker <- function(group="docker",container=NULL, params=NULL){
        return(1)
      }
   
-  #remove dockerID
+  #remove dockerID under the assumption that second paramiter is dockerID file
      vec_params=strsplit(params,split=" ")
      if (file.exists(vec_params[[1]][2])){ 
         cat("\n\nFile:",vec_params[[1]][2]," found ---> It will be removed\n\n")
