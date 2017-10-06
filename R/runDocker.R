@@ -21,7 +21,16 @@ runDocker <- function(group="docker",container=NULL, params=NULL){
        cat("\nNo parameters where provided!\n")
        return(1)
      }
-     if(group=="sudo"){
+  
+  #remove dockerID
+     vec_params=strsplit(params,split=" ")
+     if (file.exists(vec_params[[1]][2])){ 
+        cat("\n\nFile:",vec_params[[1]][2]," found ---> It will be removed\n\n")
+        system(paste("rm ",vec_params[[1]][2]))
+     }
+  #remove dockerID   
+  
+        if(group=="sudo"){
    #      system(paste("sudo docker pull ",container, sep=""))
          system(paste("sudo docker run --privileged=true ",params, sep=""))
      }else if(group=="docker"){
