@@ -247,7 +247,7 @@ org="mm10", annotation.type="gtfENSEMBL")
 User needs to create the **fastq.folder**, where the fastq.gz file(s) for the sample under analysis are located. 
 The **scratch.folder** is the location where temporary data are created. The results will be then saved in the **fastq.folder**.
 
-User needs to provide also the sequence of the sequencing adapters, **adapter5** and **adapter3** parameters. In case Illumina platform the adapters sequences can be easily recovered [**here**](https://support.illumina.com/content/dam/illumina-support/documents/documentation/chemistry_documentation/experiment-design/illumina-adapter-sequences_1000000002694-01.pdf). 
+User needs to provide also the sequence of the sequencing adapters, **adapter5** and **adapter3** parameters. In case Illumina platform the adapters sequences can be easily recovered [**here**](https://support.illumina.com/downloads/illumina-customer-sequence-letter.html). 
 
 **seq.type** indicates if single-end (se) or pair-end (pe) data are provided, **threads** indicates the max number of cores used by *skewer* and *STAR*, all the other steps are done on a single core.
 
