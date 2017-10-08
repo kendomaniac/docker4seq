@@ -1,7 +1,7 @@
 ---
 title: " Supplementary data SeqBox: RNAseq/ChIPseq reproducible analysis on a consumer game computer"
 author: "Marco Beccuti, Francesca Cordero, Maddalena Arigoni, Riccardo Panero, Elvio G. Amparore, Susanna Donatelli and Raffaele A Calogero"
-date: "9/26/2017"
+date: "10/08/2017"
 output: pdf_document
 toc: true
 fig_caption: true
@@ -745,5 +745,5 @@ The following data are available for download:
 - PRDM family members are transcriptional regulators involved in tissue specific differentiation. PRDM5 has been reported to predominantly repress transcription, but a characterization of its molecular functions in a relevant biological context is lacking. Prdm5 controls both Collagen I transcription and fibrillogenesis by binding inside the Col1a1 gene body and maintaining RNA polymerase II occupancy (Galli et al. PLoS Genet. 2012,e1002711).
     
 - The toy experiment is organized in three folders: i. one for IgG (igg, containing the igg pool down fastq); ii. one for Prdm5 (prdm5, containing the Prdm5 pool down fastq) and iii. the other for analysis output prdm5.igg, where MACS results will be located. The execution of the ChIPseq workflow using GUI or line command will provide the final annotated table of peaks (mypeaks.xls)
-    
+ 
     
