@@ -50,7 +50,7 @@ skeleton <- function(group=c("sudo","docker"), scratch.folder, data.folder){
     resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/ubuntu", params=params)
   }
   #waiting for the end of the container work
-  if(resultRun == 0){
+  if(!resultRun){
     system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
   }
   #running time 2
@@ -76,7 +76,7 @@ skeleton <- function(group=c("sudo","docker"), scratch.folder, data.folder){
 
   #saving log and removing docker container
   container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", substr(container.id,1,12), " &> ", substr(container.id,1,12),".log", sep=""))
+  system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
   #removing temporary folder
   cat("\n\nRemoving the temporary file ....\n")

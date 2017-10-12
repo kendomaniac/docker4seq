@@ -22,13 +22,7 @@ runDocker <- function(group="docker",container=NULL, params=NULL){
        return(1)
      }
   
-  #remove dockerID under the assumption that second paramiter is dockerID file
-     vec_params=strsplit(params,split=" ")
-     if (file.exists(vec_params[[1]][2])){ 
-        cat("\n\nFile:",vec_params[[1]][2]," found ---> It will be removed\n\n")
-        system(paste("rm ",vec_params[[1]][2]))
-     }
-  #remove dockerID   
+ 
   
         if(group=="sudo"){
    #      system(paste("sudo docker pull ",container, sep=""))
@@ -41,15 +35,25 @@ runDocker <- function(group="docker",container=NULL, params=NULL){
        return(2)
      }
      
-     #checking if docker container is still running
-     out <- system("docker ps", intern = TRUE)
-     did <- readLines("dockerID",warn = FALSE)
-     did<- substr(did, 1, 12)
-     
-     while(length(out[grep(did, out)]) > 0 ){
-       Sys.sleep(10)
-       cat(".")
-     }
-     cat("docker container execution ended")
-     return(0)
+  ## to obtain the Docker ID by file
+  if (!file.exists(dockerIDfile)){ 
+    cat("\n\nDocker does not start!!!\n\n")
+    return(2)
+  }
+  dockerID=readLines(dockerIDfile, warn = FALSE)
+  cat("\nDocker ID is:\n",dockerID,"\n")
+  ## to obtain the Docker ID by file
+  
+  ## to check the Docker container status
+  dockerStatus=system(paste("docker inspect -f {{.State.Running}}",dockerID),intern= T)
+  cat("\n\nBefore while, docker status: ",dockerStatus,"\n")
+  while (dockerStatus){
+    Sys.sleep(10);
+    dockerStatus=system(paste("docker inspect -f {{.State.Running}}",dockerID),intern= T)
+    cat("In while Docker status: ",dockerStatus,"\n")
+  }
+  cat("After while, docker status: ",dockerStatus,"\n\n")
+  ## to check the Docker container status
+  return(dockerStatus)
+  
 }
