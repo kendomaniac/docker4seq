@@ -1,7 +1,7 @@
 ---
 title: " Supplementary data SeqBox: RNAseq/ChIPseq reproducible analysis on a consumer game computer"
 author: "Marco Beccuti, Francesca Cordero, Maddalena Arigoni, Riccardo Panero, Elvio G. Amparore, Susanna Donatelli and Raffaele A Calogero"
-date: "10/08/2017"
+date: "10/12/2017"
 output: pdf_document
 toc: true
 fig_caption: true
@@ -267,9 +267,11 @@ the third column is the annotation source, the fourth column contains the set of
 
 
 ### Alignment-dependent tools versus aligner-free methods
-Recently Zhang and coworkers (BMC Genomics 2017, 18,583) compared at transcript level alignment-dependent tools Salmon_aln, eXpress, RSEM and TIGAR2 and the aligner-free methods Salmon, Sailfish and Kallisto. In their paper, STAR was used for all alignment-dependent tools as instead the three alignment-free methods used their own mappers for pseudo-alignment or quasi-mapping. The results obtained by isoform quantification with the analysed tools, indicate that there is strong concordance among quantification results from RSEM, Salmon, Salmon_aln, Kallisto and Sailfish (R2 > 0.89), indicating that the impact of mappers on isoform quantification is small. Furthermore, the paper of Teng and coworkers (Genome Biology 2016, 17,74) indicates that at gene-level differences between different methods are shrinking with respect to transcripts level analysis.
-On the basis of the above papers it seems that fro m the quantification point of view the difference between alignment free and alignment-dependent tools are very limited. 
-However, aligner-free methods have low memory requirements and we have added Salmon in the devel version of docker4seq. We are planning to introduce Salmon in the stable version of docker4seq in the first quarter of 2018. Salmon implementation will allow to increase the sample throughput, allowing to run multiple samples in parallel as instead serially as it happen now because of the high RAM requirement of STAR.
+
+Recently Zhang and coworkers (BMC Genomics 2017, 18,583) compared, at transcript level, alignment-dependent tools and aligner-free methods. In their paper, STAR was used as mapping tool for all alignment-dependent tools (Salmon_aln, eXpress, RSEM and TIGAR2). In terms of isoform quantification, the authors indicated that there is strong concordance among quantification results from RSEM, Salmon, Salmon_aln, Kallisto and Sailfish (R2 > 0.89), suggesting that the impact of mappers on isoform quantification is small. Furthermore, the paper of Teng and coworkers (Genome Biology 2016, 17,74) reported that,in term of gene-level quantification, differences between alignment-dependent tools and aligner-free methods are shrinking with respect to transcripts level analysis.
+On the basis of the above papers it seems that from the quantification point of view the difference between alignment free and alignment-dependent tools is very limited. 
+However, aligner-free methods have low memory requirements and we have added Salmon in the development version of docker4seq in github. We are planning to introduce Salmon in the stable version of docker4seq in the first quarter of 2018. Salmon implementation will allow to increase the sample throughput, by running multiple samples. Currently samples are run serially because of the high RAM requirement of STAR.
+
 
 
 \newpage
@@ -459,7 +461,7 @@ IMPORTANT: the above analysis can be applied to miRNAseq data too.
 
 #### Why DESeq2 was chosen as differential expression tool
 
-Love and coworkers, in their paper on DESeq2, showed that DESeq2 had comparable sensitivity to edgeR and voom. We introduced in our workflow DESEq2 because it has some specific features which increase the strength of the differential expression analysis and are not available in other tools. Specifically, the Empirical Bayes shrinkage for fold-change estimation shrinks log fold change estimates toward zero in a manner such that shrinkage is stronger when the available information for a gene is low, which may be because counts are low, dispersion is high or there are few degrees of freedom. Furthermore, DESeq2 flags genes characterized by the presence of counts outliers, which are estimated with the standard outlier diagnostic Cook’s distance (Love at al. Genome Biol. 2014; 15, 550) and might represent a source false positives.
+Love and co-workers, in their paper on DESeq2 (Love at al. Genome Biol. 2014; 15, 550), showed that DESeq2 had comparable sensitivity to edgeR and voom. We introduced in our workflow DESeq2 because it has some specific features which increase the strength of the differential expression analysis, features that are not available in other tools. One of these features is, the Empirical Bayes shrinkage for fold-change estimation, which shrinks log fold change estimates toward zero. This feature reduces the noise due to low expressed genes, since shrinkage is stronger when the available information for a gene is low, which may be because the read counts are low, dispersion is high or there are few degrees of freedom. The other peculiar feature of DESeq2 is the identification of counts outliers, which might represent a source of false positives. Specifically, DESeq2 flags genes characterized by the presence of counts outliers, which are estimated with the standard outlier diagnostic Cook’s distance (Love at al. Genome Biol. 2014; 15, 550).
 
 \newpage
 
