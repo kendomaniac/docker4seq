@@ -44,23 +44,15 @@ skeleton <- function(group=c("sudo","docker"), scratch.folder, data.folder){
   #executing the docker job
   if(group=="sudo"){
     params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh", sep="")
-    runDocker(group="sudo",container="docker.io/repbioinfo/ubuntu", params=params)
+    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/ubuntu", params=params)
   }else{
     params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh", sep="")
-    runDocker(group="docker",container="docker.io/repbioinfo/ubuntu", params=params)
+    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/ubuntu", params=params)
   }
   #waiting for the end of the container work
-  out <- "xxxx"
-  while(out != "out.info"){
-    Sys.sleep(10)
-    cat(".")
-    out.tmp <- dir(file.path(data.folder))
-    out.tmp <- out.tmp[grep("out.info",out.tmp)]
-    if(length(out.tmp)>0){
-      out <- "out.info"
-    }
+  if(resultRun == 0){
+    system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
   }
-
   #running time 2
   ptm <- proc.time() - ptm
   dir <- dir(data.folder)

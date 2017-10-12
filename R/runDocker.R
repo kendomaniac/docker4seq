@@ -40,4 +40,16 @@ runDocker <- function(group="docker",container=NULL, params=NULL){
        cat("\nThe group provides is neither sudo or docker\n")
        return(2)
      }
+     
+     #checking if docker container is still running
+     out <- system("docker ps", intern = TRUE)
+     did <- readLines("dockerID",warn = FALSE)
+     did<- substr(did, 1, 12)
+     
+     while(length(out[grep(did, out)]) > 0 ){
+       Sys.sleep(10)
+       cat(".")
+     }
+     cat("docker container execution ended")
+     return(0)
 }
