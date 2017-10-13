@@ -9,7 +9,7 @@
 #' 
 #' @examples
 #' \dontrun{
-#'     #running skeleton
+#'     #running salmonIndex
 #'     salmonIndex(group="docker", index.folder=getwd(), 
 #'     ensembl.urltranscriptome="ftp://ftp.ensembl.org/pub/release-90/fasta/mus_musculus/cdna/Mus_musculus.GRCm38.cdna.all.fa.gz",
 #'     ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-90/gtf/mus_musculus/Mus_musculus.GRCm38.90.gtf.gz", 
