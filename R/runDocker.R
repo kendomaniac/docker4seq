@@ -22,9 +22,13 @@ runDocker <- function(group="docker",container=NULL, params=NULL){
        return(1)
      }
   
- 
+  # to obtain the Docker ID by file
+    if (file.exists("dockerID")){ 
+        cat("\n\nDocker does not start, there is already a docker container running che dockerID file!!!\n\n")
+        return(2)
+    }
   
-        if(group=="sudo"){
+   if(group=="sudo"){
    #      system(paste("sudo docker pull ",container, sep=""))
          system(paste("sudo docker run --privileged=true ",params, sep=""))
      }else if(group=="docker"){
@@ -35,24 +39,20 @@ runDocker <- function(group="docker",container=NULL, params=NULL){
        return(2)
      }
      
-  ## to obtain the Docker ID by file
-  if (!file.exists(dockerIDfile)){ 
-    cat("\n\nDocker does not start!!!\n\n")
-    return(2)
-  }
-  dockerID=readLines(dockerIDfile, warn = FALSE)
-  cat("\nDocker ID is:\n",dockerID,"\n")
+ 
+  dockerid=readLines("dockerID", warn = FALSE)
+  cat("\nDocker ID is:\n",substr(dockerid,1, 12),"\n")
   ## to obtain the Docker ID by file
   
   ## to check the Docker container status
-  dockerStatus=system(paste("docker inspect -f {{.State.Running}}",dockerID),intern= T)
+  dockerStatus=system(paste("docker inspect -f {{.State.Running}}",dockerid),intern= T)
   cat("\n\nBefore while, docker status: ",dockerStatus,"\n")
-  while (dockerStatus){
+  while(dockerStatus){
     Sys.sleep(10);
-    dockerStatus=system(paste("docker inspect -f {{.State.Running}}",dockerID),intern= T)
-    cat("In while Docker status: ",dockerStatus,"\n")
+    dockerStatus=system(paste("docker inspect -f {{.State.Running}}",dockerid),intern= T)
+    cat(".")
   }
-  cat("After while, docker status: ",dockerStatus,"\n\n")
+  cat(".\n\n")
   ## to check the Docker container status
   return(dockerStatus)
   
