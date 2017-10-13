@@ -8,7 +8,6 @@
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit University of Torino Italy
 #' 
 #' @examples
-#' index -t transcripts.fa -i transcripts_index --type quasi -k 31
 #' \dontrun{
 #'     #running skeleton
 #'     salmonIndex(group="docker", index.folder=getwd(), 

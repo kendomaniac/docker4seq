@@ -53,7 +53,7 @@ This function executes xenome, to remove mouse data, skewer, to trim adapters, b
     wrapperPdx(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
     xenome.folder="/data/scratch/hg19.mm10", seq.type="pe", threads=24, 
     adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-    adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT"
+    adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
     min.length=40, genome.folder="/data/scratch/hg19_exome", sample.id="sampleX")
 
 }
