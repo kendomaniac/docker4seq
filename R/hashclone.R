@@ -1,4 +1,4 @@
-' @title HashClone running A function to handle a hashclone docker containier
+#' @title HashClone running A function to handle a hashclone docker containier
 #' @description This function executes  HashClone algorithm developed to identify the set of clonality markers during the patient follow-up in order to quantify the minimal residual disease. 
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
