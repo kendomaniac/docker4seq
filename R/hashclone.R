@@ -51,16 +51,13 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   
   #executing the docker job
   
-  common_params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d ",dockerImage,sep="")
-  
-  params <- paste(common_params," /usr/HashClone/HashCheckerFreq ",sep="")
-  for (i in 1:length(input.files)){
-    params <- paste(params,data.folder,"/input-",input.files[i]," fastq 1 ",common_params,data.folder,"/input-",input.files[i],  "fastq 1 ",common_params,data.folder,"/output-",input.files[i]," ",kmer," 1 ",hash," ",coll, sep="")
-    resultRun <- runDocker(group=group,container=dockerImage, params=params)
-  
-
+ params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d ",dockerImage, " /usr/HashClone/HashCheckerParall.sh ",kmer," ",hash," ",coll," ",threashold," ", data.folder, " null ", spike, sep="")
+ for (i in 1:length(input.files)){
+    params <- paste(params,input.files[i], sep=" ")
+   }
+  resultRun <- runDocker(group=group,container=dockerImage, params=params)
   #waiting for the end of the container work
-  if(resultRun==FALSE){
+  if(!resultRun){
     system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
   }
   #running time 2
@@ -97,4 +94,3 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
   setwd(home)
 }
-  }
