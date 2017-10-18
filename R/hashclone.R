@@ -57,7 +57,7 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   for (i in 1:length(input.files)){
     params <- paste(params,data.folder,"/input-",input.files[i]," fastq 1 ",common_params,data.folder,"/input-",input.files[i],  "fastq 1 ",common_params,data.folder,"/output-",input.files[i]," ",kmer," 1 ",hash," ",coll, sep="")
     resultRun <- runDocker(group=group,container=dockerImage, params=params)
-   }
+  
 
   #waiting for the end of the container work
   if(!resultRun){
@@ -97,3 +97,4 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
   setwd(home)
 }
+  }
