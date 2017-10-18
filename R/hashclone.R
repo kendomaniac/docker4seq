@@ -60,7 +60,7 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   
 
   #waiting for the end of the container work
-  if(!resultRun){
+  if(resultRun==FALSE){
     system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
   }
   #running time 2
