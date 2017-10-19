@@ -108,15 +108,15 @@ document.addEventListener("DOMContentLoaded", function() {
 <li><p>-v the data folder is mounted as /data</p></li>
 <li><p>-d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh is the command that executes the skeleton.sh script.</p></li>
 </ul></li>
-<li><p>the parameter string is passed to the runDocker that execute the job.</p></li>
+<li><p>the parameter string is passed to the runDocker that execute the job. runDocker check if docker is running and return <strong>false</strong> when is finished</p></li>
 </ul>
 <pre class="r"><code>  #executing the docker job
   if(group==&quot;sudo&quot;){
     params &lt;- paste(&quot;--cidfile &quot;,data.folder,&quot;/dockerID -v &quot;,scrat_tmp.folder,&quot;:/scratch -v &quot;, data.folder, &quot;:/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh&quot;, sep=&quot;&quot;)
-    runDocker(group=&quot;sudo&quot;,container=&quot;docker.io/repbioinfo/ubuntu&quot;, params=params)
+    resultRun &lt;- runDocker(group=&quot;sudo&quot;,container=&quot;docker.io/repbioinfo/ubuntu&quot;, params=params)
   }else{
     params &lt;- paste(&quot;--cidfile &quot;,data.folder,&quot;/dockerID -v &quot;,scrat_tmp.folder,&quot;:/scratch -v &quot;, data.folder, &quot;:/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh&quot;, sep=&quot;&quot;)
-    runDocker(group=&quot;docker&quot;,container=&quot;docker.io/repbioinfo/ubuntu&quot;, params=params)
+    resultRun &lt;- runDocker(group=&quot;docker&quot;,container=&quot;docker.io/repbioinfo/ubuntu&quot;, params=params)
   }</code></pre>
 <p>The <strong>skeleton.sh</strong> scripts in docker.io/repbioinfo/ubuntu is the following:</p>
 <pre class="bash"><code>#!/bin/bash
@@ -140,26 +140,26 @@ echo &quot;hello world&quot; &gt; $SCRATCH_FOLDER/helloworld.txt
 echo &quot;analysis is finished&quot; &gt; $SCRATCH_FOLDER/out.info
 #changing the properties of files and folders in /data/scratch 
 chmod 777 -R $SCRATCH_FOLDER/*
-#moving results in the data folder 
-mv $SCRATCH_FOLDER/helloworld.txt $DATA_FOLDER/
-#moving run.info in data folder
-mv $SCRATCH_FOLDER/run.info $DATA_FOLDER/
-#moving out.info in data folder
-mv $SCRATCH_FOLDER/out.info $DATA_FOLDER/</code></pre>
+</code></pre>
 <p>It writes hello world in the <strong>helloworld.txt</strong> and moves <strong>helloworld.txt</strong> to the data folder together with the <strong>run.info</strong> file, used to store information about the run, and the <strong>out.info</strong>, used to tell to the R script when the doker job is finished. The <strong>skeleton.sh</strong> scripts is a prototype for the handling of docker application(s).</p>
 <p>Lets go back to the skeleton.R dissection:</p>
-<p>The following code is used to check when the docker job is finished and it needs that the docker script, e.g. skeleton.sh, creates a file called <strong>out.info</strong></p>
-<pre class="r"><code> #waiting for the end of the container work
-  out &lt;- &quot;xxxx&quot;
-  while(out != &quot;out.info&quot;){
-    Sys.sleep(10)
-    cat(&quot;.&quot;)
-    out.tmp &lt;- dir(file.path(data.folder))
-    out.tmp &lt;- out.tmp[grep(&quot;out.info&quot;,out.tmp)]
-    if(length(out.tmp)&gt;0){
-      out &lt;- &quot;out.info&quot;
-    }
-  }</code></pre>
+<p>The <strong>resultRun</strong> is used to check when the docker job is finished. The log of the docker job is saved with a name made of the first 12 letters of the docker job ID. Then, the docker container is deleted as well as the temporary folder and few other files: out.info, dockerID, tempFolderID. Finally the home folder is restored as working directory.</p>
+<pre class="r"><code> #when container ends
+ if(resultRun==&quot;false&quot;){
+   #everything is copied to the input folder
+    system(paste(&quot;mv &quot;, scrat_tmp.folder,&quot;/* &quot;,data.folder, sep=&quot;&quot;))
+     #saving log and removing docker container
+    container.id &lt;- readLines(paste(data.folder,&quot;/dockerID&quot;, sep=&quot;&quot;), warn = FALSE)
+    system(paste(&quot;docker logs &quot;, substr(container.id,1,12), &quot; &amp;&gt; &quot;, substr(container.id,1,12),&quot;.log&quot;, sep=&quot;&quot;))
+    system(paste(&quot;docker rm &quot;, container.id, sep=&quot;&quot;))
+    #removing temporary folder
+    cat(&quot;\n\nRemoving the temporary file ....\n&quot;)
+    system(paste(&quot;rm -R &quot;,scrat_tmp.folder))
+    system(&quot;rm -fR out.info&quot;)
+    system(&quot;rm -fR dockerID&quot;)
+    system(&quot;rm  -fR tempFolderID&quot;)
+    system(paste(&quot;cp &quot;,paste(path.package(package=&quot;docker4seq&quot;),&quot;containers/containers.txt&quot;,sep=&quot;/&quot;),&quot; &quot;,data.folder, sep=&quot;&quot;))
+ }</code></pre>
 <p>Then, the computing time is estimated and saved in the run.info file</p>
 <pre class="r"><code>  #running time 2
   ptm &lt;- proc.time() - ptm
@@ -180,19 +180,7 @@ mv $SCRATCH_FOLDER/out.info $DATA_FOLDER/</code></pre>
     tmp.run[length(tmp.run)+1] &lt;- paste(&quot;elapsed run time mins &quot;,ptm[3]/60, sep=&quot;&quot;)
     writeLines(tmp.run,&quot;run.info&quot;)
   }</code></pre>
-<p>The log of the docker job is saved with a name made of the first 12 letters of the docker job ID. Then, the docker container is deleted as well as the temporary folder and few other files: out.info, dockerID, tempFolderID. Finally the home folder is restored as working directory.</p>
-<pre class="r"><code>  #saving log and removing docker container
-  container.id &lt;- readLines(paste(data.folder,&quot;/dockerID&quot;, sep=&quot;&quot;), warn = FALSE)
-  system(paste(&quot;docker logs &quot;, substr(container.id,1,12), &quot; &amp;&gt; &quot;, substr(container.id,1,12),&quot;.log&quot;, sep=&quot;&quot;))
-  system(paste(&quot;docker rm &quot;, container.id, sep=&quot;&quot;))
-  #removing temporary folder
-  cat(&quot;\n\nRemoving the temporary file ....\n&quot;)
-  system(paste(&quot;rm -R &quot;,scrat_tmp.folder))
-  system(&quot;rm -fR out.info&quot;)
-  system(&quot;rm -fR dockerID&quot;)
-  system(&quot;rm  -fR tempFolderID&quot;)
-  system(paste(&quot;cp &quot;,paste(path.package(package=&quot;docker4seq&quot;),&quot;containers/containers.txt&quot;,sep=&quot;/&quot;),&quot; &quot;,data.folder, sep=&quot;&quot;))
-  setwd(home)</code></pre>
+<pre class="r"><code>  setwd(home)</code></pre>
 </div>
 
 

@@ -50,7 +50,7 @@ skeleton <- function(group=c("sudo","docker"), scratch.folder, data.folder){
     resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/ubuntu", params=params)
   }
   #waiting for the end of the container work
-  if(!resultRun){
+  if(resultRun=="false"){
     system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
   }
   #running time 2

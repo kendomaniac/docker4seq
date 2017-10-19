@@ -42,24 +42,30 @@ knitr::opts_chunk$set(echo = TRUE)
 #    #executing the docker job
 #    if(group=="sudo"){
 #      params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh", sep="")
-#      runDocker(group="sudo",container="docker.io/repbioinfo/ubuntu", params=params)
+#      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/ubuntu", params=params)
 #    }else{
 #      params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh", sep="")
-#      runDocker(group="docker",container="docker.io/repbioinfo/ubuntu", params=params)
+#      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/ubuntu", params=params)
 #    }
 
 ## ---- echo=TRUE, eval=FALSE----------------------------------------------
-#   #waiting for the end of the container work
-#    out <- "xxxx"
-#    while(out != "out.info"){
-#      Sys.sleep(10)
-#      cat(".")
-#      out.tmp <- dir(file.path(data.folder))
-#      out.tmp <- out.tmp[grep("out.info",out.tmp)]
-#      if(length(out.tmp)>0){
-#        out <- "out.info"
-#      }
-#    }
+#   #when container ends
+#   if(resultRun=="false"){
+#     #everything is copied to the input folder
+#      system(paste("mv ", scrat_tmp.folder,"/* ",data.folder, sep=""))
+#       #saving log and removing docker container
+#      container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
+#      system(paste("docker logs ", substr(container.id,1,12), " &> ", substr(container.id,1,12),".log", sep=""))
+#      system(paste("docker rm ", container.id, sep=""))
+#      #removing temporary folder
+#      cat("\n\nRemoving the temporary file ....\n")
+#      system(paste("rm -R ",scrat_tmp.folder))
+#      system("rm -fR out.info")
+#      system("rm -fR dockerID")
+#      system("rm  -fR tempFolderID")
+#      system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
+#   }
+#  
 
 ## ---- echo=TRUE, eval=FALSE----------------------------------------------
 #    #running time 2
@@ -83,16 +89,5 @@ knitr::opts_chunk$set(echo = TRUE)
 #    }
 
 ## ---- echo=TRUE, eval=FALSE----------------------------------------------
-#    #saving log and removing docker container
-#    container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
-#    system(paste("docker logs ", substr(container.id,1,12), " &> ", substr(container.id,1,12),".log", sep=""))
-#    system(paste("docker rm ", container.id, sep=""))
-#    #removing temporary folder
-#    cat("\n\nRemoving the temporary file ....\n")
-#    system(paste("rm -R ",scrat_tmp.folder))
-#    system("rm -fR out.info")
-#    system("rm -fR dockerID")
-#    system("rm  -fR tempFolderID")
-#    system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
 #    setwd(home)
 
