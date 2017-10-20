@@ -7,3 +7,4 @@ docker.io/rcaloger/rsemstar.2017.01
 docker.io/rcaloger/skewer.2017.01
 docker.io/rcaloger/r340.2017.01
 docker.io/rcaloger/demultiplexing.2017.01
+docker.io/beccuti/hashclone
