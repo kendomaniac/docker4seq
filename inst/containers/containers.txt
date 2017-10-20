@@ -10,5 +10,5 @@ docker.io/repbioinfo/demultiplexing.2017.01
 docker.io/repbioinfo/xenome.2017.01
 docker.io/repbioinfo/ubuntu
 docker.io/rcaloger/casc
-
+docker.io/beccuti/hashclone
 
