@@ -47,18 +47,25 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
   writeLines(scrat_tmp.folder,paste(data.folder,"/tempFolderID", sep=""))
   cat("\nCreating a folder in scratch folder\n")
-  dir.create(file.path(scrat_tmp.folder))
-  
+  scrat_tmp.folder=file.path(scrat_tmp.folder)
+  dir.create(scrat_tmp.folder)
+  #copying input files
+  cat("\nCopying input files in scratch folder\n")
+  for (i in 1:length(input.files)){
+    system(paste("cp ",input.files[i],scrat_tmp.folder))
+  }
   #executing the docker job
   
- params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d ",dockerImage, " /usr/HashClone/HashCheckerParall.sh ",kmer," ",hash," ",coll," ",threashold," ", data.folder, " null ", spike, sep="")
+ params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d ",dockerImage, " /bin/hashclone.sh ",kmer," ",hash," ",coll," ",threashold," /scratch  null ", spike, sep="")
  for (i in 1:length(input.files)){
-    params <- paste(params,input.files[i], sep=" ")
-   }
+    params <- paste(params,paste("/scratch/",basename(input.files[i]),sep=""), sep=" ")
+ }
+ 
+  #Run docker   
   resultRun <- runDocker(group=group,container=dockerImage, params=params)
   #waiting for the end of the container work
-  if(!resultRun){
-    system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
+  if(resultRun=="false"){
+    system(paste("cp ", scrat_tmp.folder, "/*.cvs* ", data.folder, sep=""))
   }
   #running time 2
   ptm <- proc.time() - ptm
@@ -87,7 +94,7 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   system(paste("docker rm ", container.id, sep=""))
   #removing temporary folder
   cat("\n\nRemoving the temporary file ....\n")
-  system(paste("rm -R ",scrat_tmp.folder))
+  system(paste("rm -fR ",scrat_tmp.folder))
   system("rm -fR out.info")
   system("rm -fR dockerID")
   system("rm  -fR tempFolderID")
