@@ -1,0 +1,130 @@
+#' @title Platypus analysis
+#' @description This function executes Platypus: A Haplotype-Based Variant Caller For Next Generation Sequence Data. Platypus requires as input bam and bai files. In case vcf.gz and vcf.idx files are located in the bam folder  platypus will use only those positions for SNV calling
+#' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
+#' @param data.folder, a character string indicating the folder where bams and vcf files are located and where output will be written
+#' @param scratch.folder, a character string indicating the path of the scratch folder
+#' @param pathRef, Path of the foldert that contains the fasta file of the genome
+#' @param nameRef, name of the fasta file inside pathRef, the fastq has to be indexed with samtools faidx
+#' @param threads, a number indicating the number of cores to be used from the application
+#' @param GQ, min GQ value to consider (extreme included)
+#' @param minSampGQ, min number of samples with GQ value (extreme included), usually we start with 85\% of the samples
+#' @param NR, min NR value to consider (extreme included), the number of reads covering the SNV region
+#' @param minSampNR, min number of samples with NR value (extreme included), usually we start with 85\% of the samples
+#' @param NV, min NV value to consider (extreme included), the n of reads with the SNV
+#' @param minSampNV, min number of samples with NV value (extreme included)
+#' @param normal_samples, string with names (group names of bam files) of normal samples separated by hash, write NULL if you do not want to use GT filter in normal samples
+#' @param GT_normal, GT value in normal samples to consider, type "NO" if you do not want to use this filter, else e.g. you might use 0/0
+#' @param minSampGT_normal, min number of normal samples with GT value
+#' @param tumoral_samples, string with names (group names of bam files) of tumoral samples separated by &, write NULL if you do not want to use GT filter in normal samples
+#' @param GT_tumoral, GT value in tumoral samples to consider, type "NO" if you do not want to use this filter. Type e.g. 0/0 if you do not want to consider this genotype.
+#' @param minSampGT_tumoral, min number of tumoral samples in which the GT value is NOT present
+#' @param stringent_filter, To enable the filter (it keeps only the variants with "PASS" value or the variants that have only the "alleleBias" value) use 1 or 0 to disable it
+#' @param annotation, hg19 and mm10 are actually available for the annotation of the detected SNVs
+#' @author Riccardo Panero, riccardo.panero[at]gmail[dot]com, Bioinformatics and Genomics unit, University of Torino Italy
+ 
+#' @examples
+#' \dontrun{
+#'     #running platypus with some threshold provided by sottoriva analysis
+#'   platypus(group="docker", data.folder=getwd(), scratch.folder="/scratch/users/rcaloger", 
+#'   pathRef="/archive/home/rcaloger/hg19_exome", 
+#'   nameRef="hg19_clean.fasta", threads=96,
+#'   GQ=10, minSampGQ=2, NR=10, minSampNR=2, NV=3, minSampNV=1, normal_samples="475blood", GT_normal="0/0", 
+#'   minSampGT_normal=1, tumoral_samples="1864p1#1864p22", GT_tumoral="0/0", minSampGT_tumoral=1, stringent_filter=0, annotation="mm10")
+#' }
+
+#' @export
+
+platypus <- function(group=c("sudo","docker"), data.folder=getwd(), scratch.folder, pathRef, nameRef, threads,
+                    GQ, minSampGQ, NR, minSampNR, NV, minSampNV, normal_samples, GT_normal, 
+                    minSampGT_normal, tumoral_samples, GT_tumoral, minSampGT_tumoral, stringent_filter=0, annotation=c("hg19","mm10")){
+  
+  pathPlatypus="/bin/Platypus_0.8.1" 
+  pathHtslib="/bin/htslib-1.3.2" 
+  #running time 1
+  ptm <- proc.time()
+  #running time 1
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    return()
+  }
+  
+  #storing the position of the home folder  
+  home <- getwd()
+  #running time 1
+  ptm <- proc.time()
+  #setting the data.folder as working folder
+  if (!file.exists(data.folder)){
+    cat(paste("\nIt seems that the ",data.folder, " folder does not exist\n"))
+    return(2)
+  }
+  #creating a tmp folder in scratch
+  tmp.folder <- gsub(":","-",gsub(" ","-",date()))
+  scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
+  writeLines(scrat_tmp.folder,paste(data.folder,"/tempFolderID", sep=""))
+  cat("\ncreating a folder in scratch folder\n")
+  dir.create(file.path(scrat_tmp.folder))
+  if(length(dir(data.folder)[grep("run.info",dir(data.folder))]) == 0){
+    system(paste("touch ", scrat_tmp.folder,"/run.info",sep=""))
+  }else{
+    system(paste("mv run.info ", scrat_tmp.folder),sep="")
+  }
+  
+  #getting in the tmp folder in scratch folder
+  setwd(data.folder)
+  
+  #executing the docker job
+  if(group=="sudo"){
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":", data.folder, " -v ", scrat_tmp.folder, ":",  scrat_tmp.folder, " -v ", pathRef, ":", pathRef, " -d docker.io/repbioinfo/platypus.2017.01 python /bin/platypus.py ",
+                    data.folder, " ", pathRef, " ", nameRef, " ", data.folder, " ", pathPlatypus, " ", threads, " ", pathHtslib, " ", pathPlatypus, " ", scrat_tmp.folder, " ", 
+                    GQ, " ",  minSampGQ, " ",  NR, " ",  minSampNR, " ",  NV, " ",  minSampNV, " ",  normal_samples, " ",  GT_normal, " ",  minSampGT_normal, " ",  tumoral_samples, " ",  GT_tumoral, " ",  minSampGT_tumoral, " ",  stringent_filter, " ", annotation, sep="")
+    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/platypus.2017.01", params=params)
+  }else{
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":", data.folder, " -v ", scrat_tmp.folder, ":",  scrat_tmp.folder, " -v ", pathRef, ":", pathRef, " -d docker.io/repbioinfo/platypus.2017.01 python /bin/platypus.py ",
+                    data.folder, " ", pathRef, " ", nameRef, " ", data.folder, " ", pathPlatypus, " ", threads, " ", pathHtslib, " ", pathPlatypus, " ", scrat_tmp.folder, " ",
+                    GQ, " ",  minSampGQ, " ",  NR, " ",  minSampNR, " ",  NV, " ",  minSampNV, " ",  normal_samples, " ",  GT_normal, " ",  minSampGT_normal, " ",  tumoral_samples, " ",  GT_tumoral, " ",  minSampGT_tumoral, " ",  stringent_filter," ",annotation, sep="")
+    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/platypus.2017.01", params=params)
+    print(paste("docker run --privileged=true ",params, sep=""))
+  }
+
+  
+      setwd(scrat_tmp.folder)
+      cat("\n\nRemoving the temporary file ....\n")
+      system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
+      system(paste("mv platypus.vcf ", data.folder, sep = ""))
+      system(paste("mv run.info ", data.folder, sep = ""))
+      system(paste("mv platypus_filtered_annotated.txt ", data.folder, sep = ""))
+      system(paste("mv single_variants.vcf ", data.folder, sep = ""))
+      system(paste("mv multiple_variants.vcf ", data.folder, sep = ""))
+      system(paste("mv platypus_filter_annotation.out ", data.folder, sep = ""))
+
+      setwd(data.folder)
+      #running time 2
+      ptm <- proc.time() - ptm
+      dir <- dir(scratch.folder)
+      dir <- dir[grep("run.info",dir)]
+      if(length(dir)>0){
+        con <- file("run.info", "r")
+        tmp.run <- readLines(con)
+        close(con)
+        tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
+        tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+        tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+        writeLines(tmp.run,"run.info")
+      }else{
+        tmp.run <- NULL
+        tmp.run[1] <- paste("run time mins ",ptm[1]/60, sep="")
+        tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+        tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+        writeLines(tmp.run,"run.info")
+      }
+  
+      container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
+      system(paste("docker logs ", substr(container.id,1,12), " &> ", substr(container.id,1,12),".log", sep=""))
+      system(paste("docker rm ", container.id, sep=""))
+      system("rm -fR dockerID")
+      system("rm  -fR tempFolderID")
+      setwd(home)
+      
+}
+  

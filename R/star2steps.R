@@ -1,5 +1,5 @@
 #' @title Running Star two steps for variant calls
-#' @description This function executes the two steps STAR as sugested by best practice GATK for calling varinats on RNAseq data only PE data are accepted
+#' @description This function executes the two steps STAR as sugested by best practice GATK for calling variants on RNAseq data only PE data are accepted
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param fastq.folder, a character string indicating where gzip fastq files are located
@@ -8,7 +8,7 @@
 #' @param groupid, a character string to be inserted in the bam as identifier for the sample
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param opossum.preprocessing, a boolean TRUE or FALSE to use opossum for RNAseq data preprocessing https://wellcomeopenresearch.org/articles/2-6/v1
-#' @author Raffaele Calogero
+#' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 #'
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
 #' @examples
@@ -72,59 +72,59 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
   #Trimmed fastq  linking fpr docker
   fastq <- sub(".gz$", "", dir)
   cat("\nsetting as working dir the scratch folder and running  docker container\n")
+  
+  
   if(group=="sudo"){
-      system("sudo docker pull docker.io/rcaloger/star25.1")
+  #    system("sudo docker pull docker.io/repbioinfo/star251.2017.01")
       if(opossum.preprocessing){
-          system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star_opossum.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
+        params <- paste("--cidfile ",data.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/2step_star_opossum.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep="")
+        resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/star251.2017.01", params=params)
+        
+#        system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star_opossum.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
       }else{
-        system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
+        params <- paste("--cidfile ",data.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep="")
+        resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/star251.2017.01", params=params)
+        
+#        system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
       }
    }else{
-        system("docker pull docker.io/rcaloger/star25.1")
+#        system("docker pull docker.io/repbioinfo/star251.2017.01")
         if(opossum.preprocessing){
-          system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star_opossum.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
+            params <- paste("--cidfile ",data.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/2step_star_opossum.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep="")
+            resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/star251.2017.01", params=params)
+          
+#          system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star_opossum.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
         }else{
-          system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
+           params <- paste("--cidfile ",data.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep="")
+           resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/star251.2017.01", params=params)
+          
+#          system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
         }
    }
-
-
-
-  out <- "xxxx"
-  #waiting for the end of the container work
-  while(out != "out.info"){
-    Sys.sleep(10)
-    cat(".")
-    out.tmp <- dir(file.path(scratch.folder, tmp.folder))
-    out.tmp <- out.tmp[grep("out.info",out.tmp)]
-
-    if(length(out.tmp)>0){
-      out <- "out.info"
+  if(resultRun=="false"){
+    out <- "out.info"
+    #system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+    con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
+    tmp <- readLines(con)
+    close(con)
+    for(i in tmp){
+      i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
+      system(i)
     }
+    #running time 2
+    ptm <- proc.time() - ptm
+    con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
+    tmp.run <- readLines(con)
+    close(con)
+    tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+    writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
+    #running time 2
+    #removing temporary folder
+    
+    cat("\n\nRemoving the rsemStar temporary file ....\n")
+    #  system(paste("rm -R ",scrat_tmp.folder))
   }
-
-  #system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-  con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
-  tmp <- readLines(con)
-  close(con)
-  for(i in tmp){
-    i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
-    system(i)
-  }
-  #running time 2
-  ptm <- proc.time() - ptm
-  con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
-  tmp.run <- readLines(con)
-  close(con)
-  tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
-  tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-  tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
-  writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
-  #running time 2
-  #removing temporary folder
-
-  cat("\n\nRemoving the rsemStar temporary file ....\n")
-#  system(paste("rm -R ",scrat_tmp.folder))
-
 }
 

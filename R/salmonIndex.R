@@ -2,7 +2,7 @@
 #' @description This function executes the Salmon docker that produces as output a transcripts index file.
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param index.folder, a character string indicating the folder where transcriptime index will be created.
-#' @param ensembl.ensembl.urltranscriptome, a character string indicating the URL from ENSEMBL ftp for the transcripts fasta file of interest
+#' @param ensembl.urltranscriptome, a character string indicating the URL from ENSEMBL ftp for the transcripts fasta file of interest
 #' @param ensembl.urlgtf, a character string indicating the URL from ENSEMBL ftp for the GTF for genome of interest
 #' @param k, a number indicating the k-mers length, 31 eems to work well for reads of 75bp or longer, but you might consider a smaller k if dealing with shorter reads.
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit University of Torino Italy

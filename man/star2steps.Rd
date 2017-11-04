@@ -27,7 +27,7 @@ star2steps(group = c("sudo", "docker"), fastq.folder = getwd(),
 three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
 }
 \description{
-This function executes the two steps STAR as sugested by best practice GATK for calling varinats on RNAseq data only PE data are accepted
+This function executes the two steps STAR as sugested by best practice GATK for calling variants on RNAseq data only PE data are accepted
 }
 \examples{
 \dontrun{
@@ -41,5 +41,5 @@ This function executes the two steps STAR as sugested by best practice GATK for 
 }
 }
 \author{
-Raffaele Calogero
+Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 }

@@ -9,6 +9,7 @@ docker.io/repbioinfo/r340.2017.01
 docker.io/repbioinfo/demultiplexing.2017.01
 docker.io/repbioinfo/xenome.2017.01
 docker.io/repbioinfo/ubuntu
+docker.io/repbioinfo/star251.2017.01
 docker.io/rcaloger/casc
 
 

@@ -12,11 +12,11 @@ salmonIndex(group = c("sudo", "docker"), index.folder,
 
 \item{index.folder, }{a character string indicating the folder where transcriptime index will be created.}
 
+\item{ensembl.urltranscriptome, }{a character string indicating the URL from ENSEMBL ftp for the transcripts fasta file of interest}
+
 \item{ensembl.urlgtf, }{a character string indicating the URL from ENSEMBL ftp for the GTF for genome of interest}
 
 \item{k, }{a number indicating the k-mers length, 31 eems to work well for reads of 75bp or longer, but you might consider a smaller k if dealing with shorter reads.}
-
-\item{ensembl.ensembl.urltranscriptome, }{a character string indicating the URL from ENSEMBL ftp for the transcripts fasta file of interest}
 }
 \description{
 This function executes the Salmon docker that produces as output a transcripts index file.
