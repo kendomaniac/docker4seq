@@ -1,0 +1,106 @@
+#' @title Running Star to detect chimeric transcripts on paired-end sequences
+#' @description This function executes STAR to detect chimeric transcripts
+#'
+#' @param fastq.folder, a character string indicating where gzip fastq files are located
+#' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
+#' @param genome.folder, a character string indicating the folder where the indexed reference genome for STAR is located.
+#' @param groupid, a character string to be inserted in the bam as identifier for the sample
+#' @param threads, a number indicating the number of cores to be used from the application
+#' @param chimSegmentMin, is a positive value indicating the minimal lenght of the overlap of a read to the chimeric element
+#' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
+#'
+#' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
+#' @examples
+#'\dontrun{
+#'     #downloading fastq files
+#'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
+#'     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
+#'     #running star2step nostrand pe
+#'     starChimeric(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
+#'     genome.folder="/data/scratch/hg38star", threads=8, chimSegmentMin=20)
+#'
+#' }
+#' @export
+starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, threads=1, chimSegmentMin=20){
+  setwd(fastq.folder)
+  #running time 1
+  ptm <- proc.time()
+  #running time 1
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    return()
+  }
+
+  tmp.folder <- gsub(":","-",gsub(" ","-",date()))
+  scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
+  cat("\ncreating a folder in scratch folder\n")
+  dir.create(file.path(scratch.folder, tmp.folder))
+  dir.create(file.path(scratch.folder, tmp.folder,"/tmp"))
+  dir <- dir(path=fastq.folder)
+  dir.info <- dir[which(dir=="run.info")]
+  if(length(dir.info)>0){
+    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+    system(paste("cp ",fastq.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
+
+  }
+  #moving run.inf in scratch
+  if(length(dir(fastq.folder)[grep("run.info",dir(fastq.folder))]) == 0){
+    system(paste("touch ", scrat_tmp.folder,"/run.info",sep=""))
+  }else{
+    system(paste("mv run.info ", scrat_tmp.folder),sep="")
+  }
+  
+  dir <- dir[grep(".fastq.gz", dir)]
+  dir.trim <- dir[grep("trimmed", dir)]
+  cat("\ncopying \n")
+  if(length(dir)==0){
+    cat(paste("It seems that in ", fastq.folder, "there are not fastq.gz files"))
+    return(1)
+  }else if(length(dir.trim)>0){
+    dir <- dir.trim
+    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+    for(i in dir){
+      system(paste("cp ",fastq.folder,"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
+    }
+    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+  }else if(length(dir)>2){
+    cat(paste("It seems that in ", fastq.folder, "there are more than two fastq.gz files"))
+    return(2)
+  }else{
+    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+    for(i in dir){
+      system(paste("cp ",fastq.folder,"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
+    }
+    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+  }
+  
+
+  
+  if(group=="sudo"){
+         params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/fastq.folder -v ",scrat_tmp.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/star_chimeric_2.sh ",chimSegmentMin," ", threads," ", dir[1]," ", dir[2], sep="")
+        resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/star251.2017.01", params=params)
+   }else{
+     params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/fastq.folder -v ",scrat_tmp.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/star_chimeric_2.sh ",chimSegmentMin," ", threads," ", dir[1]," ", dir[2], sep="")
+     resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/star251.2017.01", params=params)
+  }
+
+    system(paste("mv ", scrat_tmp.folder,"/run.info ",fastq.folder, sep=""))
+    system(paste("mv ", scrat_tmp.folder,"/Chimeric.out.sam ",fastq.folder, sep=""))
+    system(paste("mv ", scrat_tmp.folder,"/Chimeric.out.junction ",fastq.folder, sep=""))
+    #running time 2
+    ptm <- proc.time() - ptm
+    con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
+    tmp.run <- readLines(con)
+    close(con)
+    tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+    writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
+    #running time 2
+    #removing temporary folder
+    
+    cat("\n\nRemoving the rsemStar temporary file ....\n")
+    #  system(paste("rm -R ",scrat_tmp.folder))
+
+}

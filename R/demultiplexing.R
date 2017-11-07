@@ -17,13 +17,14 @@
 #' }
 #' @export
 demultiplexing <- function(group=c("sudo","docker"),  data.folder, scratch.folder, threads=8){
-
+  
   #########check scratch folder exist###########
   if (!file.exists(data.folder)){
     cat(paste("\nIt seems that the ",data.folder, "folder does not exist.\n"))
     return(1)
   }
   #############################################
+  setwd(data.folder)
   tmp <- strsplit(data.folder, "/")
   tmp <- unlist(tmp)
   main.folder <- paste(tmp[(1:length(tmp)-1)], collapse="/")
@@ -61,32 +62,31 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, scratch.folde
 	  resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/demultiplexing.2017.01", params=params)
 	}
 
-  Data/Intensities/BaseCalls/
+     #running time 2
+    system(paste("mv ",  scrat_tmp.folder,"/",illumina.folder,"/Data/Intensities/BaseCalls/*.fastq.gz ", main.folder, sep=""))
+    system(paste("mv ",  scrat_tmp.folder,"/",illumina.folder,"/Data/Intensities/BaseCalls/Reports/html ", main.folder, sep=""))
+    system(paste("mv ",  scrat_tmp.folder,"/",illumina.folder,"/Data/Intensities/BaseCalls/Stats ", main.folder, sep=""))
   
-  #running time 2
-  system(paste("mv ",  scrat_tmp.folder,"/",illumina.folder,"/Data/Intensities/BaseCalls/*.fastq.gz ", main.folder, sep=""))
-  system(paste("mv ",  scrat_tmp.folder,"/",illumina.folder,"/Data/Intensities/BaseCalls/Reports/html ", main.folder, sep=""))
-  system(paste("mv ",  scrat_tmp.folder,"/",illumina.folder,"/Data/Intensities/BaseCalls/Stats ", main.folder, sep=""))
-  
-  system(paste("mv ", scrat_tmp.folder,"/run.info ",main.folder, sep=""))
-  ptm <- proc.time() - ptm
-  con <- file(paste(main.folder,"run.info", sep="/"), "r")
-  tmp.run <- readLines(con)
-  close(con)
+    system(paste("mv ", scrat_tmp.folder,"/run.info ",main.folder, sep=""))
+    ptm <- proc.time() - ptm
+    con <- file(paste(main.folder,"run.info", sep="/"), "r")
+    tmp.run <- readLines(con)
+    close(con)
 
-  tmp.run <- NULL
-  tmp.run[length(tmp.run)+1] <- paste("demultiplexing user run time mins ",ptm[1]/60, sep="")
-  tmp.run[length(tmp.run)+1] <- paste("demultiplexing system run time mins ",ptm[2]/60, sep="")
-  tmp.run[length(tmp.run)+1] <- paste("demultiplexing elapsed run time mins ",ptm[3]/60, sep="")
-  writeLines(tmp.run, paste(main.folder,"run.info", sep="/"))
+    tmp.run <- NULL
+    tmp.run[length(tmp.run)+1] <- paste("demultiplexing user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("demultiplexing system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("demultiplexing elapsed run time mins ",ptm[3]/60, sep="")
+    writeLines(tmp.run, paste(main.folder,"run.info", sep="/"))
 
-  #saving log and removing docker container
-  container.id <- readLines(paste(main.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),"_demultiplexing.log", sep=""))
-  system(paste("docker rm ", container.id, sep=""))
+    #saving log and removing docker container
+    container.id <- readLines(paste(main.folder,"/dockerID", sep=""), warn = FALSE)
+    system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),"_demultiplexing.log", sep=""))
+    system(paste("docker rm ", container.id, sep=""))
 
-  #running time 2
-  system(paste("rm ",main.folder,"/dockerID", sep=""))
-  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",main.folder, sep=""))
+    #running time 2
+    system(paste("rm ",main.folder,"/dockerID", sep=""))
+    system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",main.folder, sep=""))
+
 }
 
