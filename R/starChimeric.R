@@ -65,6 +65,7 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
       system(paste("cp ",fastq.folder,"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
     }
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+    system(paste("gzip -d ",scratch.folder,"/",tmp.folder,"/*.gz",sep=""))
   }else if(length(dir)>2){
     cat(paste("It seems that in ", fastq.folder, "there are more than two fastq.gz files"))
     return(2)
