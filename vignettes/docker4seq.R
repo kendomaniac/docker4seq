@@ -13,6 +13,11 @@ knitr::opts_chunk$set(echo = TRUE)
 #  docker.io/rcaloger/r340.2017.01
 
 ## ----  echo=TRUE, eval=FALSE---------------------------------------------
+#  demultiplexing(group="docker",
+#        data.folder="/home/calogero/Documents/data/lollini/3a_run/170712_NB501050_0097_AH3FGNBGX3",
+#        scratch.folder="/data/scratch", threads=24)
+
+## ----  echo=TRUE, eval=FALSE---------------------------------------------
 #  rsemstarIndex(group="docker",genome.folder="/data/scratch/hg38star",
 #  ensembl.urlgenome="ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz",
 #  ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh38.87.gtf.gz")

@@ -61,10 +61,13 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, scratch.folde
 	  resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/demultiplexing.2017.01", params=params)
 	}
 
-  
+  Data/Intensities/BaseCalls/
   
   #running time 2
-  system(paste("mv ",  scrat_tmp.folder,"/Data/Intensities/BaseCalls/*.fastq.gz ", main.folder, sep=""))
+  system(paste("mv ",  scrat_tmp.folder,"/",illumina.folder,"/Data/Intensities/BaseCalls/*.fastq.gz ", main.folder, sep=""))
+  system(paste("mv ",  scrat_tmp.folder,"/",illumina.folder,"/Data/Intensities/BaseCalls/Reports/html ", main.folder, sep=""))
+  system(paste("mv ",  scrat_tmp.folder,"/",illumina.folder,"/Data/Intensities/BaseCalls/Stats ", main.folder, sep=""))
+  
   system(paste("mv ", scrat_tmp.folder,"/run.info ",main.folder, sep=""))
   ptm <- proc.time() - ptm
   con <- file(paste(main.folder,"run.info", sep="/"), "r")
@@ -79,7 +82,7 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, scratch.folde
 
   #saving log and removing docker container
   container.id <- readLines(paste(main.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+  system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),"_demultiplexing.log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
 
   #running time 2
