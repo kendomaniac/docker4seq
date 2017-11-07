@@ -2,6 +2,7 @@
 #' @description This function executes the Illumina bcl2fastq program
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param data.folder, a character string indicating the Illumina folder where the Samplesheet.csv is located, and example of Samplesheet.cvs is in inst/examples folder
+#' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @author Raffaele Calogero
 #'
@@ -11,11 +12,18 @@
 #'     #running rsemstar index for human
 #'     demultiplexing(group="docker",
 #'     data.folder="/home/calogero/Documents/data/lollini/3a_run/170712_NB501050_0097_AH3FGNBGX3",
-#'     threads=24)
+#'     scratch.folder="/data/scratch", threads=24)
 #'
 #' }
 #' @export
-demultiplexing <- function(group=c("sudo","docker"),  data.folder, threads=8){
+demultiplexing <- function(group=c("sudo","docker"),  data.folder, scratch.folder, threads=8){
+
+  #########check scratch folder exist###########
+  if (!file.exists(data.folder)){
+    cat(paste("\nIt seems that the ",data.folder, "folder does not exist.\n"))
+    return(1)
+  }
+  #############################################
   tmp <- strsplit(data.folder, "/")
   tmp <- unlist(tmp)
   main.folder <- paste(tmp[(1:length(tmp)-1)], collapse="/")
@@ -28,34 +36,36 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, threads=8){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
-  #########check scratch folder exist###########
-  if (!file.exists(data.folder)){
-    cat(paste("\nIt seems that the ",data.folder, "folder does not exist.\n"))
-    return(1)
+  
+  #creating a tmp folder in scratch
+  tmp.folder <- gsub(":","-",gsub(" ","-",date()))
+  scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
+  writeLines(scrat_tmp.folder,paste(data.folder,"/tempFolderID", sep=""))
+  cat("\ncreating a folder in scratch folder\n")
+  dir.create(file.path(scrat_tmp.folder))
+  if(length(dir(data.folder)[grep("run.info",dir(data.folder))]) == 0){
+    system(paste("touch ", scrat_tmp.folder,"/run.info",sep=""))
+  }else{
+    system(paste("mv run.info ", scrat_tmp.folder),sep="")
   }
-  #############################################
-  cat("\nsetting as working dir the genome folder and running bwa docker container\n")
+  
+  #getting in the tmp folder in scratch folder
+  setwd(main.folder)
+  system(paste("cp -R ", data.folder, " ", scrat_tmp.folder, sep=""))
 
 	if(group=="sudo"){
-	      params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/repbioinfo/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
-	      runDocker(group="sudo",container="docker.io/repbioinfo/demultiplexing.2017.1", params=params)
+	      params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data.folder -v ", scrat_tmp.folder,":/data/scratch -d docker.io/repbioinfo/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
+	      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/demultiplexing.2017.01", params=params)
 	}else{
-	  params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/repbioinfo/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
-	  runDocker(group="docker",container="docker.io/repbioinfo/demultiplexing.2017.01", params=params)
+	  params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data.folder -v ", scrat_tmp.folder,":/data/scratch -d docker.io/repbioinfo/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
+	  resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/demultiplexing.2017.01", params=params)
 	}
-  out <- "xxxx"
-  #waiting for the end of the container work
-  while(out != "out.info"){
-    Sys.sleep(10)
-    cat(".")
-    out.tmp <- dir(main.folder)
-    out.tmp <- out.tmp[grep("out.info",out.tmp)]
-    if(length(out.tmp)>0){
-      out <- "out.info"
-    }
-  }
+
+  
+  
   #running time 2
-  system(paste("mv ",  data.folder,"/Data/Intensities/BaseCalls/*.fastq.gz ",main.folder, sep=""))
+  system(paste("mv ",  scrat_tmp.folder,"/Data/Intensities/BaseCalls/*.fastq.gz ", main.folder, sep=""))
+  system(paste("mv ", scrat_tmp.folder,"/run.info ",main.folder, sep=""))
   ptm <- proc.time() - ptm
   con <- file(paste(main.folder,"run.info", sep="/"), "r")
   tmp.run <- readLines(con)
