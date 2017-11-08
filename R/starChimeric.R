@@ -49,7 +49,7 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
   if(length(dir(fastq.folder)[grep("run.info",dir(fastq.folder))]) == 0){
     system(paste("touch ", scrat_tmp.folder,"/run.info",sep=""))
   }else{
-    system(paste("mv run.info ", scrat_tmp.folder),sep="")
+    system(paste("mv run.info ", scrat_tmp.folder,sep=""))
   }
   
   dir <- dir[grep(".fastq.gz", dir)]
