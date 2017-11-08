@@ -69,7 +69,7 @@ This function executes Platypus: A Haplotype-Based Variant Caller For Next Gener
         minSampGT_normal=1, tumoral_samples="5275001-LSG1#5275001-LSGIII", 
         GT_tumoral="0/0", minSampGT_tumoral=1, stringent_filter=0, annotation="hg19")
  platypus(group="docker", data.folder="/archive/home/rcaloger/data/platypus_tests/mm10ENSEMBL", 
-        scratch.folder="/scratch/users/rcaloger/", pathRef="/archive/home/rcaloger/hg19star", 
+        scratch.folder="/scratch/users/rcaloger/", pathRef="/archive/home/rcaloger/mm10star", 
         nameRef="genome.fa", threads=96, GQ=10, minSampGQ=2, NR=10, minSampNR=2, NV=3, 
         minSampNV=1, normal_samples="MAMBO43", GT_normal="0/0", 
         minSampGT_normal=1, tumoral_samples="MAMBO43TRT#MAMBO43TRNT", GT_tumoral="0/0", 

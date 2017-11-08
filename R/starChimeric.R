@@ -87,6 +87,13 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
     system(paste("mv ", scrat_tmp.folder,"/run.info ",fastq.folder, sep=""))
     system(paste("mv ", scrat_tmp.folder,"/Chimeric.out.sam ",fastq.folder, sep=""))
     system(paste("mv ", scrat_tmp.folder,"/Chimeric.out.junction ",fastq.folder, sep=""))
+    system(paste("mv ", scrat_tmp.folder,"/Unmapped.out.mate1 ",fastq.folder, sep=""))
+    system(paste("mv ", scrat_tmp.folder,"/Unmapped.out.mate2 ",fastq.folder, sep=""))
+    system(paste("mv ", scrat_tmp.folder,"/Aligned.sortedByCoord.out.bam ",fastq.folder, sep=""))
+    system(paste("mv ", scrat_tmp.folder,"/Log.out ",fastq.folder, sep=""))
+    system(paste("mv ", scrat_tmp.folder,"/Log.final.out ",fastq.folder, sep=""))
+    system(paste("mv ", scrat_tmp.folder,"/Log.progress.out ",fastq.folder, sep=""))
+    system(paste("mv ", scrat_tmp.folder,"/SJ.out.tab ",fastq.folder, sep=""))
     #running time 2
     ptm <- proc.time() - ptm
     con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
