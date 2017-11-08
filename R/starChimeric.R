@@ -60,7 +60,6 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
     return(1)
   }else if(length(dir.trim)>0){
     dir <- dir.trim
-    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
     for(i in dir){
       system(paste("cp ",fastq.folder,"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
     }
@@ -70,14 +69,12 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
     cat(paste("It seems that in ", fastq.folder, "there are more than two fastq.gz files"))
     return(2)
   }else{
-    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
     for(i in dir){
       system(paste("cp ",fastq.folder,"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
     }
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+    system(paste("gzip -d ",scratch.folder,"/",tmp.folder,"/*.gz",sep=""))
   }
-  
-
   
   if(group=="sudo"){
          params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/fastq.folder -v ",scrat_tmp.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/star_chimeric_2.sh ",chimSegmentMin," ", threads," ", sub(".gz$", "", dir[1])," ", sub(".gz$", "", dir[2]), sep="")
