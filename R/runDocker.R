@@ -54,6 +54,29 @@ runDocker <- function(group="docker",container=NULL, params=NULL){
   }
   cat(".\n\n")
   ## to check the Docker container status
+  dockerExit <- system("docker ps -a", intern= T)
+  dockerExit <- dockerExit[grep(dockerid,dockerExit)]
+  cat("\n",dockerExit,"\n")
+
+  dockerExit.tmp <- unlist(strsplit(dockerExit, "ago"))
+  if(length(grep("Exited", dockerExit.tmp))>0){
+    dockerExit.tmp <- dockerExit.tmp[grep("Exited", dockerExit.tmp)]
+    dockerExit.tmp <- gsub("  ", " ", dockerExit.tmp)
+    dockerExit.tmp <- unlist(strsplit(dockerExit.tmp, " "))
+    dockerExit.tmp <- dockerExit.tmp[grep("Exited", dockerExit.tmp)+1]
+    dockerExit.tmp <- sub('\\(', "", dockerExit.tmp)
+    dockerExit.tmp <- sub('\\)', "", dockerExit.tmp)
+    if(as.numeric(dockerExit.tmp)!=0){
+      system(paste("docker logs ", substr(dockerid,1,12), " &> ", substr(dockerid,1,12),"_error.log", sep=""))
+      cat(paste("\nDocker container ", substr(dockerid,1,12), " had exit different from 0\n", sep=""))
+      cat("\nExecution is interrupted\n")
+      cat(paste("Please send to raffaele.calogero@unito.it this error: Docker failed exit 0,\n
+                the description of the function you were using and the following error log file,\n
+                which is saved in your working folder:\n", substr(dockerid,1,12),"_error.log\n", sep=""))
+      return("Docker failed exit 0")
+    }
+  }
+  
   return(dockerStatus)
   
 }
