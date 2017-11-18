@@ -35,7 +35,7 @@ This function executes the docker container skewer1 to remove sequencing adapter
 \dontrun{
     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
-    skewer(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
+    skewer(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
     adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
     adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
     seq.type="pe", threads=10,  min.length=40)

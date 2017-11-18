@@ -38,24 +38,16 @@ sampleSize <- function(group=c("sudo","docker"), filename, power=0.80, FDR=0.1, 
 
   if(group=="sudo"){
     params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.sampleSize.R ", filename, " ", power, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
-    runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
+    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
   }else{
     params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.sampleSize.R ", filename, " ", power, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
-    runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
+    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
   }
 
-  out <- "xxxx"
-  #waiting for the end of the container work
-  while(out != "anno.info"){
-    Sys.sleep(10)
-    cat(".")
-    out.tmp <- dir(file.path(output.folder))
-    out.tmp <- out.tmp[grep("anno.info",out.tmp)]
-    if(length(out.tmp)>0){
-      out <- "anno.info"
-    }
+  if(resultRun=="false"){
+    cat("\nSample size analysis is finished\n")
   }
-
+  
   home <- getwd()
   setwd(output.folder)
 
@@ -78,9 +70,15 @@ sampleSize <- function(group=c("sudo","docker"), filename, power=0.80, FDR=0.1, 
     tmp.run[length(tmp.run)+1] <- paste("sampleSize elapsed run time mins ",ptm[3]/60, sep="")
   }
   writeLines(tmp.run,"run.info")
-  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",output.folder, sep=""))
+  #saving log and removing docker container
+  container.id <- readLines(paste(output.folder,"/dockerID", sep=""), warn = FALSE)
+  #  system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+  system(paste("docker logs ", container.id, " >& ","sampleSize_",substr(container.id,1,12),".log", sep=""))
+  # system(paste("docker rm ", container.id, sep=""))
   system("rm -fR anno.info")
   system("rm -fR dockerID")
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",output.folder, sep=""))
+
 
   setwd(home)
 }
