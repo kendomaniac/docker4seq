@@ -3,14 +3,20 @@
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param data.folder, a character string indicating the folder where input data are located and where output will be written
+#' @param k-mer, an integer that define the size of the substrings (k-mer) encoded in the hash table (this must be a value between 1 and 32)
+#' @param hash_size, a prime number indicating the size of the hash table. Increasing this value reduces the execution time but increases the memory utilization. Ideally, this value should be close to the number of different k-mers stored in the hash table;
+#' @param collision_list_size, an integer that define the maximum number of different k-mers that the tool might need to store in the hash table.
+#' @threshold (tau), this value is the threshold used to select significant k-mers. We suggest to set tau equal to 1
+#' @spike, a character string indicating the path of the spike in file (if you don't want the spike in research, please set this parameter as 'null')
+#' @input.files: a character string indicating the path of the input files
 #' @author Beccuti Marco, Greta Romano, Francesca Cordero, Raffaele Calogero, beccuti@di.unito.it, Computer Science Department Univ. of Turin.
 #' 
 #' @examples
-#' \dontrun{
-#'     #running skeleton
-#'     skeleton(group="docker", scratch.folder="/Users/raffaelecalogero/Desktop/scratch", 
-#'     data.folder=getwd())
-#' }
+#' library(docker4seq)
+#' downloadContainers(group="docker","docker.io/beccuti/hashclone")
+#' hashclone(group="docker",scratch.folder="/home/scratch_folder", data.folder="/home/output_folder", kmer=26, hash=10999997, coll=10999997, threashold=1, spike="/home/spike_in.fa", input.files=c('/home/input_file1.fastq', '/home/input_file2.fastq'))	
+#'
+#'
 #'
 #' @export
 hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getwd(), kmer, hash,  coll, threashold=0.1, spike="null", input.files){
