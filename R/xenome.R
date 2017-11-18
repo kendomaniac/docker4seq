@@ -75,39 +75,22 @@ xenome <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
     if(seq.type=="pe"){
     	if(group=="sudo"){
 		      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",xenome.folder,":/xenome -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome_pe.sh ", threads," ",fastq.folder, sep="")
-    		  runDocker(group="sudo",container="docker.io/repbioinfo/xenome.2017.01", params=params)
+		      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/xenome.2017.01", params=params)
 	    }else{
 	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",xenome.folder,":/xenome -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome_pe.sh ", threads," ",fastq.folder, sep="")
-	      runDocker(group="docker",container="docker.io/repbioinfo/xenome.2017.01", params=params)
+	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/xenome.2017.01", params=params)
 	    }
 	  }else if(seq.type=="se"){
 	    if(group=="sudo"){
 	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",xenome.folder,":/xenome -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome_se.sh ", threads," ",fastq.folder, sep="")
-	      runDocker(group="sudo",container="docker.io/repbioinfo/xenome.2017.01", params=params)
+	      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/xenome.2017.01", params=params)
 		  }else{
 		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",xenome.folder,":/xenome -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome_se.sh ", threads," ",fastq.folder, sep="")
-		    runDocker(group="docker",container="docker.io/repbioinfo/xenome.2017.01", params=params)
+		    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/xenome.2017.01", params=params)
 		  }
 	  }
-    out <- "xxxx"
-    #waiting for the end of the container work
-    while(out != "out.info"){
-      Sys.sleep(10)
-      cat(".")
-      out.tmp <- dir(file.path(scratch.folder, tmp.folder))
-      out.tmp <- out.tmp[grep("out.info",out.tmp)]
-
-      if(length(out.tmp)>0){
-        out <- "out.info"
-      }
-    }
-    #system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-    con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
-    tmp <- readLines(con)
-    close(con)
-    for(i in tmp){
-      i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
-      system(i)
+    if(resultRun=="false"){
+      system(paste("cp ", docker_fastq.folder, "/* ", fastq.folder, sep=""))
     }
     #running time 2
     ptm <- proc.time() - ptm
@@ -129,7 +112,7 @@ xenome <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
     
     #removing temporary folder
     cat("\n\nRemoving the xenome temporary file ....\n")
-    system(paste("rm -R ",scrat_tmp.folder))
+    system(paste("rm -R ",docker_fastq.folder))
     system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))
     system(paste("rm  -f ",fastq.folder,"/tempFolderID", sep=""))
     

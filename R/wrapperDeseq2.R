@@ -41,22 +41,14 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
 
   if(group=="sudo"){
     params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
-    runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
+    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
   }else{
     params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
-    runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
+    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
   }
 
-  out <- "xxxx"
-  #waiting for the end of the container work
-  while(out != "anno.info"){
-    Sys.sleep(10)
-    cat(".")
-    out.tmp <- dir(file.path(output.folder))
-    out.tmp <- out.tmp[grep("anno.info",out.tmp)]
-    if(length(out.tmp)>0){
-      out <- "anno.info"
-    }
+  if(resultRun=="false"){
+    cat("\nDESeq2 analysis is finished\n")
   }
 
   home <- getwd()

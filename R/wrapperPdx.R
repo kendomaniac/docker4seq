@@ -1,4 +1,4 @@
-#' @title Running PDX data preprocessing
+#' @title Running PDX data preprocessing TO BE REVISED
 #' @description This function executes xenome, to remove mouse data, skewer, to trim adapters, bwa, to map reads to hg19 and to mark duplicates. IMPORTANT to prepare data for mutect v1 analysis it is mandatory to download the hg19 index archive indicated in the example.
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
