@@ -16,7 +16,7 @@
 #'    unzip("test.analysis.zip")
 #'    setwd("test.analysis")
 #'    library(docker4seq)
-#'    sampleSize(filename="_counts.txt", power=0.80, FDR=0.1,
+#'    sampleSize(group="docker", filename="_counts.txt", power=0.80, FDR=0.1,
 #'    genes4dispersion=200, log2fold.change=1)
 #'}
 #' @export
