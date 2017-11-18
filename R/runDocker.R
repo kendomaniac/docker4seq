@@ -73,7 +73,7 @@ runDocker <- function(group="docker",container=NULL, params=NULL){
       cat(paste("Please send to raffaele.calogero@unito.it this error: Docker failed exit 0,\n
                 the description of the function you were using and the following error log file,\n
                 which is saved in your working folder:\n", substr(dockerid,1,12),"_error.log\n", sep=""))
-      return("Docker failed exit 0")
+      return("Docker run failed1")
     }
   }
   

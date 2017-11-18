@@ -2,7 +2,7 @@
 % Please edit documentation in R/hashclone.R
 \name{hashclone}
 \alias{hashclone}
-\title{HashClone running A function to handle a hashclone docker containier}
+\title{HashClone running A function to handle a hashclone docker container}
 \usage{
 hashclone(group = c("sudo", "docker"), scratch.folder,
   data.folder = getwd(), kmer, hash, coll, threashold = 0.1,
