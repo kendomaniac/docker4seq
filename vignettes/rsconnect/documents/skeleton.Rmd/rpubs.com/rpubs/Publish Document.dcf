@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/300960/36479329110e4052b2fd16936e864766
+bundleId: https://api.rpubs.com/api/v1/document/300960/36479329110e4052b2fd16936e864766
+url: http://rpubs.com/rcaloger/300960
+when: 1510993293.93224

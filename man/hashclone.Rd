@@ -14,16 +14,22 @@ hashclone(group = c("sudo", "docker"), scratch.folder,
 \item{scratch.folder, }{a character string indicating the path of the scratch folder}
 
 \item{data.folder, }{a character string indicating the folder where input data are located and where output will be written}
+
+\item{k-mer, }{an integer that define the size of the substrings (k-mer) encoded in the hash table (this must be a value between 1 and 32)}
+
+\item{hash_size, }{a prime number indicating the size of the hash table. Increasing this value reduces the execution time but increases the memory utilization. Ideally, this value should be close to the number of different k-mers stored in the hash table;}
+
+\item{collision_list_size, }{an integer that define the maximum number of different k-mers that the tool might need to store in the hash table.}
 }
 \description{
 This function executes  HashClone algorithm developed to identify the set of clonality markers during the patient follow-up in order to quantify the minimal residual disease.
 }
 \examples{
-\dontrun{
-    #running skeleton
-    skeleton(group="docker", scratch.folder="/Users/raffaelecalogero/Desktop/scratch", 
-    data.folder=getwd())
-}
+library(docker4seq)
+downloadContainers(group="docker","docker.io/beccuti/hashclone")
+hashclone(group="docker",scratch.folder="/home/scratch_folder", data.folder="/home/output_folder", kmer=26, hash=10999997, coll=10999997, threashold=1, spike="/home/spike_in.fa", input.files=c('/home/input_file1.fastq', '/home/input_file2.fastq'))	
+
+
 
 }
 \author{
