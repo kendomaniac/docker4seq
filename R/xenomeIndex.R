@@ -60,11 +60,12 @@ xenomeIndex <- function(group=c("sudo","docker"),xenome.folder=getwd(), hg.urlge
 	tmp.run[length(tmp.run)+1] <- paste("xenome elapsed run time mins ",ptm[3]/60, sep="")
 	writeLines(tmp.run, paste(xenome.folder,"run.info", sep="/"))
   #running time 2
-	system(paste("rm ",xenome.folder,"/out.info",sep=""))
+
 	
 	#saving log and removing docker container
 	container.id <- readLines(paste(xenome.folder,"/dockerID", sep=""), warn = FALSE)
-	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+#	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+	system(paste("docker logs ", container.id, " >& ","xenomeIndex_",substr(container.id,1,12),".log", sep=""))
 	system(paste("docker rm ", container.id, sep=""))
 	system(paste("rm  -f ",xenome.folder,"/dockerID", sep=""))
 	system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",xenome.folder, sep=""))
