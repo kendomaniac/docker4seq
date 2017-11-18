@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrapperPdx.R
 \name{wrapperPdx}
 \alias{wrapperPdx}
-\title{Running PDX data preprocessing}
+\title{Running PDX data preprocessing TO BE REVISED}
 \usage{
 wrapperPdx(group = c("sudo", "docker"), fastq.folder, scratch.folder,
   xenome.folder, seq.type, threads,
