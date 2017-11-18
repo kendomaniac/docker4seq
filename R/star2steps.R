@@ -34,6 +34,7 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
 
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
   scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
+  writeLines(scrat_tmp.folder,paste(fastq.folder,"/tempFolderID", sep=""))
   cat("\ncreating a folder in scratch folder\n")
   dir.create(file.path(scratch.folder, tmp.folder))
   dir.create(file.path(scratch.folder, tmp.folder,"/tmp"))

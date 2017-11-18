@@ -67,40 +67,24 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 #		system("sudo docker pull docker.io/repbioinfo/skewer.2017.01")
 		if(seq.type=="pe"){
 		      params <- paste("--cidfile ",fastq.folder,"/dockerID   -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim2.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep="")
-		      runDocker(group="sudo",container="docker.io/repbioinfo/skewer.2017.01", params=params)
+		      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/skewer.2017.01", params=params)
 		}else{
 			    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim1.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length, sep="")
-		      runDocker(group="sudo",container="docker.io/repbioinfo/skewer.2017.01", params=params)
+			    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/skewer.2017.01", params=params)
 		}
 	}else{
 #		system("docker pull docker.io/repbioinfo/skewer.2017.01")
 		if(seq.type=="pe"){
 		      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim2.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep="")
-		      runDocker(group="docker",container="docker.io/repbioinfo/skewer.2017.01", params=params)
+		      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/skewer.2017.01", params=params)
 		}else{
 			   params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim1.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length , sep="")
-		     runDocker(group="docker",container="docker.io/repbioinfo/skewer.2017.01", params=params)
+			   resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/skewer.2017.01", params=params)
 		}
 	}
-	out <- "xxxx"
-	#waiting for the end of the container work
-	while(out != "out.info"){
-		Sys.sleep(10)
-		cat(".")
-		out.tmp <- dir(file.path(scratch.folder, tmp.folder))
-		out.tmp <- out.tmp[grep("out.info",out.tmp)]
-		if(length(out.tmp)>0){
-			out <- "out.info"
-		}
-	}
-	#moved inside the script!!!
-	#system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-	con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
-	tmp <- readLines(con)
-	close(con)
-	for(i in tmp){
-		i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
-		system(i)
+
+	if(resultRun=="false"){
+	  system(paste("cp ", scrat_tmp.folder, "/* ", fastq.folder, sep=""))
 	}
 	#running time 2
 	ptm <- proc.time() - ptm
@@ -115,7 +99,8 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 
 	#saving log and removing docker container
 	container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
-	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+#	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+	system(paste("docker logs ", container.id, " >& ","skewer_",substr(container.id,1,12),".log", sep=""))
 	system(paste("docker rm ", container.id, sep=""))
 
   #removing temporary folder
@@ -123,7 +108,7 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	system(paste("rm -R ",scrat_tmp.folder))
 	system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
 	system(paste("rm  ",fastq.folder,"/tempFolderID", sep=""))
-	#removing temporary folder
+	
 	system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
 }
 
