@@ -15,7 +15,7 @@
 #' library(docker4seq)
 #' #running salmonCounts
 #' salmonCounts(group="docker", scratch.folder="/scratch/users/rcaloger/", 
-#'         fastq.folder=getwd(), index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R/transcripts_index", 
+#'         fastq.folder=getwd(), index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R", 
 #'         threads=24, seq.type="pe")
 #' }
 #'
