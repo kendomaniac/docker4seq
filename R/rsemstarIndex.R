@@ -46,10 +46,10 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
 
 	if(group=="sudo"){
 	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
-	      runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
 	}else{
 	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
-	      runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
   }
   out <- "xxxx"
   #waiting for the end of the container work
@@ -76,7 +76,7 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
   
   #saving log and removing docker container
   container.id <- readLines(paste(genome.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+  system(paste("docker logs ", container.id, " >& ", "rsemstarIndex_",substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
   
   #running time 2
