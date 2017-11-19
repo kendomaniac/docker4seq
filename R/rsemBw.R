@@ -1,4 +1,4 @@
-#' @title Creating a bigwig using RSEM
+#' @title Creating a bigwig using RSEM NOT FOR STABLE
 #' @description This function executes the docker container rsemstar where RSEM is installed and create a bigwig file for genomic data visualization
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs

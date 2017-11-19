@@ -1,4 +1,4 @@
-#' @title Running realignment and recalibration, GATK
+#' @title Running realignment and recalibration, GATK NOT READY FOR STABLE
 #' @description This function executes the docker container snv.1 where GATK software is used to do INDEL realignment and quality recalibration. This analysis is required only to run mutect1. The bwa index has to be prepared with bwaIndex
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs

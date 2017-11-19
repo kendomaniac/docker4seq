@@ -137,7 +137,7 @@ platypus <- function(group=c("sudo","docker"), data.folder=getwd(), scratch.fold
       }
   
       container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
-      system(paste("docker logs ", substr(container.id,1,12), " &> ", substr(container.id,1,12),".log", sep=""))
+      system(paste("docker logs ", substr(container.id,1,12), " &> ", "platypus_",substr(container.id,1,12),".log", sep=""))
       system(paste("docker rm ", container.id, sep=""))
       system("rm -fR dockerID")
       system("rm  -fR tempFolderID")

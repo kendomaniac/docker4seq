@@ -2,7 +2,7 @@
 % Please edit documentation in R/gatkDna.R
 \name{gatkDNA}
 \alias{gatkDNA}
-\title{Running realignment and recalibration, GATK}
+\title{Running realignment and recalibration, GATK NOT READY FOR STABLE}
 \usage{
 gatkDNA(group = c("sudo", "docker"), bam.folder = getwd(),
   scratch.folder = "/data/scratch", gatk.filename, genome.folder,
