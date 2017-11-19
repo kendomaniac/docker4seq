@@ -35,7 +35,7 @@ salmonAnnotation <- function(group=c("sudo","docker"), fastq.folder, index.folde
       params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/annotate.salmon.R", sep="")
       resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r340.2017.01", params=params)
   }else{
-      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/salmon.2017.01 Rscript /bin/annotate.salmon.R", sep="")
+      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/annotate.salmon.R", sep="")
       resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r340.2017.01", params=params)
   }
   
