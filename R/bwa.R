@@ -103,14 +103,25 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
     }
     #running time 2
     ptm <- proc.time() - ptm
-    con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
-    tmp.run <- readLines(con)
-    close(con)
-    tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
-    writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
-
+    dir <- dir(fastq.folder)
+    dir <- dir[grep("run.info",dir)]
+    if(length(dir)>0){
+      con <- file("run.info", "r")
+      tmp.run <- readLines(con)
+      close(con)
+      tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+      writeLines(tmp.run,"run.info")
+    }else{
+      tmp.run <- NULL
+      tmp.run[1] <- paste("run time mins ",ptm[1]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+      
+      writeLines(tmp.run,"run.info")
+    }
+    
     #saving log and removing docker container
     container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
     system(paste("docker logs ", container.id, " >& ", "bwa_",substr(container.id,1,12),".log", sep=""))
