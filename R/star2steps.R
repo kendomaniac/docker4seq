@@ -23,6 +23,10 @@
 #' }
 #' @export
 star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, groupid, threads=1, opossum.preprocessing=FALSE){
+
+  home <- getwd()
+  setwd(fastq.folder)
+  
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -137,5 +141,6 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
     
  
   }
+  setwd(home)
 }
 

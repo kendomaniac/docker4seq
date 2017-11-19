@@ -41,6 +41,10 @@
 #' }
 #' @export
 chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ctrl.bam, scratch.folder="/data/scratch", genome=c("hg19","hg38","mm9","mm10"), read.size, tool=c("macs","sicer"), macs.min.mfold=10, macs.max.mfold=30, macs.pval="1e-5", sicer.wsize=200, sicer.gsize=c(200,600), sicer.fdr=0.10, tss.distance=0, max.upstream.distance=10000,  remove.duplicates=c("Y","N")){
+
+  home <- getwd()
+  setwd(bam.folder)
+  
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -142,5 +146,6 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
   system(paste("rm  ",bam.folder,"/tempFolderID", sep=""))
 	#removing temporary folder
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",bam.folder, sep=""))
+  setwd(home)
 }
 

@@ -34,6 +34,7 @@ salmonIndex <- function(group=c("sudo","docker"), index.folder, ensembl.urltrans
   }
   #storing the position of the home folder  
   home <- getwd()
+  
   #running time 1
   ptm <- proc.time()
   #setting the data.folder as working folder

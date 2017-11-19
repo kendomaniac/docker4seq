@@ -18,6 +18,10 @@
 #' }
 #' @export
 xenomeIndex <- function(group=c("sudo","docker"),xenome.folder=getwd(), hg.urlgenome=NULL, mm.urlgenome=NULL, threads=8){
+
+  home <- getwd()
+  setwd(xenome.folder)
+  
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -69,5 +73,6 @@ xenomeIndex <- function(group=c("sudo","docker"),xenome.folder=getwd(), hg.urlge
 	system(paste("docker rm ", container.id, sep=""))
 	system(paste("rm  -f ",xenome.folder,"/dockerID", sep=""))
 	system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",xenome.folder, sep=""))
+	setwd(home)
 }
 

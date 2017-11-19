@@ -24,7 +24,10 @@
 #' }
 #' @export
 wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.table, log2fc=1, fdr=0.1, ref.covar="0", type=c("gene","isoform","mirna"), batch=FALSE){
-
+  
+  home <- getwd()
+  setwd(output.folder)
+  
   #running time 1
   ptm <- proc.time()
   #running time 1

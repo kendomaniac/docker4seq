@@ -36,24 +36,16 @@ rsemannoByGtf <- function(group="docker", rsem.folder=getwd(), genome.folder){
 
   if(group=="sudo"){
     params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",rsem.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.rsemannoByGtf.R", sep="")
-    runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
+    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
   }else{
     params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",rsem.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.rsemannoByGtf.R", sep="")
-    runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
+    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
   }
 
-  out <- "xxxx"
-  #waiting for the end of the container work
-  while(out != "anno.info"){
-    Sys.sleep(10)
-    cat(".")
-    out.tmp <- dir(file.path(rsem.folder))
-    out.tmp <- out.tmp[grep("anno.info",out.tmp)]
-    if(length(out.tmp)>0){
-      out <- "anno.info"
-    }
+  if(resultRun=="false"){
+    cat("\nGTF based annotation is finished is finished\n")
   }
-
+  
   #running time 2
   ptm <- proc.time() - ptm
   dir <- dir(rsem.folder)

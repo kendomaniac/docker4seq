@@ -31,6 +31,9 @@ rsemstarUscsIndex <- function(group=c("sudo","docker"), genome.folder=getwd(),
                           uscs.urlgenome=NULL, uscs.gtf=NULL,
                           uscs.urlknownIsoforms=NULL, uscs.urlknownToLocusLink=NULL,
                           threads=1){
+
+  home <- getwd()
+  setwd(genome.folder)
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -85,5 +88,7 @@ rsemstarUscsIndex <- function(group=c("sudo","docker"), genome.folder=getwd(),
   #running time 2
   system(paste("rm ",genome.folder,"/dockerID", sep=""))
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",genome.folder, sep=""))
+  setwd(home)
+  
 }
 

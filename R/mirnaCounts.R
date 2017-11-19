@@ -25,6 +25,10 @@
 #' }
 #' @export
 mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch",mirbase.id=c("hsa", "mmu"), download.status=FALSE, adapter.type=c("ILLUMINA","NEB"),  trimmed.fastq=FALSE){
+
+  home <- getwd()
+  setwd(data.folder)
+  
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -62,25 +66,18 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	cat("\nsetting as working dir the scratch folder and running mirna8 docker container\n")
 	if(group=="sudo"){
 	    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep="")
-	    runDocker(group="sudo",container="docker.io/repbioinfo/mirnaseq.2017.01", params=params)
+	    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/mirnaseq.2017.01", params=params)
 	}else{
 	    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep="")
-	    runDocker(group="docker",container="docker.io/repbioinfo/mirnaseq.2017.01", params=params)
+	    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/mirnaseq.2017.01", params=params)
 	  
 	}
 
-	out <- "xxxx"
-	#waiting for the end of the container work
-  while(out != "out.info"){
-		Sys.sleep(10)
-		cat(".")
-		out.tmp <- dir(scrat_tmp.folder)
-		out.tmp <- out.tmp[grep("out.info",out.tmp)]
 
-		if(length(out.tmp)>0){
-			out <- "out.info"
-		}
-  }
+	if(resultRun=="false"){
+	  cat("\nmirnaCounts analysis is finished\n")
+	}
+	
 #	system(paste("chmod 777 -R", scrat_tmp.folder))
 	con <- file(paste(scrat_tmp.folder,"out.info", sep="/"), "r")
 	tmp <- readLines(con)
@@ -111,5 +108,6 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	system(paste("rm  ",fastq.folder,"/tempFolderID", sep=""))
 	#removing temporary folder
 	system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
+	setwd(home)
 }
 

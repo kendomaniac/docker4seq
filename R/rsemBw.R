@@ -17,6 +17,10 @@
 #' }
 #' @export
 rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="/data/scratch"){
+
+  home <- getwd()
+  setwd(bam.folder)
+  
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -96,6 +100,6 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
    system(paste("rm -R ",scrat_tmp.folder))
    system(paste("rm  -f ",bam.folder,"/dockerID", sep=""))
    system(paste("rm  -f ",bam.folder,"/tempFolderID", sep=""))
-  
+   setwd(home)
 }
 

@@ -23,6 +23,11 @@
 #' }
 #' @export
 bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), threads=1, sample.id){
+
+  
+    home <- getwd()
+    setwd(fastq.folder)
+  
     #running time 1
     ptm <- proc.time()
     #running time 1
@@ -134,5 +139,6 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
     system(paste("rm  -f ",fastq.folder,"/tempFolderID", sep=""))
     
     system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
+    setwd(home)
 }
 

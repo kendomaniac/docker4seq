@@ -17,7 +17,7 @@
 #' }
 #' @export
 demultiplexing <- function(group=c("sudo","docker"),  data.folder, scratch.folder, threads=8){
-  
+  home <- getwd()
   #########check scratch folder exist###########
   if (!file.exists(data.folder)){
     cat(paste("\nIt seems that the ",data.folder, "folder does not exist.\n"))
@@ -87,6 +87,6 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, scratch.folde
     #running time 2
     system(paste("rm ",main.folder,"/dockerID", sep=""))
     system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",main.folder, sep=""))
-
+    setwd(home)
 }
 

@@ -21,6 +21,8 @@
 #' }
 #' @export
 starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, threads=1, chimSegmentMin=20){
+
+  home <- getwd()
   setwd(fastq.folder)
   #running time 1
   ptm <- proc.time()
@@ -115,6 +117,6 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
     system(paste("rm -R ",scrat_tmp.folder))
     system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))
     system(paste("rm  -f ",fastq.folder,"/tempFolderID", sep=""))
-    
+    setwd(home)
 
 }

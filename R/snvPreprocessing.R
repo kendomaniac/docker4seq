@@ -29,6 +29,10 @@
 #' }
 #' @export
 snvPreprocessing <- function(group=c("sudo","docker"), bam.folder=getwd(), scratch.folder="/data/scratch", genome.folder, threads=8, gatk.file){
+
+    home <- getwd()
+    setwd(bam.folder)
+  
     #renaming gatk.file
     system(paste("mv ",gatk.file, " GenomeAnalysisTK.tar.bz2", sep=""))
     #running time 1
@@ -117,5 +121,6 @@ snvPreprocessing <- function(group=c("sudo","docker"), bam.folder=getwd(), scrat
     system(paste("rm  -f ",bam.folder,"/tempFolderID", sep=""))
     
     system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",bam.folder, sep=""))
+    setwd(home)
 }
 

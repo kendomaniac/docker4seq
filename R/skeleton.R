@@ -23,6 +23,7 @@ skeleton <- function(group=c("sudo","docker"), scratch.folder, data.folder){
   }
   #storing the position of the home folder  
   home <- getwd()
+  setwd(data.folder)
   #running time 1
   ptm <- proc.time()
   #setting the data.folder as working folder

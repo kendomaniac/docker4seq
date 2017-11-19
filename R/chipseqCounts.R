@@ -1,4 +1,4 @@
-#' @title Running MACS & SICER workflow
+#' @title Running MACS & SICER workflow NOT READY FOR STABLE check it!
 #' @description This function executes a set of docker containers allowing the detection of TFs and Histon marks peaks.
 #' #params skewer
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
@@ -57,6 +57,8 @@ chipseqCounts <- function( group=c("sudo","docker"),output.folder=getwd(), mock.
                           tss.distance=0, max.upstream.distance=10000, remove.duplicates="N"){
   
   #trimming adapter and bwa
+  home <- getwd()
+  setwd(output.folder)
   cat("\nrunning skewer ctrl\n")
   check.skewer <- dir(mock.folder)
   if(length(grep("trimmed", check.skewer))==0){
@@ -101,6 +103,7 @@ chipseqCounts <- function( group=c("sudo","docker"),output.folder=getwd(), mock.
           tss.distance=tss.distance, max.upstream.distance=max.upstream.distance,remove.duplicates=remove.duplicates)
 
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",output.folder, sep=""))
+  setwd(home)
 }
 
 

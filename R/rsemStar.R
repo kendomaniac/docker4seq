@@ -25,6 +25,10 @@
 #' }
 #' @export
 rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), strandness=c("none","forward","reverse"), threads=1, save.bam = TRUE){
+
+  home <- getwd()
+  setwd(fastq.folder)
+  
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -187,6 +191,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	#removing temporary folder
 	system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
 
+	setwd(home)
 
 }
 
