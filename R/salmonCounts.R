@@ -101,8 +101,10 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
 
   #waiting for the end of the container work
   if(resultRun=="false"){
-    system(paste("rm ", scrat_tmp.folder, "-/*.fastq ", sep=""))
-    system(paste("cp ", scrat_tmp.folder, "-R /* ", fastq.folder, sep=""))
+    system(paste("mkdir ", fastq.folder, "/output",sep=""))
+    system(paste("rm ", scrat_tmp.folder, "/*.fastq ", sep=""))
+    system(paste("cp ", scrat_tmp.folder, "/* ", fastq.folder, sep=""))
+    system(paste("cp -R", scrat_tmp.folder, "/transcripts_quant.txt ", fastq.folder,"/output", sep=""))
     #saving log and removing docker container
     container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
     system(paste("docker logs ", substr(container.id,1,12), " &> ","salmonCounts_",substr(container.id,1,12),".log", sep=""))
