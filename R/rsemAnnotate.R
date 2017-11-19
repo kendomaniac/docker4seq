@@ -1,4 +1,4 @@
-#' @title Annotating RSEM gene.results using ENSEMBL annotation
+#' @title Annotating RSEM gene.results using ENSEMBL annotation NOT FOR STABLE
 #' @description This function executes the docker container annotate.1, where Bioconductor is used to annotated gene.results output of RSEM using ENSEMBL annotation
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
