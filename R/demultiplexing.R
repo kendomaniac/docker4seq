@@ -47,7 +47,7 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, scratch.folde
   if(length(dir(data.folder)[grep("run.info",dir(data.folder))]) == 0){
     system(paste("touch ", scrat_tmp.folder,"/run.info",sep=""))
   }else{
-    system(paste("mv run.info ", scrat_tmp.folder),sep="")
+    system(paste("mv run.info ", scrat_tmp.folder, sep=""))
   }
   
   #getting in the tmp folder in scratch folder

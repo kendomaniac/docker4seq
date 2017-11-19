@@ -9,6 +9,8 @@ starChimeric(group = c("sudo", "docker"), fastq.folder = getwd(),
   chimSegmentMin = 20)
 }
 \arguments{
+\item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
+
 \item{fastq.folder, }{a character string indicating where gzip fastq files are located}
 
 \item{scratch.folder, }{a character string indicating the scratch folder where docker container will be mounted}
@@ -18,8 +20,6 @@ starChimeric(group = c("sudo", "docker"), fastq.folder = getwd(),
 \item{threads, }{a number indicating the number of cores to be used from the application}
 
 \item{chimSegmentMin, }{is a positive value indicating the minimal lenght of the overlap of a read to the chimeric element}
-
-\item{groupid, }{a character string to be inserted in the bam as identifier for the sample}
 }
 \value{
 three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics

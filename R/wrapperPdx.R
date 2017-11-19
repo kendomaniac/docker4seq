@@ -56,7 +56,7 @@ wrapperPdx <- function(group=c("sudo","docker"),fastq.folder, scratch.folder, xe
          min.length=min.length)
   
   cat("\nrunning bwa\n")
-  bwa(group=group, fastq.folderfastq.folder, scratch.folder=scratch.folder,
+  bwa(group=group, fastq.folder=fastq.folder, scratch.folder=scratch.folder,
         genome.folder=genome.folder, seq.type=seq.type, threads=threads, sample.id=sample.id)
 }
 

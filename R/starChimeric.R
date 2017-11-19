@@ -1,10 +1,9 @@
 #' @title Running Star to detect chimeric transcripts on paired-end sequences
 #' @description This function executes STAR to detect chimeric transcripts
-#'
+#' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param fastq.folder, a character string indicating where gzip fastq files are located
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for STAR is located.
-#' @param groupid, a character string to be inserted in the bam as identifier for the sample
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param chimSegmentMin, is a positive value indicating the minimal lenght of the overlap of a read to the chimeric element
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy

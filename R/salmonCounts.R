@@ -98,15 +98,15 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
     system(paste("cp ", scrat_tmp.folder, "/* ", fastq.folder, sep=""))
     #saving log and removing docker container
     container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
-    system(paste("docker logs ", substr(container.id,1,12), " &> ",fastq.folder,"/", substr(container.id,1,12),".log", sep=""))
+    system(paste("docker logs ", substr(container.id,1,12), " &> ","salmonCounts_",substr(container.id,1,12),".log", sep=""))
     system(paste("docker rm ", container.id, sep=""))
     #removing temporary folder
     cat("\n\nRemoving the temporary file ....\n")
-    system(paste("rm -R ",scrat_tmp.folder))
+#    system(paste("rm -R ",scrat_tmp.folder))
     system("rm -fR out.info")
-    system("rm -fR dockerID")
-    system("rm  -fR tempFolderID")
-    system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
+#    system("rm -fR dockerID")
+#    system("rm  -fR tempFolderID")
+    system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
   }
   #running time 2
   ptm <- proc.time() - ptm

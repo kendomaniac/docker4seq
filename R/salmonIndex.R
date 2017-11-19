@@ -55,7 +55,7 @@ salmonIndex <- function(group=c("sudo","docker"), index.folder, ensembl.urltrans
   }
   
   home <- getwd()
-  setwd(output.folder)
+  setwd(index.folder)
   #waiting for the end of the container work
   #running time 2
   ptm <- proc.time() - ptm
@@ -87,7 +87,7 @@ salmonIndex <- function(group=c("sudo","docker"), index.folder, ensembl.urltrans
   if(resultRun=="false"){
      system("rm -fR dockerID")
      system("rm  -fR tempFolderID")
-     system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
+     system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",index.folder, sep=""))
   }else{
     cat(paste("there was an error in the execution of ", substr(container.id,1,12), "\n"), sep="")
   }
