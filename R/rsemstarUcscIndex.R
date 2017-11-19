@@ -53,23 +53,17 @@ rsemstarUscsIndex <- function(group=c("sudo","docker"), genome.folder=getwd(),
 
 	if(group=="sudo"){
 	     params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstarUCSC.index.sh "," ",genome.folder," ",uscs.urlgenome," ",uscs.gtf," ",threads," ",uscs.urlknownIsoforms," ", uscs.urlknownToLocusLink, sep="")
-	     runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	     resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
 	  }else{
 #		system("docker pull docker.io/repbioinfo/rsemstar.2017.01")
 	    params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstarUCSC.index.sh "," ",genome.folder," ",uscs.urlgenome," ",uscs.gtf," ",threads," ",uscs.urlknownIsoforms," ", uscs.urlknownToLocusLink, sep="")
-	    runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
 	  }
-  out <- "xxxx"
-  #waiting for the end of the container work
-  while(out != "out.info"){
-    Sys.sleep(10)
-    cat(".")
-    out.tmp <- dir(genome.folder)
-    out.tmp <- out.tmp[grep("out.info",out.tmp)]
-    if(length(out.tmp)>0){
-      out <- "out.info"
-    }
+
+    if(resultRun=="false"){
+    cat("\nrsemstarUscsIndex run is finished\n")
   }
+  
   #running time 2
   ptm <- proc.time() - ptm
   con <- file(paste(genome.folder,"run.info", sep="/"), "r")
@@ -84,7 +78,7 @@ rsemstarUscsIndex <- function(group=c("sudo","docker"), genome.folder=getwd(),
 
   #saving log and removing docker container
   container.id <- readLines(paste(genome.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+  system(paste("docker logs ", container.id, " >& ", "rsemstarUscsIndex_",substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
 
 
