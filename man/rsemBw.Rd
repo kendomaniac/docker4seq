@@ -2,7 +2,7 @@
 % Please edit documentation in R/rsemBw.R
 \name{rsemBw}
 \alias{rsemBw}
-\title{Creating a bigwig using RSEM}
+\title{Creating a bigwig using RSEM NOT FOR STABLE}
 \usage{
 rsemBw(group = c("sudo", "docker"), bam.folder = getwd(),
   scratch.folder = "/data/scratch")
