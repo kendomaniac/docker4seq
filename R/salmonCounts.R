@@ -94,7 +94,7 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
       resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/salmon.2017.01", params=params)
     }else{
       params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_countsSE.sh ", threads," ", fastq[1]," ", fastq.folder, sep="")
-      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/salmon.2017.011", params=params)
+      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/salmon.2017.01", params=params)
     }
   }
     
@@ -103,6 +103,7 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   if(resultRun=="false"){
     system(paste("rm ", scrat_tmp.folder, "/*.fastq ", sep=""))
     system(paste("cp -R ", scrat_tmp.folder, "/* ", fastq.folder, sep=""))
+    
      #saving log and removing docker container
     container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
     system(paste("docker logs ", substr(container.id,1,12), " &> ","salmonCounts_",substr(container.id,1,12),".log", sep=""))
