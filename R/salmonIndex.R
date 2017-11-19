@@ -48,6 +48,14 @@ salmonIndex <- function(group=c("sudo","docker"), index.folder, ensembl.urltrans
      params <- paste("--cidfile ",index.folder,"/dockerID -v ", index.folder, ":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_index.sh ",k, sep="")
      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/salmon.2017.01", params=params)
   }
+  
+  
+  if(resultRun=="false"){
+    cat("\nSalmon index generation is finished\n")
+  }
+  
+  home <- getwd()
+  setwd(output.folder)
   #waiting for the end of the container work
   #running time 2
   ptm <- proc.time() - ptm
@@ -72,7 +80,7 @@ salmonIndex <- function(group=c("sudo","docker"), index.folder, ensembl.urltrans
 
   #saving log and removing docker container
   container.id <- readLines(paste(index.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", substr(container.id,1,12), " &> ",index.folder,"/", substr(container.id,1,12),".log", sep=""))
+  system(paste("docker logs ", substr(container.id,1,12), " &> ","salmonIndex_",substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
   #removing temporary folder
   cat("\n\nRemoving the temporary file ....\n")
