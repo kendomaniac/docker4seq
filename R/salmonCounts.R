@@ -74,8 +74,9 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
   }
   #Trimmed fastq  linking fpr docker
-  docker_fastq.folder=file.path("/data/scratch", tmp.folder)
+  docker_fastq.folder=scrat_tmp.folder
   #Trimmed fastq  linking fpr docker
+  system(paste("gzip -d ",docker_fastq.folder,"/*.gz", sep=""))
   fastq <- sub(".gz$", "", dir)
   cat("\nsetting as working dir the scratch folder and running  docker container\n")
   #executing the docker job
