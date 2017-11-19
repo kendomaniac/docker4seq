@@ -109,10 +109,10 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
     system(paste("docker rm ", container.id, sep=""))
     #removing temporary folder
     cat("\n\nRemoving the temporary file ....\n")
-#    system(paste("rm -R ",scrat_tmp.folder))
+    system(paste("rm -R ",scrat_tmp.folder))
     system("rm -fR out.info")
-#    system("rm -fR dockerID")
-#    system("rm  -fR tempFolderID")
+    system("rm -fR dockerID")
+    system("rm  -fR tempFolderID")
     system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
   }
   #running time 2
