@@ -9,8 +9,7 @@
 #' @return output.bw, which is the bigwig
 #' @examples
 #'\dontrun{
-#'     #downloading fastq files
-#'     #running bwa
+#'     #Important bam should be named Aligned.out.bam and the index Aligned.out.bai
 #'     rsemBw(group="docker",bam.folder=getwd(), scratch.folder="/data/scratch")
 #'
 
