@@ -1,4 +1,4 @@
-#' @title Running CASC step1 identification of the optimal number of clusters
+#' @title Running CASC step1 identific ation of the optimal number of clusters
 #' @description This function executes CASC step1 identification of the optimal number of clusters
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
