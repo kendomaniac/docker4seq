@@ -19,14 +19,14 @@
 #' #running salmonCounts
 #' wrapperSalmon(group="docker", scratch.folder="/scratch/users/rcaloger/", 
 #'         fastq.folder=getwd(), index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R", 
-#'         threads=24, seq.type="pe", adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT")
+#'         threads=24, seq.type="pe", adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", min.length=40)
 #' }
 #' 
 #'     
 #' @export  
 #' 
 wrapperSalmon <- function(group=c("sudo", "docker"), scratch.folder, fastq.folder, index.folder, 
-         threads=24, seq.type=c("se", "pe"), adapter5, adapter3){
+         threads=24, seq.type=c("se", "pe"), adapter5, adapter3, min.length){
   
   #trimming adapter
   skewer(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder,adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
