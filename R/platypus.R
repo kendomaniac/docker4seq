@@ -1,4 +1,4 @@
-#' @title Platypus analysis
+#' @title Platypus analysis NOT READY TO GO ON STABLE mising test set
 #' @description This function executes Platypus: A Haplotype-Based Variant Caller For Next Generation Sequence Data. Platypus requires as input bam and bai files. In case vcf.gz and vcf.idx files are located in the bam folder  platypus will use only those positions for SNV calling
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param data.folder, a character string indicating the folder where bams and vcf files are located and where output will be written

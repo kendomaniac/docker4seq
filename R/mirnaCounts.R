@@ -27,7 +27,7 @@
 mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch",mirbase.id=c("hsa", "mmu"), download.status=FALSE, adapter.type=c("ILLUMINA","NEB"),  trimmed.fastq=FALSE){
 
   home <- getwd()
-  setwd(data.folder)
+  setwd(fastq.folder)
   
   #running time 1
   ptm <- proc.time()
