@@ -1,4 +1,4 @@
-#' @title Generating running bcl2fastq
+#' @title Generating running bcl2fastq NOT READY FOR STABLE missing test set
 #' @description This function executes the Illumina bcl2fastq program
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param data.folder, a character string indicating the Illumina folder where the Samplesheet.csv is located, and example of Samplesheet.cvs is in inst/examples folder
