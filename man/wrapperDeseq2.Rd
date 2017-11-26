@@ -42,3 +42,6 @@ This function runs deseq2 on a table genrated with sample2experiment having the 
 
 }
 }
+\author{
+Raffaele Calogero
+}

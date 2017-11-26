@@ -6,6 +6,7 @@
 #' @param ensembl.urlgenome, a character string indicating the URL from ENSEMBL ftp for the unmasked genome sequence of interest
 #' @param ensembl.urlgtf, a character string indicating the URL from ENSEMBL ftp for the GTF for genome of interest
 #' @param threads, a number indicating the number of cores to be used from the application
+#' @author Raffaele Calogero
 #'
 #' @return The indexed bwa genome reference sequence
 #' @examples
@@ -27,6 +28,10 @@
 #' }
 #' @export
 rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ensembl.urlgenome=NULL, ensembl.urlgtf=NULL, threads=1){
+
+  home <- getwd()
+  setwd(genome.folder)
+  
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -44,11 +49,11 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
   cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 
 	if(group=="sudo"){
-	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
-	      runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
+	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
+	      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
 	}else{
-	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
-	      runDocker(group="docker",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
+	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
+	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
   }
   out <- "xxxx"
   #waiting for the end of the container work
@@ -75,11 +80,13 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
   
   #saving log and removing docker container
   container.id <- readLines(paste(genome.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+  system(paste("docker logs ", container.id, " >& ", "rsemstarIndex_",substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
   
   #running time 2
   system(paste("rm ",genome.folder,"/dockerID", sep=""))
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",genome.folder, sep=""))
+  setwd(home)
+  
 }
 

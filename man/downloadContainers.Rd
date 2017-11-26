@@ -21,3 +21,6 @@ This is a functin that preapre the docker environment to be used for the first t
 
 }
 }
+\author{
+Raffaele Calogero
+}

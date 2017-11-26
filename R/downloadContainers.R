@@ -2,6 +2,8 @@
 #' @description This is a functin that preapre the docker environment to be used for the first time the docker4seq is installed.
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param containers.file, a character string with the name of the file which indicate which are the initial set of containers to be downloaded. Initally the set is given by a file located in the folder containers of docker4seq package.
+#' @author Raffaele Calogero
+#' 
 #' @examples
 #'\dontrun{
 ##'     #running runDocker

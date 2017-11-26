@@ -2,10 +2,10 @@
 title: "CASC"
 author: "Raffaele A Calogero"
 output: 
-  BiocStyle::html_document
+  rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Vignette Title}
   %\VignetteEncoding{UTF-8}  
 ---
 
@@ -116,7 +116,7 @@ CASC was tested on previously published data sets [Usoskin et al, Pollen et al, 
 
 #### Introduction
 
-**CASC** is controlled by a set of functions embedded in `r Githubpkg("kendomaniac/docker4seq")` package,
+**CASC** is controlled by a set of functions embedded in **kendomaniac/docker4seq** package,
 which was developed to facilitate the use of computing demanding applications in the field of NGS data analysis.
 
 

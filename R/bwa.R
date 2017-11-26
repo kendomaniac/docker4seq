@@ -8,26 +8,26 @@
 #' @param seq.type, a character string indicating the type of reads to be trimmed. Two options: \code{"se"} or \code{"pe"} respectively for single end and pair end sequencing
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param sample.id, a character string indicating the unique id to be associated to the bam that will be created
+#' @author Raffaele Calogero
 #'
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
 #' @examples
 #'\dontrun{
 #'     #downloading fastq files
 #'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
-#'     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
-#'     #running bwa
-#'     bwa(group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch",
-#'     genome.folder="/data/scratch/hg19_exome", seq.type="pe",
-#'     threads=24, sample.id="exome")
-#'
 #'     #running bwa
 #'     bwa(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
-#'     genome.folder="/data/scratch/mm10bwa", seq.type="se",
-#'     threads=24, sample.id="igg")
+#'     genome.folder="/data/scratch/hg19bwa", seq.type="se",
+#'     threads=24, sample.id="exome")
 #'
 #' }
 #' @export
 bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), threads=1, sample.id){
+
+  
+    home <- getwd()
+    setwd(fastq.folder)
+  
     #running time 1
     ptm <- proc.time()
     #running time 1
@@ -79,7 +79,7 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
       system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
     }
     #Trimmed fastq  linking fpr docker
-    docker_fastq.folder=file.path("/data/scratch", tmp.folder)
+    docker_fastq.folder=scrat_tmp.folder
     #Trimmed fastq  linking fpr docker
     fastq <- sub(".gz$", "", dir)
     cat("\nsetting as working dir the scratch folder and running  docker container\n")
@@ -87,54 +87,49 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
 
     if(seq.type=="pe"){
     	if(group=="sudo"){
-		      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa_pe.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", sample.id, " ",fastq.folder, sep="")
-    		  runDocker(group="sudo",container="docker.io/rcaloger/bwa.2017.01", params=params)
+		      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_pe.sh /data/scratch ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", sample.id, " ",fastq.folder, sep="")
+		      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/bwa.2017.01", params=params)
 	    }else{
-	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa_pe.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", sample.id, " ",fastq.folder, sep="")
-	      runDocker(group="docker",container="docker.io/rcaloger/bwa.2017.01", params=params)
+	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_pe.sh /data/scratch ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", sample.id, " ",fastq.folder, sep="")
+	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/bwa.2017.01", params=params)
 	    }
 	  }else if(seq.type=="se"){
 	    if(group=="sudo"){
-		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa_se.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
-		    runDocker(group="sudo",container="docker.io/rcaloger/bwa.2017.01", params=params)
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_se.sh /data/scratch ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
+		    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/bwa.2017.01", params=params)
 		  }else{
-		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa_se.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
-		    runDocker(group="docker",container="docker.io/rcaloger/bwa.2017.01", params=params)
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_se.sh /data/scratch ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
+		    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/bwa.2017.01", params=params)
 		  }
 	  }
-    out <- "xxxx"
-    #waiting for the end of the container work
-    while(out != "out.info"){
-      Sys.sleep(10)
-      cat(".")
-      out.tmp <- dir(file.path(scratch.folder, tmp.folder))
-      out.tmp <- out.tmp[grep("out.info",out.tmp)]
-
-      if(length(out.tmp)>0){
-        out <- "out.info"
-      }
-    }
-    #system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-    con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
-    tmp <- readLines(con)
-    close(con)
-    for(i in tmp){
-      i <- sub("mv ",paste("mv ",file.path(scratch.folder, tmp.folder),"/",sep=""),i)
-      system(i)
+    
+    if(resultRun=="false"){
+      system(paste("cp ", docker_fastq.folder, "/* ", fastq.folder, sep=""))
     }
     #running time 2
     ptm <- proc.time() - ptm
-    con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
-    tmp.run <- readLines(con)
-    close(con)
-    tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
-    writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
-
+    dir <- dir(fastq.folder)
+    dir <- dir[grep("run.info",dir)]
+    if(length(dir)>0){
+      con <- file("run.info", "r")
+      tmp.run <- readLines(con)
+      close(con)
+      tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+      writeLines(tmp.run,"run.info")
+    }else{
+      tmp.run <- NULL
+      tmp.run[1] <- paste("run time mins ",ptm[1]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+      
+      writeLines(tmp.run,"run.info")
+    }
+    
     #saving log and removing docker container
     container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
-    system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+    system(paste("docker logs ", container.id, " >& ", "bwa_",substr(container.id,1,12),".log", sep=""))
     system(paste("docker rm ", container.id, sep=""))
     
     #removing temporary folder
@@ -144,5 +139,6 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
     system(paste("rm  -f ",fastq.folder,"/tempFolderID", sep=""))
     
     system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
+    setwd(home)
 }
 

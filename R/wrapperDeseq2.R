@@ -8,6 +8,8 @@
 #' @param ref.covar, covariate to be used as reference
 #' @param type, character with three options: gene, isoform, mirna. if gene is used two files are generated for geneset enrichment, the filtered Gene symbols and the background that contains all gene simbols.
 #' @param batch, logical FALSE, TRUE
+#' @author Raffaele Calogero
+#' 
 #' @return Returns a full table of differentially expressed genes (prefix DEfull), a filtered table of differentially expressed genes (prefix DEfiltered) and the normalized counts table (prefix normalized)
 
 #' @examples
@@ -22,7 +24,10 @@
 #' }
 #' @export
 wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.table, log2fc=1, fdr=0.1, ref.covar="0", type=c("gene","isoform","mirna"), batch=FALSE){
-
+  
+  home <- getwd()
+  setwd(output.folder)
+  
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -38,23 +43,15 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
 
 
   if(group=="sudo"){
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
-    runDocker(group="sudo",container="docker.io/rcaloger/r332.2017.01", params=params)
+    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
+    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
   }else{
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
-    runDocker(group="docker",container="docker.io/rcaloger/r332.2017.01", params=params)
+    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
+    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
   }
 
-  out <- "xxxx"
-  #waiting for the end of the container work
-  while(out != "anno.info"){
-    Sys.sleep(10)
-    cat(".")
-    out.tmp <- dir(file.path(output.folder))
-    out.tmp <- out.tmp[grep("anno.info",out.tmp)]
-    if(length(out.tmp)>0){
-      out <- "anno.info"
-    }
+  if(resultRun=="false"){
+    cat("\nDESeq2 analysis is finished\n")
   }
 
   home <- getwd()
@@ -84,7 +81,8 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
 
   #saving log and removing docker container
   container.id <- readLines(paste(output.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+#  system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+  system(paste("docker logs ", container.id, " >& ","wrapperDeseq2_",substr(container.id,1,12),".log", sep=""))
  # system(paste("docker rm ", container.id, sep=""))
   system("rm -fR anno.info")
   system("rm -fR dockerID")

@@ -2,7 +2,7 @@
 % Please edit documentation in R/chipseqCounts.R
 \name{chipseqCounts}
 \alias{chipseqCounts}
-\title{Running MACS & SICER workflow}
+\title{Running MACS & SICER workflow NOT READY FOR STABLE check it!}
 \usage{
 chipseqCounts(group = c("sudo", "docker"), output.folder = getwd(),
   mock.folder, test.folder, scratch.folder,
@@ -90,4 +90,7 @@ This function executes a set of docker containers allowing the detection of TFs 
              sicer.fdr = 0.1, tss.distance = 0, max.upstream.distance = 10000,
              remove.duplicates = "N")
 }
+}
+\author{
+Raffaele Calogero
 }

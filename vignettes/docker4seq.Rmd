@@ -1,12 +1,11 @@
 ---
 title: "An Introduction to docker4seq package and 4SeqGUI"
-author: "Marco Beccuti, Francesca Cordero, Maddalena Arigoni, Riccardo Panero, Elvio G. Amparore, Susanna Donatelli and Raffaele A Calogero"
-date: "8/21/2017"
+author: "Raffaele A Calogero"
 output: 
-  BiocStyle::html_document
+  rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Vignette Title}
   %\VignetteEncoding{UTF-8}  
 ---
 
@@ -16,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introduction
 
-The docker4seq package was developed to facilitate the use of computing demanding applications in the field of NGS data analysis. docker4seq package is part of the [Reproducible Bioinformatics Project](http://reproducible-bioinformatics.org/)
+The docker4seq package was developed to facilitate the use of computing demanding applications in the field of NGS data analysis.
 
 The docker4seq package uses [docker](https://www.docker.com/what-docker) [containers](https://www.docker.com/what-container) that embed demanding computing tasks (e.g. short reads mapping) into isolated containers. 
 
@@ -36,17 +35,6 @@ The minimal hardware requirements are a 4 cores 64 bits linux computer, 32 Gb RA
 
 [**docker4seq**](https://github.com/kendomaniac/docker4seq) and its graphical interface (optional) [**4SeqGUI**](https://github.com/mbeccuti/4SeqGUI) can fit ideally in the [NUC6I7KYK, Intel mini-computer](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html) equipped with Kingston Technology HyperX Impact 32GB Kit (2x16GB), 2133MHz DDR4 CL13 260-Pin SODIMM and Samsung 850 EVO - 250GB - M.2 SATA III Internal SSD.
 
-#### SeqBox 
-
-[SeqBox Project](http://www.seqbox.com/)
-
-[SeqBox Overview](https://www.youtube.com/playlist?list=PLN48SoNXrLRhn8Qn5ZjJiLwDqkJTtfw9f)
-
-[Getting started with SeqBox - MAC VNC](https://www.youtube.com/playlist?list=PLN48SoNXrLRhsDZZo8Mee4uHEiSm9KSQW)
-
-[Getting started with SeqBox - WIN10 VNC](https://www.youtube.com/playlist?list=PLN48SoNXrLRh9Sp0EiKRLBVoQ05libYND)
-
-
 
 **MANDATORY:** The first time *docker4seq* is installed the **downloadContainers** function needs to be executed to download, in the local repository, the docker images that are needed by *docker4seq*.
 
@@ -60,19 +48,23 @@ downloadContainers(group="docker")
 
 At the present time all functions requiring some sort of calculation are embedded in the following docker images:
 
-- docker.io/rcaloger/annotate.2017.01 used by rnaseqCounts, rsemanno 
+- docker.io/repbioinfo/demultiplexing.2017.01 used by demultiplexing
 
-- docker.io/rcaloger/bwa.2017.01 used by bwaIndexUcsc, bwa 
+- docker.io/repbioinfo/annotate.2017.01 used by rnaseqCounts, rsemanno 
 
-- docker.io/rcaloger/chipseq.2017.01 used by chipseqCounts, chipseq
+- docker.io/repbioinfo/bwa.2017.01 used by bwaIndexUcsc, bwa, wrapperPdx 
 
-- docker.io/rcaloger/r332.2017.01 used by experimentPower, sampleSize, wrapperDeseq2
+- docker.io/repbioinfo/chipseq.2017.01 used by chipseqCounts, chipseq
 
-- docker.io/rcaloger/mirnaseq.2017.01 used by mirnaCounts
+- docker.io/repbioinfo/r332.2017.01 used by experimentPower, sampleSize, wrapperDeseq2
 
-- docker.io/rcaloger/rsemstar.2017.01 used by rnaseqCounts, rsemstarIndex, rsemstarUscsIndex
+- docker.io/repbioinfo/mirnaseq.2017.01 used by mirnaCounts
 
-- docker.io/rcaloger/skewer.2017.01 used by skewer
+- docker.io/repbioinfo/rsemstar.2017.01 used by rnaseqCounts, rsemstarIndex, rsemstarUscsIndex
+
+- docker.io/repbioinfo/skewer.2017.01 used by skewer, rnaseqCounts, wrapperPdx 
+
+- docker.io/repbioinfo/xenome.2017.01 used by xemone, xenomeIndex, wrapperPdx
 
 ### docker container nomenclature
 
@@ -120,6 +112,10 @@ At the present time are available the following workflows:
     + peak calling using either MACS v 1.4 or SICER v 1.1
     + associating peaks to the nearest gene, UCSC annotation
     + full annotation of the nearest gene
+- **PDX Exomeseq**, which allows:
+     + mouse sequence removal with [xenome](https://github.com/data61/gossamer)
+     + adapter trimming with [skewer](https://github.com/relipmoc/skewer)
+     + mapping with [BWA](http://bio-bwa.sourceforge.net/bwa.shtml)
 
 
 The most expensive computing  steps of the analyses are embedded in the following docker4seq functions: **rnaseqCounts**, **mirnaCounts**, **chipseqCounts**. These functions are also the only having RAM and computing power requirements not usually available in consumer computers. Hereafter it is shown the time required to run the above three functions increasing the number of sequenced reads.
@@ -134,14 +130,14 @@ Counts generation from fastq files  is the most time consuming step in RNAseq da
 
 We run respectively 26, 52, 78, and 105 million reads using different number of threads, values shown in parenthesis in *Figure  1*. It is notable that SeqBox, mapping in 5 hours more than 100 milion reads, it is able to handle in 20 hours the throughput of the Illumina benchtop sequencer NextSeq 500, which produces up to 400 milion reads in a run of 30 hours.
     
-![rnaseqCounts overall performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mrna_performance_bis.jpg)
+![rnaseqCounts overall performance](../inst/img/mrna_performance_bis.jpg)
 
 
 ### mirnaCounts performances
 
 We run resepctively 3, 6, 12, and 24 miRNA samples in parallel using **mirnaCounts**, with different number of threads, values shown in parenthesis in *Figure 2*.
     
-![mirnaCounts overall performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirnaseq_performance_bis.jpg) 
+![mirnaCounts overall performance](../inst/img/mirnaseq_performance_bis.jpg) 
 
 
 
@@ -149,7 +145,7 @@ We run resepctively 3, 6, 12, and 24 miRNA samples in parallel using **mirnaCoun
 
 We run respectively 37, 70, 111, and 149 million reads using different number of threads, values shown in parenthesis in *Figure 3*.
     
-![chipseqCounts overall performance](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/chipseq_performance_bis.jpg) 
+![chipseqCounts overall performance](../inst/img/chipseq_performance_bis.jpg) 
 
 
 
@@ -165,16 +161,23 @@ A folder including a set do dataset to test each of the workflows available in d
 
 ## RNAseq workflow: Howto
 
-The mRNAseq workflow can be run using **4SeqGUI** graphical interface (linux/MAC):
+### Demultiplexing
 
-![mRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/rnaseq1.jpeg)
+*demultiplexing* function is used to convert in fastq bcl files generated by an Illumina sequencer. The function requires that in the bcl folder the SampleSheet.csv is present. An example fo SampleSheet for a pair-end run is present in docker4seq examples folder. The function require that the full path to the bcl file folder is provided, **data.folder**, the scratch folder where temporary analysis is run and the number of cores that will be used by the program.
 
-### video tutorial
+```{r,  echo=TRUE, eval=FALSE}
+demultiplexing(group="docker",
+      data.folder="/home/calogero/Documents/data/lollini/3a_run/170712_NB501050_0097_AH3FGNBGX3",
+      scratch.folder="/data/scratch", threads=24)
+```
 
-A complete video tutorial on mRNAseq workflow is available [**here**](https://www.youtube.com/playlist?list=PLN48SoNXrLRhTi9MYMysNI3O4fR0wt46D)
+The function will return, in the folder containing the bcl files folder, e.g. \/home\/calogero\/Documents\/data\/lollini\/3a_run\/, the fastq files generated by the analysis.
 
+This function is not implemented in **4SeqGUI** because this step is generally done by a core lab. Thus only a limited group of users require the use of this function.
 
-### Samples quantification
+The **mRNAseq workflow**, that can be handled using **4SeqGUI** graphical interface (linux/MAC), starts from the availability of fastq files.
+
+![mRNAseq workflow](../inst/img/rnaseq1.jpeg)
 
 Sample quantification is made of these steps:
 
@@ -190,11 +193,11 @@ Sample quantification is made of these steps:
 
 All the parameters can be setup using 4SeqGUI
 
-### Creating a STAR index file for mRNAseq:
+### Creating a STAR index file for mRNAseq
 
 The index can be easily created using the graphical interface:
 
-![Creating a STAR genome index](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/rnaseq2.jpeg)
+![Creating a STAR genome index](../inst/img/rnaseq2.jpeg)
 
 A detailed description of the parameters is given below.
 
@@ -217,9 +220,9 @@ Precompiled index folders are available:
 
 
 
-### Quantifying genes/isoforms:
+### Quantifying genes/isoforms
 
-![Gene, Isoform counting](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/rnaseq3.jpeg)
+![Gene, Isoform counting](../inst/img/rnaseq3.jpeg)
 
 A detailed description of the parameters is given below.
 
@@ -273,7 +276,7 @@ The mRNAseq workflow produces the following output files:
     + skewerd_xxxxxxxxxxxx.log, log of the skewer docker container
     + stard.yyyyyyyyyyyy.log, log of the star docker container
 
-![gtf_annotated_genes.results](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/rnaseq7.jpeg)
+![gtf_annotated_genes.results](../inst/img/rnaseq7.jpeg)
 
 The first column in **gtf_annotated_genes.results** is the ensembl gene id, the second is the [biotype](http://www.ensembl.org/Help/Faq?id=468), 
 the 3rd is the annotation source, the 4th contains the set of transcripts included in the ensembl gene id. Then there is the length of the gene, the lenght of the gene to which is subtracted the average length of the sequenced fragments, the expected counts are the counts to be used for differential expression analysis. [TPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) and [FPM](https://haroldpimentel.wordpress.com/2014/05/08/what-the-fpkm-a-review-rna-seq-expression-units/) are normalized gene quantities to be used only for visualization purposes.
@@ -283,16 +286,16 @@ the 3rd is the annotation source, the 4th contains the set of transcripts includ
 The RSEM output is sample specific, thus it is necessary to assemble the single sample in an experiment table including in the header of the column both the covariates and the batch, if any.
 The header sample name is separated by the covariate with an underscore, e.g. mysample1\_Cov1, mysample2\_Cov2. 
 
-![counts table with covariates](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/counts1.jpeg)
+![counts table with covariates](../inst/img/counts1.jpeg)
 
 
 In case also a batch is present also this is added to the sample name through a further underscore, e.g. mysample1\_Cov1\_batch1, mysample2\_Cov\_batch2.
 
-![counts table with covariates and batch](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/counts2.jpeg)
+![counts table with covariates and batch](../inst/img/counts2.jpeg)
 
 The addition of the covariates to the various samples can be done using the **4seqGUI** using the button: *From samples to experiment*.
 
-![generating a table with covariates](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/counts3.jpeg)
+![generating a table with covariates](../inst/img/counts3.jpeg)
 
 #### From samples to experiments by line command
 
@@ -330,7 +333,7 @@ The samples to experiments produces the following output files:
 [PCA](https://georgemdallas.wordpress.com/2013/10/30/principal-component-analysis-4-dummies-eigenvectors-eigenvalues-and-dimension-reduction/) is a statistical procedure that uses an orthogonal transformation to convert a set of observations of possibly correlated variables into a set of values of linearly uncorrelated variables called principal components. This transformation is defined in such a way that the first principal component accounts for as much of the variability in the data as possible, and each succeeding component in turn has the highest variance possible under the constraint that it is orthogonal to the preceding components. 
 **4SeqGUI** provides an interface to the generation experiment samples PCA
 
-![PCA](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/pca1.jpeg)
+![PCA](../inst/img/pca1.jpeg)
 
 The plot is saved in **pca.pdf** in the selected folder.
 
@@ -348,7 +351,7 @@ pca(experiment.table="_log2FPKM.txt", type="FPKM", legend.position="topleft", co
 
 User needs to provide the paths of experiment table, **experiment.table** parameter, i.e. the file generated using the samples2experiment function. The **type** parameter indicates if FPKM, TPM or counts are used for the PCA generation. The parameter **legend.position** defines where to locate the covariates legend. The parameter **covariatesInNames** indicates if the header of the experiment table contains or not covariate information. The parameter **principal.components** indicates which principal components should be plotted. **output.folder** indicates where to save the pca.pdf file.
 
-![pca.pdf](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/pca2.jpeg)
+![pca.pdf](../inst/img/pca2.jpeg)
 
 The values in parentesis on x and y axes are the amount of variance explained by each principal component.
 
@@ -363,11 +366,11 @@ We have implemented wrapper functions to  RnaSeqSampleSize sample size and exper
 
 **4SeqGUI** provides an interface to sample size estimation and to statistical power estimation. 
 
-![sample size estimation](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/ss.jpeg)
+![sample size estimation](../inst/img/ss.jpeg)
 
 
 
-![stat power estimation](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/es.jpeg)
+![stat power estimation](../inst/img/es.jpeg)
 
 
 #### Sample size estimation by line command
@@ -386,7 +389,7 @@ The requested parameters are the path to the counts experiment table generated b
 
 The output file is **sample_size_evaluation.txt** is saved in the R working folder, below an example of the file content:
 
-![sample_size_evaluation.txt](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/samplesize1.jpeg)
+![sample_size_evaluation.txt](../inst/img/samplesize1.jpeg)
 
 IMPORTANT: The above analysis is suitable also for miRNAseq data
 
@@ -408,7 +411,7 @@ The requested parameters are the path to the counts experiment table generated b
 
 The output file is **power_estimation.txt** is saved in the R working folder, below an example of the file content: 
 
-![power_estimation.txt](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/expp1.jpeg)
+![power_estimation.txt](../inst/img/expp1.jpeg)
 
 IMPORTANT: The above analysis is suitable also for miRNAseq data
 
@@ -417,18 +420,18 @@ IMPORTANT: The above analysis is suitable also for miRNAseq data
 A basic task in the analysis of count data from RNA-seq is the detection of differentially expressed genes.
 **4SeqGUI** provides an interface to DESeq2 to simplify differential expression analysis.
 
-![DESeq2](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/de1.jpeg)
+![DESeq2](../inst/img/de1.jpeg)
 
 The output files are:
 
 **DEfull.txt** containing the full set of results generated by DESeq2
 
-![DEfull.txt](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/de2.jpeg)
+![DEfull.txt](../inst/img/de2.jpeg)
 
 
 **DEfiltered_log2fc_X_fdr_Y.Y.txt** containing the set of differentially expressed genes passing the indicated thresholds
 
-![DEfiltered_log2fc_1_fdr_0.1.txt](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/de3.jpeg)
+![DEfiltered_log2fc_1_fdr_0.1.txt](../inst/img/de3.jpeg)
 
 
 **genes4david.txt** a file containing only the gene symbols to be used as input for [DAVID](https://david.ncifcrf.gov/) or [ENRICHR](http://amp.pharm.mssm.edu/Enrichr/)
@@ -453,30 +456,24 @@ User has to provide experiment table, **experiment.table** param, i.e. the count
 
 IMPORTANT: the above analysis can be also applied to miRNAseq data.
 
-## miRNAseq workflow: HowTo 
+## miRNAseq workflow 
 
 The miRNAseq workflow can be run using **4SeqGUI** graphical interface:
 
-![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirna1.jpeg)
+![miRNAseq workflow](../inst/img/mirna1.jpeg)
   
-### Video tutorial
-
-A complete video tutorial on miRNAseq workflow is available [**here**](https://www.youtube.com/playlist?list=PLN48SoNXrLRix-Er5unoze68qE8vW46s-)
- 
-
-### Samples quantification
   
 The miRNAseq docker container executes the following steps:
 
 
-![miRNAseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirna3.jpeg)
+![miRNAseq workflow](../inst/img/mirna3.jpeg)
 
 The full workflow is described in [Cordero et al. Plos ONE 2012](http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0031630). In brief, fastq files are trimmed using [cutadapt](https://github.com/marcelm/cutadapt) and the trimmed reads are mapped on miRNA precursors, i.e. harpin.fa file, from [miRBase](http://www.mirbase.org/ftp.shtml) using [SHRIMP](http://compbio.cs.toronto.edu/shrimp/). Using the location of the mature miRNAs in the precursor, countOverlaps function, from the Bioconductor package GenomicRanges is used to quantify the reads mapping on mature miRNAs. 
 
 
 All the parameters needed to run the miRNAseq workflow can be setup using 4SeqGUI
 
-![miRNAseq parameters](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirna2.jpeg)
+![miRNAseq parameters](../inst/img/mirna2.jpeg)
  
  
 A detailed description of the parameters is given below.
@@ -517,7 +514,7 @@ The miRNAseq workflow produces the following output files:
 
 **4SeqGUI** provides an interface to add covariates and batches to all.counts.txt
 
-![miRNAseq covariates and batches](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/mirna_covars.jpeg)
+![miRNAseq covariates and batches](../inst/img/mirna_covars.jpeg)
 
 The function **mirnaCovar** add to the header of all.counts.txt covariates and batches or covariates only.
 
@@ -537,17 +534,12 @@ mirnaCovar(experiment.folder=paste(getwd(), "all.counts.txt", sep="/"),
 
 The output of **mirnaCovar**, i.e. w\_covar\_batch\_all.counts.txt, is compliant with PCA, Sample size estimator, Experiment stat. power and DEseq2 analysis.
 
-## chipseq workflow: HowTo
+## chipseq workflow
 
 The chipseq workflow can be run using **4SeqGUI** graphical interface:
 
-![ChIPseq workflow](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/chipseq0.jpeg)
+![ChIPseq workflow](../inst/img/chipseq0.jpeg)
 
-### Video tutorial
-
-A video tutorial for ChIPseq workflow is available [**here**](https://www.youtube.com/playlist?list=PLN48SoNXrLRhqjyPBGkDRTf0wNi4Y9Va2)
-
-### Peaks calling
 
 The ChIPseq is made of two main steps:
 
@@ -555,12 +547,12 @@ The ChIPseq is made of two main steps:
 
 - Running MACS or SICER analysis
 
-### Creating a BWA index file for Chipseq:
+### Creating a BWA index file for Chipseq
 
 
 The index can be easily created using the graphical interface:
 
-![Creating a BWA index with Genome indexing BWA](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/chipseq1.jpeg)
+![Creating a BWA index with Genome indexing BWA](../inst/img/chipseq1.jpeg)
 
 ```{r,  echo=TRUE, eval=FALSE}
 bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/mm10bwa", uscs.urlgenome=
@@ -575,11 +567,11 @@ Precompiled index folders are available:
 - [mm10bwa](http://130.192.119.59/public/mm10bwa.tar.gz)
 
 
-### Calling peaks and annotating:
+### Calling peaks and annotating
 
 All the parameters needed to run MACS or SICER can be setup using 4SeqGUI
 
-![MACS and SICER analysis](/Users/raffaelecalogero/Dropbox/data/docker/stable/docker4seq/inst/img/chipseq3.jpeg)
+![MACS and SICER analysis](../inst/img/chipseq3.jpeg)
 
 A detailed description of the parameters is given below.
 
@@ -653,9 +645,97 @@ The chipseq workflow produces the following output files:
     + mytreat_sorted.bw: bigWig file for UCSC Genome Browser visualization
      
 
+## PDX Exomeseq workflow
+
+Patient derived tumor xenografts (PDTX) are created when cancerous tissue from a patient's primary tumor is implanted directly into an immunodeficient mouse. PDTX models are providing solutions to the challenges that researchers face in cancer drug research such as positive tumor responses in mouse models but not translating over when the study is implemented in humans. As a result, PDTX cancer models are popular models to use in cancer drug research.
+Exome sequencing is an importnat step of the PCX characterization. IN PDX we have the human tumor mixex with the mouse stroma and it is necessary to remove the mouse information from the exome data.
+One way of removing the mouse component is the use of [xenome](https://academic.oup.com/bioinformatics/article-lookup/doi/10.1093/bioinformatics/bts236), which performs fast, accurate and specific classification of xenograft-derived sequence read data [gossamer](https://github.com/data61/gossamer/blob/master/docs/xenome.md).
+
+### Creating Xenome index files
 
 
+The index can be easily created using the the following function:
 
 
+```{r,  echo=TRUE, eval=FALSE}
+xenomeIndex(group="docker",xenome.folder="/data/scratch/hg19.mm10", 
+    hg.urlgenome="http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz",
+    mm.urlgenome="http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz", threads=8)
+```
+
+In brief, **xenomeIndex** uses UCSC genomic data. User has to provide the **hg.urlgenome** for the human chromFa.tar.gz, the **mm.urlgenome** for the mouse chromFa.tar.gz and the path to the folder where the index will be generated (**xenome.folder**). The parameter **threads** indicates how many threads the user would like to use. 
+
+
+### Running Xenome
+
+Xenome classification can be run using the following code: 
+
+```{r,  echo=TRUE, eval=FALSE}
+system("wget http://130.192.119.59/public/mcf7_mouse_1m_R1.fastq.gz")
+system("wget http://130.192.119.59/public/mcf7_mouse_1m_R2.fastq.gz")
+#running xenome
+xenome(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
+         xenome.folder="/data/scratch/hg19.mm10", seq.type="pe",
+         threads=8)
+```
+
+In brief, **xenome.folder** is the location of the output generated by **xenomeIndex**. The **scratch.folder** is the folder where temporary data are created. **seq.type** indicates if it is a pair-end **pe** or a single-end **se** sequence. The parameter **threads** indicates how many threads the user would like to use. **fastq.folder** is the folder were input fastq are located and where the output of xenome will be located.
+
+## PDX data preprocessing HowTo
+
+PDX data preprocessing is done stating from the fastq.gz file of a sample present in a user defined folder **fastq.folder**. Data preprocessing is done by **wrapperPdx** with embeds:
+
+- **xenome** for mouse stromal data removal,
+
+- **skewer** for adapter trimming,
+
+- **bwa** for mapping and duplicates marking.
+
+**IMPORTANT** In case the mutect v1 will be used it is necessary to use, a genome reference for **bwa** the following archive (61 GB):
+
+```{r, echo=TRUE, eval=FALSE}
+system("wget http://130.192.119.59/public/hg19_exome.tar.gz)
+```
+
+### wrapperPdx
+
+PDX fastq preprocessing can be done with **wrapperPdx**. 
+These are the parameters to be passed:
+
+```{r, echo=TRUE, eval=FALSE}
+#example set made of 1 million reads of MCF7 exome data and 1 million reads of mouse genomic DNA pulled down with Illumina Nextera Rapid Capture Exome kit.
+
+system("wget http://130.192.119.59/public/mcf7_mouse_1m_R1.fastq.gz")
+system("wget http://130.192.119.59/public/mcf7_mouse_1m_R2.fastq.gz")
+
+#running wrapperPdx
+wrapperPdx(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
+     xenome.folder="/data/scratch/hg19.mm10", seq.type="pe", threads=24, 
+     adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+     adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT"
+     min.length=40, genome.folder="/data/scratch/hg19_exome", sample.id="sampleX")
+```
+
+In brief, **xenome.folder** is the location of the output generated by **xenomeIndex**. The **scratch.folder** is the folder where temporary data are created. **seq.type** indicates if it is a pair-end **pe** or a single-end **se** sequence. The parameter **threads** indicates how many threads the user would like to use. **fastq.folder** is the folder were input fastq are located and where the output of xenome will be located.
+User needs to provide also the sequence of the sequencing adapters, **adapter5** and **adapter3** parameters. In case Illumina platform the adapters sequences can be easily recovered [**here**](https://support.illumina.com/content/dam/illumina-support/documents/documentation/chemistry_documentation/experiment-design/illumina-adapter-sequences_1000000002694-01.pdf). 
+The **min.length** refers to the minimal length that a reads should have after adapters trimming. Since today the average read length for a RNAseq experiment is 50 or 75 nts would be better to bring to 40 nts the min.length parameter to increase the precision in assigning the correct position on the genome.
+The **genome.folder** parameter refers to the location of the genomic index [**hg19_exome**](http://130.192.119.59/public/hg19_exome.tar.gz) required for **bwa**, see above.
+**Sample.id** is a character string indicating the unique id to be associated to the bam that will be created.
+
+### wrapperPdx output
+
+The output of the function are three files:
+
+- **xenome_folder**, which contains xeno_ambiguous_ (difficult to be classified as human or mouse),  xeno_both_ (classified in both mouse and human), xeno_mm_ (mouse specific reads), xeno_neither_ (not human or mouse, possibly adapter sequences) files.
+
+- **xeno_hs_R1.fastq.gz**, xeno_hs_R2.fastq.gz, hg19 human associated reads, produced by xenome analysis and further processed by **wrapperPdx** to generated bam, bai and stats files.
+
+- One or two gzip fastq files ending with **trimmed-pair1.fastq.gz** and **trimmed-pair1.fastq.gz**, a log file of the trimming with the extensione **trimmed.log**
+
+- **dedup_reads.bam**, which is sorted and duplicates marked bam file generated by **bwa**, 
+
+- **dedup_reads.bai**, which is the index of the dedup_reads.bam generated by **bwa**, 
+
+- **dedup_reads.stats**, which provides mapping statistics generated by **bwa**.
 
 

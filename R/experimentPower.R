@@ -7,6 +7,8 @@
 #' @param genes4dispersion, an integer indicating the number of genes used in estimation of read counts and dispersion distribution
 #' @param log2fold.change, an integer indicating the minimum log2 fold change for prognostic genes between two groups
 #' @param output.folder, a string indicating the path where to save the output file
+#' @author Raffaele Calogero
+#' 
 #' @return a string with the requested informations. The string is also saved in a file: power_evaluation.txt
 #' @examples
 #'\dontrun{
@@ -14,7 +16,7 @@
 #'  unzip("test.analysis.zip")
 #'  setwd("test.analysis")
 #'  library(docker4seq)
-#'  experimentPower("_counts.txt",replicatesXgroup=7,
+#'  experimentPower(group="docker","_counts.txt",replicatesXgroup=7,
 #'  FDR=0.1, genes4dispersion=200, log2fold.change=1)
 #'}
 #' @export
@@ -36,25 +38,17 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
   filename <-  filename.tmp[length(filename.tmp)]
 
   if(group=="sudo"){
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
-    runDocker(group="sudo",container="docker.io/rcaloger/r332.2017.01", params=params)
+    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
+    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
   }else{
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/rcaloger/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
-    runDocker(group="docker",container="docker.io/rcaloger/r332.2017.01", params=params)
+    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
+    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
   }
 
-  out <- "xxxx"
-  #waiting for the end of the container work
-  while(out != "anno.info"){
-    Sys.sleep(10)
-    cat(".")
-    out.tmp <- dir(file.path(output.folder))
-    out.tmp <- out.tmp[grep("anno.info",out.tmp)]
-    if(length(out.tmp)>0){
-      out <- "anno.info"
-    }
+  if(resultRun=="false"){
+    cat("\nExperiment power analysis is finished\n")
   }
-
+  
   home <- getwd()
   setwd(output.folder)
 
@@ -82,7 +76,7 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
 
     #saving log and removing docker container
     container.id <- readLines(paste(output.folder,"/dockerID", sep=""), warn = FALSE)
-    system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+    system(paste("docker logs ", container.id, " >& ", "expermentPower_",substr(container.id,1,12),".log", sep=""))
     system(paste("docker rm ", container.id, sep=""))
 
     system("rm -fR anno.info")
