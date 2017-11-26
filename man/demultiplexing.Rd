@@ -2,7 +2,7 @@
 % Please edit documentation in R/demultiplexing.R
 \name{demultiplexing}
 \alias{demultiplexing}
-\title{Generating running bcl2fastq}
+\title{Generating running bcl2fastq NOT READY FOR STABLE missing test set}
 \usage{
 demultiplexing(group = c("sudo", "docker"), data.folder, scratch.folder,
   threads = 8)

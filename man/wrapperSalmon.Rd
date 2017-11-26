@@ -5,7 +5,8 @@
 \title{A function to estimate counts using Salmon quasi-alignment}
 \usage{
 wrapperSalmon(group = c("sudo", "docker"), scratch.folder, fastq.folder,
-  index.folder, threads = 24, seq.type = c("se", "pe"), adapter5, adapter3)
+  index.folder, threads = 24, seq.type = c("se", "pe"), adapter5, adapter3,
+  min.length)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
@@ -37,7 +38,7 @@ library(docker4seq)
 #running salmonCounts
 wrapperSalmon(group="docker", scratch.folder="/scratch/users/rcaloger/", 
         fastq.folder=getwd(), index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R", 
-        threads=24, seq.type="pe", adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT")
+        threads=24, seq.type="pe", adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", min.length=40)
 }
 
     

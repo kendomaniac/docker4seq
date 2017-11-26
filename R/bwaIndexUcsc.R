@@ -72,22 +72,16 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
 
 	if(group=="sudo"){
 		params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
-		runDocker(group="sudo",container="docker.io/repbioinfo/bwa.2017.01", params=params)
+		resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/bwa.2017.01", params=params)
 	}else{
 	  params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
-	  runDocker(group="docker",container="docker.io/repbioinfo/bwa.2017.01", params=params)
+	  resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/bwa.2017.01", params=params)
 	}
-	out <- "xxxx"
-	#waiting for the end of the container work
-	while(out != "out.info"){
-	  Sys.sleep(10)
-	  cat(".")
-	  out.tmp <- dir(genome.folder)
-	  out.tmp <- out.tmp[grep("out.info",out.tmp)]
-	  if(length(out.tmp)>0){
-	    out <- "out.info"
-	  }
-	}
+  if(resultRun=="false"){
+    cat("\nBwa index generation is finished\n")
+  }
+  
+  
 	#running time 2
 	ptm <- proc.time() - ptm
 	con <- file(paste(genome.folder,"run.info", sep="/"), "r")

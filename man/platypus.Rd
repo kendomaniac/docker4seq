@@ -2,7 +2,7 @@
 % Please edit documentation in R/platypus.R
 \name{platypus}
 \alias{platypus}
-\title{Platypus analysis}
+\title{Platypus analysis NOT READY TO GO ON STABLE missing test set}
 \usage{
 platypus(group = c("sudo", "docker"), data.folder = getwd(), scratch.folder,
   pathRef, nameRef, threads, GQ, minSampGQ, NR, minSampNR, NV, minSampNV,
