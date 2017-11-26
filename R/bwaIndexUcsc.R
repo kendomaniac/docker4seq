@@ -7,6 +7,7 @@
 #' @param g1000.file, a character string indicating the name of 1000 genome vcf located in the genome folder. The 1000 genomes vcf, Mills_and_1000G_gold_standard.indels.b37.vcf.gz and Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/
 #' @param uscs.urlgenome, a character string indicating the URL from uscs download web page for the unmasked genome sequence of interest
 #' @param gatk, a boolean TRUE and FALSE that indicate if the index will be used for GATK analysis
+#' @author Raffaele Calogero
 #'
 #' @return The indexed bwa genome reference sequence
 #' @examples
@@ -26,6 +27,10 @@
 #' }
 #' @export
 bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.urlgenome=NULL, dbsnp.file=NULL, g1000.file=NULL, gatk=FALSE){
+
+  home <- getwd()
+  setwd(genome.folder)
+  
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -66,23 +71,17 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
   }
 
 	if(group=="sudo"){
-		params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
-		runDocker(group="sudo",container="docker.io/rcaloger/bwa.2017.01", params=params)
+		params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
+		resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/bwa.2017.01", params=params)
 	}else{
-	  params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/rcaloger/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
-	  runDocker(group="docker",container="docker.io/rcaloger/bwa.2017.01", params=params)
+	  params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
+	  resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/bwa.2017.01", params=params)
 	}
-	out <- "xxxx"
-	#waiting for the end of the container work
-	while(out != "out.info"){
-	  Sys.sleep(10)
-	  cat(".")
-	  out.tmp <- dir(genome.folder)
-	  out.tmp <- out.tmp[grep("out.info",out.tmp)]
-	  if(length(out.tmp)>0){
-	    out <- "out.info"
-	  }
-	}
+  if(resultRun=="false"){
+    cat("\nBwa index generation is finished\n")
+  }
+  
+  
 	#running time 2
 	ptm <- proc.time() - ptm
 	con <- file(paste(genome.folder,"run.info", sep="/"), "r")
@@ -103,5 +102,6 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
 	system(paste("docker rm ", container.id, sep=""))
 	
 	system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",genome.folder, sep=""))
+  setwd(home)
 }
 
