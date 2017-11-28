@@ -13,7 +13,7 @@
 #'     system("wget http://130.192.119.59/public/mm10bwa.tar.gz")
 #'     system("gzip -d *.gz")
 #'     system("tar xvf *.tar")
-#'     setwd("/data/)
+#'     setwd("/data/")
 #'     system("wget http://130.192.119.59/public/tests.tar.gz")
 #'     system("gzip -d tests.tar.gz")
 #'     system("tar xvf tests.tar")
