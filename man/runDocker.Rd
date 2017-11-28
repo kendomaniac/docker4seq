@@ -26,3 +26,6 @@ This is an internal function executing a docker container. Not to be used by use
     
 }
 }
+\author{
+Raffaele Calogero
+}
