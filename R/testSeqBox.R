@@ -17,6 +17,7 @@
 #'     system("wget http://130.192.119.59/public/tests.tar.gz")
 #'     system("gzip -d tests.tar.gz")
 #'     system("tar xvf tests.tar")
+#'     system("rm tests.tar")
 #'     #running test SeqBox
 #'     testSeqbox()
 #'
