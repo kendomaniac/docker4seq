@@ -120,6 +120,9 @@ At the present time are available the following workflows:
 
 The most expensive computing  steps of the analyses are embedded in the following docker4seq functions: **rnaseqCounts**, **mirnaCounts**, **chipseqCounts**. These functions are also the only having RAM and computing power requirements not usually available in consumer computers. Hereafter it is shown the time required to run the above three functions increasing the number of sequenced reads.
 
+### testSeqbox
+In *docker4seq* is now present the function *testSeqbox*, which allows to evaluate if the software required for docker4seq functionalities is properly installed. Results of the tests are saved in testSeqBox.out file.
+
 ### rnaseqCounts performances
 
 Counts generation from fastq files  is the most time consuming step in RNAseq data analysis and it is usually calculated using high-end servers. We compare the behabiour of **rnaseqCounts** on SeqBox and on a high-end server:
