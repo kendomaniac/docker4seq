@@ -35,6 +35,7 @@ testSeqbox <- function(){
      source("/data/tests/downloadContainers/script.R")
      #
      #testing RNAseq workflow
+     cat("\ntesting RNAseq workflow\n")
      writeLines("testing RNAseq workflow",con=zz)
      writeLines(time,con=zz)
      setwd("/data/tests/rsemstarIndex/")
@@ -52,11 +53,13 @@ testSeqbox <- function(){
      setwd("/data/tests/wrapperDeseq2")
      source("/data/tests/wrapperDeseq2/script.R")
      #testing miRNAseq
+     cat("\ntesting miRNAseq workflow\n")
      writeLines("testing miRNAseq",con=zz)
      writeLines(time,con=zz)
      setwd("/data/tests/mirnaCounts")
      source("/data/tests/mirnaCounts/script.R")
      #testing chipseq
+     cat("\ntesting chipseq workflow\n")
      writeLines("testing chipseq",con=zz)
      writeLines(time,con=zz)
      setwd("/data/tests/bwaIndexUcsc/")
@@ -65,6 +68,7 @@ testSeqbox <- function(){
      source("/data/tests/chipseqCounts/script.R")
      #
      #checking results
+     cat("\nchecking results\n")
      writeLines(time,con=zz)
      setwd("/data/tests/rsemstarIndex/")
      #.....TO BE defined
@@ -166,6 +170,7 @@ testSeqbox <- function(){
      time <- gsub(":","-",gsub(" ","-",date()))
      writeLines(time,con=zz)
      close(zz)
+     cat("\nTests are finished, please check testSeqBox.out for results\n")
 
 }
 
