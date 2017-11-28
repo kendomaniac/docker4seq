@@ -19,6 +19,7 @@
 #'     system("tar xvf tests.tar")
 #'     system("rm tests.tar")
 #'     #running test SeqBox
+#'     library(docker4seq)
 #'     testSeqbox()
 #'
 #' }
@@ -176,9 +177,5 @@ testSeqbox <- function(){
 }
 
 
-
-
-
-#checking results
 
 
