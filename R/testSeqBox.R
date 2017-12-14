@@ -7,7 +7,7 @@
 #' @examples
 #'\dontrun{
 #'     #downloading in /data/genomes
-#'     setwd("/data/genomes)
+#'     setwd("/data/genomes")
 #'     system("wget http://130.192.119.59/public/hg38star.tar.gz")
 #'     system("wget http://130.192.119.59/public/mm10star.tar.gz")
 #'     system("wget http://130.192.119.59/public/mm10bwa.tar.gz")
