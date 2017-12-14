@@ -17,7 +17,7 @@
 #' @param org, a character string indicating the genome assembly used for mapping and counting with \code{"rsemstar"} function only required for biocENSEMBL based annotation
 #' @param annotation.type, a character string. Two options: \code{"biocENSEMBL"} or \code{"gtfENSEMBL"}. \code{"biocENSEMBL"} will annotate by Bioconductor only protein coding genes. \code{"gtfENSEMBL"} will annotate all RNAs described in \code{"annotation.type"}
 #' @author Raffaele Calogero
-#' 
+#'
 #' @return Returns the output of skewer, rsemstar, rsemannos' functions
 #' @examples
 #'\dontrun{
@@ -52,7 +52,10 @@ org="hg38", annotation.type=c("biocUCSC","gtfENSEMBL")){
     cat("\nERROR: an annotatin function not implemented was selected\n")
     return(1)
   }
+  setwd(fastq.folder)
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
+  system("rm *.fastq")
+  system("rm *trimmed-pair*")
   return(0)
 }
 
