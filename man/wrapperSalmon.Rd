@@ -36,12 +36,13 @@ system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 library(docker4seq)
 #running salmonCounts
-wrapperSalmon(group="docker", scratch.folder="/scratch/users/rcaloger/", 
-        fastq.folder=getwd(), index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R", 
-        threads=24, seq.type="pe", adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", min.length=40)
+wrapperSalmon(group="docker", scratch.folder="/scratch/users/rcaloger/",
+        fastq.folder=getwd(), index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R",
+        threads=24, seq.type="pe", adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+        adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT", min.length=40)
 }
 
-    
+
 }
 \author{
 Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
