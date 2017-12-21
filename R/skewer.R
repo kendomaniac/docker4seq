@@ -10,22 +10,22 @@
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param min.length, a number indicating minimal length required to return a trimmed read
 #' @author Raffaele Calogero
-#' 
+#'
 #' @return One or two gzip fastq files ending with trimmed-pair1.fastq.gz and trimmed-pair1.fastq.gz, a log file of the trimming with the extensione trimmed.log, run.info file descring the analysis steps done by the docker. The latter file is useful to understand where the docker stop in case of unexpected end
 #' @examples
 #'\dontrun{
 #'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 #'     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 #'     skewer(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
-#'     adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-#'     adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+#'     adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+#'     adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
 #'     seq.type="pe", threads=10,  min.length=40)
 #' }
 #' @export
 skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", adapter5, adapter3, seq.type=c("se","pe"), threads=1, min.length=18){
   home <- getwd()
   setwd(fastq.folder)
-  
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -111,7 +111,7 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	system(paste("rm -R ",scrat_tmp.folder))
 	system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
 	system(paste("rm  ",fastq.folder,"/tempFolderID", sep=""))
-	
+
 	system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
 	setwd(home)
 }

@@ -26,16 +26,16 @@
 #'     setwd("./test.mrnaCounts")
 #'     library(docker4seq)
 #'     rnaseqCounts(group="docker",fastq.folder=getwd(), scratch.folder=getwd(),
-#'             adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-#'             adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+#'             adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+#'             adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
 #'             seq.type="se", threads=8,  min.length=40,
 #'             genome.folder="/data/scratch/mm10star", strandness="none", save.bam=FALSE,
 #'             org="mm10", annotation.type="gtfENSEMBL")
 #' }
 #' @export
 rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/data/scratch", threads=4,
-adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
 seq.type="pe",   min.length=40,
 genome.folder="/data/scratch/hg38star", strandness="none", save.bam=TRUE,
 org="hg38", annotation.type=c("biocUCSC","gtfENSEMBL")){

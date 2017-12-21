@@ -75,7 +75,7 @@ oncosnpAnnotation <- function(group=c("sudo","docker"), data.folder, genome.fold
   #saving log and removing docker container
   container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/", substr(container.id,1,12),".log", sep=""))
-  system(paste("docker rm ", container.id, sep=""))
+ # system(paste("docker rm ", container.id, sep=""))
   #removing temporary data
   system("rm -fR dockerID")
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))

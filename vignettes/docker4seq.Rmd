@@ -242,8 +242,8 @@ unzip("test.mrnaCounts.zip")
 setwd("./test.mrnaCounts")
 library(docker4seq)
 rnaseqCounts(group="docker",fastq.folder=getwd(), scratch.folder=getwd(),
-adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
 seq.type="se", threads=8,  min.length=40,
 genome.folder="/data/scratch/mm10star", strandness="none", save.bam=FALSE,
 org="mm10", annotation.type="gtfENSEMBL")
@@ -591,8 +591,8 @@ setwd("test.chipseqCounts")
 library(docker4seq)
 chipseqCounts(group = "docker", output.folder = "./prdm51.igg",
   mock.folder="./igg", test.folder="./prdm51", scratch.folder=getwd(),
-  adapter5 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-  adapter3 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+  adapter5 = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+  adapter3 = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
   threads = 8, min.length = 30, genome.folder,
   mock.id = "igg", test.id = "tf", genome, read.size = 50,
   tool = "macs", macs.min.mfold = 10, macs.max.mfold = 30,
@@ -715,8 +715,8 @@ system("wget http://130.192.119.59/public/mcf7_mouse_1m_R2.fastq.gz")
 #running wrapperPdx
 wrapperPdx(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
      xenome.folder="/data/scratch/hg19.mm10", seq.type="pe", threads=24, 
-     adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-     adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT"
+     adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+     adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
      min.length=40, genome.folder="/data/scratch/hg19_exome", sample.id="sampleX")
 ```
 

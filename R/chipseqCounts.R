@@ -37,8 +37,8 @@
 #'     library(docker4seq)
 #'     chipseqCounts(group = "docker", output.folder = "./prdm51.igg",
 #'              mock.folder="./igg", test.folder="./prdm51", scratch.folder=getwd(),
-#'              adapter5 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-#'              adapter3 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+#'              adapter5 = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+#'              adapter3 = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
 #'              threads = 8, min.length = 30, genome.folder,
 #'              mock.id = "igg", test.id = "tf", genome, read.size = 50,
 #'              tool = "macs", macs.min.mfold = 10, macs.max.mfold = 30,
@@ -55,7 +55,7 @@ chipseqCounts <- function( group=c("sudo","docker"),output.folder=getwd(), mock.
                           tool="macs", macs.min.mfold=10, macs.max.mfold=30, macs.pval="1e-5",
                           sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10,
                           tss.distance=0, max.upstream.distance=10000, remove.duplicates="N"){
-  
+
   #trimming adapter and bwa
   home <- getwd()
   setwd(output.folder)
