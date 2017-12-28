@@ -19,6 +19,7 @@ This function executes a set of scripts to check if SeqBox installation is OK. I
     system("wget http://130.192.119.59/public/hg38star.tar.gz")
     system("wget http://130.192.119.59/public/mm10star.tar.gz")
     system("wget http://130.192.119.59/public/mm10bwa.tar.gz")
+    system("wget http://130.192.119.59/public/hg38salmon.tar.gz")
     system("gzip -d *.gz")
     system("tar xvf *.tar")
     setwd("/data/")

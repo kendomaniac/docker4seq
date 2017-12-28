@@ -11,6 +11,7 @@
 #'     system("wget http://130.192.119.59/public/hg38star.tar.gz")
 #'     system("wget http://130.192.119.59/public/mm10star.tar.gz")
 #'     system("wget http://130.192.119.59/public/mm10bwa.tar.gz")
+#'     system("wget http://130.192.119.59/public/hg38salmon.tar.gz")
 #'     system("gzip -d *.gz")
 #'     system("tar xvf *.tar")
 #'     setwd("/data/")
@@ -44,6 +45,11 @@ testSeqbox <- function(){
      #source("/data/tests/rsemstarIndex/script.R")
      setwd("/data/tests/rnaseqCounts")
      source("/data/tests/rnaseqCounts/script.R")
+
+     #testing salmon reference free aligner
+     setwd("/data/tests/salmonCounts")
+     source("/data/tests/salmonCounts/script.R")
+
      setwd("/data/tests/samples2experiment")
      source("/data/tests/samples2experiment/script.R")
      setwd("/data/tests/sampleSize")
@@ -87,6 +93,22 @@ testSeqbox <- function(){
      }else{
        writeLines("rnaseqCounts passed tests checks",con=zz)
      }
+     #
+
+     setwd("/data/tests/salmonCounts")
+     dir <- dir()
+     if(length(grep("gtf_annotated_genes.results", dir))==0){
+       writeLines("annotation by GTF failed",con=zz)
+     }else if(length(grep("isoforms.results", dir))==0){
+       writeLines("Salmon to RSEM conversion failed",con=zz)
+     }else if(length(grep("quant.sf", dir))==0){
+       writeLines("Salmon failed",con=zz)
+     }else if(length(grep("trimmed.log$", dir))==0){
+       writeLines("Skewer failed",con=zz)
+     }else{
+       writeLines("salmonCounts passed tests checks",con=zz)
+     }
+
      #
      setwd("/data/tests/samples2experiment")
      dir <- dir()
