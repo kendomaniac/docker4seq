@@ -45,17 +45,65 @@ salmonAnnotation <- function(group=c("sudo","docker"), fastq.folder, index.folde
 
     #saving log and removing docker container
     container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
-    system(paste("docker logs ", substr(container.id,1,12), " &> ","salmonAnnotation_",substr(container.id,1,12),".log", sep=""))
+    system(paste("docker logs ", substr(container.id,1,12), " &> ","salmonTranscriptsAnnotation_",substr(container.id,1,12),".log", sep=""))
     system(paste("docker rm ", container.id, sep=""))
     #removing temporary folder
     cat("\n\nRemoving the temporary file ....\n")
-#    system(paste("rm -R ",scrat_tmp.folder))
-#    system("rm -fR out.info")
+    system("rm -fR dockerID")
+    system("rm  -fR tempFolderID")
+#    system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
+  }
+
+#gene level conversion
+
+  if(group=="sudo"){
+    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/iso2gene.R", sep="")
+    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r340.2017.01", params=params)
+  }else{
+    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/iso2gene.R", sep="")
+    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r340.2017.01", params=params)
+  }
+
+  #waiting for the end of the container work
+  if(resultRun=="false"){
+    cat("\nSalmon output gene level conversion is finished\n")
+
+    #saving log and removing docker container
+    container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
+    system(paste("docker logs ", substr(container.id,1,12), " &> ","salmonGeneConversion_",substr(container.id,1,12),".log", sep=""))
+    system(paste("docker rm ", container.id, sep=""))
+    #removing temporary folder
+    cat("\n\nRemoving the temporary file ....\n")
+    system("rm -fR dockerID")
+    system("rm  -fR tempFolderID")
+    #    system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
+  }
+
+  #ensembl gtf annotation at gene level
+
+  if(group=="sudo"){
+    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/salmon.annoByGtf.R", sep="")
+    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r340.2017.01", params=params)
+  }else{
+    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/salmon.annoByGtf.R", sep="")
+    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r340.2017.01", params=params)
+  }
+
+  #waiting for the end of the container work
+  if(resultRun=="false"){
+    cat("\nSalmon output ensembl gtf annotation at gene level is finished\n")
+
+    #saving log and removing docker container
+    container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
+    system(paste("docker logs ", substr(container.id,1,12), " &> ","salmonGeneAnnotation_",substr(container.id,1,12),".log", sep=""))
+    system(paste("docker rm ", container.id, sep=""))
+    #removing temporary folder
+    cat("\n\nRemoving the temporary file ....\n")
     system("rm -fR dockerID")
     system("rm  -fR tempFolderID")
     system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
-
   }
+
 
   #running time 2
   ptm <- proc.time() - ptm
