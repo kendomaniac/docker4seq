@@ -9,6 +9,7 @@
 #' @param seq.type, a character string indicating the type of reads to be trimmed. Two options: \code{"se"} or \code{"pe"} respectively for single end and pair end sequencing.
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param min.length, a number indicating minimal length required to return a trimmed read
+#' @param DockerSwarm, a bolean value used to enable docker execution in swarm mode.
 #' @author Raffaele Calogero
 #'
 #' @return One or two gzip fastq files ending with trimmed-pair1.fastq.gz and trimmed-pair1.fastq.gz, a log file of the trimming with the extensione trimmed.log, run.info file descring the analysis steps done by the docker. The latter file is useful to understand where the docker stop in case of unexpected end
@@ -22,7 +23,7 @@
 #'     seq.type="pe", threads=10,  min.length=40)
 #' }
 #' @export
-skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", adapter5, adapter3, seq.type=c("se","pe"), threads=1, min.length=18){
+skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", adapter5, adapter3, seq.type=c("se","pe"), threads=1, min.length=18,DockerSwarm=FALSE){
   home <- getwd()
   setwd(fastq.folder)
 
@@ -70,19 +71,19 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 #		system("sudo docker pull docker.io/repbioinfo/skewer.2017.01")
 		if(seq.type=="pe"){
 		      params <- paste("--cidfile ",fastq.folder,"/dockerID   -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim2.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep="")
-		      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/skewer.2017.01", params=params)
+		      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/skewer.2017.01", params=params,DockerSwarm=DockerSwarm)
 		}else{
 			    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim1.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length, sep="")
-			    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/skewer.2017.01", params=params)
+			    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/skewer.2017.01", params=params,DockerSwarm=DockerSwarm)
 		}
 	}else{
 #		system("docker pull docker.io/repbioinfo/skewer.2017.01")
 		if(seq.type=="pe"){
 		      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim2.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep="")
-		      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/skewer.2017.01", params=params)
+		      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/skewer.2017.01", params=params,DockerSwarm=DockerSwarm)
 		}else{
 			   params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim1.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length , sep="")
-			   resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/skewer.2017.01", params=params)
+			   resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/skewer.2017.01", params=params,DockerSwarm=DockerSwarm)
 		}
 	}
 
