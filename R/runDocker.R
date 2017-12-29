@@ -95,12 +95,11 @@ runDocker <- function(group="docker",container=NULL, params=NULL, DockerSwarm=FA
     stringExcution=paste(stringExcution,"docker service create --replicas 1 --name",nameService,"--restart-condition=\"none\" ",params," ")
     system(stringExcution)
     
-    dockerStatus=system(paste("docker service ps ",nameService),intern= T)
-    
+    dockerStatus=system(paste("docker service ps ",nameService),intern= T)[2][6]
     cat("\n\nBefore while, docker status: ",dockerStatus,"\n")
     while(dockerStatus=="running"){
       Sys.sleep(10);
-      dockerStatus=system(paste("docker service ps --format {{.CurrentState}}",nameService),intern= T)
+      dockerStatus=system(paste("docker service ps ",nameService),intern= T)[2][6]
       cat(".")
     }
     cat(".\n\n")
