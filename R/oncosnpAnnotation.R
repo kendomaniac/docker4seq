@@ -5,6 +5,7 @@
 #' @param data.folder, a character string indicating the folder where input data (.cnvs) generated with oncoSNP are located and where output will be written
 #' @author Raffaele Calogero, raffaele.calogero[at]unito[dot]it, University of Torino, Italy
 #' 
+#' @return a file for each .cnvs, e.g. annotation_XXXX.cnvs.txt
 #' @examples
 #' \dontrun{
 #'     #running oncosnpAnnotation
