@@ -63,11 +63,11 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   }
   #executing the docker job
   
- params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d ",dockerImage, " /bin/hashclone.sh ",kmer," ",hash," ",coll," ",threshold," /scratch  null ", spike, sep="")
- for (i in 1:length(input.files)){
+  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d ",dockerImage, " /bin/hashclone.sh ",kmer," ",hash," ",coll," ",threshold," /scratch  null ", spike, sep="")
+  for (i in 1:length(input.files)){
     params <- paste(params,paste("/scratch/",basename(input.files[i]),sep=""), sep=" ")
- }
- 
+  }
+  
   #Run docker   
   resultRun <- runDocker(group=group,container=dockerImage, params=params)
   #waiting for the end of the container work
@@ -107,4 +107,5 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   system("rm  -fR tempFolderID")
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
   setwd(home)
+
 }
