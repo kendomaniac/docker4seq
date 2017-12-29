@@ -2,17 +2,14 @@
 % Please edit documentation in R/demultiplexing.R
 \name{demultiplexing}
 \alias{demultiplexing}
-\title{Generating running bcl2fastq NOT READY FOR STABLE missing test set}
+\title{Generating running bcl2fastq}
 \usage{
-demultiplexing(group = c("sudo", "docker"), data.folder, scratch.folder,
-  threads = 8)
+demultiplexing(group = c("sudo", "docker"), data.folder, threads = 8)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
 
 \item{data.folder, }{a character string indicating the Illumina folder where the Samplesheet.csv is located, and example of Samplesheet.cvs is in inst/examples folder}
-
-\item{scratch.folder, }{a character string indicating the path of the scratch folder}
 
 \item{threads, }{a number indicating the number of cores to be used from the application}
 }
@@ -27,10 +24,7 @@ This function executes the Illumina bcl2fastq program
     #running rsemstar index for human
     demultiplexing(group="docker",
     data.folder="/home/calogero/Documents/data/lollini/3a_run/170712_NB501050_0097_AH3FGNBGX3",
-    scratch.folder="/data/scratch", threads=24)
+    threads=24)
 
 }
-}
-\author{
-Raffaele Calogero
 }

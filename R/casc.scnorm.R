@@ -10,8 +10,6 @@
 #' @param ditherCount, FALSE of TRUE. Settin gto TRUE might improve results with UMI data
 #' @param PropToUse, as default is set to 0.25 but to increase speed with large data set could be reduced, e.g. 0.1
 #' @return a PDF providing a view of effects of normalization, a Rda file containing the full output of **SCnorm** and a tab delimited file containing the normalized data.
-#' @author Raffaele Calogero, Luca Alessandri
-#' 
 #' @examples
 #' \dontrun{
 #'     #downloading fastq files
@@ -39,11 +37,11 @@ scnorm <- function(group=c("sudo","docker"), data.folder=getwd(), counts.matrix,
     conditions <- paste(conditions, collapse = "_")
   }
   if(group=="sudo"){
-        params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum, " ",ditherCount," ",PropToUse, sep="")
-        runDocker(group="sudo",container="docker.io/repbioinfo/r340.2017.01", params=params)
+        params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum, " ",ditherCount," ",PropToUse, sep="")
+        runDocker(group="sudo",container="docker.io/rcaloger/r340.2017.01", params=params)
   }else{
-        params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum," ",ditherCount," ",PropToUse, sep="")
-        runDocker(group="docker",container="docker.io/repbioinfo/r340.2017.01", params=params)
+        params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scnorm.R ",counts.matrix," ",conditions," ",outputName," ",nCores," ",filtercellNum," ",ditherCount," ",PropToUse, sep="")
+        runDocker(group="docker",container="docker.io/rcaloger/r340.2017.01", params=params)
   }
 
   out <- "xxxx"

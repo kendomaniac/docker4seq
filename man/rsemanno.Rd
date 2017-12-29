@@ -2,7 +2,7 @@
 % Please edit documentation in R/rsemAnnotate.R
 \name{rsemanno}
 \alias{rsemanno}
-\title{Annotating RSEM gene.results using ENSEMBL annotation NOT FOR STABLE}
+\title{Annotating RSEM gene.results using ENSEMBL annotation}
 \usage{
 rsemanno(group = c("sudo", "docker"), rsem.folder = getwd(),
   scratch.folder = "/data/scratch", org = c("hg19", "hg38", "mm10", "mm9"),
@@ -38,7 +38,4 @@ This function executes the docker container annotate.1, where Bioconductor is us
     protein.anno=FALSE)
 
 }
-}
-\author{
-Raffaele Calogero
 }

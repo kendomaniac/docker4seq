@@ -18,7 +18,6 @@
 #' @param tss.distance, an integer indicating the distance of TSS with respect to gene start
 #' @param max.upstream.distance, an integer indicating the maximum distance to associate a gene ID to a peak
 #' @param remove.duplicates, a character string indicating if duplicated reads have to be removed. Available options: Y, to remove douplicates, N to keep duplicates
-#' @author Raffaele Calogero
 #'
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
 #' @examples
@@ -41,10 +40,6 @@
 #' }
 #' @export
 chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ctrl.bam, scratch.folder="/data/scratch", genome=c("hg19","hg38","mm9","mm10"), read.size, tool=c("macs","sicer"), macs.min.mfold=10, macs.max.mfold=30, macs.pval="1e-5", sicer.wsize=200, sicer.gsize=c(200,600), sicer.fdr=0.10, tss.distance=0, max.upstream.distance=10000,  remove.duplicates=c("Y","N")){
-
-  home <- getwd()
-  setwd(bam.folder)
-  
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -96,25 +91,31 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	cat("\nsetting as working dir the scratch folder and running chipseq docker container\n")
 
 	if(group=="sudo"){
-		   params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
+		   params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
 		             bam.folder," ", ctrl.bam," 000000 ",docker_chipseq.folder," ",
 		             genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ",
 		             macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",
 		             max.upstream.distance," ",remove.duplicates, sep="")
-		   resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/chipseq.2017.01", params=params)
+	     runDocker(group="sudo",container="docker.io/repbioinfo/chipseq.2017.01", params=params)
 		}else{
-		  params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
+		  params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
              bam.folder," ", ctrl.bam," 000000 ",docker_chipseq.folder," ",
              genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ",
              macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",
              max.upstream.distance," ",remove.duplicates, sep="")
-		  resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/chipseq.2017.01", params=params)
-		}
-	
-	if(resultRun=="false"){
-	  cat("\nChIPseq analysis is finished\n")
+		  runDocker(group="docker",container="docker.io/repbioinfo/chipseq.2017.01", params=params)
 	}
-
+	out <- "xxxx"
+	#waiting for the end of the container work
+	while(out != "out.info"){
+		Sys.sleep(10)
+		cat(".")
+		out.tmp <- dir(scrat_tmp.folder)
+		out.tmp <- out.tmp[grep("out.info",out.tmp)]
+		if(length(out.tmp)>0){
+			out <- "out.info"
+		}
+	}
 #	system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	con <- file(paste(scrat_tmp.folder,"out.info", sep="/"), "r")
 	tmp <- readLines(con)
@@ -136,9 +137,9 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 
 	#saving log and removing docker container
 	container.id <- readLines(paste(bam.folder,"/dockerID", sep=""), warn = FALSE)
-	system(paste("docker logs ", container.id, " >& ","chipseq_",substr(container.id,1,12),".log", sep=""))
+	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
 	system(paste("docker rm ", container.id, sep=""))
-	
+
 	#removing temporary folder
 	cat("\n\nRemoving the rsemStar temporary file ....\n")
 	system(paste("rm -R ",scrat_tmp.folder))
@@ -146,6 +147,5 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
   system(paste("rm  ",bam.folder,"/tempFolderID", sep=""))
 	#removing temporary folder
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",bam.folder, sep=""))
-  setwd(home)
 }
 

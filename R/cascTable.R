@@ -4,7 +4,6 @@
 #' @param data.folder, a character string indicating the folder where comma separated file of cells log10 counts will be saved
 #' @param type, a character value indicating the content of the file separator: csv comma, txt tab
 #' @param log.base, a integer value indicating the base fro the log transformation
-#' @author Raffaele Calogero, Luca Alessandri
 #' @return Returns a log10 or log2 comma separated file.
 #' @examples
 #'\dontrun{

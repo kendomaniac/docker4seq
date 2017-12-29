@@ -2,7 +2,7 @@
 % Please edit documentation in R/cascStep1.R
 \name{cascStep1}
 \alias{cascStep1}
-\title{Running CASC step1 identific ation of the optimal number of clusters}
+\title{Running CASC step1 identification of the optimal number of clusters}
 \usage{
 cascStep1(group = c("sudo", "docker"), scratch.folder,
   data.folder = getwd(), counts.matrix, permutations = 100,
@@ -46,7 +46,4 @@ This function executes CASC step1 identification of the optimal number of cluste
     counts.matrix="log10_singlecells_counts.csv", permutations=20, blocks.permutations=2, core=0, bootstrap.fraction=10, k.min=2, k.max=4)
 }
 
-}
-\author{
-Raffaele Calogero, Luca Alessandri
 }

@@ -6,8 +6,6 @@
 #' @param drop.thre, A number between 0 and 1, specifying the threshold to determine dropout values
 #' @param cores, a integer specifying the number of cores used for parallel computation.
 #' @param refining, boolean FALSE, TRUE, if TRUE it execute again scImpute but setting a different drop.thre. Rerunning to change drop.thre hase to be done in the same folder where the first run was done.
-#' @author Raffaele Calogero, Luca Alessandri
-#'
 #' @return A matrix file with imputed data.
 #' @examples
 #' \dontrun{
@@ -20,20 +18,12 @@
 #' @export
 cascImpute <- function(group=c("sudo","docker"), data.folder, counts.matrix, drop.thre, cores, refining=FALSE){
 
-  #running time 1
-  ptm <- proc.time()
-  #running time 1
-  test <- dockerTest()
-  if(!test){
-    cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
-  }
   if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder, ":/data -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/scimpute.R ",counts.matrix," ",drop.thre," ",cores," ", refining, sep="")
-    runDocker(group="sudo",container="docker.io/repbioinfo/r340.2017.01", params=params)
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder, ":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scimpute.R ",counts.matrix," ",drop.thre," ",cores," ", refining, sep="")
+    runDocker(group="sudo",container="docker.io/rcaloger/r340.2017.01", params=params)
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder, ":/data -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/scimpute.R ",counts.matrix," ",drop.thre," ",cores," ", refining, sep="")
-    runDocker(group="docker",container="docker.io/repbioinfo/r340.2017.01", params=params)
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder, ":/data -d docker.io/rcaloger/r340.2017.01 Rscript /bin/scimpute.R ",counts.matrix," ",drop.thre," ",cores," ", refining, sep="")
+    runDocker(group="docker",container="docker.io/rcaloger/r340.2017.01", params=params)
   }
 
   out <- "xxxx"

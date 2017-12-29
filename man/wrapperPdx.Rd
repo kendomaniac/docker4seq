@@ -6,10 +6,9 @@
 \usage{
 wrapperPdx(group = c("sudo", "docker"), fastq.folder, scratch.folder,
   xenome.folder, seq.type, threads,
-  adapter5 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-  adapter3 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-  min.length = 40, genome.folder = "/data/scratch/hg19_exome",
-  sample.id = "sampleX")
+  adapter5 = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+  adapter3 = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT", min.length = 40,
+  genome.folder = "/data/scratch/hg19_exome", sample.id = "sampleX")
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -45,15 +44,15 @@ This function executes xenome, to remove mouse data, skewer, to trim adapters, b
     #downloading examples 1 million reads of mcf7 exome mixed with 1 million of mouse derived by human exome capturing
     system("wget http://130.192.119.59/public/hs1m_mm1m_R1.fastq.gz")
     system("wget http://130.192.119.59/public/hs1m_mm1m_R2.fastq.gz")
-    
+
     #required for bwa 61Gb At the present time this is required to run mutect1
     system("wget http://130.192.119.59/public/hg19_exome.tar.gz")
-    
+
     #running wrapperPdx
     wrapperPdx(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
-    xenome.folder="/data/scratch/hg19.mm10", seq.type="pe", threads=24, 
-    adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-    adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+    xenome.folder="/data/scratch/hg19.mm10", seq.type="pe", threads=24,
+    adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+    adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
     min.length=40, genome.folder="/data/scratch/hg19_exome", sample.id="sampleX")
 
 }

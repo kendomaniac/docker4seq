@@ -22,15 +22,15 @@ system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 library(docker4seq)
 #running salmonCounts
-salmonCounts(group="docker", scratch.folder="/scratch/users/rcaloger/", 
-        fastq.folder=getwd(), index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R", 
+salmonCounts(group="docker", scratch.folder="/scratch/users/rcaloger/",
+        fastq.folder=getwd(), index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R",
         threads=24, seq.type="pe")
 
 #converting in a format identical to rsem isoform.results
-salmonAnnotation(group="docker", fastq.folder=getwd(), 
+salmonAnnotation(group="docker", fastq.folder=getwd(),
     index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R")
-}     
-    
+}
+
 }
 \author{
 Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy

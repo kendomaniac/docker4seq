@@ -2,7 +2,7 @@
 % Please edit documentation in R/rsemBw.R
 \name{rsemBw}
 \alias{rsemBw}
-\title{Creating a bigwig using RSEM NOT FOR STABLE}
+\title{Creating a bigwig using RSEM}
 \usage{
 rsemBw(group = c("sudo", "docker"), bam.folder = getwd(),
   scratch.folder = "/data/scratch")
@@ -22,12 +22,10 @@ This function executes the docker container rsemstar where RSEM is installed and
 }
 \examples{
 \dontrun{
-    #Important bam should be named Aligned.out.bam and the index Aligned.out.bai
+    #downloading fastq files
+    #running bwa
     rsemBw(group="docker",bam.folder=getwd(), scratch.folder="/data/scratch")
 
 
 }
-}
-\author{
-Raffaele Calogero
 }

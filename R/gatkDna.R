@@ -1,4 +1,4 @@
-#' @title Running realignment and recalibration, GATK NOT READY FOR STABLE
+#' @title Running realignment and recalibration, GATK
 #' @description This function executes the docker container snv.1 where GATK software is used to do INDEL realignment and quality recalibration. This analysis is required only to run mutect1. The bwa index has to be prepared with bwaIndex
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
@@ -7,7 +7,6 @@
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa is located
 #' @param threads, a number indicating the number of cores to be used from the application
-#' @author Raffaele Calogero
 #'
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
 #' @examples

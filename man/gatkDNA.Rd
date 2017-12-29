@@ -2,7 +2,7 @@
 % Please edit documentation in R/gatkDna.R
 \name{gatkDNA}
 \alias{gatkDNA}
-\title{Running realignment and recalibration, GATK NOT READY FOR STABLE}
+\title{Running realignment and recalibration, GATK}
 \usage{
 gatkDNA(group = c("sudo", "docker"), bam.folder = getwd(),
   scratch.folder = "/data/scratch", gatk.filename, genome.folder,
@@ -37,7 +37,4 @@ This function executes the docker container snv.1 where GATK software is used to
     gatk.filename="GenomeAnalysisTK-3.7.tar.bz2"
     genome.folder="/data/scratch/hg19_bwa", threads=24)
 }
-}
-\author{
-Raffaele Calogero
 }

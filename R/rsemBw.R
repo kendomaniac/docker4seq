@@ -1,15 +1,15 @@
-#' @title Creating a bigwig using RSEM NOT FOR STABLE
+#' @title Creating a bigwig using RSEM
 #' @description This function executes the docker container rsemstar where RSEM is installed and create a bigwig file for genomic data visualization
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param bam.folder, a character string indicating where BAM SORTED file is located
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
-#' @author Raffaele Calogero
 #'
 #' @return output.bw, which is the bigwig
 #' @examples
 #'\dontrun{
-#'     #Important bam should be named Aligned.out.bam and the index Aligned.out.bai
+#'     #downloading fastq files
+#'     #running bwa
 #'     rsemBw(group="docker",bam.folder=getwd(), scratch.folder="/data/scratch")
 #'
 
@@ -17,10 +17,6 @@
 #' }
 #' @export
 rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="/data/scratch"){
-
-  home <- getwd()
-  setwd(bam.folder)
-  
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -61,17 +57,24 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
   }
   docker_fastq.folder=file.path("/data/scratch", tmp.folder)
   if(group=="sudo"){
-      params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
-      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+      params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
+      runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
     }else{
-      params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
-      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
-    }
-  
-  if(resultRun=="false"){
-    cat("\nSample size analysis is finished\n")
+      params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
+      runDocker(group="docker",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
   }
-
+  out <- "xxxx"
+  #waiting for the end of the container work
+  while(out != "out.info"){
+    Sys.sleep(10)
+    cat(".")
+    out.tmp <- dir(file.path(scratch.folder, tmp.folder))
+    out.tmp <- out.tmp[grep("out.info",out.tmp)]
+    
+    if(length(out.tmp)>0){
+      out <- "out.info"
+    }
+  }
   #system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
   con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
   tmp <- readLines(con)
@@ -92,14 +95,14 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
   
   #saving log and removing docker container
   container.id <- readLines(paste(bam.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", container.id, " >& ", "rsemBw_",substr(container.id,1,12),".log", sep=""))
+  system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
   
   #removing temporary folder
   cat("\n\nRemoving the rsem temporary file ....\n")
-   system(paste("rm -R ",scrat_tmp.folder))
-   system(paste("rm  -f ",bam.folder,"/dockerID", sep=""))
-   system(paste("rm  -f ",bam.folder,"/tempFolderID", sep=""))
-   setwd(home)
+ #  system(paste("rm -R ",scrat_tmp.folder))
+ #  system(paste("rm  -f ",bam.folder,"/dockerID", sep=""))
+ #  system(paste("rm  -f ",bam.folder,"/tempFolderID", sep=""))
+  
 }
 

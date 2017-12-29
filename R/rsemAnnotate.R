@@ -1,4 +1,4 @@
-#' @title Annotating RSEM gene.results using ENSEMBL annotation NOT FOR STABLE
+#' @title Annotating RSEM gene.results using ENSEMBL annotation
 #' @description This function executes the docker container annotate.1, where Bioconductor is used to annotated gene.results output of RSEM using ENSEMBL annotation
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
@@ -7,7 +7,6 @@
 #' @param org, a character string indicating the genome assembly used for mapping and counting with \code{"rsemstar"} function
 #' @param truncating.expected.counts, a boolean logical variable indicating if the expected counts calculated by RSEM need to be converted in integer to be compliant with differnetial expression Bioconductor packages as DESeq2. Default is FALSE
 #' @param protein.anno, a boolean logical variable indicating if instead of gene SYMBOL SWISSPROT symbol are used. This option is useful for integrating transcriptomics data with proteomics data
-#' @author Raffaele Calogero
 #'
 #' @return one file: annotated_genes.results, which is the annotated version of gene.results.
 #' @examples
@@ -63,11 +62,11 @@ rsemanno <- function(group=c("sudo","docker"),rsem.folder=getwd(), scratch.folde
 	cat("\nsetting as working dir the scratch folder and running annotate docker container\n")
   rsem.results <- dir
 	if(group=="sudo"){
-#		      system("sudo docker pull docker.io/repbioinfo/annotate.2017.01")
-		      system(paste("sudo docker run --privileged=true -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/annotate.2017.01 sh /bin/annotate.sh ", file.path(scratch.folder, tmp.folder)," ",rsem.results," ",org," ",truncating.expected.counts," ",annotation.type," ", protein.anno, " ", rsem.folder, sep=""))
+#		      system("sudo docker pull docker.io/rcaloger/annotate.2017.01")
+		      system(paste("sudo docker run --privileged=true -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/annotate.2017.01 sh /bin/annotate.sh ", file.path(scratch.folder, tmp.folder)," ",rsem.results," ",org," ",truncating.expected.counts," ",annotation.type," ", protein.anno, " ", rsem.folder, sep=""))
 	}else{
-#	        system("docker pull docker.io/repbioinfo/annotate.2017.01")
-	        system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/annotate.2017.01 sh /bin/annotate.sh ", file.path(scratch.folder, tmp.folder)," ",rsem.results," ",org," ",truncating.expected.counts," ",annotation.type," ", protein.anno, " ", rsem.folder, sep=""))
+#	        system("docker pull docker.io/rcaloger/annotate.2017.01")
+	        system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/annotate.2017.01 sh /bin/annotate.sh ", file.path(scratch.folder, tmp.folder)," ",rsem.results," ",org," ",truncating.expected.counts," ",annotation.type," ", protein.anno, " ", rsem.folder, sep=""))
 
 	}
 	out <- "xxxx"

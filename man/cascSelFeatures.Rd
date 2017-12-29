@@ -48,6 +48,3 @@ The first step of the analysis requires  that  both dispersion.min  and dispersi
 }
 
 }
-\author{
-Raffaele Calogero, Luca Alessandri
-}

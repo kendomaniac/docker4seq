@@ -43,6 +43,3 @@ This function is a wrapper for SCnorm: robust normalization of single-cell RNA-s
     conditions=conditions,outputName="singlecells_counts", nCores=8, filtercellNum=10, ditherCount=TRUE, PropToUse=0.1)
 }
 }
-\author{
-Raffaele Calogero, Luca Alessandri
-}

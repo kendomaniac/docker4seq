@@ -9,6 +9,7 @@
 #' @param adapter5, a character string indicating the fwd adapter
 #' @param adapter3, a character string indicating the rev adapter
 #' @param min.length, a number indicating minimal length required to return a trimmed read
+#' @param strandness, a character string indicating the type ofsequencing protocol used for the analysis. Three options: \code{"none"}, \code{"forward"}, \code{"reverse"} respectively for non strand selection, reverse for Illumina strandness protocols, reverse for ACCESS Illumina protocol
 
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 #' @examples
@@ -17,25 +18,26 @@
 #' system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 #' library(docker4seq)
 #' #running salmonCounts
-#' wrapperSalmon(group="docker", scratch.folder="/scratch/users/rcaloger/", 
-#'         fastq.folder=getwd(), index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R", 
-#'         threads=24, seq.type="pe", adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT", min.length=40)
+#' wrapperSalmon(group="docker", scratch.folder="/scratch/users/rcaloger/",
+#'         fastq.folder=getwd(), index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R",
+#'         threads=24, seq.type="pe", adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+#'         adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT", min.length=40, strandness="none")
 #' }
-#' 
-#'     
-#' @export  
-#' 
-wrapperSalmon <- function(group=c("sudo", "docker"), scratch.folder, fastq.folder, index.folder, 
-         threads=24, seq.type=c("se", "pe"), adapter5, adapter3, min.length){
-  
+#'
+#'
+#' @export
+#'
+wrapperSalmon <- function(group=c("sudo", "docker"), scratch.folder, fastq.folder, index.folder,
+         threads=24, seq.type=c("se", "pe"), adapter5, adapter3, min.length, strandness=c("none", "forward", "reverse")){
+
   #trimming adapter
   skewer(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder,adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
   #running salmon
-  salmonCounts(group=group, scratch.folder=scratch.folder, 
-                   fastq.folder=fastq.folder, index.folder=index.folder, 
-                   threads=threads, seq.type=seq.type)
+  salmonCounts(group=group, scratch.folder=scratch.folder,
+                   fastq.folder=fastq.folder, index.folder=index.folder,
+                   threads=threads, seq.type=seq.type, strandness=strandness)
   #anntating salmon output
   salmonAnnotation(group=group, fastq.folder=fastq.folder, index.folder=index.folder)
- 
-}                     
+
+}
 

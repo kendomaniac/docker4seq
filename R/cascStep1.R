@@ -1,4 +1,4 @@
-#' @title Running CASC step1 identific ation of the optimal number of clusters
+#' @title Running CASC step1 identification of the optimal number of clusters
 #' @description This function executes CASC step1 identification of the optimal number of clusters
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
@@ -10,8 +10,6 @@
 #' @param bootstrap.fraction, a integer between 1 and 100, which indicate the fraction of cell to be removed during boostrap.
 #' @param k.min, min number of clusters.
 #' @param k.max, min number of clusters.
-#' @author Raffaele Calogero, Luca Alessandri
-#' 
 #' @return a folder with the name of the cell data set under analysis, e.g. log10_singlecells_counts. In this folder there are a set of folder named by the number of k clusters in use. A file named SilhouetteValue.csv for cluster evaluation and a pdf ViolinPlot.pdf which is the representation of the SilhouetteValue.csv. best clusters are represented by a SilhouetteValue distribution skewed versus 1 values.
 #' @examples
 #' \dontrun{

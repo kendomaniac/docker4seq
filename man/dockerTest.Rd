@@ -15,6 +15,3 @@ This function check that docker is installed
 \examples{
  dockerTest()
 }
-\author{
-Raffaele Calogero
-}
