@@ -5,10 +5,10 @@
 #' @param data.folder, a character string indicating the folder where input data are located and where output will be written
 #' @author Name Family name, myemail [at] somewhere [dot] org, Affiliation
 #'
-#'Matrix data file have to be in data.folder;format and separator refers to the matrix data in data.folder; output will be in the same format and with the same separator of input.
+#' @return output will be in the same format and with the same separator of input.
 #' @examples
 #'\dontrun{
-#'permutationClustering("sudo","/home/lucastormreig/CASC2.0/permutationClustering/scratch/","/home/lucastormreig/CASC2.0/permutationClustering/Data/","TOTAL",4,2,10,3,4,"csv",",",0,"SIMLR")# 
+#'  permutationClustering("sudo","/home/lucastormreig/CASC2.0/permutationClustering/scratch/","/home/lucastormreig/CASC2.0/permutationClustering/Data/","TOTAL",4,2,10,3,4,"csv",",",0,"SIMLR")# 
 #'}
 #' @export
 permutationClustering <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,nPerm,permAtTime,percent,range1,range2,format,separator,logTen,clustering){
