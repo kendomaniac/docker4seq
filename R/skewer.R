@@ -43,77 +43,79 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
   #############################################
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
   scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
-	cat("\ncreating a folder in scratch folder\n")
+  cat("\ncreating a folder in scratch folder\n")
   dir.create(file.path(scratch.folder, tmp.folder))
   writeLines(scrat_tmp.folder,paste(fastq.folder,"/tempFolderID", sep=""))
-	dir <- dir(path=fastq.folder)
-	dir <- dir[grep(".fastq.gz", dir)]
-	cat("\ncopying and unzipping\n")
-	if(length(dir)==0){
-		cat(paste("It seems that in ",fastq.folder, "there are not fastq.gz files"))
-		return(1)
-	}else if(length(dir)>2){
-		cat(paste("It seems that in ",fastq.folder, "there are more than two fastq.gz files"))
-		return(2)
-	}else{
-		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-		for(i in dir){
-		      system(paste("cp ",fastq.folder,"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
-	#		  untar(paste(scratch.folder,tmp.folder,i,sep="/"), compressed = 'gzip')
-	    }
-		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-		system(paste("gzip -d ",scratch.folder,"/",tmp.folder,"/*.gz",sep=""))
-	}
-	fastq <- sub(".gz$", "", dir)
-	cat("\nsetting as working dir the scratch folder and running skewer docker container\n")
+  dir <- dir(path=fastq.folder)
+  dir <- dir[grep(".fastq.gz", dir)]
+  cat("\ncopying and unzipping\n")
+  if(length(dir)==0){
+    cat(paste("It seems that in ",fastq.folder, "there are not fastq.gz files"))
+    return(1)
+  }else if(length(dir)>2){
+    cat(paste("It seems that in ",fastq.folder, "there are more than two fastq.gz files"))
+    return(2)
+  }else{
+    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+    for(i in dir){
+      system(paste("cp ",fastq.folder,"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
+      #		  untar(paste(scratch.folder,tmp.folder,i,sep="/"), compressed = 'gzip')
+    }
+    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+    system(paste("gzip -d ",scratch.folder,"/",tmp.folder,"/*.gz",sep=""))
+  }
+  fastq <- sub(".gz$", "", dir)
+  cat("\nsetting as working dir the scratch folder and running skewer docker container\n")
 
-	if(group=="sudo"){
-#		system("sudo docker pull docker.io/repbioinfo/skewer.2017.01")
-		if(seq.type=="pe"){
-		      params <- paste("--cidfile ",fastq.folder,"/dockerID   -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim2.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep="")
-		      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/skewer.2017.01", params=params,DockerSwarm=DockerSwarm)
-		}else{
-			    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim1.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length, sep="")
-			    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/skewer.2017.01", params=params,DockerSwarm=DockerSwarm)
-		}
-	}else{
-#		system("docker pull docker.io/repbioinfo/skewer.2017.01")
-		if(seq.type=="pe"){
-		      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim2.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep="")
-		      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/skewer.2017.01", params=params,DockerSwarm=DockerSwarm)
-		}else{
-			   params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim1.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length , sep="")
-			   resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/skewer.2017.01", params=params,DockerSwarm=DockerSwarm)
-		}
-	}
+  if(group=="sudo"){
+    #		system("sudo docker pull docker.io/repbioinfo/skewer.2017.01")
+    if(seq.type=="pe"){
+      params <- paste("--cidfile ",fastq.folder,"/dockerID   -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim2.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep="")
+      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/skewer.2017.01", params=params,DockerSwarm=DockerSwarm)
+    }else{
+      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim1.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length, sep="")
+      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/skewer.2017.01", params=params,DockerSwarm=DockerSwarm)
+    }
+  }else{
+    #		system("docker pull docker.io/repbioinfo/skewer.2017.01")
+    if(seq.type=="pe"){
+      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim2.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", fastq[2]," ", threads," ", fastq.folder," ", min.length, sep="")
+      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/skewer.2017.01", params=params,DockerSwarm=DockerSwarm)
+    }else{
+      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/skewer.2017.01 sh /bin/trim1.sh ",file.path("/data/scratch", tmp.folder)," ",adapter5," ", adapter3," ",fastq[1]," ", threads," ", fastq.folder," ", min.length , sep="")
+      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/skewer.2017.01", params=params,DockerSwarm=DockerSwarm)
+    }
+  }
 
-	if(resultRun=="false"){
-	  system(paste("cp ", scrat_tmp.folder, "/* ", fastq.folder, sep=""))
-	}
-	#running time 2
-	ptm <- proc.time() - ptm
-	con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
-	tmp.run <- readLines(con)
-	close(con)
-	tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
-	tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
-	writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
-	#running time 2
+  if(resultRun=="false"){
+    system(paste("cp ", scrat_tmp.folder, "/* ", fastq.folder, sep=""))
+  }
+  #running time 2
+  ptm <- proc.time() - ptm
+  con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
+  tmp.run <- readLines(con)
+  close(con)
+  tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
+  tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+  tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+  writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
+  #running time 2
 
-	#saving log and removing docker container
-	container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
-#	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
-	system(paste("docker logs ", container.id, " >& ","skewer_",substr(container.id,1,12),".log", sep=""))
-	system(paste("docker rm ", container.id, sep=""))
-
+  #saving log and removing docker container
+  if (DockerSwarm==FALSE){
+    container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
+  #	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+    system(paste("docker logs ", container.id, " >& ","skewer_",substr(container.id,1,12),".log", sep=""))
+    system(paste("docker rm ", container.id, sep=""))
+  }
   #removing temporary folder
-	cat("\n\nRemoving trimmed temporary file ....\n")
-	system(paste("rm -R ",scrat_tmp.folder))
-	system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
-	system(paste("rm  ",fastq.folder,"/tempFolderID", sep=""))
+  cat("\n\nRemoving trimmed temporary file ....\n")
+  system(paste("rm -R ",scrat_tmp.folder))
+  if (DockerSwarm==FALSE)
+    system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
+  system(paste("rm  ",fastq.folder,"/tempFolderID", sep=""))
 
-	system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
-	setwd(home)
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
+  setwd(home)
 }
 
