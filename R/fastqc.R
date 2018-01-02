@@ -31,11 +31,6 @@ fastqc <- function(group=c("sudo","docker"), data.folder){
     return(2)
   }
   setwd(data.folder)
-  #check  if scratch folder exist
-  if (!file.exists(scratch.folder)){
-    cat(paste("\nIt seems that the ",scratch.folder, " folder does not exist\n"))
-    return(3)
-  }
   #executing the docker job
   if(group=="sudo"){
     params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/scratch -d docker.io/repbioinfo/r340.2017.01 sh /bin/fastqc.sh", sep="")
