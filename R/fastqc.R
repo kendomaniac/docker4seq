@@ -36,7 +36,7 @@ fastqc <- function(group=c("sudo","docker"), data.folder){
     params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/scratch -d docker.io/repbioinfo/r340.2017.01 sh /bin/fastqc.sh", sep="")
     resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r340.2017.01", params=params)
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/scratch -d docker.io/repbioinfo/ubuntu sh /bin/fastqc.sh", sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/scratch -d docker.io/repbioinfo/r340.2017.01 sh /bin/fastqc.sh", sep="")
     resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r340.2017.01", params=params)
   }
   #waiting for the end of the container work
