@@ -17,9 +17,9 @@
 #'    unzip("test.mirnaCounts.zip")
 #'    setwd("test.mirnaCounts")
 #'    library(docker4seq)
-#'    mirnaCounts(group="docker",fastq.folder=getwd(), 
-#'              scratch.folder="/data/scratch", 
-#'              mirbase.id="hsa",download.status=FALSE, 
+#'    mirnaCounts(group="docker",fastq.folder=getwd(),
+#'              scratch.folder="/data/scratch",
+#'              mirbase.id="hsa",download.status=FALSE,
 #'              adapter.type="NEB", trimmed.fastq=FALSE)
 #'
 #' }
@@ -28,7 +28,11 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 
   home <- getwd()
   setwd(fastq.folder)
-  
+
+  #FastQC
+  fastqc(group="docker", data.folder=fastq.folder)
+  setwd(fastq.folder)
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -70,14 +74,14 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	}else{
 	    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep="")
 	    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/mirnaseq.2017.01", params=params)
-	  
+
 	}
 
 
 	if(resultRun=="false"){
 	  cat("\nmirnaCounts analysis is finished\n")
 	}
-	
+
 #	system(paste("chmod 777 -R", scrat_tmp.folder))
 	con <- file(paste(scrat_tmp.folder,"out.info", sep="/"), "r")
 	tmp <- readLines(con)
@@ -100,7 +104,7 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
 	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
 	system(paste("docker rm ", container.id, sep=""))
-	
+
 	#removing temporary folder
 	cat("\n\nRemoving the rsemStar temporary file ....\n")
 	system(paste("rm -R ",scrat_tmp.folder))

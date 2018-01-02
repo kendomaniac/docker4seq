@@ -56,6 +56,13 @@ chipseqCounts <- function( group=c("sudo","docker"),output.folder=getwd(), mock.
                           sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10,
                           tss.distance=0, max.upstream.distance=10000, remove.duplicates="N"){
 
+  # FastQC
+  home <- getwd()
+  setwd(output.folder)
+  fastqc(group="docker", data.folder=mock.folder)
+  setwd(output.folder)
+  fastqc(group="docker", data.folder=test.folder)
+  setwd(output.folder)
   #trimming adapter and bwa
   home <- getwd()
   setwd(output.folder)

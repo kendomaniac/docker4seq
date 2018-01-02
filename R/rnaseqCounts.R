@@ -39,6 +39,12 @@ adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
 seq.type="pe",   min.length=40,
 genome.folder="/data/scratch/hg38star", strandness="none", save.bam=TRUE,
 org="hg38", annotation.type=c("biocUCSC","gtfENSEMBL")){
+
+
+  #FastQC
+  fastqc(group="docker", data.folder=fastq.folder)
+  setwd(fastq.folder)
+
   #trimming adapter
   skewer(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder,adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
   #running rsemstar
