@@ -111,7 +111,7 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
     dir.tmp <- dir(scrat_tmp.folder)
     dir.tmp <- setdiff(dir.tmp, dir.tmp[grep("fastq",dir.tmp)])
     for(i in dir.tmp){
-      system(paste("cp ", scrat_tmp.folder, "/i ", fastq.folder, sep=""))
+      system(paste("cp ", scrat_tmp.folder, "/", i, " " , fastq.folder, sep=""))
     }
 
     #saving log and removing docker container
