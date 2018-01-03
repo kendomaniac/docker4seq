@@ -87,8 +87,14 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	}
 
 	if(resultRun=="false"){
-	  system(paste("cp ", scrat_tmp.folder, "/* ", fastq.folder, sep=""))
+	  #not saving fastq files
+	  dir.tmp <- dir(scrat_tmp.folder)
+	  dir.tmp <- setdiff(dir.tmp, dir.tmp[grep("fastq",dir.tmp)])
+	  for(i in dir.tmp){
+	    system(paste("cp ", scrat_tmp.folder, "/i ", fastq.folder, sep=""))
+	  }
 	}
+
 	#running time 2
 	ptm <- proc.time() - ptm
 	con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
