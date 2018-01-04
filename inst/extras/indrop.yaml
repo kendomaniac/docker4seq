@@ -1,0 +1,40 @@
+project_name : "CRISPR"
+project_dir : "/sto2/labcamargo/Documents/single_cell/CRISPR_single_cell_9Nov17/inDrops/"
+sequencing_runs :
+  - name : 'CRISPR'
+    version : 'v2'
+    dir : "/sto2/labcamargo/Documents/single_cell/CRISPR_single_cell_9Nov17/basespace/171004_M00620_0217_000000000-BFWPC_FASTQ/"
+    fastq_path : "{library_prefix}_{split_affix}_{read}_001.fastq.gz"
+    split_affixes : ["S1_L001"]
+    libraries : 
+      - {library_name: "Sample1", library_prefix: "Sample1"}
+
+paths : 
+  bowtie_index : "/sto2/labcamargo/Documents/bowtie_index/mm10/Mus_musculus.GRCm38.85.index"
+  bowtie_dir : "/Softwares/bowtie-1.1.1/"
+  python_dir : "/usr/bin/"
+  samtools_dir : "/Softwares/samtools-1.3.1/bin/"
+  rsem_dir : "/Softwares/RSEM-1.3.0/"
+  java_dir : "/Softwares/jdk1.8.0_121/bin/"
+parameters : 
+  umi_quantification_arguments:
+    m : 10 #Ignore reads with more than M alignments, after filtering on distance from transcript end.
+    u : 2 #Ignore counts from UMI that should be split among more than U genes.
+    d : 400 #Maximal distance from transcript end, NOT INCLUDING THE POLYA TAIL
+    split-ambigs: False #If umi is assigned to m genes, add 1/m to each gene's count (instead of 1)
+    min_non_polyA: 0 #Require reads to align to this much non-polyA sequence. (Set to 0 to disable filtering on this parameter.)
+  output_arguments:
+    output_alignment_to_bam: False
+    output_unaligned_reads_to_other_fastq: False
+    output_oversequencing_metrics: True
+    output_umifm_calculation_metrics: True
+    low_complexity_mask: False
+  bowtie_arguments:
+    m : 200
+    n : 1
+    l : 12
+    e : 70
+  #trimmomatic_arguments:
+  #  LEADING: "28"
+  #  SLIDINGWINDOW: "4:20"
+  #  MINLEN: "16"
