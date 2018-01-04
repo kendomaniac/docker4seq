@@ -4,16 +4,21 @@
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param fastq.folder, a character string indicating the folder where input data are located and where output will be written
 #' @param index.folder, a character string indicating the folder where transcriptome index was created with salmonIndex.
+#' @param sample.name, the name to be associated to the fastq files, e.g. C2 for C2_S2_L001_R1_001.fastq.gz, IMPORTANT input fastq should have the format SAMPLENAME_Sx_L00y_Rz_001.fastq.gz, where x is an integer, y is an integer, z is 1 or 2
+#' @param split_affixes, the string separating SAMPLENAME for the Rz_001.fastq.gz
+#' @param bowtie.index.prefix, the prefix name of the bowtie index
 #' @author Raffaele Calogero and Riccardo Panero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 #'
 #' @examples
 #' \dontrun{
 #' library(docker4seq)
-#' #running salmonCounts
+#' #running indropCounts
+#' indropCounts(group="docker", scratch.folder="/data/scratch", fastq.folder=getwd(),
+#'        index.folder="/data/genomes/mm10indrop", sample.name="C2", split_affixes="S2_L001", bowtie.index.prefix="Mus_musculus.GRCm38.85.index")
 #' }
 #'
 #' @export
-indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder, index.folder){
+indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder, index.folder, sample.name, split_affixes, bowtie.index.prefix){
 
   #testing if docker is running
   test <- dockerTest()
@@ -58,8 +63,46 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
       system(paste("cp ",fastq.folder,"/",i, " ",paste(file.path(scrat_tmp.folder), "/input", sep=""),"/",i, sep=""))
   }
 
-  yaml.file=paste(path.package(package="docker4seq"),"data/indrop.yaml",sep="/")
+  yaml.file=paste(path.package(package="docker4seq"),"extras/indrop.yaml",sep="/")
   system(paste("cp ",yaml.file," ", file.path(scrat_tmp.folder),sep=""))
+  system(paste("chmod 777 -R", file.path(scrat_tmp.folder)))
+  setwd(scrat_tmp.folder)
+
+  #edit yaml
+  yaml <- readLines("indrop.yaml")
+  project_name <- yaml[grep("project_name", yaml)]
+  project_name <- sub("CRISPR", tmp.folder, project_name)
+  yaml[grep("project_name", yaml)] <- project_name
+
+  project_dir <- yaml[grep("project_dir", yaml)]
+  project_dir <- sub("/sto2/labcamargo/Documents/single_cell/CRISPR_single_cell_9Nov17/inDrops/", "/data/scratch", project_dir)
+  yaml[grep("project_dir", yaml)] <- project_dir
+
+  sample_name <- yaml[grep("  - name :", yaml)]
+  sample_name <- sub("CRISPR", sample.name, sample_name)
+  yaml[grep("  - name :", yaml)] <- sample_name
+
+  input_dir <- yaml[grep("    dir :", yaml)]
+  input_dir <- sub("/sto2/labcamargo/Documents/single_cell/CRISPR_single_cell_9Nov17/basespace/171004_M00620_0217_000000000-BFWPC_FASTQ", "/data/scratch/input", input_dir)
+  yaml[grep("    dir :", yaml)] <- input_dir
+
+  split_affixes <- yaml[grep("    split_affixes :", yaml)]
+  split_affixes <- sub("S1_L001", "S2_L001", split_affixes)
+  yaml[grep("    split_affixes :", yaml)] <- split_affixes
+
+  library_name <- yaml[grep("library_name:", yaml)]
+  library_name <- gsub("Sample1", sample.name, library_name)
+  yaml[grep("library_name:", yaml)] <- library_name
+
+  bowtie_index <- yaml[grep("bowtie_index :", yaml)]
+  bowtie_index <- gsub("/sto2/labcamargo/Documents/bowtie_index/mm10/Mus_musculus.GRCm38.85.index", paste("/index/",bowtie.index.prefix, sep=""), bowtie_index)
+  yaml[grep("bowtie_index :", yaml)] <- bowtie_index
+
+  zz <- file("indrop.yaml", "w")
+  writeLines(yaml, zz)
+  close(zz)
+  #
+
   system(paste("chmod 777 -R", file.path(scrat_tmp.folder)))
 
   cat("\nsetting as working dir the scratch folder and running  docker container\n")
@@ -67,6 +110,44 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", project.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/indrop.2017.01 sh /bin/indrop.sh ", sep="")
   resultRun <- runDocker(group=group,container="docker.io/repbioinfo/indrop.2017.01", params=params)
 
+  if(resultRun=="false"){
+    cat("\n inDrop analysis is finished\n")
+    system(paste("cp -R ", project.folder, " ", fastq.folder, sep=""))
+    system(paste("mv output ./", sample.name, sep=""))
+    system("rm -fR input")
+  }
+
+  #running time 2
+  ptm <- proc.time() - ptm
+  dir <- dir(data.folder)
+  dir <- dir[grep("run.info",dir)]
+  if(length(dir)>0){
+    con <- file("run.info", "r")
+    tmp.run <- readLines(con)
+    close(con)
+    tmp.run[length(tmp.run)+1] <- paste("inDrop user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("inDrop system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("inDrop elapsed run time mins ",ptm[3]/60, sep="")
+    writeLines(tmp.run,"run.info")
+  }else{
+    tmp.run <- NULL
+    tmp.run[1] <- paste("inDrop user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("inDrop system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("inDrop elapsed run time mins ",ptm[3]/60, sep="")
+
+    writeLines(tmp.run,"run.info")
+  }
+
+  #saving log and removing docker container
+  container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
+  system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/inDrop_", substr(container.id,1,12),".log", sep=""))
+  system(paste("docker rm ", container.id, sep=""))
+
+  cat("\n\nRemoving the temporary file ....\n")
+  system("rm -fR dockerID")
+
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
+  setwd(home)
 
 
 

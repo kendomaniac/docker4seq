@@ -5,7 +5,7 @@
 \title{A function to handle a indrop V2 single cell data}
 \usage{
 indropCounts(group = c("sudo", "docker"), scratch.folder, fastq.folder,
-  index.folder)
+  index.folder, sample.name, split_affixes, bowtie.index.prefix)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
@@ -15,6 +15,12 @@ indropCounts(group = c("sudo", "docker"), scratch.folder, fastq.folder,
 \item{fastq.folder, }{a character string indicating the folder where input data are located and where output will be written}
 
 \item{index.folder, }{a character string indicating the folder where transcriptome index was created with salmonIndex.}
+
+\item{sample.name, }{the name to be associated to the fastq files, e.g. C2 for C2_S2_L001_R1_001.fastq.gz, IMPORTANT input fastq should have the format SAMPLENAME_Sx_L00y_Rz_001.fastq.gz, where x is an integer, y is an integer, z is 1 or 2}
+
+\item{split_affixes, }{the string separating SAMPLENAME for the Rz_001.fastq.gz}
+
+\item{bowtie.index.prefix, }{the prefix name of the bowtie index}
 }
 \description{
 This function executes a docker that produces as output the sinngle cell counts from V2 indrop single cell sequencing
@@ -22,7 +28,9 @@ This function executes a docker that produces as output the sinngle cell counts 
 \examples{
 \dontrun{
 library(docker4seq)
-#running salmonCounts
+#running indropCounts
+indropCounts(group="docker", scratch.folder="/data/scratch", fastq.folder=getwd(),
+       index.folder="/data/genomes/mm10indrop", sample.name="C2", split_affixes="S2_L001", bowtie.index.prefix="Mus_musculus.GRCm38.85.index")
 }
 
 }
