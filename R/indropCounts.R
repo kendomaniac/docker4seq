@@ -116,16 +116,17 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
     resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/indrop.2017.01", params=params)
   }
 
+
   if(resultRun=="false"){
     cat("\n inDrop analysis is finished\n")
-    system(paste("cp -R ", project.folder, " ", fastq.folder, sep=""))
-    system(paste("mv output ./", sample.name, sep=""))
-    system("rm -fR input")
+    system(paste("cp -R ", project.folder, "/", sample.name, " ", fastq.folder, sep=""))
+    system(paste("cp -R ", project.folder, "/output ", fastq.folder, sep=""))
   }
 
   #running time 2
+  setwd(fastq.folder)
   ptm <- proc.time() - ptm
-  dir <- dir(data.folder)
+  dir <- dir(fastq.folder)
   dir <- dir[grep("run.info",dir)]
   if(length(dir)>0){
     con <- file("run.info", "r")
@@ -152,9 +153,7 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   cat("\n\nRemoving the temporary file ....\n")
   system("rm -fR dockerID")
 
-  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
   setwd(home)
-
-
 
 }
