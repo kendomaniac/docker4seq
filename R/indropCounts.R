@@ -5,7 +5,7 @@
 #' @param fastq.folder, a character string indicating the folder where input data are located and where output will be written
 #' @param index.folder, a character string indicating the folder where transcriptome index was created with salmonIndex.
 #' @param sample.name, the name to be associated to the fastq files, e.g. C2 for C2_S2_L001_R1_001.fastq.gz, IMPORTANT input fastq should have the format SAMPLENAME_Sx_L00y_Rz_001.fastq.gz, where x is an integer, y is an integer, z is 1 or 2
-#' @param split_affixes, the string separating SAMPLENAME for the Rz_001.fastq.gz
+#' @param split.affixes, the string separating SAMPLENAME for the Rz_001.fastq.gz
 #' @param bowtie.index.prefix, the prefix name of the bowtie index
 #' @author Raffaele Calogero and Riccardo Panero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 #'
@@ -14,11 +14,11 @@
 #' library(docker4seq)
 #' #running indropCounts
 #' indropCounts(group="docker", scratch.folder="/data/scratch", fastq.folder=getwd(),
-#'        index.folder="/data/genomes/mm10indrop", sample.name="C2", split_affixes="S2_L001", bowtie.index.prefix="Mus_musculus.GRCm38.85.index")
+#'        index.folder="/data/genomes/mm10indrop", sample.name="C2", split.affixes="S2_L001", bowtie.index.prefix="Mus_musculus.GRCm38.85.index")
 #' }
 #'
 #' @export
-indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder, index.folder, sample.name, split_affixes, bowtie.index.prefix){
+indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder, index.folder, sample.name, split.affixes, bowtie.index.prefix){
 
   #testing if docker is running
   test <- dockerTest()
@@ -87,7 +87,7 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   yaml[grep("    dir :", yaml)] <- input_dir
 
   split_affixes <- yaml[grep("    split_affixes :", yaml)]
-  split_affixes <- sub("S1_L001", "S2_L001", split_affixes)
+  split_affixes <- sub("S1_L001", split.affixes, split_affixes)
   yaml[grep("    split_affixes :", yaml)] <- split_affixes
 
   library_name <- yaml[grep("library_name:", yaml)]
