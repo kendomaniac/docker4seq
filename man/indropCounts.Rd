@@ -5,7 +5,8 @@
 \title{A function to handle a indrop V2 single cell data}
 \usage{
 indropCounts(group = c("sudo", "docker"), scratch.folder, fastq.folder,
-  index.folder, sample.name, split.affixes, bowtie.index.prefix)
+  index.folder, sample.name, split.affixes, bowtie.index.prefix, M = 10,
+  U = 2, D = 400, low.complexity.mask = c("False", "True"))
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
@@ -21,6 +22,14 @@ indropCounts(group = c("sudo", "docker"), scratch.folder, fastq.folder,
 \item{split.affixes, }{the string separating SAMPLENAME for the Rz_001.fastq.gz}
 
 \item{bowtie.index.prefix, }{the prefix name of the bowtie index}
+
+\item{M, }{Ignore reads with more than M alignments, after filtering on distance from transcript end.}
+
+\item{U, }{Ignore counts from UMI that should be split among more than U genes.}
+
+\item{D, }{Maximal distance from transcript end, NOT INCLUDING THE POLYA TAIL.}
+
+\item{low.complexity.mask, }{low complexity mask False or True}
 }
 \description{
 This function executes a docker that produces as output the sinngle cell counts from V2 indrop single cell sequencing
@@ -30,7 +39,8 @@ This function executes a docker that produces as output the sinngle cell counts 
 library(docker4seq)
 #running indropCounts
 indropCounts(group="docker", scratch.folder="/data/scratch", fastq.folder=getwd(),
-       index.folder="/data/genomes/mm10indrop", sample.name="C2", split.affixes="S2_L001", bowtie.index.prefix="Mus_musculus.GRCm38.85.index")
+       index.folder="/data/genomes/mm10indrop", sample.name="C2", split.affixes="S2_L001",
+       bowtie.index.prefix="Mus_musculus.GRCm38.85.index", M=10, U=2, D=400, low.complexity.mask="False")
 }
 
 }

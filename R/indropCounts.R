@@ -7,6 +7,10 @@
 #' @param sample.name, the name to be associated to the fastq files, e.g. C2 for C2_S2_L001_R1_001.fastq.gz, IMPORTANT input fastq should have the format SAMPLENAME_Sx_L00y_Rz_001.fastq.gz, where x is an integer, y is an integer, z is 1 or 2
 #' @param split.affixes, the string separating SAMPLENAME for the Rz_001.fastq.gz
 #' @param bowtie.index.prefix, the prefix name of the bowtie index
+#' @param M, Ignore reads with more than M alignments, after filtering on distance from transcript end.
+#' @param U, Ignore counts from UMI that should be split among more than U genes.
+#' @param D, Maximal distance from transcript end, NOT INCLUDING THE POLYA TAIL.
+#' @param low.complexity.mask, low complexity mask False or True
 #' @author Raffaele Calogero and Riccardo Panero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 #'
 #' @examples
@@ -14,11 +18,12 @@
 #' library(docker4seq)
 #' #running indropCounts
 #' indropCounts(group="docker", scratch.folder="/data/scratch", fastq.folder=getwd(),
-#'        index.folder="/data/genomes/mm10indrop", sample.name="C2", split.affixes="S2_L001", bowtie.index.prefix="Mus_musculus.GRCm38.85.index")
+#'        index.folder="/data/genomes/mm10indrop", sample.name="C2", split.affixes="S2_L001",
+#'        bowtie.index.prefix="Mus_musculus.GRCm38.85.index", M=10, U=2, D=400, low.complexity.mask="False")
 #' }
 #'
 #' @export
-indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder, index.folder, sample.name, split.affixes, bowtie.index.prefix){
+indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder, index.folder, sample.name, split.affixes, bowtie.index.prefix, M=10, U=2, D=400, low.complexity.mask=c("False", "True")){
 
   #testing if docker is running
   test <- dockerTest()
@@ -98,6 +103,25 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   bowtie_index <- gsub("/sto2/labcamargo/Documents/bowtie_index/mm10/Mus_musculus.GRCm38.85.index", paste("/index/",bowtie.index.prefix, sep=""), bowtie_index)
   yaml[grep("bowtie_index :", yaml)] <- bowtie_index
 
+  #UMI parameters
+  m <- yaml[grep("    m : 10 #Ignore reads with more than M alignments, after filtering on distance from transcript end.", yaml)]
+  m <- sub("10", M, m)
+  yaml[grep("    m : 10 #Ignore reads with more than M alignments, after filtering on distance from transcript end.", yaml)] <- m
+
+  u <- yaml[grep("    u : 2 #Ignore counts from UMI that should be split among more than U genes.", yaml)]
+  u <- sub("2", U, u)
+  yaml[grep("    u : 2 #Ignore counts from UMI that should be split among more than U genes.", yaml)] <- u
+
+  d <- yaml[grep("    d : 400 #Maximal distance from transcript end, NOT INCLUDING THE POLYA TAIL", yaml)]
+  d <- sub("400", D, d)
+  yaml[grep("    d : 400 #Maximal distance from transcript end, NOT INCLUDING THE POLYA TAIL", yaml)] <- d
+
+  #outout params
+  low_complexity_mask <- yaml[grep("    low_complexity_mask: False", yaml)]
+  low_complexity_mask <- sub("False", low.complexity.mask, low_complexity_mask)
+  yaml[grep("    low_complexity_mask: False", yaml)] <- low_complexity_mask
+
+
   zz <- file("indrop.yaml", "w")
   writeLines(yaml, zz)
   close(zz)
@@ -152,7 +176,7 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
 
   cat("\n\nRemoving the temporary file ....\n")
   system("rm -fR dockerID")
-
+#  system(paste("rm -fR ", project.folder, sep=""))
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
   setwd(home)
 
