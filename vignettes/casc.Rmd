@@ -23,7 +23,8 @@ knitr::opts_chunk$set(echo = TRUE)
     + Data normalization: **scnorm**
     + Imputing dropouts: **cascImpute**
     + Converting a count table in log10: **counts2log**
-
+- **Cell filtering**:
+    + Removing low quality cells: **lorenzFilter**
 
 ## inDrop seq
 
@@ -117,6 +118,21 @@ The function **counts2log** can convert a count table in a log10 values saved in
 system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
 system("gzip -d singlecells_counts.txt.gz")
 counts2log(counts.matrix="singlecells_counts.txt", data.folder=getwd(), log.base=10, type="txt")
+```
+
+
+
+## Cell filtering
+
+### Identifying outlier libraries
+
+To identify outlier libraries, [Diaz et al.2016](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4937196/) developed a strategy to estimate genes expressed at background levels in a given sample. Then samples whose background fraction is significantly larger than average is filtered out (Lorenz statistics). Furthermore, this statistics correlates with correlates (Pearson-correlation 0.7) with live-dead staining [Diaz et al.2016](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4937196/).  
+
+```{r, echo=TRUE,eval=FALSE}
+
+lorenzFilter(group="docker",scratch.folder="path/of/scratch/folder",
+           data.folder="path/of/data/folder",matrixName="matrixName",p_value=0.05,format="txt",separator='\t')
+
 ```
 
 

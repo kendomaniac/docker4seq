@@ -41,6 +41,11 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
     return(2)
   }
   setwd(fastq.folder)
+
+  #FastQC
+  fastqc(group="docker", data.folder=fastq.folder)
+  #
+
   #check  if scratch folder exist
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, " folder does not exist\n"))
