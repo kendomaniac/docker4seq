@@ -171,12 +171,13 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
 
   #saving log and removing docker container
   container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/inDrop_", substr(container.id,1,12),".log", sep=""))
+  system(paste("docker logs ", substr(container.id,1,12), " &> ",fastq.folder,"/inDrop_", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
 
   cat("\n\nRemoving the temporary file ....\n")
   system("rm -fR dockerID")
-#  system(paste("rm -fR ", project.folder, sep=""))
+  system("rm  -fR tempFolderID")
+  system(paste("rm -fR ", project.folder, sep=""))
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
   setwd(home)
 
