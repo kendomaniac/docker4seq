@@ -137,6 +137,10 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   cat("\nsetting as working dir the scratch folder and running  docker container\n")
   setwd(fastq.folder)
 
+  zz <- file("indrop.yaml", "w")
+  writeLines(yaml, zz)
+  close(zz)
+
   if(group=="sudo"){
     params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", project.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/indrop.2017.01 sh /bin/indrop.sh ", sep="")
     resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/indrop.2017.01", params=params)
