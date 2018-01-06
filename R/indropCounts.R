@@ -180,7 +180,7 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   }
 
   #saving log and removing docker container
-  container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
+  container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", substr(container.id,1,12), " &> ",fastq.folder,"/inDrop_", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
 
