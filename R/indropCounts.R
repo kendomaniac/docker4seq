@@ -16,6 +16,7 @@
 #' @examples
 #' \dontrun{
 #' system("wget 130.192.119.59/public/testMm_S0_L001_R1_001.fastq.gz")
+#' system("wget 130.192.119.59/public/testMm_S0_L001_R2_001.fastq.gz")
 #' library(docker4seq)
 #' #running indropCounts
 #' indropCounts(group="docker", scratch.folder="/data/scratch", fastq.folder=getwd(),
