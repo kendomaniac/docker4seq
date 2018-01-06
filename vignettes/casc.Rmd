@@ -1,5 +1,5 @@
 ---
-title: "CASC"
+title: "Single Cell workflow"
 author: "Raffaele A Calogero"
 output: 
   rmarkdown::html_vignette
@@ -15,6 +15,31 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Single Cell workflow
 
+- **inDropseq**:
+    + Creating a reference genome for inDrop V2:
+    + From fastq to UMI counts using inDrop workflow: **indropCounts**
+- **Counts manipulation**:
+    + Removing non informative genes: **allZeros**
+    + Data normalization: **scnorm**
+    + Imputing dropouts: **cascImpute**
+    + Converting a count table in log10: **counts2log**
+
+
+## inDrop seq
+
+The function indropCounts start for inDrop V2 library and convert fastq to UMI counts.
+
+```{r, echo=TRUE, eval=FALSE}
+
+indropCounts(group="docker", scratch.folder="/data/scratch", fastq.folder=getwd(),
+        index.folder="/data/genomes/mm10indrop", sample.name="C2", split.affixes="S2_L001",
+        bowtie.index.prefix="Mus_musculus.GRCm38.85.index", M=10, U=2, D=400, low.complexity.mask="False")
+
+```
+
+
+
+## Counts manipulation
 
 ### Removing non informative genes
 

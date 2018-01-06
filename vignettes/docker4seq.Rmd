@@ -277,6 +277,8 @@ However, aligner-free methods have low memory requirements and we added Salmon i
 
 The quasi-reference can be created using cDNA fasta files available at ENSEMBL. The corresponding genomics GTF is required for the gene level annotation.
 
+![Salmon reference](../inst/img/salmonIndex.jpeg)
+
 ```{r, echo=TRUE, eval=FALSE}
 
 #running salmonIndex human
@@ -292,6 +294,7 @@ salmonIndex(group="docker", index.folder=getwd(),
 
 Salmon quantification function *wrapperSalmon* has the same structure of *rnaseqCounts*. It performs adapters trimming, transcripts quantification, genes quantification and annotation.  The output of wrapperSalmon is identical to the output of rnaseqCounts for what concern the files **isoforms.results** and **gtf_annotated_genes.results**, which can be used by *samples2experiment* to generate the tables for differential expression analysis. 
 
+![Salmon qunatification](../inst/img/salmonCounts.jpeg)
 
 ```{r, echo=TRUE, eval=FALSE}
 
