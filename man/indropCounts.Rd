@@ -6,7 +6,8 @@
 \usage{
 indropCounts(group = c("sudo", "docker"), scratch.folder, fastq.folder,
   index.folder, sample.name, split.affixes, bowtie.index.prefix, M = 10,
-  U = 2, D = 400, low.complexity.mask = c("False", "True"))
+  U = 2, D = 400, low.complexity.mask = c("False", "True"),
+  umi.threshold = 5)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
@@ -30,6 +31,8 @@ indropCounts(group = c("sudo", "docker"), scratch.folder, fastq.folder,
 \item{D, }{Maximal distance from transcript end, NOT INCLUDING THE POLYA TAIL.}
 
 \item{low.complexity.mask, }{low complexity mask False or True}
+
+\item{umi.threshold, }{the minimal number of UMI to consider a gene present}
 }
 \description{
 This function executes a docker that produces as output the sinngle cell counts from V2 indrop single cell sequencing
@@ -41,8 +44,8 @@ system("wget 130.192.119.59/public/testMm_S0_L001_R2_001.fastq.gz")
 library(docker4seq)
 #running indropCounts
 indropCounts(group="docker", scratch.folder="/data/scratch", fastq.folder=getwd(),
-       index.folder="/data/genomes/mm10indrop", sample.name="test", split.affixes="S0_L001",
-       bowtie.index.prefix="Mus_musculus.GRCm38.85.index", M=10, U=2, D=400, low.complexity.mask="False")
+       index.folder="/data/genomes/mm10indrop", sample.name="testMm", split.affixes="S0_L001",
+       bowtie.index.prefix="Mus_musculus.GRCm38.85.index", M=10, U=2, D=400, low.complexity.mask="False", umi.threshold=5)
 }
 
 }

@@ -11,6 +11,7 @@
 #' @param U, Ignore counts from UMI that should be split among more than U genes.
 #' @param D, Maximal distance from transcript end, NOT INCLUDING THE POLYA TAIL.
 #' @param low.complexity.mask, low complexity mask False or True
+#' @param umi.threshold, the minimal number of UMI to consider a gene present
 #' @author Raffaele Calogero and Riccardo Panero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 #'
 #' @examples
@@ -20,12 +21,12 @@
 #' library(docker4seq)
 #' #running indropCounts
 #' indropCounts(group="docker", scratch.folder="/data/scratch", fastq.folder=getwd(),
-#'        index.folder="/data/genomes/mm10indrop", sample.name="test", split.affixes="S0_L001",
-#'        bowtie.index.prefix="Mus_musculus.GRCm38.85.index", M=10, U=2, D=400, low.complexity.mask="False")
+#'        index.folder="/data/genomes/mm10indrop", sample.name="testMm", split.affixes="S0_L001",
+#'        bowtie.index.prefix="Mus_musculus.GRCm38.85.index", M=10, U=2, D=400, low.complexity.mask="False", umi.threshold=5)
 #' }
 #'
 #' @export
-indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder, index.folder, sample.name, split.affixes, bowtie.index.prefix, M=10, U=2, D=400, low.complexity.mask=c("False", "True")){
+indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder, index.folder, sample.name, split.affixes, bowtie.index.prefix, M=10, U=2, D=400, low.complexity.mask=c("False", "True"), umi.threshold=5){
 
   #testing if docker is running
   test <- dockerTest()
@@ -139,6 +140,7 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   cat("\nsetting as working dir the scratch folder and running  docker container\n")
   setwd(fastq.folder)
 
+  #saving running params
   zz <- file("indrop.yaml", "w")
   writeLines(yaml, zz)
   close(zz)
@@ -158,8 +160,29 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
     system(paste("cp -R ", project.folder, "/output ", fastq.folder, sep=""))
   }
 
-  #running time 2
+
   setwd(fastq.folder)
+
+  #output stat
+  dir <- dir(sample.name)
+  dir <- dir[grep("counts.tsv.gz$",dir)]
+  system(paste("gzip -d ./", sample.name,"/", dir, sep=""))
+  counts <- read.table(paste("./", sample.name,"/", sub(".gz$","", dir), sep=""), header=T, row.names = 1, stringsAsFactors = F)
+  counts <- t(counts)
+  write.table(counts, "counts.txt", sep="\t")
+  system(paste("rm ./", sample.name,"/", sub(".gz$","", dir), sep=""))
+
+  cells.counts <- apply(counts, 2, sum)
+  genes.cell <- apply(counts, 2, function(x){
+    length(which(x > umi.threshold))
+  })
+
+  jpeg(paste("counts_stats","_",sample.name, "_", umi.threshold, ".jpg", sep=""))
+  plot(log10(cells.counts+1), log10(genes.cell+1), pch=19, xlab="log10(cell counts)", ylab="log10(# of detected genes)", cex=0.5)
+  dev.off()
+
+
+  #running time 2
   ptm <- proc.time() - ptm
   dir <- dir(fastq.folder)
   dir <- dir[grep("run.info",dir)]
