@@ -11,7 +11,7 @@ install_github("kendomaniac/docker4seq", ref="master")
 ## Requirements
 You need to have docker installed on your machine, for more info see this document:
 https://docs.docker.com/engine/installation/. 
-**docker4seq** package is expected to run on 64 bits linux machine with at least 4 cores and 32 Gb RAM.
+**docker4seq** package is expected to run on 64 bits linux machine with at least 4 cores and 32 Gb RAM, if mapping will be done with STAR. In case mapping is done with Salmon, only 16 Gb RAM are needed.
 A scratch folder should be present, e.g. /data/scratch and it should be writable from everybody:
 ```
 chmod 777 /data/scratch
