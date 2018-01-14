@@ -46,7 +46,10 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
     system(paste("rm ", i, sep=""))
     setwd(fastq.folder)
   }
+
   setwd(fastq.folder)
+  system("mv ./fastQC.folder/*.log .")
+
 
   #running time 1
   ptm <- proc.time()
@@ -117,7 +120,7 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 
 	#saving log and removing docker container
 	container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
-	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+	system(paste("docker logs ", container.id, " >& mirnaCounts_", substr(container.id,1,12),".log", sep=""))
 	system(paste("docker rm ", container.id, sep=""))
 
 	#removing temporary folder
