@@ -4,7 +4,7 @@
 \alias{filterCounts}
 \title{Filter a count table using a table of DE from wrapperDeseq2}
 \usage{
-filterCounts(data.folder, type = c("gene", "isoforms", "mirna"))
+filterCounts(data.folder, type = c("gene", "isoform", "mirna"))
 }
 \arguments{
 \item{data.folder, }{a character string indicating the paths of rnaseqCouts output folders}

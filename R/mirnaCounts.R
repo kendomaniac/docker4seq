@@ -130,6 +130,10 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	system(paste("rm  ",fastq.folder,"/tempFolderID", sep=""))
 	#removing temporary folder
 	system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
+  all.counts <- read.table("all.counts.txt", sep="\t", header=T, row.names=1, stringsAsFactors = F, check.names = F)
+	cpm <- apply(all.counts,2, function(x) (x/sum(x))*1000000)
+	write.table(cpm, "cpm.txt", sep="\t")
+
 	setwd(home)
 }
 
