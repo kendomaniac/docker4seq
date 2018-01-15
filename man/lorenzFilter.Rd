@@ -14,7 +14,7 @@ lorenzFilter(group = c("sudo", "docker"), scratch.folder, data.folder,
 
 \item{data.folder, }{a character string indicating the folder where input data are located and where output will be written}
 
-\item{matrixName, }{counts table name. Matrix data file must be in data.folder}
+\item{matrixName, }{counts table name. Matrix data file must be in data.folder. The file MUST contain RAW counts, without any modification, such as log transformation, normalizatio etc.}
 
 \item{p_value, }{threshold to be used for the filtering}
 
