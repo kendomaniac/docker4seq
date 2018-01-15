@@ -53,7 +53,8 @@
 
 platypus <- function(group=c("sudo","docker"), data.folder=getwd(), scratch.folder, pathRef, nameRef, threads,
                     GQ, minSampGQ, NR, minSampNR, NV, minSampNV, normal_samples, GT_normal, 
-                    minSampGT_normal, tumoral_samples, GT_tumoral, minSampGT_tumoral, stringent_filter=0, annotation=c("hg19","mm10")){
+                    minSampGT_normal, tumoral_samples, GT_tumoral, minSampGT_tumoral, stringent_filter=0, 
+                    annotation=c("hg19","mm10")){
   
   pathPlatypus="/bin/Platypus_0.8.1" 
   pathHtslib="/bin/htslib-1.3.2" 
