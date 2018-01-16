@@ -1,11 +1,18 @@
-#' @title A skeleton function to handle a docker containier
-#' @description This function executes a ubuntu docker that produces as output helloworld.txt file
+#' @title Reorganize Cluster
+#' @description This function executes a ubuntu docker that merge two clusters
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param data.folder, a character string indicating the folder where input data are located and where output will be written
-#' @author Name Family name, myemail [at] somewhere [dot] org, Affiliation
+#' @param matrixName, counts table name. Matrix data file must be in data.folder. The file MUST contain RAW counts, without any modification, such as log transformation, normalizatio etc. 
+#' @param nCluster, number of Cluster used in Kmeans to generate the clusters that you want to merge
+#' @param A, first Cluster that has to be merged 
+#' @param B, second Cluster that has to be merged
+#' @param format, matrix count format, "csv", "txt"#' @param B, second Cluster that has to be merged
+#' @param separator, separator used in count file, e.g. '\\t', ','
+#' @param sp, minimun number of percentage of cells that has to be in common between two permutation to be the same cluster. 
+#' @author Luca Alessandri , alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
-#' @return output will be in the same format and with the same separator of input.
+#' @return will change all the files generated from permAnalysis algorithm in a new folder matrixName_Cluster_merged/
 #' @examples
 #'\dontrun{
 #'clusterReorg("sudo","/home/lucastormreig/CASC2.0/2.1_clusterReorg/scratch/","/home/lucastormreig/CASC2.0/2.1_clusterReorg/Data/","TOTAL",3,1,3,"csv",",",0.8,0.9)# 
