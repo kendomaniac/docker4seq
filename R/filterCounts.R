@@ -43,7 +43,7 @@ filterCounts <- function(data.folder, type=c("gene", "isoform", "mirna")){
       counts.df <- read.table(i, sep="\t", header=T, row.names=1, stringsAsFactors = F)
       de.df <- read.table(de.file, sep="\t", header=T, row.names=1, stringsAsFactors = F)
       counts.df <- counts.df[which(rownames(counts.df)%in%rownames(de.df)),]
-      write.table(counts.df, paste("DEfiltered_",i, sep=""),sep="\t")
+      write.table(counts.df, paste("DEfiltered_",i, sep=""),sep="\t", col.names=NA)
     }
 
     cpm.df <- read.table(cpm.file, sep="\t", header=T, row.names=1, stringsAsFactors = F)
@@ -52,7 +52,7 @@ filterCounts <- function(data.folder, type=c("gene", "isoform", "mirna")){
     write.table(cpm.df, paste("DEfiltered_",cpm.file, sep=""),sep="\t")
     cpm.mean <- apply(cpm.df, 1, function(x){log2(x+1) - mean(log2(x+1))})
     cpm.mean <- t(cpm.mean)
-    write.table(cpm.mean, paste("DEfiltered-mean-centered_",cpm.file, sep=""),sep="\t")
+    write.table(cpm.mean, paste("DEfiltered-mean-centered_",cpm.file, sep=""),sep="\t", col.names=NA)
 
   }else if(type=="gene"){
 
@@ -83,23 +83,23 @@ filterCounts <- function(data.folder, type=c("gene", "isoform", "mirna")){
     counts.df <- read.table(counts.file, sep="\t", header=T, row.names=1, stringsAsFactors = F)
     de.df <- read.table(de.file, sep="\t", header=T, row.names=1, stringsAsFactors = F)
     counts.df <- counts.df[which(rownames(counts.df)%in%rownames(de.df)),]
-    write.table(counts.df, paste("DEfiltered",counts.file, sep=""),sep="\t")
+    write.table(counts.df, paste("DEfiltered",counts.file, sep=""),sep="\t", col.names=NA)
 
     fpkm.df <- read.table(fpkm.file, sep="\t", header=T, row.names=1, stringsAsFactors = F)
     fpkm.df <- fpkm.df[which(rownames(fpkm.df)%in%rownames(de.df)),]
-    write.table(fpkm.df, paste("DEfiltered_",fpkm.file, sep=""),sep="\t")
+    write.table(fpkm.df, paste("DEfiltered_",fpkm.file, sep=""),sep="\t", col.names=NA)
 
     fpkm.mean <- apply(fpkm.df, 1, function(x){x - mean(x)})
     fpkm.mean <- t(fpkm.mean)
-    write.table(fpkm.mean, paste("DEfiltered-mean-centered",fpkm.file, sep=""),sep="\t")
+    write.table(fpkm.mean, paste("DEfiltered-mean-centered",fpkm.file, sep=""),sep="\t", col.names=NA)
 
     tpm.df <- read.table(tpm.file, sep="\t", header=T, row.names=1, stringsAsFactors = F)
     tpm.df <- tpm.df[which(rownames(tpm.df)%in%rownames(de.df)),]
-    write.table(tpm.df, paste("DEfiltered_",tpm.file, sep=""),sep="\t")
+    write.table(tpm.df, paste("DEfiltered_",tpm.file, sep=""),sep="\t", col.names=NA)
 
     tpm.mean <- apply(tpm.df, 1, function(x){x - mean(x)})
     tpm.mean <- t(tpm.mean)
-    write.table(tpm.mean, paste("DEfiltered-mean-centered",tpm.file, sep=""),sep="\t")
+    write.table(tpm.mean, paste("DEfiltered-mean-centered",tpm.file, sep=""),sep="\t", col.names=NA)
 
   }else if(type=="isoform"){
 
@@ -130,11 +130,11 @@ filterCounts <- function(data.folder, type=c("gene", "isoform", "mirna")){
     counts.df <- read.table(counts.file, sep="\t", header=T, row.names=1, stringsAsFactors = F)
     de.df <- read.table(de.file, sep="\t", header=T, row.names=1, stringsAsFactors = F)
     counts.df <- counts.df[which(rownames(counts.df)%in%rownames(de.df)),]
-    write.table(counts.df, paste("DEfiltered",counts.file, sep=""),sep="\t")
+    write.table(counts.df, paste("DEfiltered",counts.file, sep=""),sep="\t", col.names=NA)
 
     fpkm.df <- read.table(fpkm.file, sep="\t", header=T, row.names=1, stringsAsFactors = F)
     fpkm.df <- fpkm.df[which(rownames(fpkm.df)%in%rownames(de.df)),]
-    write.table(fpkm.df, paste("DEfiltered_",fpkm.file, sep=""),sep="\t")
+    write.table(fpkm.df, paste("DEfiltered_",fpkm.file, sep=""),sep="\t", col.names=NA)
 
     fpkm.mean <- apply(fpkm.df, 1, function(x){x - mean(x)})
     fpkm.mean <- t(fpkm.mean)
@@ -142,11 +142,11 @@ filterCounts <- function(data.folder, type=c("gene", "isoform", "mirna")){
 
     tpm.df <- read.table(tpm.file, sep="\t", header=T, row.names=1, stringsAsFactors = F)
     tpm.df <- tpm.df[which(rownames(tpm.df)%in%rownames(de.df)),]
-    write.table(tpm.df, paste("DEfiltered_",tpm.file, sep=""),sep="\t")
+    write.table(tpm.df, paste("DEfiltered_",tpm.file, sep=""),sep="\t", col.names=NA)
 
     tpm.mean <- apply(tpm.df, 1, function(x){x - mean(x)})
     tpm.mean <- t(tpm.mean)
-    write.table(tpm.mean, paste("DEfiltered-mean-centered",tpm.file, sep=""),sep="\t")
+    write.table(tpm.mean, paste("DEfiltered-mean-centered",tpm.file, sep=""),sep="\t", col.names=NA)
 
   }
 

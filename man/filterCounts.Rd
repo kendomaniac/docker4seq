@@ -7,7 +7,7 @@
 filterCounts(data.folder, type = c("gene", "isoform", "mirna"))
 }
 \arguments{
-\item{data.folder, }{a character string indicating the paths of rnaseqCouts output folders}
+\item{data.folder, }{a character string indicating the paths of rnaseqCounts/mirnaCounts output folders}
 
 \item{type, }{character with three options: gene, isoform, mirna.}
 }
