@@ -35,12 +35,13 @@
 #'     unzip("test.chipseqCounts.zip")
 #'     setwd("test.chipseqCounts")
 #'     library(docker4seq)
-#'     chipseqCounts(group = "docker", output.folder = "./prdm51.igg",
-#'              mock.folder="./igg", test.folder="./prdm51", scratch.folder=getwd(),
+#'     chipseqCounts(group = "docker", output.folder = "/data/tests/chipseqCounts/test.chipseqCounts/prdm51.igg",
+#'              mock.folder="/data/tests/chipseqCounts/test.chipseqCount/igg",
+#'              test.folder="/data/tests/chipseqCounts/test.chipseqCount/prdm51", scratch.folder=getwd(),
 #'              adapter5 = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
 #'              adapter3 = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
-#'              threads = 8, min.length = 30, genome.folder,
-#'              mock.id = "igg", test.id = "tf", genome, read.size = 50,
+#'              threads = 8, min.length = 30, genome.folder="/data/genomes/mm10bwa",
+#'              mock.id = "igg", test.id = "tf", genome="mm10", read.size = 50,
 #'              tool = "macs", macs.min.mfold = 10, macs.max.mfold = 30,
 #'              macs.pval = "1e-5", sicer.wsize = 200, sicer.gsize = 200,
 #'              sicer.fdr = 0.1, tss.distance = 0, max.upstream.distance = 10000,
