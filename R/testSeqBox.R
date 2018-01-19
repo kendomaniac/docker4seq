@@ -41,37 +41,57 @@ testSeqbox <- function(){
      cat("\ntesting RNAseq workflow\n")
      writeLines("testing RNAseq workflow",con=zz)
      writeLines(time,con=zz)
+
+     cat("\ntesting rsemstarIndex\n")
      setwd("/data/tests/rsemstarIndex/")
      #source("/data/tests/rsemstarIndex/script.R")
+
+     cat("\ntesting rnaseqCounts\n")
      setwd("/data/tests/rnaseqCounts")
      source("/data/tests/rnaseqCounts/script.R")
 
      #testing salmon reference free aligner
+     cat("\ntesting salmonCounts\n")
      setwd("/data/tests/salmonCounts")
      source("/data/tests/salmonCounts/script.R")
 
+     cat("\ntesting samples2experiment\n")
      setwd("/data/tests/samples2experiment")
      source("/data/tests/samples2experiment/script.R")
+
+     cat("\ntesting sampleSize\n")
      setwd("/data/tests/sampleSize")
      source("/data/tests/sampleSize/script.R")
+
+     cat("\ntesting experimentPower\n")
      setwd("/data/tests/experimentPower")
      source("/data/tests/experimentPower/script.R")
+
+     cat("\ntesting pca\n")
      setwd("/data/tests/pca")
      source("/data/tests/pca/script.R")
+
+     cat("\ntesting wrapperDeseq2\n")
      setwd("/data/tests/wrapperDeseq2")
      source("/data/tests/wrapperDeseq2/script.R")
      #testing miRNAseq
      cat("\ntesting miRNAseq workflow\n")
      writeLines("testing miRNAseq",con=zz)
      writeLines(time,con=zz)
+
+     cat("\ntesting mirnaCounts\n")
      setwd("/data/tests/mirnaCounts")
      source("/data/tests/mirnaCounts/script.R")
      #testing chipseq
      cat("\ntesting chipseq workflow\n")
      writeLines("testing chipseq",con=zz)
      writeLines(time,con=zz)
+
+     cat("\ntesting bwaIndexUcsc\n")
      setwd("/data/tests/bwaIndexUcsc/")
      #source(/data/tests/bwaIndexUcsc/script.R
+
+     cat("\ntesting chipseqCounts\n")
      setwd("/data/tests/chipseqCounts")
      source("/data/tests/chipseqCounts/script.R")
      #
@@ -94,7 +114,6 @@ testSeqbox <- function(){
        writeLines("rnaseqCounts passed tests checks",con=zz)
      }
      #
-
      setwd("/data/tests/salmonCounts")
      dir <- dir()
      if(length(grep("gtf_annotated_genes.results", dir))==0){
@@ -108,7 +127,6 @@ testSeqbox <- function(){
      }else{
        writeLines("salmonCounts passed tests checks",con=zz)
      }
-
      #
      setwd("/data/tests/samples2experiment")
      dir <- dir()
@@ -147,6 +165,7 @@ testSeqbox <- function(){
        cat("\n\n")
        writeLines("wget failed",con=zz)
      }
+     #
      setwd("/data/tests/experimentPower/test.analysis")
      dir <- dir()
      if(length(grep("power_evaluation.txt", dir))==0){
@@ -154,7 +173,6 @@ testSeqbox <- function(){
      }else{
        writeLines("experimentPower passed test checks",con=zz)
      }
-
      #
      #testing miRNAseq
      setwd("/data/tests/mirnaCounts")
@@ -162,6 +180,7 @@ testSeqbox <- function(){
      if(length(grep("test.mirnaCounts", dir))==0){
        writeLines("wget failed",con=zz)
      }
+     #
      setwd("/data/tests/mirnaCounts/test.mirnaCounts")
      dir <- dir()
      if(length(grep("all_counts.Rda", dir))==0){
@@ -174,8 +193,7 @@ testSeqbox <- function(){
      }else{
        writeLines("mirnaCounts failed check 2",con=zz)
      }
-
-
+     #
      #testing chipseq
      setwd("/data/tests/bwaIndexUcsc/")
      #....TO BE DEFINED
@@ -184,6 +202,7 @@ testSeqbox <- function(){
      if(length(grep("test.chipseqCounts", dir))==0){
        writeLines("wget failed",con=zz)
      }
+     #
      setwd("/data/tests/chipseqCounts/test.chipseqCounts/prdm51.igg")
      dir <- dir()
      if(length(dir)>=23){
