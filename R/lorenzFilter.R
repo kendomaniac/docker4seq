@@ -1,5 +1,5 @@
 #' @title A function to handle sigle cell Lorenz Quality filter for Single-cells
-#' @description This function executes a docker that produces ....
+#' @description This function executes a docker that produces a count matrix named "lorenz_MatrixName" removing low quality cells
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param data.folder, a character string indicating the folder where input data are located and where output will be written
@@ -8,9 +8,9 @@
 #' @param format, counts file extension, "txt", "csv"
 #' @param separator, separator used in count file, e.g. '\\t', ','
 #' 
-#' @author Name Family name, myemail [at] somewhere [dot] org, Affiliation
+#' @author Luca Alessandri, alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
-#' @return output will be in the same format and with the same separator of input.
+#' @return output matrix, without low quality cells, will be in the same format and with the same separator of input.
 #' 
 #' @examples
 #'\dontrun{

@@ -1,23 +1,24 @@
-#' @title Permutation Analysis 
-#' @description This function analyze the data that came up from permutationClustering script.
+#' @title Reorganize Cluster
+#' @description This function executes a ubuntu docker that merge two clusters
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param data.folder, a character string indicating the folder where input data are located and where output will be written
 #' @param matrixName, counts table name. Matrix data file must be in data.folder. The file MUST contain RAW counts, without any modification, such as log transformation, normalizatio etc. 
-#' @param range1, First number of cluster that has to be analyzed 
-#' @param range2, Last number of cluster that has to be analyzed
-#' @param format, matrix count format, "csv", "txt"
+#' @param nCluster, number of Cluster used in Kmeans to generate the clusters that you want to merge
+#' @param A, first Cluster that has to be merged 
+#' @param B, second Cluster that has to be merged
+#' @param format, matrix count format, "csv", "txt"#' @param B, second Cluster that has to be merged
 #' @param separator, separator used in count file, e.g. '\\t', ','
 #' @param sp, minimun number of percentage of cells that has to be in common between two permutation to be the same cluster. 
 #' @author Luca Alessandri , alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
-#' @return stability plot for each nCluster,two files with score information for each cell for each permutation. 
+#' @return will change all the files generated from permAnalysis algorithm in a new folder matrixName_Cluster_merged/
 #' @examples
 #'\dontrun{
-#'permAnalysis("sudo","path/to/scratch","path/to/data","TOTAL",3,4,"csv",",",0.8)# 
+#'clusterReorg("sudo","/home/lucastormreig/CASC2.0/2.1_clusterReorg/scratch/","/home/lucastormreig/CASC2.0/2.1_clusterReorg/Data/","TOTAL",3,1,3,"csv",",",0.8,0.9)# 
 #'}
 #' @export
-permAnalysis <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,range1,range2,format,separator,sp){
+clusterReorg <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,nCluster,A,B,format,separator,sp,pValue){
 
 
 
@@ -55,11 +56,11 @@ separator="tab"
 
   #executing the docker job
   if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationanalysis Rscript /home/main.R ",matrixName," ",range1," ",range2," ",format," ",separator," ",sp, sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/rcaloger/permutationanalysis", params=params)
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/clustereorg Rscript /home/main.R ",matrixName," ",nCluster," ",A," ",B," ",format," ",separator," ",sp," ",pValue,sep="")
+    resultRun <- runDocker(group="sudo",container="docker.io/rcaloger/clulstereorg", params=params)
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationanalysis Rscript /home/main.R ",matrixName," ",range1," ",range2," ",format," ",separator," ",sp, sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/rcaloger/permutationanalysis", params=params)
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/clustereorg Rscript /home/main.R ",matrixName," ",nCluster," ",A," ",B," ",format," ",separator," ",sp," ",pValue,sep="")
+    resultRun <- runDocker(group="docker",container="docker.io/rcaloger/clustereorg", params=params)
   }
   #waiting for the end of the container work
   if(resultRun=="false"){
