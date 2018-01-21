@@ -36,9 +36,9 @@ This function executes the docker container mrna8, which allows miRNAs counting.
    unzip("test.mirnaCounts.zip")
    setwd("test.mirnaCounts")
    library(docker4seq)
-   mirnaCounts(group="docker",fastq.folder=getwd(), 
-             scratch.folder="/data/scratch", 
-             mirbase.id="hsa",download.status=FALSE, 
+   mirnaCounts(group="docker",fastq.folder=getwd(),
+             scratch.folder="/data/scratch",
+             mirbase.id="hsa",download.status=FALSE,
              adapter.type="NEB", trimmed.fastq=FALSE)
 
 }

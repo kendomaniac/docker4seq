@@ -13,11 +13,12 @@
 #' \dontrun{
 #' system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 #' system("wget http://130.192.119.59/public/test_R2.fastq.gz")
+
 #' library(docker4seq)
-#' #running salmonCounts
-#' salmonCounts(group="docker", scratch.folder="/scratch/users/rcaloger/",
-#'         fastq.folder=getwd(), index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R",
-#'         threads=24, seq.type="pe", strandness="none")
+#' wrapperSalmon(group="docker", scratch.folder="/data/scratch/",
+#'               fastq.folder=getwd(), index.folder="/data/genomes/hg38salmon",
+#'               threads=24, seq.type="pe", adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+#'               adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT", min.length=40, strandness="none")
 #' }
 #'
 #' @export
@@ -107,8 +108,12 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
 
   #waiting for the end of the container work
   if(resultRun=="false"){
-    system(paste("rm ", scrat_tmp.folder, "/*.fastq ", sep=""))
-    system(paste("cp -R ", scrat_tmp.folder, "/* ", fastq.folder, sep=""))
+    #not saving fastq files
+    dir.tmp <- dir(scrat_tmp.folder)
+    dir.tmp <- setdiff(dir.tmp, dir.tmp[grep("fastq",dir.tmp)])
+    for(i in dir.tmp){
+      system(paste("cp ", scrat_tmp.folder, "/", i, " " , fastq.folder, sep=""))
+    }
 
     #saving log and removing docker container
     container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)

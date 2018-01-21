@@ -2,7 +2,7 @@
 % Please edit documentation in R/permutationClustering.R
 \name{permutationClustering}
 \alias{permutationClustering}
-\title{A skeleton function to handle a docker containier}
+\title{Permutations and Clustering}
 \usage{
 permutationClustering(group = c("sudo", "docker"), scratch.folder,
   data.folder, matrixName, nPerm, permAtTime, percent, range1, range2, format,
@@ -17,29 +17,29 @@ permutationClustering(group = c("sudo", "docker"), scratch.folder,
 
 \item{matrixName, }{counts table name. Matrix data file must be in data.folder. The file MUST contain RAW counts, without any modification, such as log transformation, normalizatio etc.}
 
-\item{nPerm, }{DA AGGIUNGERE}
+\item{nPerm, }{number of permutations to perform the pValue to evaluate clustering}
 
-\item{permAtTime, }{DA AGGIUNGERE}
+\item{permAtTime, }{number of permutations that can be computes in parallel}
 
-\item{percent, }{DA AGGIUNGERE}
+\item{percent, }{percentage of random cells that has to be removed in each permutation}
 
-\item{range1, }{DA AGGIUNGERE}
+\item{range1, }{first number of cluster for k means algorithm}
 
-\item{range2, }{DA AGGIUNGERE}
+\item{range2, }{last number of cluster for k means algorithm}
 
-\item{format, }{DA AGGIUNGERE}
+\item{format, }{count matrix format "csv", "txt"..}
 
 \item{separator, }{separator used in count file, e.g. '\\t', ','}
 
-\item{logTen, }{DA AGGIUNGERE}
+\item{logTen, }{1 if the count matrix is already in log10, 0 otherwise}
 
-\item{clustering, }{DA AGGIUNGERE}
+\item{clustering, }{clustering method to use : "SIMLR" , "tsne", "griph"}
 }
 \value{
-output will be in the same format and with the same separator of input.
+VioPlot of silhouette cells value for each number of cluster used,clusterP file with clustering results for each permutation, killedCell file with removed cells in each permutation, clustering.output a sommarize file with general information for each cells.
 }
 \description{
-This function executes a ubuntu docker that produces as output helloworld.txt file
+This function executes a ubuntu docker that produces a specific number of permutation to evaluate clustering.
 }
 \examples{
 \dontrun{

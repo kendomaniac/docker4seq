@@ -31,15 +31,15 @@
 #' @return Returns the output of skewer, bwa, chipseq
 #' @examples
 #'\dontrun{
-#'     system("wget 130.192.119.59/public/test.chipseqCounts.zip")
-#'     unzip("test.chipseqCounts.zip")
-#'     setwd("test.chipseqCounts")
-#'     library(docker4seq)
-#'     chipseqCounts(group = "docker", output.folder = "/data/tests/chipseqCounts/test.chipseqCounts/prdm51.igg",
-#'              mock.folder="/data/tests/chipseqCounts/test.chipseqCounts/igg", 
+#' system("wget 130.192.119.59/public/test.chipseqCounts.zip")
+#' unzip("test.chipseqCounts.zip")
+#' setwd("test.chipseqCounts")
+#' library(docker4seq)
+#' chipseqCounts(group = "docker", output.folder = "/data/tests/chipseqCounts/test.chipseqCounts/prdm51.igg",
+#'              mock.folder="/data/tests/chipseqCounts/test.chipseqCounts/igg",
 #'              test.folder="/data/tests/chipseqCounts/test.chipseqCounts/prdm51", scratch.folder="/data/scratch/",
-#'              adapter5 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-#'              adapter3 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+#'              adapter5 = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+#'              adapter3 = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
 #'              threads = 8, min.length = 30, genome.folder="/data/genomes/mm10bwa",
 #'              mock.id = "igg", test.id = "tf", genome="mm10", read.size = 50,
 #'              tool = "macs", macs.min.mfold = 10, macs.max.mfold = 30,
@@ -49,14 +49,21 @@
 #' }
 #' @export
 chipseqCounts <- function( group=c("sudo","docker"),output.folder=getwd(), mock.folder, test.folder, scratch.folder,
-                          adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-                          adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+                          adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+                          adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
                           threads=8, seq.type = "se", min.length=30,genome.folder,
                           mock.id="igg", test.id="tf", genome, read.size=50,
                           tool="macs", macs.min.mfold=10, macs.max.mfold=30, macs.pval="1e-5",
                           sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10,
                           tss.distance=0, max.upstream.distance=10000, remove.duplicates="N"){
 
+  # FastQC
+  home <- getwd()
+  setwd(output.folder)
+  fastqc(group="docker", data.folder=mock.folder)
+  setwd(output.folder)
+  fastqc(group="docker", data.folder=test.folder)
+  setwd(output.folder)
   #trimming adapter and bwa
   home <- getwd()
   setwd(output.folder)

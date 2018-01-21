@@ -36,11 +36,11 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, threads=8){
   cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 
 	if(group=="sudo"){
-	      params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/rcaloger/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
-	      runDocker(group="sudo",container="docker.io/rcaloger/demultiplexing.2017.1", params=params)
+	      params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/repbioinfo/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
+	      runDocker(group="sudo",container="docker.io/repbioinfo/demultiplexing.2017.1", params=params)
 	}else{
-	  params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/rcaloger/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
-	  runDocker(group="docker",container="docker.io/rcaloger/demultiplexing.2017.01", params=params)
+	  params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/repbioinfo/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
+	  runDocker(group="docker",container="docker.io/repbioinfo/demultiplexing.2017.01", params=params)
 	}
   out <- "xxxx"
   #waiting for the end of the container work

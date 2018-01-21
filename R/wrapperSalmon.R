@@ -30,6 +30,10 @@
 wrapperSalmon <- function(group=c("sudo", "docker"), scratch.folder, fastq.folder, index.folder,
          threads=24, seq.type=c("se", "pe"), adapter5, adapter3, min.length, strandness=c("none", "forward", "reverse")){
 
+  #FastQC
+  fastqc(group="docker", data.folder=fastq.folder)
+  setwd(fastq.folder)
+
   #trimming adapter
   skewer(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder,adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
   #running salmon
