@@ -6,13 +6,13 @@
 \usage{
 chipseqCounts(group = c("sudo", "docker"), output.folder = getwd(),
   mock.folder, test.folder, scratch.folder,
-  adapter5 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-  adapter3 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-  threads = 8, seq.type = "se", min.length = 30, genome.folder,
-  mock.id = "igg", test.id = "tf", genome, read.size = 50,
-  tool = "macs", macs.min.mfold = 10, macs.max.mfold = 30,
-  macs.pval = "1e-5", sicer.wsize = 200, sicer.gsize = 200,
-  sicer.fdr = 0.1, tss.distance = 0, max.upstream.distance = 10000,
+  adapter5 = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+  adapter3 = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT", threads = 8,
+  seq.type = "se", min.length = 30, genome.folder, mock.id = "igg",
+  test.id = "tf", genome, read.size = 50, tool = "macs",
+  macs.min.mfold = 10, macs.max.mfold = 30, macs.pval = "1e-5",
+  sicer.wsize = 200, sicer.gsize = 200, sicer.fdr = 0.1,
+  tss.distance = 0, max.upstream.distance = 10000,
   remove.duplicates = "N")
 }
 \arguments{
@@ -75,13 +75,13 @@ This function executes a set of docker containers allowing the detection of TFs 
 }
 \examples{
 \dontrun{
-    system("wget 130.192.119.59/public/test.chipseqCounts.zip")
-    unzip("test.chipseqCounts.zip")
-    setwd("test.chipseqCounts")
-    library(docker4seq)
-    chipseqCounts(group = "docker", output.folder = "/data/tests/chipseqCounts/test.chipseqCounts/prdm51.igg",
-             mock.folder="/data/tests/chipseqCounts/test.chipseqCount/igg",
-             test.folder="/data/tests/chipseqCounts/test.chipseqCount/prdm51", scratch.folder=getwd(),
+system("wget 130.192.119.59/public/test.chipseqCounts.zip")
+unzip("test.chipseqCounts.zip")
+setwd("test.chipseqCounts")
+library(docker4seq)
+chipseqCounts(group = "docker", output.folder = "/data/tests/chipseqCounts/test.chipseqCounts/prdm51.igg",
+             mock.folder="/data/tests/chipseqCounts/test.chipseqCounts/igg",
+             test.folder="/data/tests/chipseqCounts/test.chipseqCounts/prdm51", scratch.folder="/data/scratch/",
              adapter5 = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
              adapter3 = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
              threads = 8, min.length = 30, genome.folder="/data/genomes/mm10bwa",

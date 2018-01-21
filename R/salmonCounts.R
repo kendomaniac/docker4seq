@@ -13,11 +13,12 @@
 #' \dontrun{
 #' system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 #' system("wget http://130.192.119.59/public/test_R2.fastq.gz")
+
 #' library(docker4seq)
-#' #running salmonCounts
-#' salmonCounts(group="docker", scratch.folder="/scratch/users/rcaloger/",
-#'         fastq.folder=getwd(), index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R",
-#'         threads=24, seq.type="pe", strandness="none")
+#' wrapperSalmon(group="docker", scratch.folder="/data/scratch/",
+#'               fastq.folder=getwd(), index.folder="/data/genomes/hg38salmon",
+#'               threads=24, seq.type="pe", adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+#'               adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT", min.length=40, strandness="none")
 #' }
 #'
 #' @export

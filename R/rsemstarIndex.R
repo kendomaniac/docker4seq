@@ -31,7 +31,7 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
 
   home <- getwd()
   setwd(genome.folder)
-  
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -55,17 +55,25 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
 	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
 	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
   }
-  out <- "xxxx"
-  #waiting for the end of the container work
-  while(out != "out.info"){
-    Sys.sleep(10)
-    cat(".")
-    out.tmp <- dir(genome.folder)
-    out.tmp <- out.tmp[grep("out.info",out.tmp)]
-    if(length(out.tmp)>0){
-      out <- "out.info"
-    }
+
+  if(resultRun=="false"){
+    cat("\nRSEMSTAR index generation is finished\n")
   }
+
+  #out <- "xxxx"
+  ##waiting for the end of the container work
+  #while(out != "out.info"){
+  #  Sys.sleep(10)
+  #  cat(".")
+  #  out.tmp <- dir(genome.folder)
+  #  out.tmp <- out.tmp[grep("out.info",out.tmp)]
+  #  if(length(out.tmp)>0){
+  #    out <- "out.info"
+  #  }
+  #}
+
+
+
   #running time 2
   ptm <- proc.time() - ptm
   con <- file(paste(genome.folder,"run.info", sep="/"), "r")
@@ -77,16 +85,16 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
   tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
   tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
   writeLines(tmp.run, paste(genome.folder,"run.info", sep="/"))
-  
+
   #saving log and removing docker container
   container.id <- readLines(paste(genome.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", container.id, " >& ", "rsemstarIndex_",substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
-  
+
   #running time 2
   system(paste("rm ",genome.folder,"/dockerID", sep=""))
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",genome.folder, sep=""))
   setwd(home)
-  
+
 }
 

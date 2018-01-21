@@ -11,13 +11,16 @@
 #' system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 #' library(docker4seq)
 #' #running salmonCounts
-#' salmonCounts(group="docker", scratch.folder="/scratch/users/rcaloger/",
-#'         fastq.folder=getwd(), index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R",
-#'         threads=24, seq.type="pe")
-#'
+#' library(docker4seq)
+#' wrapperSalmon(group="docker", scratch.folder="/data/scratch/",
+#'               fastq.folder=getwd(), index.folder="/data/genomes/hg38salmon",
+#'               threads=8, seq.type="pe", adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+#'               adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT", min.length=40, strandness="none")
+
 #' #converting in a format identical to rsem isoform.results
 #' salmonAnnotation(group="docker", fastq.folder=getwd(),
-#'     index.folder="/archive/home/rcaloger/data/seqbox/salmonIndex.R")
+#'                  index.folder="/data/genomes/hg38salmon")
+#'
 #' }
 #'
 #' @export

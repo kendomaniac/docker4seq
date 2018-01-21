@@ -10,17 +10,18 @@
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param save.bam, a boolean TRUE FALSE to decide if bam files are saved
 #' @author Raffaele Calogero
-#' 
+#'
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
 #' @examples
 #'\dontrun{
 #'     #downloading fastq files
-#'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
-#'     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
-#'     #running rsemstar nostrand pe
-#'     rsemstar(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
-#'     genome.folder="/data/scratch/hg38star", seq.type="pe", strandness="none",
-#'     threads=24, save.bam = FALSE)
+#' system("wget http://130.192.119.59/public/test_R1.fastq.gz")
+#' system("wget http://130.192.119.59/public/test_R2.fastq.gz")
+#' library(docker4seq)
+#' #running rsemstar nostrand pe
+#' rsemstar(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch/",
+#'          genome.folder="/data/genomes/hg38star/", seq.type="pe", strandness="none",
+#'          threads=8, save.bam = FALSE)
 #'
 #' }
 #' @export
@@ -28,7 +29,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 
   home <- getwd()
   setwd(fastq.folder)
-  
+
   #running time 1
   ptm <- proc.time()
   #running time 1
