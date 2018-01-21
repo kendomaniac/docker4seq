@@ -102,16 +102,25 @@ testSeqbox <- function(){
      #.....TO BE defined
      setwd("/data/tests/rnaseqCounts")
      dir <- dir()
-     if(length(grep("gtf_annotated_genes.results", dir))==0){
-       writeLines("annotation by GTF failed",con=zz)
-     }else if(length(grep("isoforms.results", dir))==0){
-       writeLines("RSEM failed",con=zz)
-     }else if(length(grep("Log.final.out", dir))==0){
-       writeLines("STAR failed",con=zz)
-     }else if(length(grep("trimmed.log$", dir))==0){
+     if(length(grep("trimmed.log$", dir))==0){
        writeLines("Skewer failed",con=zz)
      }else{
-       writeLines("rnaseqCounts passed tests checks",con=zz)
+       writeLines("skewer passed test",con=zz)
+     }
+     if(length(grep("Log.final.out", dir))==0){
+       writeLines("STAR failed",con=zz)
+     }else{
+       writeLines("STAR passed test",con=zz)
+     }
+     if(length(grep("isoforms.results", dir))==0){
+       writeLines("RSEM failed",con=zz)
+     }else{
+       writeLines("RSEM passed tests checks",con=zz)
+     }
+     if(length(grep("gtf_annotated_genes.results", dir))==0){
+       writeLines("annotation by GTF failed",con=zz)
+     }else{
+       writeLines("annotation by GTF passed test",con=zz)
      }
      #
      setwd("/data/tests/salmonCounts")
@@ -125,7 +134,7 @@ testSeqbox <- function(){
      }else if(length(grep("trimmed.log$", dir))==0){
        writeLines("Skewer failed",con=zz)
      }else{
-       writeLines("salmonCounts passed tests checks",con=zz)
+       writeLines("salmonCounts passed test",con=zz)
      }
      #
      setwd("/data/tests/samples2experiment")
@@ -156,7 +165,7 @@ testSeqbox <- function(){
      if(length(grep("sample_size_evaluation.txt", dir))==0){
        writeLines("sampleSize failed",con=zz)
      }else{
-       writeLines("sampleSize passed test checks",con=zz)
+       writeLines("sampleSize passed test",con=zz)
      }
      #
      setwd("/data/tests/experimentPower")
@@ -169,9 +178,9 @@ testSeqbox <- function(){
      setwd("/data/tests/experimentPower/test.analysis")
      dir <- dir()
      if(length(grep("power_evaluation.txt", dir))==0){
-       writeLines("experimentPower failed test check 1",con=zz)
+       writeLines("experimentPower failed test",con=zz)
      }else{
-       writeLines("experimentPower passed test checks",con=zz)
+       writeLines("experimentPower passed test",con=zz)
      }
      #
      #testing miRNAseq
@@ -189,9 +198,9 @@ testSeqbox <- function(){
        load(dir[grep("all_counts.Rda", dir)])
      }
      if(dim(all.counts)[1]>10){
-       writeLines("mirnaCounts passed test checks",con=zz)
+       writeLines("mirnaCounts passed test",con=zz)
      }else{
-       writeLines("mirnaCounts failed check 2",con=zz)
+       writeLines("mirnaCounts failed test",con=zz)
      }
      #
      #testing chipseq
@@ -206,9 +215,9 @@ testSeqbox <- function(){
      setwd("/data/tests/chipseqCounts/test.chipseqCounts/prdm51.igg")
      dir <- dir()
      if(length(dir)>=23){
-       writeLines("chipseqCounts passed test checks",con=zz)
+       writeLines("chipseqCounts passed test",con=zz)
      }else{
-       writeLines("chipseqCounts failed test checks",con=zz)
+       writeLines("chipseqCounts failed test",con=zz)
      }
      time <- gsub(":","-",gsub(" ","-",date()))
      writeLines(time,con=zz)
