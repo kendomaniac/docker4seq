@@ -19,6 +19,12 @@
 #' }
 #' @export
 filterCounts <- function(data.folder, type=c("gene", "isoform", "mirna")){
+
+  #running time 1
+  ptm <- proc.time()
+
+  home <- getwd()
+  setwd(data.folder)
   dir <- dir()
 
   if(type=="mirna"){
@@ -52,7 +58,7 @@ filterCounts <- function(data.folder, type=c("gene", "isoform", "mirna")){
     write.table(cpm.df, paste("DEfiltered_",cpm.file, sep=""),sep="\t")
     cpm.mean <- apply(cpm.df, 1, function(x){log2(x+1) - mean(log2(x+1))})
     cpm.mean <- t(cpm.mean)
-    write.table(cpm.mean, paste("DEfiltered-mean-centered_",cpm.file, sep=""),sep="\t", col.names=NA)
+    write.table(cpm.mean, paste("DEfiltered-mean-centered_log2",cpm.file, sep=""),sep="\t", col.names=NA)
 
   }else if(type=="gene"){
 
@@ -149,6 +155,30 @@ filterCounts <- function(data.folder, type=c("gene", "isoform", "mirna")){
     write.table(tpm.mean, paste("DEfiltered-mean-centered",tpm.file, sep=""),sep="\t", col.names=NA)
 
   }
+
+  #running time 2
+  ptm <- proc.time() - ptm
+  dir <- dir(data.folder)
+  dir <- dir[grep("run.info",dir)]
+  if(length(dir)>0){
+    con <- file("run.info", "r")
+    tmp.run <- readLines(con)
+    close(con)
+    tmp.run[length(tmp.run)+1] <- paste("filterCounts user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("filterCounts system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("filterCounts elapsed run time mins ",ptm[3]/60, sep="")
+    writeLines(tmp.run,"run.info")
+  }else{
+    tmp.run <- NULL
+    tmp.run[1] <- paste("filterCounts user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("filterCounts system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("filterCounts elapsed run time mins ",ptm[3]/60, sep="")
+  }
+  writeLines(tmp.run,"run.info")
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
+
+
+  setwd(home)
 
 
 

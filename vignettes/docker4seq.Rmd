@@ -94,12 +94,13 @@ At the present time are available the following workflows:
     + adapter trimming with [skewer](https://github.com/relipmoc/skewer)
     + mapping with [STAR](https://github.com/alexdobin/STAR)
     + counting genes and isoforms with [RSEM](http://deweylab.github.io/RSEM/)
-    + as option to STAR/RSEM it is possible to use SALMON, which is does reference-free transcripts quantification.
+    + as option to STAR/RSEM it is possible to use **SALMON**, which is does reference-free transcripts quantification.
     + ENSEMBL gene annotation.
     + organizing the output of RSEM in tables to be used for differential expression analysis
     + visualizing experiment data with PCA
     + evaluating experiment power and sample size
     + detecting differentially expressed genes/isoforms
+    + subsetting counts/FPKM and TPM table to have only differentially expressed genes, suitable for heatmaps generation.
 - **miRNAseq**, which executes the workflow described in Cordero et al. PLoS One. 2012;7(2):e31630, embedding the following steps:
     + trimming adapters with [cutadapt](http://cutadapt.readthedocs.io/en/stable/guide.html)
     + miRNAs mapping on [mirbase](http://www.mirbase.org/) hairpins using [SHRiMP](http://compbio.cs.toronto.edu/shrimp/)
@@ -531,6 +532,30 @@ wrapperDeseq2(output.folder=getwd(), group="docker",
 User has to provide experiment table, **experiment.table** param, i.e. the counts table generated with **samples2experiment** function, the thresholds for the differential expression analysis, **log2fc** and **fdr** params, the reference covariate, **ref.covar** param, i.e. the covariate that is used as reference for differential expression detection, the **type** param, which refers to the type of experiment table in use: *gene*, *isoform*, *mirna*, **batch** parameter that indicates, if it is set to **TRUE** that the header of the experiment table also contains the extra information for the batch effect (see above). 
 
 IMPORTANT: the above analysis can be also applied to miRNAseq data.
+
+### Subsetting counts/FPKM/TPM with differentially expressed genes
+
+The function *filterCounts* allows to generate counts/FPKM/TPM tables that contains only differentially expressed genes. These tables can be used for visualization purposes, e.g. hetmaps generation with [**ClustVis**](https://biit.cs.ut.ee/clustvis/)
+
+![Count Filter](../inst/img/filtercounts.jpeg)
+
+#### filterCounts
+
+```{r, echo=TRUE, eval=FALSE}
+system("wget 130.192.119.59/public/test.analysis.zip")
+unzip("test.analysis.zip")
+setwd("test.analysis")
+library(docker4seq)
+     wrapperDeseq2(output.folder=getwd(), group="docker", experiment.table="_counts.txt", log2fc=1,
+     fdr=0.1, ref.covar="Cov.1", type="gene", batch=FALSE))
+
+    filterCounts(data.folder=getwd(), type="gene")
+
+```
+
+IMPORTANT: the above analysis can be also applied to miRNAseq data, using for the type parameter **mirna**. In this case also mean centered CPMs are calculated (**NOTE: DE filtered CPM are log2 transformed!**).
+
+The outputs of **filterCounts** function start with **DEfiltered**.  Mean centered data indicates that for each gene count is divided by the mean of that gene over all samples. This representation is more convenient to observe changes between experimental groups. 
 
 ## miRNAseq workflow 
 
