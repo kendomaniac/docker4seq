@@ -5,12 +5,10 @@
 \title{Running RNAseq counting workflow for a single sample}
 \usage{
 rnaseqCounts(group = "sudo", fastq.folder = getwd(),
-  scratch.folder = "/data/scratch", threads = 4,
-  adapter5 = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
-  adapter3 = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT", seq.type = "pe",
-  min.length = 40, genome.folder = "/data/scratch/hg38star",
-  strandness = "none", save.bam = TRUE, org = "hg38",
-  annotation.type = c("biocUCSC", "gtfENSEMBL"))
+  scratch.folder = "/data/scratch", threads = 4, adapter5, adapter3,
+  seq.type = "pe", min.length = 40,
+  genome.folder = "/data/genomes/hg38star", strandness = "none",
+  save.bam = TRUE, org = "hg38", annotation.type = "gtfENSEMBL")
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -50,16 +48,14 @@ This function executes a set of docker containers allowing the generation of gen
 }
 \examples{
 \dontrun{
-    system("wget http://130.192.119.59/public/test.mrnaCounts.zip")
-    unzip("test.mrnaCounts.zip")
-    setwd("./test.mrnaCounts")
-    library(docker4seq)
-    rnaseqCounts(group="docker",fastq.folder=getwd(), scratch.folder=getwd(),
+system("wget http://130.192.119.59/public/test_R1.fastq.gz")
+library(docker4seq)
+rnaseqCounts(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch/",
             adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
             adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
-            seq.type="se", threads=8,  min.length=40,
-            genome.folder="/data/scratch/mm10star", strandness="none", save.bam=FALSE,
-            org="mm10", annotation.type="gtfENSEMBL")
+            seq.type="se", threads=24,  min.length=40,
+            genome.folder="/data/genomes/hg38star", strandness="none", save.bam=FALSE,
+            org="hg38", annotation.type="gtfENSEMBL")
 }
 }
 \author{

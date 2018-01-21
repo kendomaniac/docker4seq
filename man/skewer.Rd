@@ -6,7 +6,7 @@
 \usage{
 skewer(group = c("sudo", "docker"), fastq.folder = getwd(),
   scratch.folder = "/data/scratch", adapter5, adapter3, seq.type = c("se",
-  "pe"), threads = 1, min.length = 18, DockerSwarm = FALSE)
+  "pe"), threads = 1, min.length = 18)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -24,8 +24,6 @@ skewer(group = c("sudo", "docker"), fastq.folder = getwd(),
 \item{threads, }{a number indicating the number of cores to be used from the application}
 
 \item{min.length, }{a number indicating minimal length required to return a trimmed read}
-
-\item{DockerSwarm, }{a bolean value used to enable docker execution in swarm mode.}
 }
 \value{
 One or two gzip fastq files ending with trimmed-pair1.fastq.gz and trimmed-pair1.fastq.gz, a log file of the trimming with the extensione trimmed.log, run.info file descring the analysis steps done by the docker. The latter file is useful to understand where the docker stop in case of unexpected end
