@@ -34,7 +34,7 @@ More info on the functionalities of the package are available at: [**docker4seq/
 
 
 **testSeqbox**
-In *docker4seq* library is now present the function *testSeqbox*, allowing to check if  the software required for docker4seq functionalities is properly installed.
+In *docker4seq* library is now present the function *testSeqbox*, allowing to check if  the software required for docker4seq functionalities is properly installed. Check *?testSeqbox* to see how to use it.
 
 ## Diclaimer:
 docker4seq developers have no liability for any use of docker4seq functions, including without limitation, any loss of data, incorrect results, or any costs, liabilities, or damages that result from use of docker4seq. 
