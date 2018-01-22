@@ -6,7 +6,7 @@
 \usage{
 starChimeric(group = c("sudo", "docker"), fastq.folder = getwd(),
   scratch.folder = "/data/scratch", genome.folder, threads = 1,
-  chimSegmentMin = 20)
+  chimSegmentMin = 15, chimJunctionOverhangMin = 15)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
@@ -20,6 +20,8 @@ starChimeric(group = c("sudo", "docker"), fastq.folder = getwd(),
 \item{threads, }{a number indicating the number of cores to be used from the application}
 
 \item{chimSegmentMin, }{is a positive value indicating the minimal lenght of the overlap of a read to the chimeric element}
+
+\item{chimJunctionOverhangMin, }{is a is a positive value indicating the minimal lenght of the overlap of a read to exon-exon junction}
 }
 \value{
 three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
@@ -34,7 +36,7 @@ This function executes STAR to detect chimeric transcripts
     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
     #running star2step nostrand pe
     starChimeric(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
-    genome.folder="/data/scratch/hg38star", threads=8, chimSegmentMin=20)
+    genome.folder="/data/scratch/hg38star", threads=8, chimSegmentMin=15, chimJunctionOverhangMin=15)
 
 }
 }
