@@ -19,11 +19,7 @@ This function prepare the genome bed file for starchip, the GTF must be the one 
 }
 \examples{
 \dontrun{
-    #downloading fastq files
-    system("wget http://130.192.119.59/public/test_R1.fastq.gz")
-    system("wget http://130.192.119.59/public/test_R2.fastq.gz")
-    #running star2step nostrand pe
-    starChipIndex(group="docker", genome.folder="/data/scratch/hg38star")
+    starChipIndex(group="docker", genome.folder="/data/genomes/hg38star")
 }
 }
 \author{

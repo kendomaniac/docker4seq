@@ -7,11 +7,7 @@
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
 #' @examples
 #'\dontrun{
-#'     #downloading fastq files
-#'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
-#'     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
-#'     #running star2step nostrand pe
-#'     starChipIndex(group="docker", genome.folder="/data/scratch/hg38star")
+#'     starChipIndex(group="docker", genome.folder="/data/genomes/hg38star")
 #' }
 #' @export
 starChipIndex <- function(group=c("sudo","docker"), genome.folder=getwd()){
@@ -52,7 +48,7 @@ starChipIndex <- function(group=c("sudo","docker"), genome.folder=getwd()){
   #running time 2
   #removing temporary folder
   #saving log and removing docker container
-  container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
+  container.id <- readLines(paste(genome.folder,"/dockerID", sep=""), warn = FALSE)
   #    system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
   system(paste("docker logs ", container.id, " >& ","starChipIndex_",substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))

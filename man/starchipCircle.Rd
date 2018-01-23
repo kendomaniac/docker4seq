@@ -39,9 +39,6 @@ This function execute starchip on a set of folders containing the output of star
 \examples{
 \dontrun{
     #downloading fastq files
-    system("wget http://130.192.119.59/public/test_R1.fastq.gz")
-    system("wget http://130.192.119.59/public/test_R2.fastq.gz")
-    #running star2step nostrand pe
     starchipCircle(group="docker", genome.folder="/data/genomes/hg38star", samples.folder=getwd(),
                        reads.cutoff=5, min.subject.limit=10, threads=8,
                        do.splice = "True"), cpm.cutoff=0,

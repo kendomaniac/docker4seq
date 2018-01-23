@@ -15,7 +15,7 @@
 #'     #downloading fastq files
 #'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 #'     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
-#'     #running star2step nostrand pe
+#'     #running starChimeric nostrand pe
 #'     starChimeric(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
 #'     genome.folder="/data/scratch/hg38star", threads=8, chimSegmentMin=15, chimJunctionOverhangMin=15)
 #'
