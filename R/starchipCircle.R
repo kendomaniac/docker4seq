@@ -2,30 +2,35 @@
 #' @description This function execute starchip on a set of folders containing the output of starChimeric. It requires a specific bed generated with starChipIndex in teh genome folder used by starChimeric
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for STAR is located.
+#' @param reads.cutoff, Integer. Minimum number of reads crossing the circular RNA backsplice required.
+#' @param min.subject.limit, Integer. Minimum number of individuals with readsCutoff reads required to carry forward a cRNA for analysis
+#' @param threads, Integer. Number of threads to use
+#' @param do.splice, true false. The splices within the cRNA be detected and reported. Linear splices are searched within each cRNA in each individual. Any linear splice with >= 60\% of the read count of the cRNA is considered a splice within the cRNA. Two files are then created, .consensus with most common splice pattern, and .allvariants with all reported splice patterns.
+#' @param cpm.cutoff, Float. Reads counts are loaded into R and log2(CountsPerMillion) is calculated using the limma package. With cpmCutoff > 0, cRNA with log2(CPM) below this value will be filtered from this analysis
+#' @param subjectCPM.cutoff, Integer. See above. This value is the lower limit for number of individuals required to have the cRNA expressed at a value higher than cpmCutoff.
+#' @param annotation, rue/false. cRNA are provided with gene annotations
 #' @param samples.folder, the folder where are located all the folders of the samples processed with starChimeric
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 #'
-#' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
+#' @return 1. Count matrixes : raw cRNA backsplice counts: circRNA.cutoff[readthreshold]reads.[subjectthreshold]ind.countmatrix log2CPM of above: norm_log2_counts_circRNA.[readthreshold]reads.[subjectthreshold]ind.0cpm_0samples.txt Maximum Linear Splices at Circular Loci: rawdata/linear.[readthreshold]reads.[subjectthreshold]ind.sjmax 2. Info about each circRNA:  Consensus Information about Internal Splicing: Circs[reads].[subjects].spliced.consensus Complete Gene Annotation: circRNA.[readthreshold]reads.[subjectthreshold]ind.annotated Consise Gene Annotation + Splice Type:  circRNA.[readthreshold]reads.[subjectthreshold]ind.genes 3. Images: PCA plots: circRNA.[readthreshold]reads.[subjectthreshold]ind.0cpm_0samples_variance_PCA.pdf Heatmap: circRNA.[readthreshold]reads.[subjectthreshold]ind.heatmap.pdf
 #' @examples
 #'\dontrun{
 #'     #downloading fastq files
 #'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 #'     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 #'     #running star2step nostrand pe
-#'     starchipCircle(group="docker", genome.folder="/data/genomes/hg38star", samples.folder=getwd())
+#'     starchipCircle(group="docker", genome.folder="/data/genomes/hg38star", samples.folder=getwd(),
+#'                        reads.cutoff=5, min.subject.limit=10, threads=8,
+#'                        do.splice = "True"), cpm.cutoff=0,
+#"                        subjectCPM.cutoff=0, annotation="true")
 #' }
 #' @export
-starchipCircle <- function(group=c("sudo","docker"), genome.folder, samples.folder){
+starchipCircle <- function(group=c("sudo","docker"), genome.folder, samples.folder,
+                           reads.cutoff=5, min.subject.limit=10, threads=8,
+                           do.splice = c("True", "False"),cpm.cutoff=0,
+                           subjectCPM.cutoff=0, annotation=c("true", "false")){
 
   home <- getwd()
-  setwd(samples.folder)
-  dir <- list.dirs(recursive = FALSE)
-  dir <- sub("\\./","/samples/", dir)
-  writeLines(dir, "STARdirs.txt")
-
-  params.file=paste(path.package(package="docker4seq"),"extras/starchip-circles.params",sep="/")
-  system(paste("cp ",params.file," ", samples.folder, "/Parameters.txt",sep=""))
-
 
   #running time 1
   ptm <- proc.time()
@@ -35,6 +40,50 @@ starchipCircle <- function(group=c("sudo","docker"), genome.folder, samples.fold
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
+
+
+  setwd(samples.folder)
+  dir <- list.dirs(recursive = FALSE)
+  dir <- sub("\\./","/samples/", dir)
+  writeLines(dir, "STARdirs.txt")
+
+  params.file=paste(path.package(package="docker4seq"),"extras/starchip-circles.params",sep="/")
+  system(paste("cp ",params.file," ", samples.folder, "/Parameters.txt",sep=""))
+
+  #edit params file
+  pf <- readLines("Parameters.txt")
+  readsCutoff <- pf[grep("readsCutoff", pf)]
+  readsCutoff <- sub("5", reads.cutoff, readsCutoff)
+  pf[grep("readsCutoff", pf)] <- readsCutoff
+
+  minSubjectLimit <- pf[grep("minSubjectLimit", pf)]
+  minSubjectLimit <- sub("10", min.subject.limit, minSubjectLimit)
+  pf[grep("minSubjectLimit", pf)] <- minSubjectLimit
+
+  cpus <- pf[grep("cpus", pf)]
+  cpus <- sub("8", threads, cpus)
+  pf[grep("cpus", pf)] <- cpus
+
+  do_splice <- pf[grep("do_splice", pf)]
+  do_splice <- sub("True", do.splice, do_splice)
+  pf[grep("do_splice", pf)] <- do_splice
+
+  cpmCutoff <- pf[grep("cpmCutoff", pf)]
+  cpmCutoff <- sub("0", cpm.cutoff, cpmCutoff)
+  pf[grep("cpmCutoff", pf)] <- cpmCutoff
+
+  subjectCPMcutoff <- pf[grep("subjectCPMcutoff", pf)]
+  subjectCPMcutofff <- sub("0", subjectCPM.cutoff, subjectCPMcutoff)
+  pf[grep("subjectCPMcutoff", pf)] <- subjectCPMcutoff
+
+  annotate <- pf[grep("annotate", pf)]
+  annotate <- sub("true", annotation, annotate)
+  pf[grep("annotate", pf)] <- annotate
+
+  zz <- file("Parameters.txt", "w")
+  writeLines(pf, zz)
+  close(zz)
+
 
   if(group=="sudo"){
     params <- paste("--cidfile ", samples.folder,"/dockerID -v ", samples.folder,":/samples -v ", genome.folder,":/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/starChipCircle.sh", sep="")
@@ -47,8 +96,6 @@ starchipCircle <- function(group=c("sudo","docker"), genome.folder, samples.fold
   if(resultRun=="false"){
     cat("\nstarchipCircle runs are finished\n")
   }
-
-
 
   #running time 2
   ptm <- proc.time() - ptm
