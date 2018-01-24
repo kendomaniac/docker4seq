@@ -44,7 +44,7 @@ starchipCircle <- function(group=c("sudo","docker"), genome.folder, scratch.fold
   writeLines(scrat_tmp.folder,paste(samples.folder,"/tempFolderID", sep=""))
   cat("\ncreating a folder in scratch folder\n")
   dir.create(scrat_tmp.folder)
-  dir.create(scrat_tmp.folder,"/samples")
+  dir.create(paste(scrat_tmp.folder,"/samples", sep=""))
   dir <- dir(path=samples.folder)
   dir.info <- dir[which(dir=="run.info")]
   if(length(dir.info)>0){
