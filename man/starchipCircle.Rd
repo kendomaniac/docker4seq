@@ -4,8 +4,8 @@
 \alias{starchipCircle}
 \title{Running starchip to detect circular RNAs on paired-end sequences}
 \usage{
-starchipCircle(group = c("sudo", "docker"), genome.folder, samples.folder,
-  reads.cutoff = 5, min.subject.limit = 10, threads = 8,
+starchipCircle(group = c("sudo", "docker"), genome.folder, scratch.folder,
+  samples.folder, reads.cutoff, min.subject.limit, threads,
   do.splice = c("True", "False"), cpm.cutoff = 0, subjectCPM.cutoff = 0,
   annotation = c("true", "false"))
 }
@@ -13,6 +13,8 @@ starchipCircle(group = c("sudo", "docker"), genome.folder, samples.folder,
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
 
 \item{genome.folder, }{a character string indicating the folder where the indexed reference genome for STAR is located.}
+
+\item{scratch.folder, }{a character string indicating the scratch folder where docker container will be mounted}
 
 \item{samples.folder, }{the folder where are located all the folders of the samples processed with starChimeric}
 
@@ -39,10 +41,11 @@ This function execute starchip on a set of folders containing the output of star
 \examples{
 \dontrun{
     #downloading fastq files
-    starchipCircle(group="docker", genome.folder="/data/genomes/hg38star", samples.folder=getwd(),
-                       reads.cutoff=5, min.subject.limit=10, threads=8,
-                       do.splice = "True"), cpm.cutoff=0,
+    starchipCircle(group="docker", genome.folder="/data/genomes/hg38star", scratch.folder="/data/scratch",
+                       samples.folder=getwd(), reads.cutoff=1, min.subject.limit=2, threads=8,
+                       do.splice = "True", cpm.cutoff=0, subjectCPM.cutoff=0, annotation="true")
 }
+
 }
 \author{
 Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy

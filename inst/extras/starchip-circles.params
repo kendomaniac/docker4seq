@@ -8,7 +8,7 @@ subjectCPMcutoff = 0
 annotate = true
 
 #Reference Files
-refbed = /genome/genome.bed  #use setup.sh to create this from a gtf.
+refbed = /genome/genome.gtf.bed  #use setup.sh to create this from a gtf.
 refFasta = /genome/genome.fa
 
 #STAR Parameters

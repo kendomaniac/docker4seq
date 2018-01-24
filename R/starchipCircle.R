@@ -2,6 +2,7 @@
 #' @description This function execute starchip on a set of folders containing the output of starChimeric. It requires a specific bed generated with starChipIndex in teh genome folder used by starChimeric
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for STAR is located.
+#' @param scratch.folder,  a character string indicating the scratch folder where docker container will be mounted
 #' @param reads.cutoff, Integer. Minimum number of reads crossing the circular RNA backsplice required.
 #' @param min.subject.limit, Integer. Minimum number of individuals with readsCutoff reads required to carry forward a cRNA for analysis
 #' @param threads, Integer. Number of threads to use
@@ -16,14 +17,14 @@
 #' @examples
 #'\dontrun{
 #'     #downloading fastq files
-#'     starchipCircle(group="docker", genome.folder="/data/genomes/hg38star", samples.folder=getwd(),
-#'                        reads.cutoff=5, min.subject.limit=10, threads=8,
-#'                        do.splice = "True"), cpm.cutoff=0,
-#"                        subjectCPM.cutoff=0, annotation="true")
+#'     starchipCircle(group="docker", genome.folder="/data/genomes/hg38star", scratch.folder="/data/scratch",
+#'                        samples.folder=getwd(), reads.cutoff=1, min.subject.limit=2, threads=8,
+#'                        do.splice = "True", cpm.cutoff=0, subjectCPM.cutoff=0, annotation="true")
 #' }
+#'
 #' @export
-starchipCircle <- function(group=c("sudo","docker"), genome.folder, samples.folder,
-                           reads.cutoff=5, min.subject.limit=10, threads=8,
+starchipCircle <- function(group=c("sudo","docker"), genome.folder, scratch.folder, samples.folder,
+                           reads.cutoff, min.subject.limit, threads,
                            do.splice = c("True", "False"),cpm.cutoff=0,
                            subjectCPM.cutoff=0, annotation=c("true", "false")){
 
@@ -38,11 +39,33 @@ starchipCircle <- function(group=c("sudo","docker"), genome.folder, samples.fold
     return()
   }
 
+  tmp.folder <- gsub(":","-",gsub(" ","-",date()))
+  scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
+  writeLines(scrat_tmp.folder,paste(samples.folder,"/tempFolderID", sep=""))
+  cat("\ncreating a folder in scratch folder\n")
+  dir.create(scrat_tmp.folder)
+  dir.create(scrat_tmp.folder,"/samples")
+  dir <- dir(path=samples.folder)
+  dir.info <- dir[which(dir=="run.info")]
+  if(length(dir.info)>0){
+    system(paste("chmod 777 -R", scrat_tmp.folder))
+    system(paste("cp ",samples.folder,"/run.info ", scrat_tmp.folder,"/samples/run.info", sep=""))
+
+  }
 
   setwd(samples.folder)
   dir <- list.dirs(recursive = FALSE)
   dir <- sub("\\./","/samples/", dir)
   writeLines(dir, "STARdirs.txt")
+  writeLines(dir, paste(scrat_tmp.folder,"/samples/STARdirs.txt", sep=""))
+
+
+  for(i in dir){
+    dir.create(paste(scrat_tmp.folder, i, sep=""))
+    system(paste("cp ", sub("/samples/","",i),"/Chimeric.junction.out ", scrat_tmp.folder, i, sep=""))
+  }
+
+
 
   params.file=paste(path.package(package="docker4seq"),"extras/starchip-circles.params",sep="/")
   system(paste("cp ",params.file," ", samples.folder, "/Parameters.txt",sep=""))
@@ -77,43 +100,46 @@ starchipCircle <- function(group=c("sudo","docker"), genome.folder, samples.fold
   annotate <- sub("true", annotation, annotate)
   pf[grep("annotate", pf)] <- annotate
 
-  zz <- file("Parameters.txt", "w")
-  writeLines(pf, zz)
-  close(zz)
+
+  writeLines(pf, "Parameters.txt")
+  writeLines(pf, paste(scrat_tmp.folder,"/samples/Parameters.txt", sep=""))
 
 
   if(group=="sudo"){
-    params <- paste("--cidfile ", samples.folder,"/dockerID -v ", samples.folder,":/samples -v ", genome.folder,":/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/starChipCircle.sh", sep="")
+    params <- paste("--cidfile ", samples.folder,"/dockerID -v ", paste(scrat_tmp.folder,"/samples", sep=""),":/samples -v ", genome.folder,":/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/starChipCircle.sh", sep="")
     resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/star251.2017.01", params=params)
   }else{
-    params <- paste("--cidfile ", samples.folder,"/dockerID -v ", samples.folder,":/samples -v ", genome.folder,":/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/starChipCircle.sh", sep="")
+    params <- paste("--cidfile ", samples.folder,"/dockerID -v ", paste(scrat_tmp.folder,"/samples", sep=""),":/samples -v ", genome.folder,":/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/starChipCircle.sh", sep="")
     resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/star251.2017.01", params=params)
   }
 
   if(resultRun=="false"){
     cat("\nstarchipCircle runs are finished\n")
+    system(paste("cp -R", scrat_tmp.folder,"/samples/rawdata ", samples.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder,"/samples/* ", samples.folder, sep=""))
   }
 
   #running time 2
   ptm <- proc.time() - ptm
-  con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
+  con <- file(paste(samples.folder,"run.info", sep="/"), "r")
   tmp.run <- readLines(con)
   close(con)
   tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
   tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
   tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
-  writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
+  writeLines(tmp.run,paste(samples.folder,"run.info", sep="/"))
   #running time 2
   #removing temporary folder
   #saving log and removing docker container
-  container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
+  container.id <- readLines(paste(samples.folder,"/dockerID", sep=""), warn = FALSE)
   #    system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
   system(paste("docker logs ", container.id, " >& ","starchipCircle_",substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
 
 
   cat("\n\nRemoving the starChipIndex temporary file ....\n")
-  system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))
+  system(paste("rm -R ",scrat_tmp.folder))
+  system(paste("rm  -f ",samples.folder,"/dockerID", sep=""))
   setwd(home)
 
 }
