@@ -56,16 +56,19 @@ starchipCircle <- function(group=c("sudo","docker"), genome.folder, scratch.fold
   setwd(samples.folder)
   dir <- list.dirs(recursive = FALSE)
   dir <- sub("\\./","/samples/", dir)
-  writeLines(dir, "STARdirs.txt")
-  writeLines(dir, paste(scrat_tmp.folder,"/samples/STARdirs.txt", sep=""))
 
+  zz <- file("STARdirs.txt", "w")
+  writeLines(dir, zz)
+  close(zz)
+
+  zz <- file(paste(scrat_tmp.folder,"/samples/STARdirs.txt", sep=""), "w")
+  writeLines(dir, zz)
+  close(zz)
 
   for(i in dir){
     dir.create(paste(scrat_tmp.folder, i, sep=""))
     system(paste("cp ", sub("/samples/","",i),"/Chimeric.junction.out ", scrat_tmp.folder, i, sep=""))
   }
-
-
 
   params.file=paste(path.package(package="docker4seq"),"extras/starchip-circles.params",sep="/")
   system(paste("cp ",params.file," ", samples.folder, "/Parameters.txt",sep=""))
@@ -100,10 +103,13 @@ starchipCircle <- function(group=c("sudo","docker"), genome.folder, scratch.fold
   annotate <- sub("true", annotation, annotate)
   pf[grep("annotate", pf)] <- annotate
 
+  zz <- file("Parameters.txt", "w")
+  writeLines(pf, zz)
+  close(zz)
 
-  writeLines(pf, "Parameters.txt")
-  writeLines(pf, paste(scrat_tmp.folder,"/samples/Parameters.txt", sep=""))
-
+  zz <- file(paste(scrat_tmp.folder,"/samples/Parameters.txt", sep=""), "w")
+  writeLines(pf, zz)
+  close(zz)
 
   if(group=="sudo"){
     params <- paste("--cidfile ", samples.folder,"/dockerID -v ", paste(scrat_tmp.folder,"/samples", sep=""),":/samples -v ", genome.folder,":/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/starChipCircle.sh", sep="")
