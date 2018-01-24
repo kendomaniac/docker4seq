@@ -67,7 +67,7 @@ starchipCircle <- function(group=c("sudo","docker"), genome.folder, scratch.fold
 
   for(i in dir){
     dir.create(paste(scrat_tmp.folder, i, sep=""))
-    system(paste("cp ", samples.folder, sub("/samples/","",i),"/Chimeric.junction.out ", scrat_tmp.folder, i, sep=""))
+    system(paste("cp ", samples.folder, "/", sub("/samples/","",i),"/Chimeric.junction.out ", scrat_tmp.folder, i, sep=""))
   }
 
   params.file=paste(path.package(package="docker4seq"),"extras/starchip-circles.params",sep="/")
