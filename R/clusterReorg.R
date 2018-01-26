@@ -10,15 +10,17 @@
 #' @param format, matrix count format, "csv", "txt"#' @param B, second Cluster that has to be merged
 #' @param separator, separator used in count file, e.g. '\\t', ','
 #' @param sp, minimun number of percentage of cells that has to be in common between two permutation to be the same cluster. 
+#' @param pValue, higher is the value more correct is the algorithm to recognize clusters along all the permutation.Default=0.9. 
+#' @param clusterPermErr,error that can be done by each permutation in cluster number depicting.Default = 0.05 
 #' @author Luca Alessandri , alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
 #' @return will change all the files generated from permAnalysis algorithm in a new folder matrixName_Cluster_merged/
 #' @examples
 #'\dontrun{
-#'clusterReorg("sudo","/home/lucastormreig/CASC2.0/2.1_clusterReorg/scratch/","/home/lucastormreig/CASC2.0/2.1_clusterReorg/Data/","TOTAL",3,1,3,"csv",",",0.8,0.9)# 
+#'clusterReorg("sudo","/home/lucastormreig/CASC2.0/2.1_clusterReorg/scratch/","/home/lucastormreig/CASC2.0/2.1_clusterReorg/Data/","TOTAL",3,1,3,"csv",",")# 
 #'}
 #' @export
-clusterReorg <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,nCluster,A,B,format,separator,sp,pValue){
+clusterReorg <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,nCluster,A,B,format,separator,sp=0.8,pValue=0.9,clusterPermErr=0.05){
 
 
 
@@ -56,10 +58,10 @@ separator="tab"
 
   #executing the docker job
   if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/clustereorg Rscript /home/main.R ",matrixName," ",nCluster," ",A," ",B," ",format," ",separator," ",sp," ",pValue,sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/clustereorg Rscript /home/main.R ",matrixName," ",nCluster," ",A," ",B," ",format," ",separator," ",sp," ",pValue," ",clusterPermErr, sep="")
     resultRun <- runDocker(group="sudo",container="docker.io/rcaloger/clulstereorg", params=params)
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/clustereorg Rscript /home/main.R ",matrixName," ",nCluster," ",A," ",B," ",format," ",separator," ",sp," ",pValue,sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/clustereorg Rscript /home/main.R ",matrixName," ",nCluster," ",A," ",B," ",format," ",separator," ",sp," ",pValue," ",clusterPermErr, sep="")
     resultRun <- runDocker(group="docker",container="docker.io/rcaloger/clustereorg", params=params)
   }
   #waiting for the end of the container work
