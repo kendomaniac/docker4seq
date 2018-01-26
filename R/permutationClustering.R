@@ -13,15 +13,16 @@
 #' @param separator, separator used in count file, e.g. '\\t', ','
 #' @param logTen, 1 if the count matrix is already in log10, 0 otherwise
 #' @param clustering, clustering method to use : "SIMLR" , "tsne", "griph"
+#' @param perplexity, Number of close neighbors for each point
 #' @author Luca Alessandri, alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
 #' @return VioPlot of silhouette cells value for each number of cluster used,clusterP file with clustering results for each permutation, killedCell file with removed cells in each permutation, clustering.output a sommarize file with general information for each cells.  
 #' @examples
 #'\dontrun{
-#'  permutationClustering("sudo","/home/lucastormreig/CASC2.0/permutationClustering/scratch/","/home/lucastormreig/CASC2.0/permutationClustering/Data/","TOTAL",4,2,10,3,4,"csv",",",0,"SIMLR")# 
+#'  permutationClustering("sudo","/home/lucastormreig/CASC2.0/permutationClustering/scratch/","/home/lucastormreig/CASC2.0/permutationClustering/Data/","TOTAL",4,2,10,3,4,"csv",",",0,"SIMLR",0)# 
 #'}
 #' @export
-permutationClustering <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,nPerm,permAtTime,percent,range1,range2,format,separator,logTen,clustering){
+permutationClustering <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,nPerm,permAtTime,percent,range1,range2,format,separator,logTen,clustering,perplexity){
 
 
 
@@ -59,10 +60,10 @@ separator="tab"
 
   #executing the docker job
   if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationclustering Rscript /home/main.R ",matrixName," ",nPerm," ",permAtTime," ",percent," ",range1," ",range2," ",format," ",separator," ",logTen," ",clustering, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationclustering Rscript /home/main.R ",matrixName," ",nPerm," ",permAtTime," ",percent," ",range1," ",range2," ",format," ",separator," ",logTen," ",clustering," ",perplexity,sep="")
     resultRun <- runDocker(group="sudo",container="docker.io/rcaloger/permutationclustering", params=params)
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationclustering Rscript /home/main.R ",matrixName," ",nPerm," ",permAtTime," ",percent," ",range1," ",range2," ",format," ",separator," ",logTen," ",clustering, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationclustering Rscript /home/main.R ",matrixName," ",nPerm," ",permAtTime," ",percent," ",range1," ",range2," ",format," ",separator," ",logTen," ",clustering," ",perplexity,sep="")
     resultRun <- runDocker(group="docker",container="docker.io/rcaloger/permutationclustering", params=params)
   }
   #waiting for the end of the container work
