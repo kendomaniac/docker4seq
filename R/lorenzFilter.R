@@ -1,5 +1,5 @@
 #' @title A function to handle sigle cell Lorenz Quality filter for Single-cells
-#' @description This function executes a docker that produces ....
+#' @description This function executes a docker that produces the same matrix filtered with Lorenz statistic 
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param data.folder, a character string indicating the folder where input data are located and where output will be written
