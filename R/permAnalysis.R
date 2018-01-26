@@ -9,6 +9,7 @@
 #' @param format, matrix count format, "csv", "txt"
 #' @param separator, separator used in count file, e.g. '\\t', ','
 #' @param sp, minimun number of percentage of cells that has to be in common between two permutation to be the same cluster. 
+#' @param clusterPermErr, error that can be done by each permutation in cluster number depicting.Default = 0.05
 #' @author Luca Alessandri , alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
 #' @return stability plot for each nCluster,two files with score information for each cell for each permutation. 
@@ -17,7 +18,7 @@
 #'permAnalysis("sudo","path/to/scratch","path/to/data","TOTAL",3,4,"csv",",",0.8)# 
 #'}
 #' @export
-permAnalysis <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,range1,range2,format,separator,sp){
+permAnalysis <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,range1,range2,format,separator,sp,clusterPermErr=0.05){
 
 
 
@@ -55,10 +56,10 @@ separator="tab"
 
   #executing the docker job
   if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationanalysis Rscript /home/main.R ",matrixName," ",range1," ",range2," ",format," ",separator," ",sp, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationanalysis Rscript /home/main.R ",matrixName," ",range1," ",range2," ",format," ",separator," ",sp," ",clusterPermErr, sep="")
     resultRun <- runDocker(group="sudo",container="docker.io/rcaloger/permutationanalysis", params=params)
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationanalysis Rscript /home/main.R ",matrixName," ",range1," ",range2," ",format," ",separator," ",sp, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationanalysis Rscript /home/main.R ",matrixName," ",range1," ",range2," ",format," ",separator," ",sp," ",clusterPermErr,sep="")
     resultRun <- runDocker(group="docker",container="docker.io/rcaloger/permutationanalysis", params=params)
   }
   #waiting for the end of the container work
