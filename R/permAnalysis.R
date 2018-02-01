@@ -1,26 +1,27 @@
-#' @title A function to handle sigle cell Lorenz Quality filter for Single-cells
-#' @description This function executes a docker that produces the same matrix filtered with Lorenz statistic 
+#' @title Permutation Analysis 
+#' @description This function analyze the data that came up from permutationClustering script.
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param data.folder, a character string indicating the folder where input data are located and where output will be written
 #' @param matrixName, counts table name. Matrix data file must be in data.folder. The file MUST contain RAW counts, without any modification, such as log transformation, normalizatio etc. 
-#' @param p_value, threshold to be used for the filtering
-#' @param format, counts file extension, "txt", "csv"
+#' @param range1, First number of cluster that has to be analyzed 
+#' @param range2, Last number of cluster that has to be analyzed
+#' @param format, matrix count format, "csv", "txt"
 #' @param separator, separator used in count file, e.g. '\\t', ','
-#' 
-#' @author Name Family name, myemail [at] somewhere [dot] org, Affiliation
+#' @param sp, minimun number of percentage of cells that has to be in common between two permutation to be the same cluster. 
+#' @param clusterPermErr, error that can be done by each permutation in cluster number depicting.Default = 0.05
+#' @author Luca Alessandri , alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
-#' @return output will be in the same format and with the same separator of input.
-#' 
+#' @return stability plot for each nCluster,two files with score information for each cell for each permutation. 
 #' @examples
 #'\dontrun{
-#'
-#'  lorenzFilter(group="docker",scratch.folder="path/of/scratch/folder",
-#'           data.folder="path/of/data/folder",matrixName="matrixName",p_value=0.05,format="txt",separator='\t')
-#' }
-#' 
+#'permAnalysis("sudo","path/to/scratch","path/to/data","TOTAL",3,4,"csv",",",0.8)# 
+#'}
 #' @export
-lorenzFilter <- function(group=c("sudo","docker"), scratch.folder, data.folder, matrixName, p_value, format, separator){
+permAnalysis <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,range1,range2,format,separator,sp,clusterPermErr=0.05){
+
+
+
   #testing if docker is running
   test <- dockerTest()
   if(!test){
@@ -49,18 +50,17 @@ lorenzFilter <- function(group=c("sudo","docker"), scratch.folder, data.folder, 
   cat("\ncreating a folder in scratch folder\n")
   dir.create(file.path(scrat_tmp.folder))
   
-  write.csv(read.table(paste(data.folder,"/",matrixName,".",format,sep=""),sep=separator,header=TRUE,row.names=1),paste(scrat_tmp.folder,"/set1.csv",sep=""))
 if(separator=="\t"){
 separator="tab"
 }
 
   #executing the docker job
   if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/lorenz Rscript /home/main.R ",matrixName," ",p_value," ",format," ",separator, sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/rcaloger/lorenz", params=params)
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationanalysis Rscript /home/main.R ",matrixName," ",range1," ",range2," ",format," ",separator," ",sp," ",clusterPermErr, sep="")
+    resultRun <- runDocker(group="sudo",container="docker.io/rcaloger/permutationanalysis", params=params)
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/lorenz Rscript /home/main.R ",matrixName," ",p_value," ",format," ",separator, sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/rcaloger/lorenz", params=params)
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationanalysis Rscript /home/main.R ",matrixName," ",range1," ",range2," ",format," ",separator," ",sp," ",clusterPermErr,sep="")
+    resultRun <- runDocker(group="docker",container="docker.io/rcaloger/permutationanalysis", params=params)
   }
   #waiting for the end of the container work
   if(resultRun=="false"){
@@ -100,4 +100,3 @@ separator="tab"
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
   setwd(home)
 }
-

@@ -1,26 +1,31 @@
-#' @title A function to handle sigle cell Lorenz Quality filter for Single-cells
-#' @description This function executes a docker that produces the same matrix filtered with Lorenz statistic 
+#' @title Permutations and Clustering
+#' @description This function executes a ubuntu docker that produces a specific number of permutation to evaluate clustering.
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param data.folder, a character string indicating the folder where input data are located and where output will be written
 #' @param matrixName, counts table name. Matrix data file must be in data.folder. The file MUST contain RAW counts, without any modification, such as log transformation, normalizatio etc. 
-#' @param p_value, threshold to be used for the filtering
-#' @param format, counts file extension, "txt", "csv"
+#' @param nPerm, number of permutations to perform the pValue to evaluate clustering
+#' @param permAtTime, number of permutations that can be computes in parallel
+#' @param percent, percentage of random cells that has to be removed in each permutation
+#' @param range1, first number of cluster for k means algorithm  
+#' @param range2, last number of cluster for k means algorithm 
+#' @param format, count matrix format "csv", "txt"..
 #' @param separator, separator used in count file, e.g. '\\t', ','
-#' 
-#' @author Name Family name, myemail [at] somewhere [dot] org, Affiliation
+#' @param logTen, 1 if the count matrix is already in log10, 0 otherwise
+#' @param clustering, clustering method to use : "SIMLR" , "tsne", "griph"
+#' @param perplexity, Number of close neighbors for each point
+#' @author Luca Alessandri, alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
-#' @return output will be in the same format and with the same separator of input.
-#' 
+#' @return VioPlot of silhouette cells value for each number of cluster used,clusterP file with clustering results for each permutation, killedCell file with removed cells in each permutation, clustering.output a sommarize file with general information for each cells.  
 #' @examples
 #'\dontrun{
-#'
-#'  lorenzFilter(group="docker",scratch.folder="path/of/scratch/folder",
-#'           data.folder="path/of/data/folder",matrixName="matrixName",p_value=0.05,format="txt",separator='\t')
-#' }
-#' 
+#'  permutationClustering("sudo","/home/lucastormreig/CASC2.0/permutationClustering/scratch/","/home/lucastormreig/CASC2.0/permutationClustering/Data/","TOTAL",4,2,10,3,4,"csv",",",0,"SIMLR",0)# 
+#'}
 #' @export
-lorenzFilter <- function(group=c("sudo","docker"), scratch.folder, data.folder, matrixName, p_value, format, separator){
+permutationClustering <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,nPerm,permAtTime,percent,range1,range2,format,separator,logTen,clustering,perplexity){
+
+
+
   #testing if docker is running
   test <- dockerTest()
   if(!test){
@@ -49,18 +54,17 @@ lorenzFilter <- function(group=c("sudo","docker"), scratch.folder, data.folder, 
   cat("\ncreating a folder in scratch folder\n")
   dir.create(file.path(scrat_tmp.folder))
   
-  write.csv(read.table(paste(data.folder,"/",matrixName,".",format,sep=""),sep=separator,header=TRUE,row.names=1),paste(scrat_tmp.folder,"/set1.csv",sep=""))
 if(separator=="\t"){
 separator="tab"
 }
 
   #executing the docker job
   if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/lorenz Rscript /home/main.R ",matrixName," ",p_value," ",format," ",separator, sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/rcaloger/lorenz", params=params)
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationclustering Rscript /home/main.R ",matrixName," ",nPerm," ",permAtTime," ",percent," ",range1," ",range2," ",format," ",separator," ",logTen," ",clustering," ",perplexity,sep="")
+    resultRun <- runDocker(group="sudo",container="docker.io/rcaloger/permutationclustering", params=params)
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/lorenz Rscript /home/main.R ",matrixName," ",p_value," ",format," ",separator, sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/rcaloger/lorenz", params=params)
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationclustering Rscript /home/main.R ",matrixName," ",nPerm," ",permAtTime," ",percent," ",range1," ",range2," ",format," ",separator," ",logTen," ",clustering," ",perplexity,sep="")
+    resultRun <- runDocker(group="docker",container="docker.io/rcaloger/permutationclustering", params=params)
   }
   #waiting for the end of the container work
   if(resultRun=="false"){
@@ -100,4 +104,3 @@ separator="tab"
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
   setwd(home)
 }
-

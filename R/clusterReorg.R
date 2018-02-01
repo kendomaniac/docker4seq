@@ -1,35 +1,38 @@
-#' @title A function to handle sigle cell Lorenz Quality filter for Single-cells
-#' @description This function executes a docker that produces the same matrix filtered with Lorenz statistic 
+#' @title Reorganize Cluster
+#' @description This function executes a ubuntu docker that merge two clusters
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param data.folder, a character string indicating the folder where input data are located and where output will be written
-#' @param matrixName, counts table name. Matrix data file must be in data.folder. The file MUST contain RAW counts, without any modification, such as log transformation, normalizatio etc. 
-#' @param p_value, threshold to be used for the filtering
-#' @param format, counts file extension, "txt", "csv"
+#' @param matrixName, counts table name. Matrix data file must be in data.folder. The file MUST contain RAW counts, without any modification, such as log transformation, normalizatio etc.
+#' @param nCluster, number of Cluster used in Kmeans to generate the clusters that you want to merge
+#' @param A, first Cluster that has to be merged
+#' @param B, second Cluster that has to be merged
+#' @param format, matrix count format, "csv", "txt"
 #' @param separator, separator used in count file, e.g. '\\t', ','
-#' 
-#' @author Name Family name, myemail [at] somewhere [dot] org, Affiliation
+#' @param sp, minimun number of percentage of cells that has to be in common between two permutation to be the same cluster.
+#' @param pValue, higher is the value more correct is the algorithm to recognize clusters along all the permutation.Default=0.9.
+#' @param clusterPermErr, accepted probability that the algorithm defines a number of clusters different from the that defined using all cells, default = 0.05
+#' @author Luca Alessandri , alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
-#' @return output will be in the same format and with the same separator of input.
-#' 
+#' @return will change all the files generated from permAnalysis algorithm in a new folder matrixName_Cluster_merged/
 #' @examples
 #'\dontrun{
-#'
-#'  lorenzFilter(group="docker",scratch.folder="path/of/scratch/folder",
-#'           data.folder="path/of/data/folder",matrixName="matrixName",p_value=0.05,format="txt",separator='\t')
-#' }
-#' 
+#'clusterReorg("sudo","/home/lucastormreig/CASC2.0/2.1_clusterReorg/scratch/","/home/lucastormreig/CASC2.0/2.1_clusterReorg/Data/","TOTAL",3,1,3,"csv",",")#
+#'}
 #' @export
-lorenzFilter <- function(group=c("sudo","docker"), scratch.folder, data.folder, matrixName, p_value, format, separator){
+clusterReorg <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,nCluster,A,B,format,separator,sp=0.8,pValue=0.9,clusterPermErr=0.05){
+
+
+
   #testing if docker is running
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
-  #storing the position of the home folder  
+  #storing the position of the home folder
   home <- getwd()
-  
+
   #running time 1
   ptm <- proc.time()
   #setting the data.folder as working folder
@@ -48,19 +51,18 @@ lorenzFilter <- function(group=c("sudo","docker"), scratch.folder, data.folder, 
   writeLines(scrat_tmp.folder,paste(data.folder,"/tempFolderID", sep=""))
   cat("\ncreating a folder in scratch folder\n")
   dir.create(file.path(scrat_tmp.folder))
-  
-  write.csv(read.table(paste(data.folder,"/",matrixName,".",format,sep=""),sep=separator,header=TRUE,row.names=1),paste(scrat_tmp.folder,"/set1.csv",sep=""))
+
 if(separator=="\t"){
 separator="tab"
 }
 
   #executing the docker job
   if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/lorenz Rscript /home/main.R ",matrixName," ",p_value," ",format," ",separator, sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/rcaloger/lorenz", params=params)
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/clustereorg Rscript /home/main.R ",matrixName," ",nCluster," ",A," ",B," ",format," ",separator," ",sp," ",pValue," ",clusterPermErr, sep="")
+    resultRun <- runDocker(group="sudo",container="docker.io/rcaloger/clulstereorg", params=params)
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/lorenz Rscript /home/main.R ",matrixName," ",p_value," ",format," ",separator, sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/rcaloger/lorenz", params=params)
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/clustereorg Rscript /home/main.R ",matrixName," ",nCluster," ",A," ",B," ",format," ",separator," ",sp," ",pValue," ",clusterPermErr, sep="")
+    resultRun <- runDocker(group="docker",container="docker.io/rcaloger/clustereorg", params=params)
   }
   #waiting for the end of the container work
   if(resultRun=="false"){
@@ -100,4 +102,3 @@ separator="tab"
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
   setwd(home)
 }
-
