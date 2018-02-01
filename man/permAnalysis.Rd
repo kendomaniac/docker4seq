@@ -5,7 +5,7 @@
 \title{Permutation Analysis}
 \usage{
 permAnalysis(group = c("sudo", "docker"), scratch.folder, data.folder,
-  matrixName, range1, range2, format, separator, sp)
+  matrixName, range1, range2, format, separator, sp, clusterPermErr = 0.05)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
@@ -25,6 +25,8 @@ permAnalysis(group = c("sudo", "docker"), scratch.folder, data.folder,
 \item{separator, }{separator used in count file, e.g. '\\t', ','}
 
 \item{sp, }{minimun number of percentage of cells that has to be in common between two permutation to be the same cluster.}
+
+\item{clusterPermErr, }{error that can be done by each permutation in cluster number depicting.Default = 0.05}
 }
 \value{
 stability plot for each nCluster,two files with score information for each cell for each permutation.

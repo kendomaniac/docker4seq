@@ -5,7 +5,8 @@
 \title{Reorganize Cluster}
 \usage{
 clusterReorg(group = c("sudo", "docker"), scratch.folder, data.folder,
-  matrixName, nCluster, A, B, format, separator, sp, pValue)
+  matrixName, nCluster, A, B, format, separator, sp = 0.8, pValue = 0.9,
+  clusterPermErr = 0.05)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
@@ -27,6 +28,10 @@ clusterReorg(group = c("sudo", "docker"), scratch.folder, data.folder,
 \item{separator, }{separator used in count file, e.g. '\\t', ','}
 
 \item{sp, }{minimun number of percentage of cells that has to be in common between two permutation to be the same cluster.}
+
+\item{pValue, }{higher is the value more correct is the algorithm to recognize clusters along all the permutation.Default=0.9.}
+
+\item{clusterPermErr, error}{that can be done by each permutation in cluster number depicting.Default = 0.05}
 }
 \value{
 will change all the files generated from permAnalysis algorithm in a new folder matrixName_Cluster_merged/
@@ -36,7 +41,7 @@ This function executes a ubuntu docker that merge two clusters
 }
 \examples{
 \dontrun{
-clusterReorg("sudo","/home/lucastormreig/CASC2.0/2.1_clusterReorg/scratch/","/home/lucastormreig/CASC2.0/2.1_clusterReorg/Data/","TOTAL",3,1,3,"csv",",",0.8,0.9)# 
+clusterReorg("sudo","/home/lucastormreig/CASC2.0/2.1_clusterReorg/scratch/","/home/lucastormreig/CASC2.0/2.1_clusterReorg/Data/","TOTAL",3,1,3,"csv",",")# 
 }
 }
 \author{

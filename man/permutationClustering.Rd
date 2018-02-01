@@ -6,7 +6,7 @@
 \usage{
 permutationClustering(group = c("sudo", "docker"), scratch.folder,
   data.folder, matrixName, nPerm, permAtTime, percent, range1, range2, format,
-  separator, logTen, clustering)
+  separator, logTen, clustering, perplexity)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
@@ -34,6 +34,8 @@ permutationClustering(group = c("sudo", "docker"), scratch.folder,
 \item{logTen, }{1 if the count matrix is already in log10, 0 otherwise}
 
 \item{clustering, }{clustering method to use : "SIMLR" , "tsne", "griph"}
+
+\item{perplexity, }{Number of close neighbors for each point}
 }
 \value{
 VioPlot of silhouette cells value for each number of cluster used,clusterP file with clustering results for each permutation, killedCell file with removed cells in each permutation, clustering.output a sommarize file with general information for each cells.
@@ -43,7 +45,7 @@ This function executes a ubuntu docker that produces a specific number of permut
 }
 \examples{
 \dontrun{
- permutationClustering("sudo","/home/lucastormreig/CASC2.0/permutationClustering/scratch/","/home/lucastormreig/CASC2.0/permutationClustering/Data/","TOTAL",4,2,10,3,4,"csv",",",0,"SIMLR")# 
+ permutationClustering("sudo","/home/lucastormreig/CASC2.0/permutationClustering/scratch/","/home/lucastormreig/CASC2.0/permutationClustering/Data/","TOTAL",4,2,10,3,4,"csv",",",0,"SIMLR",0)# 
 }
 }
 \author{

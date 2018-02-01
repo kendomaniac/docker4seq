@@ -26,7 +26,7 @@ lorenzFilter(group = c("sudo", "docker"), scratch.folder, data.folder,
 output will be in the same format and with the same separator of input.
 }
 \description{
-This function executes a docker that produces ....
+This function executes a docker that produces the same matrix filtered with Lorenz statistic
 }
 \examples{
 \dontrun{
