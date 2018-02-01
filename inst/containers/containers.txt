@@ -14,4 +14,10 @@ docker.io/repbioinfo/indrop.2017.01
 docker.io/repbioinfo/salmon.2017.01
 docker.io/rcaloger/casc
 docker.io/beccuti/hashclone
+docker.io/rcaloger/lorenz
+docker.io/rcaloger/permutationclustering
+docker.io/rcaloger/permutationanalysis
+docker.io/rcaloger/clulstereor
+
+
 
