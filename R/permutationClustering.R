@@ -55,7 +55,7 @@ permutationClustering <- function(group=c("sudo","docker"), scratch.folder, data
   dir.create(file.path(scrat_tmp.folder))
 
   #copying cell matrix in scratch
-  system(paste("cp ", data.folder, "/", matrixName, file.extension, " ", scrat_tmp.folder,sep=""))
+  system(paste("cp ", data.folder, "/", matrixName, ".", file.extension, " ", scrat_tmp.folder,sep=""))
 
 if(separator=="\t"){
 separator="tab"
