@@ -5,8 +5,8 @@
 \title{Permutations and Clustering}
 \usage{
 permutationClustering(group = c("sudo", "docker"), scratch.folder,
-  data.folder, matrixName, nPerm, permAtTime, percent, range1, range2,
-  file.extension, separator, logTen, clustering, perplexity)
+  data.folder, matrixName, nPerm, permAtTime, percent, range1 = NULL,
+  range2 = NULL, file.extension, separator, logTen, clustering, perplexity)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
@@ -35,7 +35,7 @@ permutationClustering(group = c("sudo", "docker"), scratch.folder,
 
 \item{clustering, }{clustering method to use : "SIMLR" , "tsne", "griph"}
 
-\item{perplexity, }{Number of close neighbors for each point}
+\item{perplexity, }{Number of close neighbors for each point, it must be 10 in tSne}
 }
 \value{
 VioPlot of silhouette cells value for each number of cluster used,clusterP file with clustering results for each permutation, killedCell file with removed cells in each permutation, clustering.output a sommarize file with general information for each cells.

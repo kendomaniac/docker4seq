@@ -13,7 +13,7 @@
 #' @param separator, separator used in count file, e.g. '\\t', ','
 #' @param logTen, 1 if the count matrix is already in log10, 0 otherwise
 #' @param clustering, clustering method to use : "SIMLR" , "tsne", "griph"
-#' @param perplexity, Number of close neighbors for each point
+#' @param perplexity, Number of close neighbors for each point, it must be 10 in tSne
 #' @author Luca Alessandri, alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
 #' @return VioPlot of silhouette cells value for each number of cluster used,clusterP file with clustering results for each permutation, killedCell file with removed cells in each permutation, clustering.output a sommarize file with general information for each cells.
@@ -22,7 +22,7 @@
 #'  permutationClustering("sudo","/home/lucastormreig/CASC2.0/permutationClustering/scratch/","/home/lucastormreig/CASC2.0/permutationClustering/Data/","TOTAL",4,2,10,3,4,"csv",",",0,"SIMLR",0)#
 #'}
 #' @export
-permutationClustering <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,nPerm,permAtTime,percent,range1,range2,file.extension,separator,logTen,clustering,perplexity){
+permutationClustering <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,nPerm,permAtTime,percent,range1=NULL,range2=NULL,file.extension,separator,logTen,clustering,perplexity){
 
 
 
