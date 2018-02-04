@@ -5,8 +5,8 @@
 \title{Permutations and Clustering}
 \usage{
 permutationClustering(group = c("sudo", "docker"), scratch.folder,
-  data.folder, matrixName, nPerm, permAtTime, percent, range1, range2, format,
-  separator, logTen, clustering, perplexity)
+  data.folder, matrixName, nPerm, permAtTime, percent, range1, range2,
+  file.extension, separator, logTen, clustering, perplexity)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
@@ -27,7 +27,7 @@ permutationClustering(group = c("sudo", "docker"), scratch.folder,
 
 \item{range2, }{last number of cluster for k means algorithm}
 
-\item{format, }{count matrix format "csv", "txt"..}
+\item{file.extension, }{count matrix format "csv", "txt"..}
 
 \item{separator, }{separator used in count file, e.g. '\\t', ','}
 
@@ -45,7 +45,7 @@ This function executes a ubuntu docker that produces a specific number of permut
 }
 \examples{
 \dontrun{
- permutationClustering("sudo","/home/lucastormreig/CASC2.0/permutationClustering/scratch/","/home/lucastormreig/CASC2.0/permutationClustering/Data/","TOTAL",4,2,10,3,4,"csv",",",0,"SIMLR",0)# 
+ permutationClustering("sudo","/home/lucastormreig/CASC2.0/permutationClustering/scratch/","/home/lucastormreig/CASC2.0/permutationClustering/Data/","TOTAL",4,2,10,3,4,"csv",",",0,"SIMLR",0)#
 }
 }
 \author{
