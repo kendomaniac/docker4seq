@@ -19,7 +19,7 @@ skeleton <- function(group=c("sudo","docker"), scratch.folder, data.folder){
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    return(1)
   }
   #storing the position of the home folder  
   home <- getwd()
