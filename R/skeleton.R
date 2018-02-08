@@ -43,13 +43,9 @@ skeleton <- function(group=c("sudo","docker"), scratch.folder, data.folder){
   cat("\ncreating a folder in scratch folder\n")
   dir.create(file.path(scrat_tmp.folder))
   #executing the docker job
-  if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh", sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/ubuntu", params=params)
-  }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh", sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/ubuntu", params=params)
-  }
+  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh", sep="")
+  resultRun <- runDocker(group=group,container="docker.io/repbioinfo/ubuntu", params=params)
+  
   #waiting for the end of the container work
   if(resultRun=="false"){
     system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
