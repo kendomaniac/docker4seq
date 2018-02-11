@@ -33,7 +33,7 @@ permutationClustering(group = c("sudo", "docker"), scratch.folder,
 
 \item{logTen, }{1 if the count matrix is already in log10, 0 otherwise}
 
-\item{clustering, }{clustering method to use : "SIMLR" , "tsne", "griph"}
+\item{clustering, }{clustering method to use : "SIMLR" , "tSne", "griph"}
 
 \item{perplexity, }{Number of close neighbors for each point, it must be 10 in tSne}
 }

@@ -36,6 +36,25 @@ More info on the functionalities of the package are available at: [**docker4seq/
 **testSeqbox**
 In *docker4seq* library is now present the function *testSeqbox*, allowing to check if  the software required for docker4seq functionalities is properly installed. Check *?testSeqbox* to see how to use it.
 
+
+## Workflows compliance with Sandve rules:
+
+- The **whole transcriptome workflow**, embedding annotatingByGtf.R, demultiplexing.R, experimentPower.R, fastqc.R, filterCounts.R, pca.R, rnaseqCounts.R, rsemAnnotate.R, rsemStar.R, rsemstarIndex.R, salmonAnnotation.R, salmonCounts.R, salmonIndex.R, samples2experiment.R, sampleSize.R, skewer.R, wrapperDeseq2.R, wrapperSalmon.R fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285) reproducibility rules. 
+
+- The **miRNAs analysis workflow**, embedding demultiplexing.R, experimentPower.R, fastqc.R, filterCounts.R, pca.R, mirnaCounts.R, mirnaCovar.R, sampleSize.R, wrapperDeseq2.R fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285) reproducibility rules. 
+
+- The **Xenome module**, which allows to discriminate between mouse and human reads in patient derived xenograft DNA/RNA sequenced samples, embedding xenome.R and xenomeIndex.R, fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285) reproducibility rules.
+
+- The **inDrop single cell module**, which allows the single cell UMI counting generated with inDrop single cell sequencing technology, embedding indropCounts.R and demultiplexing.R fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285) reproducibility rules. 
+
+- The **Platypus module**, which allows haplotype-based variant calling for next generation sequence data, embedding demultiplexing.R, bwa.R and platypus.R fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285)
+
+- The **Circular RNA identification module**, which allows the identification circRNAs, embedding starChipIndex.R, starChimeric.R and starchipCircle.R fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285)
+
+- The **ChIPseq workflow** embedding demultiplexing.R, chipseq.R, chipseqCounts.R, bwa.R, bwaIndexUcsc.R does not satisfy Rule 4 (Version Control All Custom Scripts) because it download for annotation the latest version of ENSEMBL annotation. Thus, annotation executed at different time might differ because of the changes in the ENSEMBL downoaded information. We are working to fix this issue, expected fixing Q3 2018.
+
+
+
 ## Diclaimer:
 docker4seq developers have no liability for any use of docker4seq functions, including without limitation, any loss of data, incorrect results, or any costs, liabilities, or damages that result from use of docker4seq. 
 

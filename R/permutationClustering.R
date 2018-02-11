@@ -12,7 +12,7 @@
 #' @param file.extension, count matrix format "csv", "txt"..
 #' @param separator, separator used in count file, e.g. '\\t', ','
 #' @param logTen, 1 if the count matrix is already in log10, 0 otherwise
-#' @param clustering, clustering method to use : "SIMLR" , "tsne", "griph"
+#' @param clustering, clustering method to use : "SIMLR" , "tSne", "griph"
 #' @param perplexity, Number of close neighbors for each point, it must be 10 in tSne
 #' @author Luca Alessandri, alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
