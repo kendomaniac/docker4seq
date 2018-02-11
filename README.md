@@ -1,4 +1,4 @@
-# Reproducible Bioinformatics Project
+# Reproducible Bioinformatics Community
 
 The aim of Reproducible Bioinformatics project is the creation of easy to use Bioinformatics workflows that fullfill the following roles ([Sandve et al. PLoS Comp Biol. 2013](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285)):
 
@@ -43,7 +43,7 @@ Any bioinformatician interested to embed specific applications in the available 
 
 Steps required to submit a new application/workflow:
 
-- Edit the skeleton.R function and the ubuntu docker image (docker.io/repbioinfo/ubuntu) to create the new application.
+- Edit the [skeleton.R](https://github.com/kendomaniac/docker4seq/blob/devel/R/skeleton.R) function and the ubuntu docker image (docker.io/repbioinfo/ubuntu) to create the new application.
 
 
     + Please have a look at: [Controlling jobs in a docker image, a brief tutorial](http://rpubs.com/rcaloger/300960).
