@@ -3,21 +3,21 @@
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param data.folder, a character string indicating the folder where input data are located and where output will be written
-#' @param matrixName, counts table name. Matrix data file must be in data.folder. The file MUST contain RAW counts, without any modification, such as log transformation, normalizatio etc.
+#' @param matrixName, counts table name. Matrix data file must be in data.folder. The file MUST contain RAW counts, without any modification, such as log transformation, normalizatio etc. 
 #' @param nCluster, number of Cluster used in Kmeans to generate the clusters that you want to merge
-#' @param A, first Cluster that has to be merged
+#' @param A, first Cluster that has to be merged 
 #' @param B, second Cluster that has to be merged
-#' @param format, matrix count format, "csv", "txt"
+#' @param format, matrix count format, "csv", "txt"#' @param B, second Cluster that has to be merged
 #' @param separator, separator used in count file, e.g. '\\t', ','
-#' @param sp, minimun number of percentage of cells that has to be in common between two permutation to be the same cluster.
-#' @param pValue, higher is the value more correct is the algorithm to recognize clusters along all the permutation.Default=0.9.
-#' @param clusterPermErr, accepted probability that the algorithm defines a number of clusters different from the that defined using all cells, default = 0.05
+#' @param sp, minimun number of percentage of cells that has to be in common between two permutation to be the same cluster. 
+#' @param pValue, higher is the value more correct is the algorithm to recognize clusters along all the permutation.Default=0.9. 
+#' @param clusterPermErr,error that can be done by each permutation in cluster number depicting.Default = 0.05 
 #' @author Luca Alessandri , alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
 #' @return will change all the files generated from permAnalysis algorithm in a new folder matrixName_Cluster_merged/
 #' @examples
 #'\dontrun{
-#'clusterReorg("sudo","/home/lucastormreig/CASC2.0/2.1_clusterReorg/scratch/","/home/lucastormreig/CASC2.0/2.1_clusterReorg/Data/","TOTAL",3,1,3,"csv",",")#
+#'clusterReorg("sudo","/home/lucastormreig/CASC2.0/2.1_clusterReorg/scratch/","/home/lucastormreig/CASC2.0/2.1_clusterReorg/Data/","TOTAL",3,1,3,"csv",",")# 
 #'}
 #' @export
 clusterReorg <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,nCluster,A,B,format,separator,sp=0.8,pValue=0.9,clusterPermErr=0.05){
@@ -30,9 +30,9 @@ clusterReorg <- function(group=c("sudo","docker"), scratch.folder, data.folder,m
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
-  #storing the position of the home folder
+  #storing the position of the home folder  
   home <- getwd()
-
+  
   #running time 1
   ptm <- proc.time()
   #setting the data.folder as working folder
@@ -51,7 +51,7 @@ clusterReorg <- function(group=c("sudo","docker"), scratch.folder, data.folder,m
   writeLines(scrat_tmp.folder,paste(data.folder,"/tempFolderID", sep=""))
   cat("\ncreating a folder in scratch folder\n")
   dir.create(file.path(scrat_tmp.folder))
-
+  
 if(separator=="\t"){
 separator="tab"
 }
