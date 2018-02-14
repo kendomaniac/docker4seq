@@ -31,6 +31,7 @@ topx <- function(data.folder ,file.name, threshold, log=FALSE){
   tmp <- tmp[order(sum.counts, decreasing = T),]
 
   tmp.filter <- tmp[,1:threshold]
-  write.table(tmp.filter, sep="\t", col.names = NA)
+  write.table(tmp.filter, paste(file.name, sub(".txt",paste("_",threshold,".txt", sep=""),file.name), sep=""), sep="\t", col.names = NA)
+  setwd(home)
 
 }
