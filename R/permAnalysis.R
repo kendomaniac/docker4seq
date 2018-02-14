@@ -53,6 +53,7 @@ permAnalysis <- function(group=c("sudo","docker"), scratch.folder, data.folder,m
 if(separator=="\t"){
 separator="tab"
 }
+system(paste("cp -r ",data.folder,"/Results/",matrixName," ",scrat_tmp.folder,sep=""))
 
   #executing the docker job
   if(group=="sudo"){
@@ -64,7 +65,7 @@ separator="tab"
   }
   #waiting for the end of the container work
   if(resultRun=="false"){
-    system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
+    #system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
   }
   #running time 2
   ptm <- proc.time() - ptm
@@ -91,6 +92,8 @@ separator="tab"
   container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
+   cat("Copying Result Folder")
+  system(paste("cp -r ",scrat_tmp.folder,"/* ",data.folder,"/Results",sep=""))
   #removing temporary folder
   cat("\n\nRemoving the temporary file ....\n")
   system(paste("rm -R ",scrat_tmp.folder))
