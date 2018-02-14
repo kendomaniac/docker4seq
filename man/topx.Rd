@@ -4,7 +4,7 @@
 \alias{topx}
 \title{A function to selectec top X on the basis of gene/transcript expression}
 \usage{
-topx(data.folder, file.name, threshold, log = FALSE)
+topx(data.folder, file.name, threshold, logged = FALSE)
 }
 \arguments{
 \item{data.folder, }{a character string indicating the folder where input data are located and where output will be written}
@@ -13,7 +13,7 @@ topx(data.folder, file.name, threshold, log = FALSE)
 
 \item{threshold, }{integer used for filtering indicate the number of top expressed genes to be selected}
 
-\item{log, }{boolean TRUE or FALSE, if FALSE gene expression data are expressed in the plot as log10.}
+\item{logged, }{boolean TRUE or FALSE, if FALSE gene expression data are expressed in the plot as log10.}
 }
 \value{
 a filtered tab delimited file and a histogram of the gene by gene total expression
@@ -24,7 +24,7 @@ This function select the X top genes give a user defined threshold
 \examples{
 \dontrun{
 
- topx(data.folder="path/of/data/folder",file.name="matrixName",threshold=100000, log=FALSE)
+ topx(data.folder=getwd(),file.name="singlecells_counts.txt",threshold=10000, logged=FALSE)
 }
 
 }
