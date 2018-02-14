@@ -19,7 +19,7 @@
 topx <- function(data.folder ,file.name, threshold, log=FALSE){
   home <- getwd()
   setwd(data.folder)
-  tmp <- read.table(file.name, header=T, sep="\t", sep="\t", raw.names=1)
+  tmp <- read.table(file.name, header=T, sep="\t", row.names=1)
   sum.counts <- apply(tmp, 1, sum)
   pdf("gene_expression_distribution.pdf")
   if(!log10){
