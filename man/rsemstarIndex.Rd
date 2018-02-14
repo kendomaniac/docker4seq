@@ -27,7 +27,7 @@ This function executes the docker container rsem-star1 where RSEM and STAR are i
 \examples{
 \dontrun{
     #running rsemstar index for human
-    rsemstarIndex(group="sudo",genome.folder="/data/scratch/hg38star",
+    rsemstarIndex(group="docker",genome.folder="/data/scratch/hg38star",
     ensembl.urlgenome=
     "ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz",
     ensembl.urlgtf=
