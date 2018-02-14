@@ -58,6 +58,11 @@ if(separator=="\t"){
 separator="tab"
 }
 
+ dir.create(paste(scrat_tmp.folder,"/",matrixName,sep=""))
+ dir.create(paste(data.folder,"/Results",sep=""))
+system(paste("cp ",data.folder,"/",matrixName,".",format," ",scrat_tmp.folder,"/",matrixName,sep=""))
+
+
   #executing the docker job
   if(group=="sudo"){
     params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationclustering Rscript /home/main.R ",matrixName," ",nPerm," ",permAtTime," ",percent," ",range1," ",range2," ",format," ",separator," ",logTen," ",clustering," ",perplexity,sep="")
@@ -68,7 +73,7 @@ separator="tab"
   }
   #waiting for the end of the container work
   if(resultRun=="false"){
-    system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
+    #system(paste("cp -r ", scrat_tmp.folder, "/* ", data.folder,"Results", sep=""))
   }
   #running time 2
   ptm <- proc.time() - ptm
@@ -96,6 +101,8 @@ separator="tab"
   system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
   #removing temporary folder
+  cat("Copying Result Folder")
+  system(paste("cp -r ",scrat_tmp.folder,"/* ",data.folder,"/Results",sep=""))
   cat("\n\nRemoving the temporary file ....\n")
   system(paste("rm -R ",scrat_tmp.folder))
   system("rm -fR out.info")
