@@ -29,5 +29,5 @@ This function select the X top genes give a user defined threshold
 
 }
 \author{
-Name Family name, myemail [at] somewhere [dot] org, Affiliation
+Raffaele Calogero, raffaele.calogero [at] unito [dot] it, UNITO
 }

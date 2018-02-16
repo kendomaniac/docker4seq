@@ -117,6 +117,10 @@ In *docker4seq* library is now present the function *testSeqbox*, allowing to ch
 
 - The **ChIPseq workflow** embedding demultiplexing.R, chipseq.R, chipseqCounts.R, bwa.R, bwaIndexUcsc.R does not satisfy Rule 4 (Version Control All Custom Scripts) because it download for annotation the latest version of ENSEMBL annotation. Thus, annotation executed at different time might differ because of the changes in the ENSEMBL downoaded information. We are working to fix this issue, expected fixing Q3 2018. Not all intermediate results are available as part of the final results (Sandve rule 5), expected fixing Q3 2018.
 
+#### Demonstrative workflows:
+
+Demonstrative workflows tutorial is available [here](http://rpubs.com/rcaloger/360801).
+
 
 #### Diclaimer:
 docker4seq developers have no liability for any use of docker4seq functions, including without limitation, any loss of data, incorrect results, or any costs, liabilities, or damages that result from use of docker4seq. 
