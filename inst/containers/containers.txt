@@ -18,6 +18,7 @@ docker.io/rcaloger/lorenz
 docker.io/rcaloger/permutationclustering
 docker.io/rcaloger/permutationanalysis
 docker.io/rcaloger/clulstereor
+docker.io/gferrero/sncrna
 
 
 
