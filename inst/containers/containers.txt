@@ -19,6 +19,4 @@ docker.io/rcaloger/permutationclustering
 docker.io/rcaloger/permutationanalysis
 docker.io/rcaloger/clulstereor
 docker.io/gferrero/sncrna
-
-
-
+docker.io/ewels/multiqc
