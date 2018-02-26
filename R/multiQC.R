@@ -11,7 +11,7 @@
 #' }
 #'
 #' @export
-MultiQC <- function(group=c("sudo","docker"), data.folder){
+multiQC <- function(group=c("sudo","docker"), data.folder){
   
   #testing if docker is running
   test <- dockerTest()
