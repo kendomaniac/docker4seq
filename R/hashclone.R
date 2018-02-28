@@ -61,9 +61,11 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   for (i in 1:length(input.files)){
     system(paste("cp ",input.files[i],scrat_tmp.folder))
   }
+  system(paste("cp ",spike,scrat_tmp.folder))
   #executing the docker job
   
-  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d ",dockerImage, " /bin/hashclone.sh ",kmer," ",hash," ",coll," ",threshold," /scratch  null ", spike, sep="")
+  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d ",dockerImage, " /bin/hashclone.sh ",kmer," ",hash," ",coll," ",threshold," /scratch  null ", sep="")
+  params <- paste(params,paste("/scratch/",basename(spike),sep=""), sep=" ")
   for (i in 1:length(input.files)){
     params <- paste(params,paste("/scratch/",basename(input.files[i]),sep=""), sep=" ")
   }
