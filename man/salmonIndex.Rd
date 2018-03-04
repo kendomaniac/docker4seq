@@ -24,17 +24,17 @@ This function executes the Salmon docker that produces as output a transcripts i
 \examples{
 \dontrun{
     #running salmonIndex mouse
-    salmonIndex(group="docker", index.folder=getwd(), 
+    salmonIndex(group="docker", index.folder=getwd(),
     ensembl.urltranscriptome="ftp://ftp.ensembl.org/pub/release-90/fasta/mus_musculus/cdna/Mus_musculus.GRCm38.cdna.all.fa.gz",
-    ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-90/gtf/mus_musculus/Mus_musculus.GRCm38.90.gtf.gz", 
+    ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-90/gtf/mus_musculus/Mus_musculus.GRCm38.90.gtf.gz",
     k=31)
     #running salmonIndex human
     library(docker4seq)
-    salmonIndex(group="docker", index.folder=getwd(), 
+    salmonIndex(group="docker", index.folder=getwd(),
            ensembl.urltranscriptome="ftp://ftp.ensembl.org/pub/release-90/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz",
-           ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-90/gtf/homo_sapiens/Homo_sapiens.GRCh38.90.gtf.gz", 
+           ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-90/gtf/homo_sapiens/Homo_sapiens.GRCh38.90.gtf.gz",
            k=31)
-    
+
 }
 
 }

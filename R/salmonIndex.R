@@ -6,21 +6,21 @@
 #' @param ensembl.urlgtf, a character string indicating the URL from ENSEMBL ftp for the GTF for genome of interest
 #' @param k, a number indicating the k-mers length, 31 eems to work well for reads of 75bp or longer, but you might consider a smaller k if dealing with shorter reads.
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit University of Torino Italy
-#' 
+#'
 #' @examples
 #' \dontrun{
 #'     #running salmonIndex mouse
-#'     salmonIndex(group="docker", index.folder=getwd(), 
+#'     salmonIndex(group="docker", index.folder=getwd(),
 #'     ensembl.urltranscriptome="ftp://ftp.ensembl.org/pub/release-90/fasta/mus_musculus/cdna/Mus_musculus.GRCm38.cdna.all.fa.gz",
-#'     ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-90/gtf/mus_musculus/Mus_musculus.GRCm38.90.gtf.gz", 
+#'     ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-90/gtf/mus_musculus/Mus_musculus.GRCm38.90.gtf.gz",
 #'     k=31)
 #'     #running salmonIndex human
 #'     library(docker4seq)
-#'     salmonIndex(group="docker", index.folder=getwd(), 
+#'     salmonIndex(group="docker", index.folder=getwd(),
 #'            ensembl.urltranscriptome="ftp://ftp.ensembl.org/pub/release-90/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz",
-#'            ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-90/gtf/homo_sapiens/Homo_sapiens.GRCh38.90.gtf.gz", 
+#'            ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-90/gtf/homo_sapiens/Homo_sapiens.GRCh38.90.gtf.gz",
 #'            k=31)
-#'     
+#'
 #' }
 #'
 #' @export
@@ -32,9 +32,9 @@ salmonIndex <- function(group=c("sudo","docker"), index.folder, ensembl.urltrans
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
-  #storing the position of the home folder  
+  #storing the position of the home folder
   home <- getwd()
-  
+
   #running time 1
   ptm <- proc.time()
   #setting the data.folder as working folder
@@ -50,18 +50,19 @@ salmonIndex <- function(group=c("sudo","docker"), index.folder, ensembl.urltrans
   #executing the docker job
   if(group=="sudo"){
 #    params <- paste("--cidfile ",index.folder,"/dockerID -v ", index.folder, ":/index -d docker.io/repbioinfo/salmon.2017.01 /usr/local/bin/salmon index -t /index/transcripts.fa -i /index/transcripts_index --type quasi -k ",k, sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/salmon.2017.01", params=params)
+     params <- paste("--cidfile ",index.folder,"/dockerID -v ", index.folder, ":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_index.sh ",k, sep="")
+     resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/salmon.2017.01", params=params)
   }else{
 #    params <- paste("--cidfile ",index.folder,"/dockerID -v ", index.folder, ":/index -d docker.io/repbioinfo/salmon.2017.01 /usr/local/bin/salmon index -t /index/transcripts.fa -i /index/transcripts_index --type quasi -k ",k, sep="")
      params <- paste("--cidfile ",index.folder,"/dockerID -v ", index.folder, ":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_index.sh ",k, sep="")
      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/salmon.2017.01", params=params)
   }
-  
-  
+
+
   if(resultRun=="false"){
     cat("\nSalmon index generation is finished\n")
   }
-  
+
   home <- getwd()
   setwd(index.folder)
   #waiting for the end of the container work
