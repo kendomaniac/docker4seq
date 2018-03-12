@@ -6,7 +6,7 @@
 \usage{
 bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(),
   genome.fasta = NULL, genome.url = NULL, dbsnp.file = NULL,
-  g1000.file = NULL, gatk = FALSE)
+  g1000.file = NULL, gatk = FALSE, download_genome = FALSE)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -22,6 +22,8 @@ bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(),
 \item{g1000.file, }{a character string indicating the name of 1000 genome vcf located in the genome folder. The 1000 genomes vcf, Mills_and_1000G_gold_standard.indels.b37.vcf.gz and Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/}
 
 \item{gatk, }{a boolean TRUE and FALSE that indicate if the index will be used for GATK analysis}
+
+\item{download.genome, }{a boolean TRUE and FALSE that indicate if the genome file must but be downloaded}
 }
 \value{
 The indexed bwa genome reference sequence
@@ -34,16 +36,16 @@ This function executes the docker container bwa1 where BWA is installed. Optiona
 
     #running bwa index
     bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/mm10bwa", genome.fasta,
-    gatk=FALSE)
+    gatk=FALSE, download.genome=FALSE)
     #running bwa index for gatk
     bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", genome.url=
     "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz",
     dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz",
-    gatk=TRUE)
+    gatk=TRUE, download.genome=TRUE)
 
 
 }
 }
 \author{
-Raffaele Calogero
+Giulio Ferrero
 }
