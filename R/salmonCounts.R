@@ -107,7 +107,7 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
 
 
   #waiting for the end of the container work
-  if(resultRun=="false"){
+  if(resultRun==0){
     #not saving fastq files
     dir.tmp <- dir(scrat_tmp.folder)
     dir.tmp <- setdiff(dir.tmp, dir.tmp[grep("fastq",dir.tmp)])

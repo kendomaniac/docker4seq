@@ -90,32 +90,17 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	}
 	cat("\nsetting as working dir the scratch folder and running chipseq docker container\n")
 
-	if(group=="sudo"){
-		   params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
-		             bam.folder," ", ctrl.bam," 000000 ",docker_chipseq.folder," ",
-		             genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ",
-		             macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",
-		             max.upstream.distance," ",remove.duplicates, sep="")
-	     runDocker(group="sudo",container="docker.io/repbioinfo/chipseq.2017.01", params=params)
-		}else{
-		  params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
-             bam.folder," ", ctrl.bam," 000000 ",docker_chipseq.folder," ",
-             genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ",
-             macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",
-             max.upstream.distance," ",remove.duplicates, sep="")
-		  runDocker(group="docker",container="docker.io/repbioinfo/chipseq.2017.01", params=params)
+params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",bam.folder," ", ctrl.bam," 000000 ",docker_chipseq.folder," ",genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ", macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",max.upstream.distance," ",remove.duplicates, sep="")
+
+resultRun=runDocker(group=group,container="docker.io/repbioinfo/chipseq.2017.01", params=params)
+	
+
+	if(resultRun==0){
+	  cat("\nChipseq is finished\n")
 	}
-	out <- "xxxx"
-	#waiting for the end of the container work
-	while(out != "out.info"){
-		Sys.sleep(10)
-		cat(".")
-		out.tmp <- dir(scrat_tmp.folder)
-		out.tmp <- out.tmp[grep("out.info",out.tmp)]
-		if(length(out.tmp)>0){
-			out <- "out.info"
-		}
-	}
+	
+	
+	
 #	system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	con <- file(paste(scrat_tmp.folder,"out.info", sep="/"), "r")
 	tmp <- readLines(con)

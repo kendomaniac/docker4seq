@@ -48,17 +48,11 @@ salmonIndex <- function(group=c("sudo","docker"), index.folder, ensembl.urltrans
   system(paste("wget -O genome.gtf.gz ",ensembl.urlgtf, sep=""))
   system("gzip -d genome.gtf.gz")
   #executing the docker job
-  if(group=="sudo"){
-#    params <- paste("--cidfile ",index.folder,"/dockerID -v ", index.folder, ":/index -d docker.io/repbioinfo/salmon.2017.01 /usr/local/bin/salmon index -t /index/transcripts.fa -i /index/transcripts_index --type quasi -k ",k, sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/salmon.2017.01", params=params)
-  }else{
-#    params <- paste("--cidfile ",index.folder,"/dockerID -v ", index.folder, ":/index -d docker.io/repbioinfo/salmon.2017.01 /usr/local/bin/salmon index -t /index/transcripts.fa -i /index/transcripts_index --type quasi -k ",k, sep="")
-     params <- paste("--cidfile ",index.folder,"/dockerID -v ", index.folder, ":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_index.sh ",k, sep="")
-     resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/salmon.2017.01", params=params)
-  }
+  params <- paste("--cidfile ",index.folder,"/dockerID -v ", index.folder, ":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_index.sh ",k, sep="")
+     resultRun <- runDocker(group=sudo,container="docker.io/repbioinfo/salmon.2017.01", params=params)
   
   
-  if(resultRun=="false"){
+  if(resultRun==0){
     cat("\nSalmon index generation is finished\n")
   }
   

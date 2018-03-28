@@ -56,25 +56,15 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
   }
   docker_fastq.folder=file.path("/data/scratch", tmp.folder)
-  if(group=="sudo"){
-      params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
-      runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
-    }else{
-      params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
-      runDocker(group="docker",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
-  }
-  out <- "xxxx"
+
+  params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
+  resultRun=runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
+  
   #waiting for the end of the container work
-  while(out != "out.info"){
-    Sys.sleep(10)
-    cat(".")
-    out.tmp <- dir(file.path(scratch.folder, tmp.folder))
-    out.tmp <- out.tmp[grep("out.info",out.tmp)]
-    
-    if(length(out.tmp)>0){
-      out <- "out.info"
-    }
+  if(resultRun==0){
+    cat("\n bigwig using RSEM  is finished\n")
   }
+  
   #system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
   con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")
   tmp <- readLines(con)

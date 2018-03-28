@@ -56,16 +56,13 @@ separator="tab"
 system(paste("cp -r ",data.folder,"/Results/",matrixName," ",scrat_tmp.folder,sep=""))
 
   #executing the docker job
-  if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationanalysis Rscript /home/main.R ",matrixName," ",range1," ",range2," ",format," ",separator," ",sp," ",clusterPermErr, sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/rcaloger/permutationanalysis", params=params)
-  }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationanalysis Rscript /home/main.R ",matrixName," ",range1," ",range2," ",format," ",separator," ",sp," ",clusterPermErr,sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/rcaloger/permutationanalysis", params=params)
-  }
+params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/permutationanalysis Rscript /home/main.R ",matrixName," ",range1," ",range2," ",format," ",separator," ",sp," ",clusterPermErr, sep="")
+resultRun <- runDocker(group=group,container="docker.io/rcaloger/permutationanalysis", params=params)
+
+
   #waiting for the end of the container work
-  if(resultRun=="false"){
-    #system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
+  if(resultRun==0){
+    cat("\nPermutation Analysis  is finished\n")
   }
   #running time 2
   ptm <- proc.time() - ptm

@@ -76,15 +76,14 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
     system(paste("gzip -d ",scratch.folder,"/",tmp.folder,"/*.gz",sep=""))
   }
-  
-  if(group=="sudo"){
-         params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/fastq.folder -v ",scrat_tmp.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/star_chimeric_2.sh ",chimSegmentMin," ", threads," ", sub(".gz$", "", dir[1])," ", sub(".gz$", "", dir[2]), sep="")
-        resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/star251.2017.01", params=params)
-   }else{
-     params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/fastq.folder -v ",scrat_tmp.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/star_chimeric_2.sh ",chimSegmentMin," ", threads," ", sub(".gz$", "", dir[1])," ", sub(".gz$", "", dir[2]), sep="")
-     resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/star251.2017.01", params=params)
-  }
 
+ params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/fastq.folder -v ",scrat_tmp.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/star_chimeric_2.sh ",chimSegmentMin," ", threads," ", sub(".gz$", "", dir[1])," ", sub(".gz$", "", dir[2]), sep="")
+ resultRun <- runDocker(group=group,container="docker.io/repbioinfo/star251.2017.01", params=params)
+
+ if(resultRun==0){
+   #not saving fastq files
+   cat("\nStar to detect chimeric transcripts is finished\n")
+ }
     system(paste("mv ", scrat_tmp.folder,"/run.info ",fastq.folder, sep=""))
     system(paste("mv ", scrat_tmp.folder,"/Chimeric.out.sam ",fastq.folder, sep=""))
     system(paste("mv ", scrat_tmp.folder,"/Chimeric.out.junction ",fastq.folder, sep=""))

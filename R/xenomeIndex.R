@@ -40,15 +40,11 @@ xenomeIndex <- function(group=c("sudo","docker"),xenome.folder=getwd(), hg.urlge
 
 	cat("\nsetting as working dir the genome folder and running bwa docker container\n")
   
-	if(group=="sudo"){
-		params <- paste("--cidfile ",xenome.folder,"/dockerID -v ",xenome.folder,":/data/scratch"," -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome.index.sh ", hg.urlgenome, " ", mm.urlgenome, " ",threads, sep="")
-		resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/xenome.2017.01", params=params)
-	}else{
-	  params <- paste("--cidfile ",xenome.folder,"/dockerID -v ",xenome.folder,":/data/scratch"," -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome.index.sh ", hg.urlgenome, " ", mm.urlgenome, " ",threads, sep="")
-	  resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/xenome.2017.01", params=params)
-	}
+  params <- paste("--cidfile ",xenome.folder,"/dockerID -v ",xenome.folder,":/data/scratch"," -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome.index.sh ", hg.urlgenome, " ", mm.urlgenome, " ",threads, sep="")
+	
+  resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/xenome.2017.01", params=params)
 
-  if(resultRun=="false"){
+  if(resultRun==0){
     cat("\nXenome genome indexes were created\n")
   }
   

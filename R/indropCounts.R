@@ -145,16 +145,12 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   writeLines(yaml, zz)
   close(zz)
 
-  if(group=="sudo"){
-    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", project.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/indrop.2017.01 sh /bin/indrop.sh ", sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/indrop.2017.01", params=params)
-  }else{
-    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", project.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/indrop.2017.01 sh /bin/indrop.sh ", sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/indrop.2017.01", params=params)
-  }
+  
 
-
-  if(resultRun=="false"){
+  params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", project.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/indrop.2017.01 sh /bin/indrop.sh ", sep="")
+  resultRun <- runDocker(group=group,container="docker.io/repbioinfo/indrop.2017.01", params=params)
+ 
+  if(resultRun==0){
     cat("\n inDrop analysis is finished\n")
     system(paste("cp -R ", project.folder, "/", sample.name, " ", fastq.folder, sep=""))
     system(paste("cp -R ", project.folder, "/output ", fastq.folder, sep=""))

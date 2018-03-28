@@ -42,15 +42,11 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
   experiment.table <-  filename.tmp[length(filename.tmp)]
 
 
-  if(group=="sudo"){
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
-  }else{
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
+  params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
+  resultRun <- runDocker(group=group,container="docker.io/repbioinfo/r332.2017.01", params=params)
   }
 
-  if(resultRun=="false"){
+  if(resultRun==0){
     cat("\nDESeq2 analysis is finished\n")
   }
 

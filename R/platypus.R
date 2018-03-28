@@ -92,20 +92,15 @@ platypus <- function(group=c("sudo","docker"), data.folder=getwd(), scratch.fold
   setwd(data.folder)
   
   #executing the docker job
-  if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":", data.folder, " -v ", scrat_tmp.folder, ":",  scrat_tmp.folder, " -v ", pathRef, ":", pathRef, " -d docker.io/repbioinfo/platypus.2017.01 python /bin/platypus.py ",
-                    data.folder, " ", pathRef, " ", nameRef, " ", data.folder, " ", pathPlatypus, " ", threads, " ", pathHtslib, " ", pathPlatypus, " ", scrat_tmp.folder, " ", 
-                    GQ, " ",  minSampGQ, " ",  NR, " ",  minSampNR, " ",  NV, " ",  minSampNV, " ",  normal_samples, " ",  GT_normal, " ",  minSampGT_normal, " ",  tumoral_samples, " ",  GT_tumoral, " ",  minSampGT_tumoral, " ",  stringent_filter, " ", annotation, sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/platypus.2017.01", params=params)
-  }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":", data.folder, " -v ", scrat_tmp.folder, ":",  scrat_tmp.folder, " -v ", pathRef, ":", pathRef, " -d docker.io/repbioinfo/platypus.2017.01 python /bin/platypus.py ",
-                    data.folder, " ", pathRef, " ", nameRef, " ", data.folder, " ", pathPlatypus, " ", threads, " ", pathHtslib, " ", pathPlatypus, " ", scrat_tmp.folder, " ",
-                    GQ, " ",  minSampGQ, " ",  NR, " ",  minSampNR, " ",  NV, " ",  minSampNV, " ",  normal_samples, " ",  GT_normal, " ",  minSampGT_normal, " ",  tumoral_samples, " ",  GT_tumoral, " ",  minSampGT_tumoral, " ",  stringent_filter," ",annotation, sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/platypus.2017.01", params=params)
-    print(paste("docker run --privileged=true ",params, sep=""))
-  }
 
-  
+params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":", data.folder, " -v ", scrat_tmp.folder, ":",  scrat_tmp.folder, " -v ", pathRef, ":", pathRef, " -d docker.io/repbioinfo/platypus.2017.01 python /bin/platypus.py ",data.folder, " ", pathRef, " ", nameRef, " ", data.folder, " ", pathPlatypus, " ", threads, " ", pathHtslib, " ", pathPlatypus, " ", scrat_tmp.folder, " ", GQ, " ",  minSampGQ, " ",  NR, " ",  minSampNR, " ",  NV, " ",  minSampNV, " ",  normal_samples, " ",  GT_normal, " ",  minSampGT_normal, " ",  tumoral_samples, " ",  GT_tumoral, " ",  minSampGT_tumoral, " ",  stringent_filter, " ", annotation, sep="")
+    resultRun <- runDocker(group=group,container="docker.io/repbioinfo/platypus.2017.01", params=params)
+ 
+    #waiting for the end of the container work
+    if(resultRun==0){
+      cat("\n Platypus analysis  is finished\n")
+    }    
+     
       setwd(scrat_tmp.folder)
       cat("\n\nRemoving the temporary file ....\n")
       system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))

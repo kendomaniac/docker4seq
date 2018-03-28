@@ -34,25 +34,16 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, threads=8){
   }
   #############################################
   cat("\nsetting as working dir the genome folder and running bwa docker container\n")
+  params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/repbioinfo/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
+  resultRun=runDocker(group=group,container="docker.io/repbioinfo/demultiplexing.2017.01", params=params)
 
-	if(group=="sudo"){
-	      params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/repbioinfo/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
-	      runDocker(group="sudo",container="docker.io/repbioinfo/demultiplexing.2017.1", params=params)
-	}else{
-	  params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/repbioinfo/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
-	  runDocker(group="docker",container="docker.io/repbioinfo/demultiplexing.2017.01", params=params)
-	}
-  out <- "xxxx"
-  #waiting for the end of the container work
-  while(out != "out.info"){
-    Sys.sleep(10)
-    cat(".")
-    out.tmp <- dir(main.folder)
-    out.tmp <- out.tmp[grep("out.info",out.tmp)]
-    if(length(out.tmp)>0){
-      out <- "out.info"
-    }
-  }
+	 if(resultRun==0){
+	    cat("\nDemultiplexing is finished\n")
+	  }
+	  
+	  
+	  
+	  
   #running time 2
   system(paste("mv ",  data.folder,"/Data/Intensities/BaseCalls/*.fastq.gz ",main.folder, sep=""))
   ptm <- proc.time() - ptm

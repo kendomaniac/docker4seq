@@ -86,8 +86,9 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 		}
 	}
 
-	if(resultRun=="false"){
+	if(resultRun==0){
 	  #not saving fastq files
+	  cat("\nskewer step is finished\n")
 	  dir.tmp <- dir(scrat_tmp.folder)
 	  dir.tmp <- setdiff(dir.tmp, dir.tmp[grep("fastq$",dir.tmp)])
 	  for(i in dir.tmp){

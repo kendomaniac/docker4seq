@@ -106,7 +106,7 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
 #          system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
         }
    }
-  if(resultRun=="false"){
+  if(resultRun==0){
     out <- "out.info"
     #system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
     con <- file(paste(file.path(scratch.folder, tmp.folder),"out.info", sep="/"), "r")

@@ -37,15 +37,11 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
   filename.tmp <- unlist(strsplit(filename,'/'))
   filename <-  filename.tmp[length(filename.tmp)]
 
-  if(group=="sudo"){
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
-  }else{
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
-  }
+  params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
+  resultRun <- runDocker(group=group,container="docker.io/repbioinfo/r332.2017.01", params=params)
 
-  if(resultRun=="false"){
+
+  if(resultRun==0){
     cat("\nExperiment power analysis is finished\n")
   }
   

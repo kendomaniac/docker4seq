@@ -75,7 +75,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
   params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", genome.url, download.genome, genome.fasta, sep="")
   
 	  resultRun <- runDocker(group=group,container="docker.io/repbioinfo/bwa.2017.01", params=params)
-  if(resultRun=="false"){
+  if(resultRun==0){
     cat("\nBwa index generation is finished\n")
   }
   

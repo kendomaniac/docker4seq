@@ -70,6 +70,8 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
     }
   }
 
+  resultRun <- 1
+  
 	if(group=="sudo"){
 		params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
 		resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/bwa.2017.01", params=params)
@@ -77,7 +79,7 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
 	  params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
 	  resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/bwa.2017.01", params=params)
 	}
-  if(resultRun=="false"){
+  if(resultRun==0){
     cat("\nBwa index generation is finished\n")
   }
   

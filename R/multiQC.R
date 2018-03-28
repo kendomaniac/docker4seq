@@ -39,7 +39,7 @@ multiQC <- function(group=c("sudo","docker"), data.folder){
   resultRun <- runDocker(group=group,container="ewels/multiqc", params=params)
   
   #waiting for the end of the container work
-  if(resultRun=="false"){
+  if(resultRun==0){
     cat("\nMultiQC analysis is finished\n")
   }
   

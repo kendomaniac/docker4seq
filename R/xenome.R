@@ -93,7 +93,7 @@ xenome <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 		    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/xenome.2017.01", params=params)
 		  }
 	  }
-    if(resultRun=="false"){
+    if(resultRun==0){
       system(paste("cp ", docker_fastq.folder, "/* ", fastq.folder, sep=""))
     }
     #running time 2

@@ -42,7 +42,7 @@ rsemannoByGtf <- function(group="docker", rsem.folder=getwd(), genome.folder){
     resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
   }
 
-  if(resultRun=="false"){
+  if(resultRun==0){
     cat("\nGTF based annotation is finished is finished\n")
   }
   

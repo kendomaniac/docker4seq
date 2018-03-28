@@ -139,7 +139,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 
 	}
 
-	if(resultRun=="false"){
+	if(resultRun==0){
 	  cat("\nrsemstar analysis is finished\n")
 	}
 

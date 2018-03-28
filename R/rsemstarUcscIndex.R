@@ -54,16 +54,11 @@ rsemstarUscsIndex <- function(group=c("sudo","docker"), genome.folder=getwd(),
   system(paste("cp ", uscs.gtf," ",genome.folder,"/genome.gtf.gz", sep=""))
   system(paste("gzip -d ",genome.folder,"/genome.gtf.gz", sep=""))
 
-	if(group=="sudo"){
-	     params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstarUCSC.index.sh "," ",genome.folder," ",uscs.urlgenome," ",uscs.gtf," ",threads," ",uscs.urlknownIsoforms," ", uscs.urlknownToLocusLink, sep="")
-	     resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
-	  }else{
-#		system("docker pull docker.io/repbioinfo/rsemstar.2017.01")
-	    params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstarUCSC.index.sh "," ",genome.folder," ",uscs.urlgenome," ",uscs.gtf," ",threads," ",uscs.urlknownIsoforms," ", uscs.urlknownToLocusLink, sep="")
-	    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
-	  }
 
-    if(resultRun=="false"){
+	params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstarUCSC.index.sh "," ",genome.folder," ",uscs.urlgenome," ",uscs.gtf," ",threads," ",uscs.urlknownIsoforms," ", uscs.urlknownToLocusLink, sep="")
+	resultRun <- runDocker(group=group,container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	
+	if(resultRun==0){
     cat("\nrsemstarUscsIndex run is finished\n")
   }
   

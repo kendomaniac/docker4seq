@@ -84,15 +84,10 @@ snvPreprocessing <- function(group=c("sudo","docker"), bam.folder=getwd(), scrat
     cat("\nsetting as working dir the scratch folder and running xenome docker container\n")
     
 
-    if(group=="sudo"){
-		      params <- paste("--cidfile ",bam.folder,"/dockerID -v ",docker_bam.folder,":/data/scratch -v ",genome.folder,":/genome -d docker.io/repbioinfo/snvpre.2017.01 sh /bin/gatk.sh ", threads," ",bam.folder, sep="")
-		      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/snvpre.2017.01", params=params)
-	    }else{
-	      params <- paste("--cidfile ",bam.folder,"/dockerID -v ",docker_bam.folder,":/data/scratch -v ",genome.folder,":/genome -d docker.io/repbioinfo/snvpre.2017.01 sh /bin/gatk.sh ", threads," ",bam.folder, sep="")
-	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/snvpre.2017.01", params=params)
-	    }
-    
-    if(resultRun=="false"){
+	 params <- paste("--cidfile ",bam.folder,"/dockerID -v ",docker_bam.folder,":/data/scratch -v ",genome.folder,":/genome -d docker.io/repbioinfo/snvpre.2017.01 sh /bin/gatk.sh ", threads," ",bam.folder, sep="")
+	 resultRun <- runDocker(group=group,container="docker.io/repbioinfo/snvpre.2017.01", params=params)
+
+    if(resultRun==0){
       system(paste("cp ", scrat_tmp.folder, "/* ", bam.folder, sep=""))
     }
 

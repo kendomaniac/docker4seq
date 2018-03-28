@@ -103,7 +103,7 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
 		  }
 	  }
     
-    if(resultRun=="false"){
+    if(resultRun==0){
       system(paste("cp ", docker_fastq.folder, "/* ", fastq.folder, sep=""))
     }
     #running time 2

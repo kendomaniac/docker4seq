@@ -55,15 +55,11 @@ separator="tab"
 }
 
   #executing the docker job
-  if(group=="sudo"){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/lorenz Rscript /home/main.R ",matrixName," ",p_value," ",format," ",separator, sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/rcaloger/lorenz", params=params)
-  }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/lorenz Rscript /home/main.R ",matrixName," ",p_value," ",format," ",separator, sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/rcaloger/lorenz", params=params)
-  }
+  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/lorenz Rscript /home/main.R ",matrixName," ",p_value," ",format," ",separator, sep="")
+  resultRun <- runDocker(group=group,container="docker.io/rcaloger/lorenz", params=params)
+  
   #waiting for the end of the container work
-  if(resultRun=="false"){
+  if(resultRun==0){
     system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
   }
   #running time 2
