@@ -23,12 +23,24 @@
 gatkDNA <- function(group=c("sudo","docker"), bam.folder=getwd(), scratch.folder="/data/scratch", gatk.filename, genome.folder, threads=1){
   #running time 1
   ptm <- proc.time()
+  
+  #remembering actual folder
+  home <- getwd()
+  #setting rsem output folder as working dir
+  setwd(bam.folder)
+  
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
+  
   #running time 1
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    system("echo 10 >& ExitStatusFile")
+    return(10)
   }
+  
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
   cat("\ncreating a folder in scratch folder\n")
   dir.create(file.path(scratch.folder, tmp.folder))
@@ -43,6 +55,7 @@ gatkDNA <- function(group=c("sudo","docker"), bam.folder=getwd(), scratch.folder
   cat("\ncopying \n")
   if(length(dir)==0){
     cat(paste("It seems that in ", getwd(), "there is not dedup_reads.bam"))
+    system("echo 1 >& ExitStatusFile")
     return(1)
   }
   docker_bam.folder=file.path("/data/scratch", tmp.folder)
@@ -91,5 +104,5 @@ gatkDNA <- function(group=c("sudo","docker"), bam.folder=getwd(), scratch.folder
 #  system(paste("rm -R ",docker_bam.folder))
   system(paste("rm  ",bam.folder,"/dockerID", sep=""))
   #removing temporary folder
-
+  setwd(home)
 }
