@@ -43,15 +43,27 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
   #running time 1
   ptm <- proc.time()
   #running time 1
+  
+  
+  #remembering actual folder
+  home <- getwd()
+  #setting rsem output folder as working dir
+  setwd(rsem.folder)
+  
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    system("echo 10 >& ExitStatusFile")
+    return(10)
   }
 
   #########check scratch folder exist###########
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
+    system("echo 3 >& ExitStatusFile")
     return(3)
   }
   #############################################
@@ -77,9 +89,11 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	cat("\ncopying \n")
 	if(length(dir)==0){
 		cat(paste("It seems that in ", bam.folder, "there are not bam files"))
+	  system("echo 1 >& ExitStatusFile")
 		return(1)
 	}else if(length(dir)>2){
 		cat(paste("It seems that in ", bam.folder, "there are more than two bam files"))
+	  system("echo 2 >& ExitStatusFile")
 		return(2)
 	}else{
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
@@ -132,5 +146,7 @@ resultRun=runDocker(group=group,container="docker.io/repbioinfo/chipseq.2017.01"
   system(paste("rm  ",bam.folder,"/tempFolderID", sep=""))
 	#removing temporary folder
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",bam.folder, sep=""))
+  
+  setwd(home)
 }
 

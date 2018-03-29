@@ -27,11 +27,18 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
 
   #running time 1
   ptm <- proc.time()
+  
+  home <- getwd()
+  setwd(output.folder)
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
   #running time 1
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    system("echo 10 >& ExitStatusFile")
+    return(10)
   }
   #removing the path from filename
   filename.tmp <- unlist(strsplit(filename,'/'))
@@ -45,8 +52,7 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
     cat("\nExperiment power analysis is finished\n")
   }
   
-  home <- getwd()
-  setwd(output.folder)
+
 
 
   #running time 2

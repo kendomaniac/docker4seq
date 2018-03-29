@@ -30,6 +30,9 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
 
   home <- getwd()
   setwd(genome.folder)
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+ 
   
   #running time 1
   ptm <- proc.time()
@@ -37,7 +40,9 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    #initialize status
+    system("echo 10 >& ExitStatusFile")
+    return(10)
   }
 
     #########check scratch folder exist###########

@@ -22,16 +22,25 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, threads=8){
   #running time 1
   ptm <- proc.time()
   #running time 1
-  test <- dockerTest()
-  if(!test){
-    cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
-  }
+
   #########check scratch folder exist###########
   if (!file.exists(data.folder)){
     cat(paste("\nIt seems that the ",data.folder, "folder does not exist.\n"))
     return(1)
   }
+  
+  #storing the position of the home folder  
+  home <- getwd()
+  setwd(data.folder)
+  
+  
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    system("echo 10 >& ExitStatusFile")
+    return(10)
+  }
+  
   #############################################
   cat("\nsetting as working dir the genome folder and running bwa docker container\n")
   params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/repbioinfo/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
@@ -65,5 +74,6 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, threads=8){
   #running time 2
   system(paste("rm ",main.folder,"/dockerID", sep=""))
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",main.folder, sep=""))
+  setwd(home)
 }
 

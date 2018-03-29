@@ -20,7 +20,7 @@ runDocker <- function(group="docker",container=NULL, params=NULL, DockerSwarm=FA
   }
   if(is.null(params)){
     cat("\nNo parameters where provided!\n")
-    system("echo 1 >& dockerExitStatus")
+    system("echo 1 >& ExitStatusFile")
     return(1)
   }
   
@@ -29,7 +29,7 @@ runDocker <- function(group="docker",container=NULL, params=NULL, DockerSwarm=FA
     # to obtain the Docker ID by file
     if (file.exists("dockerID")){
       cat("\n\nDocker does not start, there is already a docker container running che dockerID file!!!\n\n")
-      system("echo 2 >& dockerExitStatus")
+      system("echo 2 >& ExitStatusFile")
       return(2)
     }
     
@@ -41,7 +41,7 @@ runDocker <- function(group="docker",container=NULL, params=NULL, DockerSwarm=FA
       system(paste("docker run --privileged=true ",params, sep=""))
     }else{
       cat("\nThe group provides is neither sudo or docker\n")
-      system("echo 2 >& dockerExitStatus")
+      system("echo 2 >& ExitStatusFile")
       return(2)
     }
     
@@ -69,7 +69,7 @@ runDocker <- function(group="docker",container=NULL, params=NULL, DockerSwarm=FA
                   the description of the function you were using and the following error log file,\n
                   which is saved in your working folder:\n", substr(dockerid,1,12),"_error.log\n", sep=""))
         
-        system("echo 3 >& dockerExitStatus")
+        system("echo 3 >& ExitStatusFile")
         return(3)
     }
     
@@ -98,7 +98,7 @@ runDocker <- function(group="docker",container=NULL, params=NULL, DockerSwarm=FA
     }
     cat(".\n\n")
   }#Swarm Docker execution
-  system("echo 0 >& dockerExitStatus")
+  system("echo 0 >& ExitStatusFile")
   return(0)
   
     }

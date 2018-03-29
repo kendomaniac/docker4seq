@@ -32,6 +32,8 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
 
   home <- getwd()
   setwd(genome.folder)
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
   
   #running time 1
   ptm <- proc.time()
@@ -39,7 +41,9 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    #initialize status
+    system("echo 1 >& ExitStatusFile")
+    return(1)
   }
 
     #########check scratch folder exist###########
@@ -54,6 +58,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
   if(gatk){
     if(length(dir[grep(sub(".vcf.gz$", "", dbsnp.file),dir)])<2){
       cat("\ndbSNP vcf.gz and/or vcf.idx.gz missing\n")
+      system("echo 2 >& ExitStatusFile")
       return(2)
     }else{
       cat("\nPreparing dbsnp vcf\n")
@@ -63,6 +68,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
     }
     if(length(dir[grep(sub(".vcf.gz$", "", g1000.file),dir)])<2){
       cat("\1000 genomes vcf and/or vcf.idx.gz missing\n")
+      system("echo 3 >& ExitStatusFile")
       return(3)
     }else{
       cat("\nPreparing 1000 genomes vcf\n")

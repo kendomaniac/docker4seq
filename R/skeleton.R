@@ -19,6 +19,8 @@ skeleton <- function(group=c("sudo","docker"), scratch.folder, data.folder){
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
+    
+    system("echo 1 >& ExitStatusFile")
     return(1)
   }
   #storing the position of the home folder  
@@ -29,12 +31,18 @@ skeleton <- function(group=c("sudo","docker"), scratch.folder, data.folder){
   #setting the data.folder as working folder
   if (!file.exists(data.folder)){
     cat(paste("\nIt seems that the ",data.folder, " folder does not exist\n"))
+    
+    system("echo 2 >& ExitStatusFile")
     return(2)
   }
   setwd(data.folder)
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
   #check  if scratch folder exist
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, " folder does not exist\n"))
+    system("echo 3 >& ExitStatusFile")
     return(3)
   }
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
