@@ -24,12 +24,7 @@
 #' @export
 salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder, index.folder, threads=8, seq.type=c("se","pe"), strandness=c("none", "forward", "reverse")){
 
-  #testing if docker is running
-  test <- dockerTest()
-  if(!test){
-    cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
-  }
+
   #storing the position of the home folder
   home <- getwd()
   #running time 1
@@ -40,9 +35,21 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
     return(2)
   }
   setwd(fastq.folder)
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
+  #testing if docker is running
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    system("echo 10 >& ExitStatusFile")
+    return(10)
+  }
+  
   #check  if scratch folder exist
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, " folder does not exist\n"))
+    system("echo 3 >& ExitStatusFile")
     return(3)
   }
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
@@ -102,7 +109,8 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
     }
   }else{
     cat("\nNot implemented, yet\n")
-    return(1)
+    system("echo 11 >& ExitStatusFile")
+    return(11)
   }
 
 

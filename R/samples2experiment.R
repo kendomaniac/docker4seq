@@ -43,9 +43,15 @@ sample2experiment <- function(sample.folders, covariates, batch=NULL, bio.type=c
                                                            "vaultRNA","sRNA",
                                                            "macro_lncRNA","non_coding",
                                                            "IG_pseudogene"), output.prefix="."){
+  
+  
+  #initialize status
+  system(paste("echo 0 >&",output.prefix ,"/ExitStatusFile",sep=""))
+  
 #preparing covar
   if( length(sample.folders)!=length(covariates)){
       cat("\nCovariates and sample folders have not the same length\n")
+      system(paste("echo 2 >&",output.prefix ,"/ExitStatusFile",sep=""))
       return(2)
   }else{
     tmp.samples <- strsplit(sample.folders, "/")
@@ -56,6 +62,7 @@ sample2experiment <- function(sample.folders, covariates, batch=NULL, bio.type=c
   if(!is.null(batch) & length(unique(batch)) > 1){
     if( length(sample.folders)!=length(batch)){
        cat("\nBatch and sample folders have not the same length\n")
+       system(paste("echo 4 >&",output.prefix ,"/ExitStatusFile",sep=""))
        return(4)
     }else{
         ls.names <- paste(ls.names, batch, sep="_")
@@ -64,6 +71,7 @@ sample2experiment <- function(sample.folders, covariates, batch=NULL, bio.type=c
   ls.folders <- sample.folders
   if(length(ls.folders)<2){
     cat("\nThere are less than two samples in the present folder\n")
+    system(paste("echo 1 >&",output.prefix ,"/ExitStatusFile",sep=""))
     return(1)
   }
 
@@ -75,11 +83,13 @@ sample2experiment <- function(sample.folders, covariates, batch=NULL, bio.type=c
     dir.tmp <- dir(i)
     if(length(grep("genes.results$", dir.tmp))==0){
       cat(paste("\nFolder ", i," does not contains a rnaseqCounts output\n", sep=""))
+      system(paste("echo 2 >&",output.prefix ,"/ExitStatusFile",sep=""))
       return(2)
     }else if(length(grep("gtf_annotated_genes.results", dir.tmp))==0){
       cat(paste("\nFolder ", i," does not contains gtf_annotated_genes.results\n", sep=""))
       if(length(grep("^genes.results$", dir.tmp))==0){
          cat(paste("\nFolder ", i," does not contains gtf_annotated_genes.results and genes.results\n", sep=""))
+        system(paste("echo 3 >&",output.prefix ,"/ExitStatusFile",sep=""))
         return(3)
       }
       genes <- "genes.results"

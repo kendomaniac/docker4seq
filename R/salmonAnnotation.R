@@ -34,7 +34,10 @@ salmonAnnotation <- function(group=c("sudo","docker"), fastq.folder, index.folde
     return(2)
   }
   setwd(fastq.folder)
-
+  
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
   params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/annotate.salmon.R", sep="")
   resultRun <- runDocker(group=group,container="docker.io/repbioinfo/r340.2017.01", params=params)
 

@@ -26,12 +26,7 @@
 #' @export
 salmonIndex <- function(group=c("sudo","docker"), index.folder, ensembl.urltranscriptome, ensembl.urlgtf, k=31){
 
-  #testing if docker is running
-  test <- dockerTest()
-  if(!test){
-    cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
-  }
+
   #storing the position of the home folder  
   home <- getwd()
   
@@ -43,6 +38,18 @@ salmonIndex <- function(group=c("sudo","docker"), index.folder, ensembl.urltrans
     return(2)
   }
   setwd(index.folder)
+  
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
+  #testing if docker is running
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    system("echo 10 >& ExitStatusFile")
+    return(10)
+  }
+  
   system(paste("wget -O transcripts.fa.gz ", ensembl.urltranscriptome, sep=""))
   system("gzip -d transcripts.fa.gz")
   system(paste("wget -O genome.gtf.gz ",ensembl.urlgtf, sep=""))
