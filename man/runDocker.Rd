@@ -17,7 +17,7 @@ runDocker(group = "docker", container = NULL, params = NULL,
 \item{DockerSwarm, }{a bolean value used to enable docker execution in swarm mode.}
 }
 \value{
-NULL if success, 1 if parameters are missing, 2 if the group is neither sudo or docker. In case of 1 or 2 the docker execution is aborted
+0 if success, 1 if parameters are missing, 2 if the group is neither sudo or docker, 3 if docker execution fails.
 }
 \description{
 This is an internal function executing a docker container. Not to be used by users.
