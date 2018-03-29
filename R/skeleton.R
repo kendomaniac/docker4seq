@@ -15,29 +15,33 @@
 #' @export
 skeleton <- function(group=c("sudo","docker"), scratch.folder, data.folder){
 
-  #testing if docker is running
-  test <- dockerTest()
-  if(!test){
-    cat("\nERROR: Docker seems not to be installed in your system\n")
-    
-    system("echo 1 >& ExitStatusFile")
-    return(1)
-  }
-  #storing the position of the home folder  
-  home <- getwd()
+
+
   
   #running time 1
   ptm <- proc.time()
   #setting the data.folder as working folder
   if (!file.exists(data.folder)){
     cat(paste("\nIt seems that the ",data.folder, " folder does not exist\n"))
-    
-    system("echo 2 >& ExitStatusFile")
     return(2)
   }
+  
+  #storing the position of the home folder  
+  home <- getwd()
   setwd(data.folder)
   #initialize status
   system("echo 0 >& ExitStatusFile")
+  
+  #testing if docker is running
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    
+    system("echo 10 >& ExitStatusFile")
+    return(10)
+  }
+  
+
   
   #check  if scratch folder exist
   if (!file.exists(scratch.folder)){

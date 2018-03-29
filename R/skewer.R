@@ -23,6 +23,7 @@
 #' }
 #' @export
 skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", adapter5, adapter3, seq.type=c("se","pe"), threads=1, min.length=18){
+ 
   home <- getwd()
   setwd(fastq.folder)
   
@@ -35,8 +36,8 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    system("echo 1 >& ExitStatusFile")
-    return(1)
+    system("echo 10 >& ExitStatusFile")
+    return(10)
   }
   #########check scratch folder exist###########
   if (!file.exists(scratch.folder)){

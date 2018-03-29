@@ -33,6 +33,9 @@ snvPreprocessing <- function(group=c("sudo","docker"), bam.folder=getwd(), scrat
     home <- getwd()
     setwd(bam.folder)
   
+    #initialize status
+    system("echo 0 >& ExitStatusFile")
+    
     #renaming gatk.file
     system(paste("mv ",gatk.file, " GenomeAnalysisTK.tar.bz2", sep=""))
     #running time 1
@@ -41,11 +44,13 @@ snvPreprocessing <- function(group=c("sudo","docker"), bam.folder=getwd(), scrat
     test <- dockerTest()
     if(!test){
       cat("\nERROR: Docker seems not to be installed in your system\n")
-      return()
+      system("echo 10 >& ExitStatusFile")
+      return(10)
     }
     #########check scratch folder exist###########
     if (!file.exists(scratch.folder)){
       cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
+      system("echo 3 >& ExitStatusFile")
       return(3)
     }
     #############################################
@@ -66,9 +71,11 @@ snvPreprocessing <- function(group=c("sudo","docker"), bam.folder=getwd(), scrat
     cat("\ncopying \n")
     if(length(dir)==0){
       cat(paste("It seems that in ", bam.folder, "there is not a bam file files"))
+      system("echo 1 >& ExitStatusFile")
       return(1)
     }else if(length(dir)>1){
       cat(paste("It seems that in ", bam.folder, "there is more than one bam file"))
+      system("echo 2 >& ExitStatusFile")
       return(2)
     }else if(length(dir)==1){
         system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))

@@ -24,13 +24,18 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
 
   home <- getwd()
   setwd(fastq.folder)
+  
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
   #running time 1
   ptm <- proc.time()
   #running time 1
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    system("echo 10 >& ExitStatusFile")
+    return(10)
   }
 
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
@@ -58,6 +63,7 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
   cat("\ncopying \n")
   if(length(dir)==0){
     cat(paste("It seems that in ", fastq.folder, "there are not fastq.gz files"))
+    system("echo 1 >& ExitStatusFile")
     return(1)
   }else if(length(dir.trim)>0){
     dir <- dir.trim
@@ -68,6 +74,7 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
     system(paste("gzip -d ",scratch.folder,"/",tmp.folder,"/*.gz",sep=""))
   }else if(length(dir)>2){
     cat(paste("It seems that in ", fastq.folder, "there are more than two fastq.gz files"))
+    system("echo 2 >& ExitStatusFile")
     return(2)
   }else{
     for(i in dir){
@@ -119,3 +126,4 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
     setwd(home)
 
 }
+s

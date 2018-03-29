@@ -26,11 +26,20 @@ sampleSize <- function(group=c("sudo","docker"), filename, power=0.80, FDR=0.1, 
 
   #running time 1
   ptm <- proc.time()
+  
+  home <- getwd()
+  setwd(output.folder)
+  
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
   #running time 1
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    #initialize status
+    system("echo 10 >& ExitStatusFile")
+    return(10)
   }
   #removing the path from filename
   filename.tmp <- unlist(strsplit(filename,'/'))
@@ -44,8 +53,7 @@ sampleSize <- function(group=c("sudo","docker"), filename, power=0.80, FDR=0.1, 
     cat("\nSample size analysis is finished\n")
   }
   
-  home <- getwd()
-  setwd(output.folder)
+
 
   #running time 2
   ptm <- proc.time() - ptm
