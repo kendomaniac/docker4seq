@@ -38,8 +38,8 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
     if(!test){
       cat("\nERROR: Docker seems not to be installed in your system\n")
 
-      system("echo 1 >& ExitStatusFile")
-      return(1)
+      system("echo 10 >& ExitStatusFile")
+      return(10)
     }
     #########check scratch folder exist###########
     if (!file.exists(scratch.folder)){

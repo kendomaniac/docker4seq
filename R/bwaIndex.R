@@ -42,8 +42,8 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     #initialize status
-    system("echo 1 >& ExitStatusFile")
-    return(1)
+    system("echo 10 >& ExitStatusFile")
+    return(10)
   }
 
     #########check scratch folder exist###########

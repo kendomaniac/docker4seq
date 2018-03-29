@@ -32,7 +32,8 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, threads=8){
   #storing the position of the home folder  
   home <- getwd()
   setwd(data.folder)
-  
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
   
   test <- dockerTest()
   if(!test){
