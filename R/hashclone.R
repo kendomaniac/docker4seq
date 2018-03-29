@@ -25,16 +25,12 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   #docker image
   dockerImage="docker.io/beccuti/hashclone"
   
-  #testing if docker is running
-  test <- dockerTest()
-  if(!test){
-    cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
-  }
+
   
   #storing the position of the home folder  
   home <- getwd()
   
+
   #running time 1
   ptm <- proc.time()
   
@@ -45,9 +41,23 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   }
   setwd(data.folder)
   
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
+  #testing if docker is running
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    system("echo 0 >& ExitStatusFile")
+    return(10)
+  }
+  
+  
+  
   #check  if scratch folder exist
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, " folder does not exist\n"))
+    system("echo 3 >& ExitStatusFile")
     return(3)
   }
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))

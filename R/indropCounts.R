@@ -28,12 +28,7 @@
 #' @export
 indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder, index.folder, sample.name, split.affixes, bowtie.index.prefix, M=10, U=2, D=400, low.complexity.mask=c("False", "True"), umi.threshold=5){
 
-  #testing if docker is running
-  test <- dockerTest()
-  if(!test){
-    cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
-  }
+
   #storing the position of the home folder
   home <- getwd()
   #running time 1
@@ -45,6 +40,18 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   }
   setwd(fastq.folder)
 
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
+  #testing if docker is running
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    system("echo 0 >& ExitStatusFile")
+    return(10)
+  }
+  
+  
   #FastQC
   fastqc(group="docker", data.folder=fastq.folder)
   #
@@ -52,6 +59,7 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   #check  if scratch folder exist
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, " folder does not exist\n"))
+    system("echo 3 >& ExitStatusFile")
     return(3)
   }
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
@@ -69,6 +77,7 @@ indropCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   cat("\ncopying \n")
   if(length(dir)==0){
     cat(paste("It seems that in ", fastq.folder, "there are not fastq.gz files"))
+    system("echo 1 >& ExitStatusFile")
     return(1)
   }
   system(paste("chmod 777 -R", file.path(scrat_tmp.folder)))

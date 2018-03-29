@@ -33,10 +33,23 @@ oncosnpAnnotation <- function(group=c("sudo","docker"), data.folder, genome.fold
     cat(paste("\nIt seems that the ",data.folder, " folder does not exist\n"))
     return(2)
   }
+  
   setwd(data.folder)
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
+  #testing if docker is running
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    system("echo 10 >& ExitStatusFile")
+    return(10)
+  }
+  
   #check  if genome folder exist
   if (!file.exists(genome.folder)){
     cat(paste("\nIt seems that the ",genome.folder, " folder does not exist\n"))
+    system("echo 3 >& ExitStatusFile")
     return(3)
   }
   #executing the docker job

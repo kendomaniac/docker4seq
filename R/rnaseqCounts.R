@@ -40,6 +40,9 @@ rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/dat
   fastqc(group="docker", data.folder=fastq.folder)
   setwd(fastq.folder)
 
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
   #trimming adapter
   skewer(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder,adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
   #running rsemstar
@@ -51,12 +54,16 @@ rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/dat
     rsemannoByGtf(group=group, rsem.folder=fastq.folder, genome.folder=genome.folder)
   }else{
     cat("\nERROR: an annotatin function not implemented was selected\n")
+
+    system("echo 1 >& ExitStatusFile")
     return(1)
   }
   setwd(fastq.folder)
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
   system("rm *.fastq")
   system("rm *trimmed-pair*")
+  
+  system("echo 0 >& ExitStatusFile")
   return(0)
 }
 

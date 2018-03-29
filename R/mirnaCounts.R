@@ -30,6 +30,10 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 
   #FastQC
   setwd(fastq.folder)
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
+  
   dir.fastq <- dir()
   dir.fastq <- dir.fastq[grep("fastq.gz$", dir.fastq)]
   system("mkdir fastQC.folder")
@@ -57,7 +61,8 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    system("echo 10 >& ExitStatusFile")
+    return(10)
   }
 
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
@@ -76,6 +81,7 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	dir <- dir[grep(".fastq.gz", dir)]
 	if(length(dir)==0){
 	  cat(paste("It seems that in ",fastq.folder, "there are not fastq.gz files"))
+	  system("echo 1 >& ExitStatusFile")
 	  return(1)
 	}else{
 	  system(paste("chmod 777 -R", scrat_tmp.folder))
