@@ -126,4 +126,3 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
     setwd(home)
 
 }
-s
