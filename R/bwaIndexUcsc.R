@@ -13,13 +13,13 @@
 #' @examples
 #'\dontrun{
 #'     #running bwa index
-#'     bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", uscs.urlgenome=
+#'     bwaIndexUcsc(group="sudo",genome.folder="data/genomes/hg19_bwa", uscs.urlgenome=
 #'     "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz",
 #'     dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz",
 #'     gatk=TRUE)
 #'
 #'     #running bwa index
-#'     bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/mm10bwa", uscs.urlgenome=
+#'     bwaIndexUcsc(group="sudo",genome.folder="/data/genomes/mm10bwa", uscs.urlgenome=
 #'     "http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz",
 #'     gatk=FALSE)
 #'
@@ -28,6 +28,17 @@
 #' @export
 bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.urlgenome=NULL, dbsnp.file=NULL, g1000.file=NULL, gatk=FALSE){
 
+  #########check genome folder exist###########
+  if (!file.exists(genome.folder)){
+    cat(paste("\n",genome.folder, "folder does not exist, It will be created \n"))
+    if (!dir.create(genome.folder)){
+      cat(paste("\nError ",genome.folder, "folder cannot be created\n"))
+      system("echo 4 >& ExitStatusFile")
+      return(4) 
+    }
+  }
+  #############################################
+  
   home <- getwd()
   setwd(genome.folder)
   #initialize status
@@ -45,12 +56,7 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
     return(10)
   }
 
-    #########check scratch folder exist###########
-  if (!file.exists(genome.folder)){
-    cat(paste("\nIt seems that the ",genome.folder, "folder does not exist, I create it\n"))
-    dir.create(genome.folder)
-  }
-  #############################################
+  
 
 	cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 
