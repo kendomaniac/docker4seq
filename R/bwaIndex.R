@@ -16,11 +16,11 @@
 #'\dontrun{
 #'
 #'     #running bwa index
-#'     bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/mm10bwa", genome.fasta,
+#'     bwaIndex(group="sudo",genome.folder="/data/genomes/mm10bwa", genome.fasta,
 #'     gatk=FALSE, download.genome=FALSE)
 #
 #'     #running bwa index for gatk
-#'     bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", genome.url=
+#'     bwaIndex(group="sudo",genome.folder="/data/genomes/hg19_bwa", genome.url=
 #'     "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz",
 #'     dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz",
 #'     gatk=TRUE, download.genome=TRUE)
@@ -28,8 +28,19 @@
 #'
 #' }
 #' @export
-bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fasta=NULL, genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, gatk=FALSE, download.genome=FALSE){
+bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fasta, genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, gatk=FALSE, download.genome=FALSE){
 
+  #########check genome folder exist###########
+  if (!file.exists(genome.folder)){
+    cat(paste("\n",genome.folder, "folder does not exist, It will be created \n"))
+    if (!dir.create(genome.folder)){
+      cat(paste("\nError ",genome.folder, "folder cannot be created\n"))
+      system("echo 4 >& ExitStatusFile")
+      return(4) 
+    }
+  }
+  #############################################
+  
   home <- getwd()
   setwd(genome.folder)
   #initialize status
@@ -46,14 +57,18 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
     return(10)
   }
 
-    #########check scratch folder exist###########
-  if (!file.exists(genome.folder)){
-    cat(paste("\nIt seems that the ",genome.folder, "folder does not exist, I create it\n"))
-    dir.create(genome.folder)
-  }
-  #############################################
 
-	cat("\nsetting as working dir the genome folder and running bwa docker container\n")
+  if (!file.exists(genome.fasta)){
+    cat("\nERROR:",genome.fasta, "does not exist\n")
+    #initialize status
+    system("echo 1 >& ExitStatusFile")
+    return(1)
+    }
+  
+  filename.genome.fasta=basename(genome.fasta)
+  path.genome.fasta=dirname(genome.fasta)
+
+	cat("\nSetting as working dir the genome folder and running bwa docker container\n")
 
   if(gatk){
     if(length(dir[grep(sub(".vcf.gz$", "", dbsnp.file),dir)])<2){
@@ -78,7 +93,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
     }
   }
 
-  params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", genome.url, download.genome, genome.fasta, sep="")
+  params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch",path.genome.fasta,":/data/ref"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", genome.url, download.genome, filename.genome.fasta, sep="")
   
 	  resultRun <- runDocker(group=group,container="docker.io/repbioinfo/bwa.2017.01", params=params)
   if(resultRun==0){
