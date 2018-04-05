@@ -28,7 +28,7 @@
 #'
 #' }
 #' @export
-bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fasta=NULL, genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, gatk=FALSE, download_genome=FALSE){
+bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fasta=NULL, genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, gatk=FALSE, download.genome=FALSE){
 
   home <- getwd()
   setwd(genome.folder)

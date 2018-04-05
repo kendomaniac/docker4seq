@@ -51,7 +51,6 @@ runDocker <- function(group="docker",container=NULL, params=NULL, DockerSwarm=FA
     
     ## to check the Docker container status
     dockerStatus=system(paste("docker inspect -f {{.State.Running}}",dockerid),intern= T)
-    cat("\n\nBefore while, docker status: ",dockerStatus,"\n")
     while(dockerStatus=="true"){
       Sys.sleep(10);
       dockerStatus=system(paste("docker inspect -f {{.State.Running}}",dockerid),intern= T)
