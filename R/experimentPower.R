@@ -27,30 +27,32 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
 
   #running time 1
   ptm <- proc.time()
+  
+  home <- getwd()
+  setwd(output.folder)
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
   #running time 1
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    system("echo 10 >& ExitStatusFile")
+    return(10)
   }
   #removing the path from filename
   filename.tmp <- unlist(strsplit(filename,'/'))
   filename <-  filename.tmp[length(filename.tmp)]
 
-  if(group=="sudo"){
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
-  }else{
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
-  }
+  params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
+  resultRun <- runDocker(group=group,container="docker.io/repbioinfo/r332.2017.01", params=params)
 
-  if(resultRun=="false"){
+
+  if(resultRun==0){
     cat("\nExperiment power analysis is finished\n")
   }
   
-  home <- getwd()
-  setwd(output.folder)
+
 
 
   #running time 2

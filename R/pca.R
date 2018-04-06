@@ -27,6 +27,14 @@
 pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
                 covariatesInNames=FALSE, principal.components=c(1,2),
                 legend.position=c("bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center"), pdf = TRUE, output.folder=getwd()){
+  
+  #storing the position of the home folder
+  home <- getwd()
+  #setting rsem output folder as working dir
+  setwd(output.folder)
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
   tmp <- read.table(experiment.table, sep="\t", stringsAsFactors = TRUE, header=T, check.names = FALSE, row.names=1)
   if(covariatesInNames){
     covar.tmp <- strsplit(names(tmp), '_')
@@ -78,5 +86,7 @@ pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
      text(pca$x[,principal.components], label=sample.names)
    }
   }
+  
+  setwd(home)
 }
 

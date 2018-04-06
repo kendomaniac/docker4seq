@@ -30,13 +30,13 @@ This function executes the docker container bwa1 where BWA is installed. The ind
 \examples{
 \dontrun{
     #running bwa index
-    bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", uscs.urlgenome=
+    bwaIndexUcsc(group="sudo",genome.folder="data/genomes/hg19_bwa", uscs.urlgenome=
     "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz",
     dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz",
     gatk=TRUE)
 
     #running bwa index
-    bwaIndexUcsc(group="sudo",genome.folder="/sto2/data/scratch/mm10bwa", uscs.urlgenome=
+    bwaIndexUcsc(group="sudo",genome.folder="/data/genomes/mm10bwa", uscs.urlgenome=
     "http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz",
     gatk=FALSE)
 

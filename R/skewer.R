@@ -23,20 +23,26 @@
 #' }
 #' @export
 skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", adapter5, adapter3, seq.type=c("se","pe"), threads=1, min.length=18){
+ 
   home <- getwd()
   setwd(fastq.folder)
-
+  
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
   #running time 1
   ptm <- proc.time()
   #running time 1
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    system("echo 10 >& ExitStatusFile")
+    return(10)
   }
   #########check scratch folder exist###########
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
+    system("echo 3 >& ExitStatusFile")
     return(3)
   }
   #############################################
@@ -50,9 +56,11 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	cat("\ncopying and unzipping\n")
 	if(length(dir)==0){
 		cat(paste("It seems that in ",fastq.folder, "there are not fastq.gz files"))
+	  system("echo 1 >& ExitStatusFile")
 		return(1)
 	}else if(length(dir)>2){
 		cat(paste("It seems that in ",fastq.folder, "there are more than two fastq.gz files"))
+	  system("echo 2 >& ExitStatusFile")
 		return(2)
 	}else{
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
@@ -86,8 +94,9 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 		}
 	}
 
-	if(resultRun=="false"){
+	if(resultRun==0){
 	  #not saving fastq files
+	  cat("\nskewer step is finished\n")
 	  dir.tmp <- dir(scrat_tmp.folder)
 	  dir.tmp <- setdiff(dir.tmp, dir.tmp[grep("fastq$",dir.tmp)])
 	  for(i in dir.tmp){
