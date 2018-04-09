@@ -84,7 +84,7 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   resultRun <- runDocker(group=group,container=dockerImage, params=params)
   #waiting for the end of the container work
   if(resultRun==0){
-    system(paste("cp ", scrat_tmp.folder, "/*.cvs* ", data.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder, "/*.csv ", data.folder, sep=""))
   }
   #running time 2
   ptm <- proc.time() - ptm
