@@ -72,7 +72,7 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   for (i in 1:length(input.files)){
     if (system(paste("cp ",input.files[i],scrat_tmp.folder),intern = FALSE) != 0)
       {
-      cat("Error input file ",input.files[i],scrat_tmp.folder," does not exist!!")
+      cat("Error input file ",input.files[i],scrat_tmp.folder," does not exist\n")
       system("echo 4 >& ExitStatusFile")
       setwd(home)
       return(4)
@@ -82,7 +82,7 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   if (spike!="null")
       if (system(paste("cp ",spike,scrat_tmp.folder)))
       {
-      cat("Error input file ",input.files[i],scrat_tmp.folder," does not exist!!")
+      cat("Error input file ",input.files[i],scrat_tmp.folder," does not exist\n")
       system("echo 4 >& ExitStatusFile")
       setwd(home)
       return(4)
