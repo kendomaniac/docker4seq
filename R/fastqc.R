@@ -39,6 +39,7 @@ fastqc <- function(group=c("sudo","docker"), data.folder){
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   
