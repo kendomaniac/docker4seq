@@ -4,9 +4,9 @@
 \alias{bwaIndex}
 \title{Generating bwa genome index}
 \usage{
-bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(),
-  genome.fasta = NULL, genome.url = NULL, dbsnp.file = NULL,
-  g1000.file = NULL, gatk = FALSE, download_genome = FALSE)
+bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(), genome.fasta,
+  genome.url = NULL, dbsnp.file = NULL, g1000.file = NULL, gatk = FALSE,
+  download.genome = FALSE)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -35,10 +35,10 @@ This function executes the docker container bwa1 where BWA is installed. Optiona
 \dontrun{
 
     #running bwa index
-    bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/mm10bwa", genome.fasta,
+    bwaIndex(group="sudo",genome.folder="/data/genomes/mm10bwa", genome.fasta,
     gatk=FALSE, download.genome=FALSE)
     #running bwa index for gatk
-    bwaIndex(group="sudo",genome.folder="/sto2/data/scratch/hg19_bwa", genome.url=
+    bwaIndex(group="sudo",genome.folder="/data/genomes/hg19_bwa", genome.url=
     "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz",
     dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz",
     gatk=TRUE, download.genome=TRUE)

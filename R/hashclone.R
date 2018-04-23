@@ -71,13 +71,31 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   #copying input files
   cat("\nCopying input files in scratch folder\n")
   for (i in 1:length(input.files)){
-    system(paste("cp ",input.files[i],scrat_tmp.folder))
+    if (system(paste("cp ",input.files[i],scrat_tmp.folder),intern = FALSE) != 0)
+      {
+      cat("Error input file ",input.files[i],scrat_tmp.folder," does not exist\n")
+      system("echo 4 >& ExitStatusFile")
+      setwd(home)
+      return(4)
+      }
+   
   }
-  system(paste("cp ",spike,scrat_tmp.folder))
+  if (spike!="null")
+      if (system(paste("cp ",spike,scrat_tmp.folder)))
+      {
+      cat("Error input file ",input.files[i],scrat_tmp.folder," does not exist\n")
+      system("echo 4 >& ExitStatusFile")
+      setwd(home)
+      return(4)
+      }
   #executing the docker job
   
   params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d ",dockerImage, " /bin/hashclone.sh ",kmer," ",hash," ",coll," ",threshold," /scratch  null ", sep="")
-  params <- paste(params,paste("/scratch/",basename(spike),sep=""), sep=" ")
+  if  (spike!="null")
+    params <- paste(params,paste("/scratch/",basename(spike),sep=""), sep=" ")
+  else
+    params <- paste(params,"null", sep=" ")
+  
   for (i in 1:length(input.files)){
     params <- paste(params,paste("/scratch/",basename(input.files[i]),sep=""), sep=" ")
   }
@@ -86,7 +104,7 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   resultRun <- runDocker(group=group, params=params)
   #waiting for the end of the container work
   if(resultRun==0){
-    system(paste("cp ", scrat_tmp.folder, "/*.cvs* ", data.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder, "/*.csv ", data.folder, sep=""))
   }
   #running time 2
   ptm <- proc.time() - ptm

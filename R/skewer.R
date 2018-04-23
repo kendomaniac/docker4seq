@@ -58,12 +58,20 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	cat("\ncopying and unzipping\n")
 	if(length(dir)==0){
 		cat(paste("It seems that in ",fastq.folder, "there are not fastq.gz files"))
+<<<<<<< HEAD
 	        system("echo 1 >& ExitStatusFile")
+=======
+	  	system("echo 1 >& ExitStatusFile")
+>>>>>>> 19ea537bdb8bd6ba9785a16177494a60cebde9d9
 		setwd(home)
 		return(1)
 	}else if(length(dir)>2){
 		cat(paste("It seems that in ",fastq.folder, "there are more than two fastq.gz files"))
+<<<<<<< HEAD
 	        system("echo 2 >& ExitStatusFile")
+=======
+	  	system("echo 2 >& ExitStatusFile")
+>>>>>>> 19ea537bdb8bd6ba9785a16177494a60cebde9d9
 		setwd(home)
 		return(2)
 	}else{
