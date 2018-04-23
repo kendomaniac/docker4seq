@@ -79,12 +79,7 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
       system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
     }else if(length(dir)>2){
       cat(paste("It seems that in ", fastq.folder, "there are more than two fastq.gz files"))
-<<<<<<< HEAD
-
       system("echo 2 >& ExitStatusFile")
-=======
-      system("echo 2 >& ExitStatusFile") 
->>>>>>> 19ea537bdb8bd6ba9785a16177494a60cebde9d9
       setwd(home)
       return(2)
     }else{
