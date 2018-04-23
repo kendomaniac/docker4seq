@@ -53,11 +53,7 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
     cat("\nERROR: Docker seems not to be installed in your system\n")
     #initialize status
     system("echo 10 >& ExitStatusFile")
-<<<<<<< HEAD
     setwd(home)
-=======
-    setwd(home)  
->>>>>>> 19ea537bdb8bd6ba9785a16177494a60cebde9d9
     return(10)
   }
 
@@ -69,11 +65,7 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
     if(length(dir[grep(sub(".vcf.gz$", "", dbsnp.file),dir)])<2){
       cat("\ndbSNP vcf.gz and/or vcf.idx.gz missing\n")
       system("echo 2 >& ExitStatusFile")
-<<<<<<< HEAD
-      setwd(home)
-=======
       setwd(home)    
->>>>>>> 19ea537bdb8bd6ba9785a16177494a60cebde9d9
       return(2)
     }else{
       cat("\nPreparing dbsnp vcf\n")
