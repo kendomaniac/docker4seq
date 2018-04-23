@@ -17,12 +17,7 @@
 #' @export
 oncosnpAnnotation <- function(group=c("sudo","docker"), data.folder, genome.folder){
 
-  #testing if docker is running
-  test <- dockerTest()
-  if(!test){
-    cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
-  }
+
   #storing the position of the home folder
   home <- getwd()
 
@@ -43,6 +38,7 @@ oncosnpAnnotation <- function(group=c("sudo","docker"), data.folder, genome.fold
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   
@@ -50,11 +46,12 @@ oncosnpAnnotation <- function(group=c("sudo","docker"), data.folder, genome.fold
   if (!file.exists(genome.folder)){
     cat(paste("\nIt seems that the ",genome.folder, " folder does not exist\n"))
     system("echo 3 >& ExitStatusFile")
+    setwd(home)
     return(3)
   }
   #executing the docker job
     params <- paste("--cidfile ",data.folder,"/dockerID -v ",genome.folder,":/index -v ", data.folder, ":/data -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/annotating_oncosnp.R", sep="")
-    resultRun <- runDocker(group=group,container="docker.io/repbioinfo/r340.2017.01", params=params)
+    resultRun <- runDocker(group=group, params=params)
 
   #waiting for the end of the container work
   if(resultRun==0){

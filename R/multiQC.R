@@ -35,6 +35,7 @@ multiQC <- function(group=c("sudo","docker"), data.folder){
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   
@@ -45,7 +46,7 @@ multiQC <- function(group=c("sudo","docker"), data.folder){
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
   
   params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":", data.folder, " -w ", data.folder, " ewels/multiqc multiqc .", sep="")
-  resultRun <- runDocker(group=group,container="ewels/multiqc", params=params)
+  resultRun <- runDocker(group=group, params=params)
   
   #waiting for the end of the container work
   if(resultRun==0){

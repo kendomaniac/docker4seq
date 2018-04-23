@@ -39,7 +39,7 @@ salmonAnnotation <- function(group=c("sudo","docker"), fastq.folder, index.folde
   system("echo 0 >& ExitStatusFile")
   
   params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/annotate.salmon.R", sep="")
-  resultRun <- runDocker(group=group,container="docker.io/repbioinfo/r340.2017.01", params=params)
+  resultRun <- runDocker(group=group, params=params)
 
 
   #waiting for the end of the container work
@@ -60,7 +60,7 @@ salmonAnnotation <- function(group=c("sudo","docker"), fastq.folder, index.folde
 #gene level conversion
 
    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/iso2gene.R", sep="")
-   resultRun <- runDocker(group=group,container="docker.io/repbioinfo/r340.2017.01", params=params)
+   resultRun <- runDocker(group=group, params=params)
  
 
   #waiting for the end of the container work
@@ -80,7 +80,7 @@ salmonAnnotation <- function(group=c("sudo","docker"), fastq.folder, index.folde
 
   #ensembl gtf annotation at gene level
     params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/salmon.annoByGtf.R", sep="")
-    resultRun <- runDocker(group=group,container="docker.io/repbioinfo/r340.2017.01", params=params)
+    resultRun <- runDocker(group=group, params=params)
   
 
   #waiting for the end of the container work

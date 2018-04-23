@@ -35,6 +35,10 @@ rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/dat
       adapter5,adapter3,seq.type="pe",   min.length=40, genome.folder="/data/genomes/hg38star",
       strandness="none", save.bam=TRUE, org="hg38", annotation.type="gtfENSEMBL"){
 
+  
+  #storing the position of the home folder
+  home <- getwd()
+
 
   #FastQC
   fastqc(group="docker", data.folder=fastq.folder)
@@ -56,6 +60,7 @@ rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/dat
     cat("\nERROR: an annotatin function not implemented was selected\n")
 
     system("echo 1 >& ExitStatusFile")
+    setwd(home)
     return(1)
   }
   setwd(fastq.folder)
@@ -64,6 +69,7 @@ rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/dat
   system("rm *trimmed-pair*")
   
   system("echo 0 >& ExitStatusFile")
+  setwd(home)
   return(0)
 }
 

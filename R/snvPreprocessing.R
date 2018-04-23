@@ -45,12 +45,14 @@ snvPreprocessing <- function(group=c("sudo","docker"), bam.folder=getwd(), scrat
     if(!test){
       cat("\nERROR: Docker seems not to be installed in your system\n")
       system("echo 10 >& ExitStatusFile")
+      setwd(home)
       return(10)
     }
     #########check scratch folder exist###########
     if (!file.exists(scratch.folder)){
       cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
       system("echo 3 >& ExitStatusFile")
+      setwd(home)
       return(3)
     }
     #############################################
@@ -72,16 +74,17 @@ snvPreprocessing <- function(group=c("sudo","docker"), bam.folder=getwd(), scrat
     if(length(dir)==0){
       cat(paste("It seems that in ", bam.folder, "there is not a bam file files"))
       system("echo 1 >& ExitStatusFile")
+      setwd(home)
       return(1)
     }else if(length(dir)>1){
       cat(paste("It seems that in ", bam.folder, "there is more than one bam file"))
       system("echo 2 >& ExitStatusFile")
+      setwd(home)
       return(2)
     }else if(length(dir)==1){
         system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
         system(paste("cp ",bam.folder,"/",dir[1], " ",scratch.folder,"/",tmp.folder,"/", sep=""))
         system(paste("cp ",bam.folder,"/",sub("bam$","bai$", dir[1]), " ",scratch.folder,"/",tmp.folder,"/", sep=""))
-  
         system(paste("cp GenomeAnalysisTK.tar.bz2 ",scratch.folder,"/",tmp.folder,"/", sep=""))
     }            
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
@@ -92,7 +95,7 @@ snvPreprocessing <- function(group=c("sudo","docker"), bam.folder=getwd(), scrat
     
 
 	 params <- paste("--cidfile ",bam.folder,"/dockerID -v ",docker_bam.folder,":/data/scratch -v ",genome.folder,":/genome -d docker.io/repbioinfo/snvpre.2017.01 sh /bin/gatk.sh ", threads," ",bam.folder, sep="")
-	 resultRun <- runDocker(group=group,container="docker.io/repbioinfo/snvpre.2017.01", params=params)
+	 resultRun <- runDocker(group=group, params=params)
 
     if(resultRun==0){
       system(paste("cp ", scrat_tmp.folder, "/* ", bam.folder, sep=""))

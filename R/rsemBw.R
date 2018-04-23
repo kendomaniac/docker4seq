@@ -31,12 +31,14 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   #########check scratch folder exist###########
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
     system("echo 3 >& ExitStatusFile")
+    setwd(home)
     return(3)
   }
   #############################################
@@ -67,7 +69,7 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
   docker_fastq.folder=file.path("/data/scratch", tmp.folder)
 
   params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
-  resultRun=runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
+  resultRun=runDocker(group="sudo", params=params)
   
   #waiting for the end of the container work
   if(resultRun==0){

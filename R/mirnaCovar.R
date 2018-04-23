@@ -38,6 +38,7 @@ mirnaCovar <- function(experiment.folder, covariates=NULL, batches=NULL, output.
            }else{
              cat("\nERROR: the covariates and the samples names do not have the same length\n")
              system("echo 1 >& ExitStatusFile")
+ 	     setwd(home)
              return(1)
            }
        }
@@ -47,6 +48,7 @@ mirnaCovar <- function(experiment.folder, covariates=NULL, batches=NULL, output.
          }else{
            cat("\nERROR: the batches and the samples names do not have the same length\n")
            system("echo 2 >& ExitStatusFile")
+ 	   setwd(home)
            return(2)
          }
        }
@@ -59,6 +61,7 @@ mirnaCovar <- function(experiment.folder, covariates=NULL, batches=NULL, output.
          write.table(tmp, "w_covar_all.counts.txt", sep="\t", col.names = NA, quote = F)
        }
        system("echo 0 >& ExitStatusFile")
+       setwd(home)
        return(0)
 }
 

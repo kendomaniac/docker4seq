@@ -36,12 +36,14 @@ rsemanno <- function(group=c("sudo","docker"),rsem.folder=getwd(), scratch.folde
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   #########check scratch folder exist###########
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
     system("echo 3 >& ExitStatusFile")
+    setwd(home)
     return(3)
   }
   #############################################
@@ -58,12 +60,14 @@ rsemanno <- function(group=c("sudo","docker"),rsem.folder=getwd(), scratch.folde
 	dir <- dir[grep("genes.results", dir)]
 	cat("\ncopying \n")
 	if(length(dir)==0){
-		cat(paste("It seems that in ", rsem.folder, "there is not a genes.results file generated using rsemstar"))
+	  cat(paste("It seems that in ", rsem.folder, "there is not a genes.results file generated using rsemstar"))
 	  system("echo 1 >& ExitStatusFile")
-		return(1)
+	  setwd(home)
+          return(1)
 	}else if(length(dir)>1){
 		cat(paste("It seems that in ", rsem.folder, "there are more than one genes.results files"))
-	  system("echo 2 >& ExitStatusFile")
+	        system("echo 2 >& ExitStatusFile")
+                setwd(home)
 		return(2)
 	}else{
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))

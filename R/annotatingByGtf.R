@@ -35,16 +35,14 @@ rsemannoByGtf <- function(group="docker", rsem.folder=getwd(), genome.folder){
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
 
-  if(group=="sudo"){
-    params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",rsem.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.rsemannoByGtf.R", sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r332.2017.01", params=params)
-  }else{
-    params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",rsem.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.rsemannoByGtf.R", sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r332.2017.01", params=params)
-  }
+
+  params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",rsem.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.rsemannoByGtf.R", sep="")
+    resultRun <- runDocker(group=group, params=params)
+
 
   if(resultRun==0){
     cat("\nGTF based annotation is finished is finished\n")

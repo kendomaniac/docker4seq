@@ -49,6 +49,7 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 0 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   
@@ -58,6 +59,7 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, " folder does not exist\n"))
     system("echo 3 >& ExitStatusFile")
+    setwd(home)
     return(3)
   }
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
@@ -81,7 +83,7 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   }
   
   #Run docker   
-  resultRun <- runDocker(group=group,container=dockerImage, params=params)
+  resultRun <- runDocker(group=group, params=params)
   #waiting for the end of the container work
   if(resultRun==0){
     system(paste("cp ", scrat_tmp.folder, "/*.cvs* ", data.folder, sep=""))

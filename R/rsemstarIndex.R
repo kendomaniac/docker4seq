@@ -42,6 +42,7 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   #########check scratch folder exist###########
@@ -54,7 +55,7 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
 
 
 	params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
-	resultRun <- runDocker(group=group,container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	resultRun <- runDocker(group=group, params=params)
 
   if(resultRun==0){
     cat("\nRSEMSTAR index generation is finished\n")

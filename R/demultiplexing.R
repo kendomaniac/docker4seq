@@ -39,13 +39,14 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, threads=8){
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   
   #############################################
   cat("\nsetting as working dir the genome folder and running bwa docker container\n")
   params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/repbioinfo/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
-  resultRun=runDocker(group=group,container="docker.io/repbioinfo/demultiplexing.2017.01", params=params)
+  resultRun=runDocker(group=group, params=params)
 
 	 if(resultRun==0){
 	    cat("\nDemultiplexing is finished\n")

@@ -43,6 +43,7 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   
@@ -50,6 +51,7 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, " folder does not exist\n"))
     system("echo 3 >& ExitStatusFile")
+    setwd(home)
     return(3)
   }
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
@@ -74,6 +76,8 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
   }else if(length(dir)>2){
     cat(paste("It seems that in ", fastq.folder, "there are more than two fastq.gz files"))
+    system("echo 2 >& ExitStatusFile")
+    setwd(home)
     return(2)
   }else{
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
@@ -93,23 +97,24 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   if(group=="sudo"){
       if(seq.type=="pe"){
           params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_countsPE.sh ", threads," ", fastq[1]," ", fastq[2]," ", fastq.folder, sep="")
-          resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/salmon.2017.01", params=params)
+          resultRun <- runDocker(group="sudo", params=params)
       }else{
           params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_countsSE.sh ", threads," ", fastq[1]," ", fastq.folder, sep="")
-          resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/salmon.2017.01", params=params)
+          resultRun <- runDocker(group="sudo", params=params)
       }
     }else{
       if(seq.type=="pe"){
         params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_countsPE.sh ", threads," ", fastq[1]," ", fastq[2]," ", fastq.folder, sep="")
-        resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/salmon.2017.01", params=params)
+        resultRun <- runDocker(group="docker", params=params)
       }else{
         params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_countsSE.sh ", threads," ", fastq[1]," ", fastq.folder, sep="")
-        resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/salmon.2017.01", params=params)
+        resultRun <- runDocker(group="docker", params=params)
       }
     }
   }else{
     cat("\nNot implemented, yet\n")
     system("echo 11 >& ExitStatusFile")
+    setwd(home)
     return(11)
   }
 

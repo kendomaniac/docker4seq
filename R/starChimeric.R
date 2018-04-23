@@ -35,6 +35,7 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
 
@@ -64,6 +65,7 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
   if(length(dir)==0){
     cat(paste("It seems that in ", fastq.folder, "there are not fastq.gz files"))
     system("echo 1 >& ExitStatusFile")
+    setwd(home)
     return(1)
   }else if(length(dir.trim)>0){
     dir <- dir.trim
@@ -75,6 +77,7 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
   }else if(length(dir)>2){
     cat(paste("It seems that in ", fastq.folder, "there are more than two fastq.gz files"))
     system("echo 2 >& ExitStatusFile")
+    setwd(home)
     return(2)
   }else{
     for(i in dir){
@@ -85,7 +88,7 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
   }
 
  params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/fastq.folder -v ",scrat_tmp.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/star_chimeric_2.sh ",chimSegmentMin," ", threads," ", sub(".gz$", "", dir[1])," ", sub(".gz$", "", dir[2]), sep="")
- resultRun <- runDocker(group=group,container="docker.io/repbioinfo/star251.2017.01", params=params)
+ resultRun <- runDocker(group=group, params=params)
 
  if(resultRun==0){
    #not saving fastq files

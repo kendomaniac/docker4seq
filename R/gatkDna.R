@@ -38,6 +38,7 @@ gatkDNA <- function(group=c("sudo","docker"), bam.folder=getwd(), scratch.folder
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   
@@ -56,6 +57,7 @@ gatkDNA <- function(group=c("sudo","docker"), bam.folder=getwd(), scratch.folder
   if(length(dir)==0){
     cat(paste("It seems that in ", getwd(), "there is not dedup_reads.bam"))
     system("echo 1 >& ExitStatusFile")
+    setwd(home)
     return(1)
   }
   docker_bam.folder=file.path("/data/scratch", tmp.folder)

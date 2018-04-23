@@ -32,6 +32,7 @@ xenomeIndex <- function(group=c("sudo","docker"),xenome.folder=getwd(), hg.urlge
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
 
@@ -46,7 +47,7 @@ xenomeIndex <- function(group=c("sudo","docker"),xenome.folder=getwd(), hg.urlge
   
   params <- paste("--cidfile ",xenome.folder,"/dockerID -v ",xenome.folder,":/data/scratch"," -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome.index.sh ", hg.urlgenome, " ", mm.urlgenome, " ",threads, sep="")
 	
-  resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/xenome.2017.01", params=params)
+  resultRun <- runDocker(group="docker", params=params)
 
   if(resultRun==0){
     cat("\nXenome genome indexes were created\n")

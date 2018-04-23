@@ -40,12 +40,14 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   #########check scratch folder exist###########
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
     system("echo 3 >& ExitStatusFile")
+    setwd(home)
     return(3)
   }
   #############################################
@@ -78,7 +80,8 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	  system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	}else if(length(dir)>2){
 		cat(paste("It seems that in ", fastq.folder, "there are more than two fastq.gz files"))
-	  system("echo 2 >& ExitStatusFile")
+	        system("echo 2 >& ExitStatusFile")
+		setwd(home)
 		return(2)
 	}else{
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
@@ -98,49 +101,49 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 		if(seq.type=="pe"){
 		  if(strandness=="none"){
 		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem2_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep="")
-		    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+		    resultRun <- runDocker(group="sudo", params=params)
 		  }else if(strandness=="forward"){
 		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem2_strand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep="")
-		    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+		    resultRun <- runDocker(group="sudo", params=params)
 		  }else if(strandness=="reverse"){
 		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem2_access.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep="")
-		    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+		    resultRun <- runDocker(group="sudo", params=params)
 		  }
 		}else{
 		  if(strandness=="none"){
 		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem1_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep="")
-		    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+		    resultRun <- runDocker(group="sudo", params=params)
 		  }else if(strandness=="forward"){
 		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem1_strand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep="")
-		    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+		    resultRun <- runDocker(group="sudo", params=params)
 		  }else if(strandness=="reverse"){
 		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem1_access.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep="")
-		    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+		    resultRun <- runDocker(group="sudo", params=params)
 		  }
 		}
 	}else{
 	  if(seq.type=="pe"){
 	    if(strandness=="none"){
 	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem2_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep="")
-	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	      resultRun <- runDocker(group="docker", params=params)
 	    }else if(strandness=="forward"){
 	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem2_strand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep="")
-	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	      resultRun <- runDocker(group="docker", params=params)
 	    }else if(strandness=="reverse"){
 	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem2_access.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep="")
-	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	      resultRun <- runDocker(group="docker", params=params)
 	    }
 
 	  }else{
 	    if(strandness=="none"){
 	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem1_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep="")
-	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	      resultRun <- runDocker(group="docker", params=params)
 	    }else if(strandness=="forward"){
 	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem1_strand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep="")
-	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	      resultRun <- runDocker(group="docker", params=params)
 	    }else if(strandness=="reverse"){
 	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsem1_access.sh ",docker_fastq.folder," ", threads," ", fastq[1]," /data/genome ", fastq.folder, sep="")
-	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	      resultRun <- runDocker(group="docker", params=params)
 	    }
 	  }
 

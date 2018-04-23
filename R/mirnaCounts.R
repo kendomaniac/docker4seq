@@ -62,6 +62,7 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
 
@@ -82,6 +83,7 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	if(length(dir)==0){
 	  cat(paste("It seems that in ",fastq.folder, "there are not fastq.gz files"))
 	  system("echo 1 >& ExitStatusFile")
+	  setwd(home)
 	  return(1)
 	}else{
 	  system(paste("chmod 777 -R", scrat_tmp.folder))
@@ -94,7 +96,7 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	cat("\nsetting as working dir the scratch folder and running mirna8 docker container\n")
 
   params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep="")
-  resultRun <- runDocker(group=group,container="docker.io/repbioinfo/mirnaseq.2017.01", params=params)
+  resultRun <- runDocker(group=group, params=params)
 
 	if(resultRun==0){
 	  cat("\nmirnaCounts analysis is finished\n")

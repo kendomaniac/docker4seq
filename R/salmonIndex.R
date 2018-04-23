@@ -47,6 +47,7 @@ salmonIndex <- function(group=c("sudo","docker"), index.folder, ensembl.urltrans
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   
@@ -56,7 +57,7 @@ salmonIndex <- function(group=c("sudo","docker"), index.folder, ensembl.urltrans
   system("gzip -d genome.gtf.gz")
   #executing the docker job
   params <- paste("--cidfile ",index.folder,"/dockerID -v ", index.folder, ":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_index.sh ",k, sep="")
-     resultRun <- runDocker(group=sudo,container="docker.io/repbioinfo/salmon.2017.01", params=params)
+  resultRun <- runDocker(group=sudo, params=params)
   
   
   if(resultRun==0){

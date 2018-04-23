@@ -53,6 +53,7 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
     cat("\nERROR: Docker seems not to be installed in your system\n")
     #initialize status
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
 
@@ -63,6 +64,8 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
   if(gatk){
     if(length(dir[grep(sub(".vcf.gz$", "", dbsnp.file),dir)])<2){
       cat("\ndbSNP vcf.gz and/or vcf.idx.gz missing\n")
+      system("echo 2 >& ExitStatusFile")
+      setwd(home)
       return(2)
     }else{
       cat("\nPreparing dbsnp vcf\n")
@@ -72,6 +75,8 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
     }
     if(length(dir[grep(sub(".vcf.gz$", "", g1000.file),dir)])<2){
       cat("\1000 genomes vcf and/or vcf.idx.gz missing\n")
+      system("echo 3 >& ExitStatusFile")
+      setwd(home)
       return(3)
     }else{
       cat("\nPreparing 1000 genomes vcf\n")
@@ -82,14 +87,9 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
   }
 
   resultRun <- 1
-  
-	if(group=="sudo"){
-		params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
-		resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/bwa.2017.01", params=params)
-	}else{
-	  params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
-	  resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/bwa.2017.01", params=params)
-	}
+  params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", uscs.urlgenome, sep="")
+  resultRun <- runDocker(group="docker", params=params)
+
   if(resultRun==0){
     cat("\nBwa index generation is finished\n")
   }

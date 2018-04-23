@@ -36,8 +36,8 @@ skeleton <- function(group=c("sudo","docker"), scratch.folder, data.folder){
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    
-    system("echo 10 >& ExitStatusFile")
+    system("echo 10 >& ExitStatusFile") 
+    setwd(home)
     return(10)
   }
   
@@ -47,6 +47,7 @@ skeleton <- function(group=c("sudo","docker"), scratch.folder, data.folder){
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, " folder does not exist\n"))
     system("echo 3 >& ExitStatusFile")
+    setwd(data.folder)
     return(3)
   }
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
@@ -56,7 +57,7 @@ skeleton <- function(group=c("sudo","docker"), scratch.folder, data.folder){
   dir.create(file.path(scrat_tmp.folder))
   #executing the docker job
   params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh", sep="")
-  resultRun <- runDocker(group=group,container="docker.io/repbioinfo/ubuntu", params=params)
+  resultRun <- runDocker(group=group, params=params)
   
   #waiting for the end of the container work
   if(resultRun==0){

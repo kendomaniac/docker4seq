@@ -7,7 +7,7 @@
 #' @examples
 #' \dontrun{
 #'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
-#'     #running skeleton
+#'     #running fastqc
 #'     fastqc(group="docker", data.folder=getwd())
 #' }
 #'
@@ -39,13 +39,14 @@ fastqc <- function(group=c("sudo","docker"), data.folder){
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   
 
   #executing the docker job
   params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/scratch -d docker.io/repbioinfo/r340.2017.01 sh /bin/fastqc.sh", sep="")
- resultRun <- runDocker(group=group,container="docker.io/repbioinfo/r340.2017.01", params=params)
+ resultRun <- runDocker(group=group, params=params)
   
   #waiting for the end of the container work
   if(resultRun==0){

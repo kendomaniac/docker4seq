@@ -57,6 +57,7 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
 
@@ -64,6 +65,7 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
     system("echo 3 >& ExitStatusFile")
+    setwd(home)
     return(3)
   }
   #############################################
@@ -89,11 +91,13 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	cat("\ncopying \n")
 	if(length(dir)==0){
 		cat(paste("It seems that in ", bam.folder, "there are not bam files"))
-	  system("echo 1 >& ExitStatusFile")
+	  	system("echo 1 >& ExitStatusFile")
+ 		setwd(home)
 		return(1)
 	}else if(length(dir)>2){
 		cat(paste("It seems that in ", bam.folder, "there are more than two bam files"))
-	  system("echo 2 >& ExitStatusFile")
+	  	system("echo 2 >& ExitStatusFile")
+ 		setwd(home)		
 		return(2)
 	}else{
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
@@ -106,7 +110,7 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 
 params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",bam.folder," ", ctrl.bam," 000000 ",docker_chipseq.folder," ",genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ", macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",max.upstream.distance," ",remove.duplicates, sep="")
 
-resultRun=runDocker(group=group,container="docker.io/repbioinfo/chipseq.2017.01", params=params)
+resultRun=runDocker(group=group, params=params)
 	
 
 	if(resultRun==0){

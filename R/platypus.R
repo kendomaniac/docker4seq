@@ -61,11 +61,7 @@ platypus <- function(group=c("sudo","docker"), data.folder=getwd(), scratch.fold
   #running time 1
   ptm <- proc.time()
   #running time 1
-  test <- dockerTest()
-  if(!test){
-    cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
-  }
+
   
   #storing the position of the home folder  
   home <- getwd()
@@ -91,10 +87,21 @@ platypus <- function(group=c("sudo","docker"), data.folder=getwd(), scratch.fold
   #getting in the tmp folder in scratch folder
   setwd(data.folder)
   
+  system("echo 0 >& ExitStatusFile")
+
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    system("echo 10 >& ExitStatusFile")
+    setwd(home)
+    return(10)
+  }
+
+
   #executing the docker job
 
 params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":", data.folder, " -v ", scrat_tmp.folder, ":",  scrat_tmp.folder, " -v ", pathRef, ":", pathRef, " -d docker.io/repbioinfo/platypus.2017.01 python /bin/platypus.py ",data.folder, " ", pathRef, " ", nameRef, " ", data.folder, " ", pathPlatypus, " ", threads, " ", pathHtslib, " ", pathPlatypus, " ", scrat_tmp.folder, " ", GQ, " ",  minSampGQ, " ",  NR, " ",  minSampNR, " ",  NV, " ",  minSampNV, " ",  normal_samples, " ",  GT_normal, " ",  minSampGT_normal, " ",  tumoral_samples, " ",  GT_tumoral, " ",  minSampGT_tumoral, " ",  stringent_filter, " ", annotation, sep="")
-    resultRun <- runDocker(group=group,container="docker.io/repbioinfo/platypus.2017.01", params=params)
+    resultRun <- runDocker(group=group, params=params)
  
     #waiting for the end of the container work
     if(resultRun==0){

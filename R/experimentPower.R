@@ -38,6 +38,7 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   #removing the path from filename
@@ -45,7 +46,7 @@ experimentPower <- function(group=c("sudo","docker"), filename, replicatesXgroup
   filename <-  filename.tmp[length(filename.tmp)]
 
   params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.experimentPower.R ", filename, " ", replicatesXgroup, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
-  resultRun <- runDocker(group=group,container="docker.io/repbioinfo/r332.2017.01", params=params)
+  resultRun <- runDocker(group=group, params=params)
 
 
   if(resultRun==0){

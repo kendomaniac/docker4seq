@@ -39,6 +39,7 @@ sampleSize <- function(group=c("sudo","docker"), filename, power=0.80, FDR=0.1, 
     cat("\nERROR: Docker seems not to be installed in your system\n")
     #initialize status
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
   #removing the path from filename
@@ -47,7 +48,7 @@ sampleSize <- function(group=c("sudo","docker"), filename, power=0.80, FDR=0.1, 
 
 
   params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.sampleSize.R ", filename, " ", power, " ", FDR, " ", genes4dispersion, " ", log2fold.change, sep="")
-  resultRun <- runDocker(group=group,container="docker.io/repbioinfo/r332.2017.01", params=params)
+  resultRun <- runDocker(group=group, params=params)
 
   if(resultRun==0){
     cat("\nSample size analysis is finished\n")
