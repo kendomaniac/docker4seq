@@ -17,7 +17,7 @@ This function executes a ubuntu docker that produces as output FASTQCstdin_fastq
 \examples{
 \dontrun{
     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
-    #running skeleton
+    #running fastqc
     fastqc(group="docker", data.folder=getwd())
 }
 

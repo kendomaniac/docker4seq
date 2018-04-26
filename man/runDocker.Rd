@@ -4,13 +4,10 @@
 \alias{runDocker}
 \title{Run docker container}
 \usage{
-runDocker(group = "docker", container = NULL, params = NULL,
-  DockerSwarm = FALSE)
+runDocker(group = "docker", params = NULL, DockerSwarm = FALSE)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
-
-\item{container, }{a character string downloading the docker container. If no value is inserted the container is already present on the local server}
 
 \item{params, }{a character string containing all parameters needed to tun the docker container}
 
@@ -25,7 +22,7 @@ This is an internal function executing a docker container. Not to be used by use
 \examples{
 \dontrun{
     #running runDocker
-     runDocker(group="docker", container="docker.io/rcaloger/bwa.2017.01", params=NULL)
+     runDocker(group="docker", params=NULL)
 
 }
 }

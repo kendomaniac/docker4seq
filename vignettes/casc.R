@@ -2,7 +2,11 @@
 knitr::opts_chunk$set(echo = TRUE)
 
 ## ---- echo=TRUE, eval=FALSE----------------------------------------------
-#  downloadContainers(group="docker")
+#  
+#  indropCounts(group="docker", scratch.folder="/data/scratch", fastq.folder=getwd(),
+#          index.folder="/data/genomes/mm10indrop", sample.name="C2", split.affixes="S2_L001",
+#          bowtie.index.prefix="Mus_musculus.GRCm38.85.index", M=10, U=2, D=400, low.complexity.mask="False")
+#  
 
 ## ---- echo=TRUE, eval=FALSE----------------------------------------------
 #  #downloading fastq files
@@ -41,6 +45,15 @@ knitr::opts_chunk$set(echo = TRUE)
 #  system("wget http://130.192.119.59/public/singlecells_counts.txt.gz")
 #  system("gzip -d singlecells_counts.txt.gz")
 #  counts2log(counts.matrix="singlecells_counts.txt", data.folder=getwd(), log.base=10, type="txt")
+
+## ---- echo=TRUE,eval=FALSE-----------------------------------------------
+#  
+#  lorenzFilter(group="docker",scratch.folder="path/of/scratch/folder",
+#             data.folder="path/of/data/folder",matrixName="matrixName",p_value=0.05,format="txt",separator='\t')
+#  
+
+## ---- echo=TRUE, eval=FALSE----------------------------------------------
+#  downloadContainers(group="docker")
 
 ## ---- echo=TRUE, eval=FALSE----------------------------------------------
 #  #downloading fastq files

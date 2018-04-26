@@ -30,11 +30,32 @@ knitr::opts_chunk$set(echo = TRUE)
 #  setwd("./test.mrnaCounts")
 #  library(docker4seq)
 #  rnaseqCounts(group="docker",fastq.folder=getwd(), scratch.folder=getwd(),
-#  adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-#  adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+#  adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+#  adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
 #  seq.type="se", threads=8,  min.length=40,
 #  genome.folder="/data/scratch/mm10star", strandness="none", save.bam=FALSE,
 #  org="mm10", annotation.type="gtfENSEMBL")
+#  
+
+## ---- echo=TRUE, eval=FALSE----------------------------------------------
+#  
+#  #running salmonIndex human
+#  salmonIndex(group="docker", index.folder=getwd(),
+#         ensembl.urltranscriptome="ftp://ftp.ensembl.org/pub/release-90/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz",
+#         ensembl.urlgtf="ftp://ftp.ensembl.org/pub/release-90/gtf/homo_sapiens/Homo_sapiens.GRCh38.90.gtf.gz",
+#         k=31)
+#  
+
+## ---- echo=TRUE, eval=FALSE----------------------------------------------
+#  
+#  system("wget http://130.192.119.59/public/test_R1.fastq.gz")
+#  system("wget http://130.192.119.59/public/test_R2.fastq.gz")
+#  
+#  #running salmonCounts
+#  wrapperSalmon(group="docker", scratch.folder="/data/scratch/",
+#           fastq.folder=getwd(), index.folder="/data/genome/salmonhg38/",
+#           threads=8, seq.type="pe", adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+#           adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT", min.length=40, strandness="none")
 #  
 
 ## ---- echo=TRUE, eval=FALSE----------------------------------------------
@@ -121,8 +142,8 @@ knitr::opts_chunk$set(echo = TRUE)
 #  library(docker4seq)
 #  chipseqCounts(group = "docker", output.folder = "./prdm51.igg",
 #    mock.folder="./igg", test.folder="./prdm51", scratch.folder=getwd(),
-#    adapter5 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-#    adapter3 = "AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
+#    adapter5 = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+#    adapter3 = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
 #    threads = 8, min.length = 30, genome.folder,
 #    mock.id = "igg", test.id = "tf", genome, read.size = 50,
 #    tool = "macs", macs.min.mfold = 10, macs.max.mfold = 30,
@@ -155,7 +176,13 @@ knitr::opts_chunk$set(echo = TRUE)
 #  #running wrapperPdx
 #  wrapperPdx(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
 #       xenome.folder="/data/scratch/hg19.mm10", seq.type="pe", threads=24,
-#       adapter5="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT",
-#       adapter3="AATGATACGGCGACCACCGAGATCTACACTCTTTCCCTACACGACGCTCTTCCGATCT"
+#       adapter5="AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
+#       adapter3="AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"
 #       min.length=40, genome.folder="/data/scratch/hg19_exome", sample.id="sampleX")
+
+## ---- echo=TRUE, eval=FALSE----------------------------------------------
+#  system("wget http://130.192.119.59/public/test_oncosnp.zip")
+#  system("unzip test_oncosnp.zip")
+#  
+#  oncosnpAnnotation(group="docker", data.folder="./test_oncosnp/oncosnp_out", genome.folder="./test_oncosnp/hg19")
 
