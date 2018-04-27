@@ -65,8 +65,8 @@ rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/dat
   }
   setwd(fastq.folder)
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
-  system("rm *.fastq")
-  system("rm *trimmed-pair*")
+  system("rm *.fastq",intern = TRUE)
+  system("rm *trimmed-pair*",intern =TRUE)
   
   system("echo 0 >& ExitStatusFile")
   setwd(home)
