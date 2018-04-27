@@ -47,8 +47,8 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
   
   #remembering actual folder
   home <- getwd()
-  #setting rsem output folder as working dir
-  setwd(rsem.folder)
+  
+  setwd(bam.folder)
   
   #initialize status
   system("echo 0 >& ExitStatusFile")
