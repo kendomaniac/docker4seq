@@ -25,7 +25,7 @@ mirnaCovar <- function(experiment.folder, covariates=NULL, batches=NULL, output.
   #remembering actual folder
   home <- getwd()
   #setting rsem output folder as working dir
-  setwd(data.folder)
+  setwd(experiment.folder)
   #initialize status
   system("echo 0 >& ExitStatusFile")
   
