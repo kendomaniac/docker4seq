@@ -54,6 +54,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
     cat("\nERROR: Docker seems not to be installed in your system\n")
     #initialize status
     system("echo 10 >& ExitStatusFile")
+    setwd(home)
     return(10)
   }
 
@@ -62,6 +63,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
     cat("\nERROR:",genome.fasta, "does not exist\n")
     #initialize status
     system("echo 1 >& ExitStatusFile")
+    setwd(home)
     return(1)
     }
   
@@ -74,6 +76,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
     if(length(dir[grep(sub(".vcf.gz$", "", dbsnp.file),dir)])<2){
       cat("\ndbSNP vcf.gz and/or vcf.idx.gz missing\n")
       system("echo 2 >& ExitStatusFile")
+      setwd(home)
       return(2)
     }else{
       cat("\nPreparing dbsnp vcf\n")
@@ -84,6 +87,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
     if(length(dir[grep(sub(".vcf.gz$", "", g1000.file),dir)])<2){
       cat("\1000 genomes vcf and/or vcf.idx.gz missing\n")
       system("echo 3 >& ExitStatusFile")
+      setwd(home)
       return(3)
     }else{
       cat("\nPreparing 1000 genomes vcf\n")
@@ -95,7 +99,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
 
   params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch",path.genome.fasta,":/data/ref"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", genome.url, download.genome, filename.genome.fasta, sep="")
   
-	  resultRun <- runDocker(group=group,container="docker.io/repbioinfo/bwa.2017.01", params=params)
+	  resultRun <- runDocker(group=group, params=params)
   if(resultRun==0){
     cat("\nBwa index generation is finished\n")
   }
