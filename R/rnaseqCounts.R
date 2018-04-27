@@ -71,6 +71,7 @@ rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/dat
   system("echo 0 >& ExitStatusFile")
   setwd(home)
   return(0)
+  
 }
 
 
