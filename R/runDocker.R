@@ -14,9 +14,7 @@
 #' }
 #' @export
 runDocker <- function(group="docker", params=NULL, DockerSwarm=FALSE){
-  if(is.null(container)){
-    cat("\nNo url to download the container was provided. Thus, container should be already located in the server\n")
-  }
+
   if(is.null(params)){
     cat("\nNo parameters where provided!\n")
     system("echo 1 >& ExitStatusFile")
