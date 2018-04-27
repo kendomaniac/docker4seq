@@ -31,7 +31,7 @@ filterCounts <- function(data.folder, type=c("gene", "isoform", "mirna")){
   system("echo 0 >& ExitStatusFile")
   
   dir <- dir()
-  
+  print(dit,"\n")
   
   
   if(type=="mirna"){
@@ -72,7 +72,8 @@ filterCounts <- function(data.folder, type=c("gene", "isoform", "mirna")){
     cpm.mean <- t(cpm.mean)
     write.table(cpm.mean, paste("DEfiltered-mean-centered_",cpm.file, sep=""),sep="\t", col.names=NA)
 
-  }else if(type=="gene"){
+  }
+  else if(type=="gene"){
 
     de.file <- dir[intersect(grep("^DEfiltered", dir),grep("gene", dir))]
     if(length(de.file) == 0){
