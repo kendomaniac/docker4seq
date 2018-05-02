@@ -116,7 +116,7 @@ params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -v
   
       container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
       system(paste("docker logs ", substr(container.id,1,12), " &> ", "platypusFilter_",substr(container.id,1,12),".log", sep=""))
-      system(paste("docker rm ", container.id, sep=""))
+ #     system(paste("docker rm ", container.id, sep=""))
       system("rm -fR dockerID")
       system("rm  -fR tempFolderID")
       setwd(home)
