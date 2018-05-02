@@ -15,7 +15,7 @@
 #'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 #'     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 #'     #running bwa
-#'     gatkDna(group="sudo",bam.folder=getwd(), scratch.folder="/data/scratch",
+#'     gatkDNA(group="sudo",bam.folder=getwd(), scratch.folder="/data/scratch",
 #'     gatk.filename="GenomeAnalysisTK-3.7.tar.bz2"
 #'     genome.folder="/data/scratch/hg19_bwa", threads=24)
 #' }

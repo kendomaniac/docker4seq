@@ -57,7 +57,7 @@ salmonIndex <- function(group=c("sudo","docker"), index.folder, ensembl.urltrans
   system("gzip -d genome.gtf.gz")
   #executing the docker job
   params <- paste("--cidfile ",index.folder,"/dockerID -v ", index.folder, ":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_index.sh ",k, sep="")
-  resultRun <- runDocker(group=sudo, params=params)
+  resultRun <- runDocker(group=group, params=params)
   
   
   if(resultRun==0){

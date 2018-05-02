@@ -31,7 +31,7 @@ filterCounts <- function(data.folder, type=c("gene", "isoform", "mirna")){
   system("echo 0 >& ExitStatusFile")
   
   dir <- dir()
-  print(dit,"\n")
+  print(dir,"\n")
   
   
   if(type=="mirna"){
