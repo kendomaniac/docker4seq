@@ -30,6 +30,14 @@
 rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ensembl.urlgenome=NULL, ensembl.urlgtf=NULL, threads=1){
 
   home <- getwd()
+
+  #########check scratch folder exist###########
+  if (!file.exists(genome.folder)){
+    cat(paste("\nIt seems that the ",genome.folder, "folder does not exist, I create it\n"))
+    dir.create(genome.folder)
+  }
+  #############################################
+  
   setwd(genome.folder)
 
   #initialize status
@@ -45,13 +53,9 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
     setwd(home)
     return(10)
   }
-  #########check scratch folder exist###########
-  if (!file.exists(genome.folder)){
-    cat(paste("\nIt seems that the ",genome.folder, "folder does not exist, I create it\n"))
-    dir.create(genome.folder)
-  }
-  #############################################
-  cat("\nsetting as working dir the genome folder and running bwa docker container\n")
+	
+	
+cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 
 
 	params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
