@@ -78,7 +78,7 @@ platypusFilter <- function(group=c("sudo","docker"), data.folder=getwd(), scratc
 
   #executing the docker job
 
-params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -v ", scrat_tmp.folder, ":/data/scratch -v -d docker.io/repbioinfo/platypus.2017.01 Rscript /bin/platypus_filter_annotation_split.R ", GQ, " ", minSampGQ, " ", NR, " ", minSampNR, " ", NV, " ", minSampNV, " ", 
+params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":/data -v ", scrat_tmp.folder, ":/data/scratch -d docker.io/repbioinfo/platypus.2017.01 Rscript /bin/platypus_filter_annotation_split.R ", GQ, " ", minSampGQ, " ", NR, " ", minSampNR, " ", NV, " ", minSampNV, " ", 
                 normal_samples, " ", GT_normal, " ", minSampGT_normal, " ", tumoral_samples, " ", GT_tumoral, " ", minSampGT_tumoral, " ", stringent_filter, " ", annotation, sep="")
     resultRun <- runDocker(group=group, params=params)
  
