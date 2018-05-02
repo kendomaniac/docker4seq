@@ -7,7 +7,7 @@
 #' @examples
 #' \dontrun{
 #'     #running skeleton
-#'     MultiQC(group="docker", data.folder=getwd())
+#'     multiQC(group="docker", data.folder=getwd())
 #' }
 #'
 #' @export
