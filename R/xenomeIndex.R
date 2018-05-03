@@ -1,5 +1,5 @@
-#' @title Generating xenome genome indexes 
-#' @description This function executes the docker container xenome.2017.01 where xenome is installed. 
+#' @title Generating xenome genome indexes
+#' @description This function executes the docker container xenome.2017.01 where xenome is installed.
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param xenome.folder, a character string indicating the folder where the indexed reference genomes for xenome will be located
 #' @param hg.urlgenome, a character string indicating the URL from uscs download web page for the unmasked human genome sequence of interest
@@ -21,7 +21,7 @@ xenomeIndex <- function(group=c("sudo","docker"),xenome.folder=getwd(), hg.urlge
 
   home <- getwd()
   setwd(xenome.folder)
-  
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -39,19 +39,19 @@ xenomeIndex <- function(group=c("sudo","docker"),xenome.folder=getwd(), hg.urlge
   #############################################
 
 	cat("\nsetting as working dir the genome folder and running bwa docker container\n")
-  
+
 	if(group=="sudo"){
 		params <- paste("--cidfile ",xenome.folder,"/dockerID -v ",xenome.folder,":/data/scratch"," -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome.index.sh ", hg.urlgenome, " ", mm.urlgenome, " ",threads, sep="")
-		resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/xenome.2017.01", params=params)
+		resultRun <- runDocker(group="sudo", params=params)
 	}else{
 	  params <- paste("--cidfile ",xenome.folder,"/dockerID -v ",xenome.folder,":/data/scratch"," -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome.index.sh ", hg.urlgenome, " ", mm.urlgenome, " ",threads, sep="")
-	  resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/xenome.2017.01", params=params)
+	  resultRun <- runDocker(group="docker", params=params)
 	}
 
   if(resultRun=="false"){
     cat("\nXenome genome indexes were created\n")
   }
-  
+
 	#running time 2
 	ptm <- proc.time() - ptm
 	con <- file(paste(xenome.folder,"run.info", sep="/"), "r")
@@ -65,7 +65,7 @@ xenomeIndex <- function(group=c("sudo","docker"),xenome.folder=getwd(), hg.urlge
 	writeLines(tmp.run, paste(xenome.folder,"run.info", sep="/"))
   #running time 2
 
-	
+
 	#saving log and removing docker container
 	container.id <- readLines(paste(xenome.folder,"/dockerID", sep=""), warn = FALSE)
 #	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))

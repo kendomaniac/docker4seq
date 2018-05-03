@@ -86,18 +86,18 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   if(group=="sudo"){
       if(seq.type=="pe"){
           params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_countsPE.sh ", threads," ", fastq[1]," ", fastq[2]," ", fastq.folder, sep="")
-          resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/salmon.2017.01", params=params)
+          resultRun <- runDocker(group="sudo", params=params)
       }else{
           params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_countsSE.sh ", threads," ", fastq[1]," ", fastq.folder, sep="")
-          resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/salmon.2017.01", params=params)
+          resultRun <- runDocker(group="sudo", params=params)
       }
     }else{
       if(seq.type=="pe"){
         params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_countsPE.sh ", threads," ", fastq[1]," ", fastq[2]," ", fastq.folder, sep="")
-        resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/salmon.2017.01", params=params)
+        resultRun <- runDocker(group="docker", params=params)
       }else{
         params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/salmon.2017.01 sh /bin/salmon_countsSE.sh ", threads," ", fastq[1]," ", fastq.folder, sep="")
-        resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/salmon.2017.01", params=params)
+        resultRun <- runDocker(group="docker", params=params)
       }
     }
   }else{

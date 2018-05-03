@@ -50,10 +50,10 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
 
 	if(group=="sudo"){
 	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
-	      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	      resultRun <- runDocker(group="sudo", params=params)
 	}else{
 	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
-	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	      resultRun <- runDocker(group="docker", params=params)
   }
 
   if(resultRun=="false"){

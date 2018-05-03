@@ -21,30 +21,30 @@
 #' @param stringent_filter, To enable the filter (it keeps only the variants with "PASS" value or the variants that have only the "alleleBias" value) use 1 or 0 to disable it
 #' @param annotation, hg19 and mm10 are actually available for the annotation of the detected SNVs
 #' @author Riccardo Panero, riccardo.panero[at]gmail[dot]com, Bioinformatics and Genomics unit, University of Torino Italy
- 
+
 #' @examples
 #' \dontrun{
 #'     #running platypus with some threshold provided by sottoriva analysis
-#'  platypus(group="docker", data.folder="/archive/home/rcaloger/data/platypus_tests/hg19UCSC", 
-#'         scratch.folder="/scratch/users/rcaloger/", pathRef="/archive/home/rcaloger/hg19_exome", 
-#'         nameRef="hg19_clean.fasta", threads=96, GQ=10, minSampGQ=2, NR=10, minSampNR=2, NV=3, 
-#'         minSampNV=1, normal_samples="475blood", GT_normal="0/0", 
-#'         minSampGT_normal=1, tumoral_samples="1864p1#1864p22", GT_tumoral="0/0", 
+#'  platypus(group="docker", data.folder="/archive/home/rcaloger/data/platypus_tests/hg19UCSC",
+#'         scratch.folder="/scratch/users/rcaloger/", pathRef="/archive/home/rcaloger/hg19_exome",
+#'         nameRef="hg19_clean.fasta", threads=96, GQ=10, minSampGQ=2, NR=10, minSampNR=2, NV=3,
+#'         minSampNV=1, normal_samples="475blood", GT_normal="0/0",
+#'         minSampGT_normal=1, tumoral_samples="1864p1#1864p22", GT_tumoral="0/0",
 #'         minSampGT_tumoral=1, stringent_filter=0, annotation="hg19")
 
-#'  platypus(group="docker", data.folder="/archive/home/rcaloger/data/platypus_tests/hg19ENSEMBL", 
-#'         scratch.folder="/scratch/users/rcaloger/", pathRef="/archive/home/rcaloger/hg19star", 
-#'         nameRef="genome.fa", threads=96,GQ=10, minSampGQ=2, NR=10, minSampNR=2, NV=3, 
-#'         minSampNV=1, normal_samples="5275001-HS", GT_normal="0/0", 
-#'         minSampGT_normal=1, tumoral_samples="5275001-LSG1#5275001-LSGIII", 
+#'  platypus(group="docker", data.folder="/archive/home/rcaloger/data/platypus_tests/hg19ENSEMBL",
+#'         scratch.folder="/scratch/users/rcaloger/", pathRef="/archive/home/rcaloger/hg19star",
+#'         nameRef="genome.fa", threads=96,GQ=10, minSampGQ=2, NR=10, minSampNR=2, NV=3,
+#'         minSampNV=1, normal_samples="5275001-HS", GT_normal="0/0",
+#'         minSampGT_normal=1, tumoral_samples="5275001-LSG1#5275001-LSGIII",
 #'         GT_tumoral="0/0", minSampGT_tumoral=1, stringent_filter=0, annotation="hg19")
 
 
-#'  platypus(group="docker", data.folder="/archive/home/rcaloger/data/platypus_tests/mm10ENSEMBL", 
-#'         scratch.folder="/scratch/users/rcaloger/", pathRef="/archive/home/rcaloger/mm10star", 
-#'         nameRef="genome.fa", threads=96, GQ=10, minSampGQ=2, NR=10, minSampNR=2, NV=3, 
-#'         minSampNV=1, normal_samples="MAMBO43", GT_normal="0/0", 
-#'         minSampGT_normal=1, tumoral_samples="MAMBO43TRT#MAMBO43TRNT", GT_tumoral="0/0", 
+#'  platypus(group="docker", data.folder="/archive/home/rcaloger/data/platypus_tests/mm10ENSEMBL",
+#'         scratch.folder="/scratch/users/rcaloger/", pathRef="/archive/home/rcaloger/mm10star",
+#'         nameRef="genome.fa", threads=96, GQ=10, minSampGQ=2, NR=10, minSampNR=2, NV=3,
+#'         minSampNV=1, normal_samples="MAMBO43", GT_normal="0/0",
+#'         minSampGT_normal=1, tumoral_samples="MAMBO43TRT#MAMBO43TRNT", GT_tumoral="0/0",
 #'         minSampGT_tumoral=1, stringent_filter=0, annotation="mm10")
 
 #' }
@@ -52,12 +52,12 @@
 #' @export
 
 platypus <- function(group=c("sudo","docker"), data.folder=getwd(), scratch.folder, pathRef, nameRef, threads,
-                    GQ, minSampGQ, NR, minSampNR, NV, minSampNV, normal_samples, GT_normal, 
-                    minSampGT_normal, tumoral_samples, GT_tumoral, minSampGT_tumoral, stringent_filter=0, 
+                    GQ, minSampGQ, NR, minSampNR, NV, minSampNV, normal_samples, GT_normal,
+                    minSampGT_normal, tumoral_samples, GT_tumoral, minSampGT_tumoral, stringent_filter=0,
                     annotation=c("hg19","mm10")){
-  
-  pathPlatypus="/bin/Platypus_0.8.1" 
-  pathHtslib="/bin/htslib-1.3.2" 
+
+  pathPlatypus="/bin/Platypus_0.8.1"
+  pathHtslib="/bin/htslib-1.3.2"
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -66,8 +66,8 @@ platypus <- function(group=c("sudo","docker"), data.folder=getwd(), scratch.fold
     cat("\nERROR: Docker seems not to be installed in your system\n")
     return()
   }
-  
-  #storing the position of the home folder  
+
+  #storing the position of the home folder
   home <- getwd()
   #running time 1
   ptm <- proc.time()
@@ -87,25 +87,25 @@ platypus <- function(group=c("sudo","docker"), data.folder=getwd(), scratch.fold
   }else{
     system(paste("mv run.info ", scrat_tmp.folder,sep=""))
   }
-  
+
   #getting in the tmp folder in scratch folder
   setwd(data.folder)
-  
+
   #executing the docker job
   if(group=="sudo"){
     params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":", data.folder, " -v ", scrat_tmp.folder, ":",  scrat_tmp.folder, " -v ", pathRef, ":", pathRef, " -d docker.io/repbioinfo/platypus.2017.01 python /bin/platypus.py ",
-                    data.folder, " ", pathRef, " ", nameRef, " ", data.folder, " ", pathPlatypus, " ", threads, " ", pathHtslib, " ", pathPlatypus, " ", scrat_tmp.folder, " ", 
+                    data.folder, " ", pathRef, " ", nameRef, " ", data.folder, " ", pathPlatypus, " ", threads, " ", pathHtslib, " ", pathPlatypus, " ", scrat_tmp.folder, " ",
                     GQ, " ",  minSampGQ, " ",  NR, " ",  minSampNR, " ",  NV, " ",  minSampNV, " ",  normal_samples, " ",  GT_normal, " ",  minSampGT_normal, " ",  tumoral_samples, " ",  GT_tumoral, " ",  minSampGT_tumoral, " ",  stringent_filter, " ", annotation, sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/platypus.2017.01", params=params)
+    resultRun <- runDocker(group="sudo", params=params)
   }else{
     params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":", data.folder, " -v ", scrat_tmp.folder, ":",  scrat_tmp.folder, " -v ", pathRef, ":", pathRef, " -d docker.io/repbioinfo/platypus.2017.01 python /bin/platypus.py ",
                     data.folder, " ", pathRef, " ", nameRef, " ", data.folder, " ", pathPlatypus, " ", threads, " ", pathHtslib, " ", pathPlatypus, " ", scrat_tmp.folder, " ",
                     GQ, " ",  minSampGQ, " ",  NR, " ",  minSampNR, " ",  NV, " ",  minSampNV, " ",  normal_samples, " ",  GT_normal, " ",  minSampGT_normal, " ",  tumoral_samples, " ",  GT_tumoral, " ",  minSampGT_tumoral, " ",  stringent_filter," ",annotation, sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/platypus.2017.01", params=params)
+    resultRun <- runDocker(group="docker", params=params)
     print(paste("docker run --privileged=true ",params, sep=""))
   }
 
-  
+
       setwd(scrat_tmp.folder)
       cat("\n\nRemoving the temporary file ....\n")
       system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
@@ -136,13 +136,12 @@ platypus <- function(group=c("sudo","docker"), data.folder=getwd(), scratch.fold
         tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
         writeLines(tmp.run,"run.info")
       }
-  
+
       container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
       system(paste("docker logs ", substr(container.id,1,12), " &> ", "platypus_",substr(container.id,1,12),".log", sep=""))
       system(paste("docker rm ", container.id, sep=""))
       system("rm -fR dockerID")
       system("rm  -fR tempFolderID")
       setwd(home)
-      
+
 }
-  

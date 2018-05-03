@@ -80,10 +80,10 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
 
   if(group=="sudo"){
          params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/fastq.folder -v ",scrat_tmp.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/star_chimeric_2.sh ",chimSegmentMin," ", chimJunctionOverhangMin, " ", threads," ", sub(".gz$", "", dir[1])," ", sub(".gz$", "", dir[2]), sep="")
-        resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/star251.2017.01", params=params)
+        resultRun <- runDocker(group="sudo", params=params)
    }else{
      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/fastq.folder -v ",scrat_tmp.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/star_chimeric_2.sh ",chimSegmentMin," ",chimJunctionOverhangMin, " ", threads," ", sub(".gz$", "", dir[1])," ", sub(".gz$", "", dir[2]), sep="")
-     resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/star251.2017.01", params=params)
+     resultRun <- runDocker(group="docker", params=params)
   }
 
   if(resultRun=="false"){

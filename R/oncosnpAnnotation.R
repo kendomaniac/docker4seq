@@ -42,10 +42,10 @@ oncosnpAnnotation <- function(group=c("sudo","docker"), data.folder, genome.fold
   #executing the docker job
   if(group=="sudo"){
     params <- paste("--cidfile ",data.folder,"/dockerID -v ",genome.folder,":/index -v ", data.folder, ":/data -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/annotating_oncosnp.R", sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r340.2017.01", params=params)
+    resultRun <- runDocker(group="sudo", params=params)
   }else{
     params <- paste("--cidfile ",data.folder,"/dockerID -v ",genome.folder,":/index -v ", data.folder, ":/data -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/annotating_oncosnp.R", sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r340.2017.01", params=params)
+    resultRun <- runDocker(group="docker", params=params)
   }
   #waiting for the end of the container work
   if(resultRun=="false"){

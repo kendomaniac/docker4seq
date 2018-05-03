@@ -34,16 +34,16 @@ salmonAnnotation <- function(group=c("sudo","docker"), fastq.folder, index.folde
     return(2)
   }
   setwd(fastq.folder)
-  if(group=="sudo"){
-      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/annotate.salmon.R", sep="")
-      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r340.2017.01", params=params)
-  }else{
-      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/annotate.salmon.R", sep="")
-      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r340.2017.01", params=params)
-  }
+  
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
+  params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/annotate.salmon.R", sep="")
+  resultRun <- runDocker(group=group, params=params)
+
 
   #waiting for the end of the container work
-  if(resultRun=="false"){
+  if(resultRun==0){
     cat("\nSalmon output annotation is finished\n")
 
     #saving log and removing docker container
@@ -59,16 +59,12 @@ salmonAnnotation <- function(group=c("sudo","docker"), fastq.folder, index.folde
 
 #gene level conversion
 
-  if(group=="sudo"){
-    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/iso2gene.R", sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r340.2017.01", params=params)
-  }else{
-    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/iso2gene.R", sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r340.2017.01", params=params)
-  }
+   params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/iso2gene.R", sep="")
+   resultRun <- runDocker(group=group, params=params)
+ 
 
   #waiting for the end of the container work
-  if(resultRun=="false"){
+  if(resultRun==0){
     cat("\nSalmon output gene level conversion is finished\n")
 
     #saving log and removing docker container
@@ -83,17 +79,12 @@ salmonAnnotation <- function(group=c("sudo","docker"), fastq.folder, index.folde
   }
 
   #ensembl gtf annotation at gene level
-
-  if(group=="sudo"){
     params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/salmon.annoByGtf.R", sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/r340.2017.01", params=params)
-  }else{
-    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/data/scratch -v ",index.folder,":/index -d docker.io/repbioinfo/r340.2017.01 Rscript /bin/salmon.annoByGtf.R", sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/r340.2017.01", params=params)
-  }
+    resultRun <- runDocker(group=group, params=params)
+  
 
   #waiting for the end of the container work
-  if(resultRun=="false"){
+  if(resultRun==0){
     cat("\nSalmon output ensembl gtf annotation at gene level is finished\n")
 
     #saving log and removing docker container

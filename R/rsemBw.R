@@ -42,7 +42,7 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
   if(length(dir.info)>0){
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
     system(paste("cp ",bam.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
-    
+
   }
   dir <- dir[grep(".bam", dir)]
   dir <- dir[which(dir=="Aligned.out.bam")]
@@ -58,10 +58,10 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
   docker_fastq.folder=file.path("/data/scratch", tmp.folder)
   if(group=="sudo"){
       params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
-      runDocker(group="sudo",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
+      runDocker(group="sudo", params=params)
     }else{
       params <- paste("--cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d docker.io/rcaloger/rsemstar.2017.01 sh /bin/rsem_bw.sh ",docker_fastq.folder," ", dir," ",bam.folder, sep="")
-      runDocker(group="docker",container="docker.io/rcaloger/rsemstar.2017.01", params=params)
+      runDocker(group="docker", params=params)
   }
   out <- "xxxx"
   #waiting for the end of the container work
@@ -70,7 +70,7 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
     cat(".")
     out.tmp <- dir(file.path(scratch.folder, tmp.folder))
     out.tmp <- out.tmp[grep("out.info",out.tmp)]
-    
+
     if(length(out.tmp)>0){
       out <- "out.info"
     }
@@ -92,17 +92,17 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
   tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
   tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
   writeLines(tmp.run,paste(bam.folder,"run.info", sep="/"))
-  
+
   #saving log and removing docker container
   container.id <- readLines(paste(bam.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
-  
+
   #removing temporary folder
   cat("\n\nRemoving the rsem temporary file ....\n")
  #  system(paste("rm -R ",scrat_tmp.folder))
  #  system(paste("rm  -f ",bam.folder,"/dockerID", sep=""))
  #  system(paste("rm  -f ",bam.folder,"/tempFolderID", sep=""))
-  
+
 }
 

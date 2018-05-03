@@ -79,18 +79,18 @@ xenome <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
     if(seq.type=="pe"){
     	if(group=="sudo"){
 		      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",xenome.folder,":/xenome -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome_pe.sh ", threads," ",fastq.folder, sep="")
-		      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/xenome.2017.01", params=params)
+		      resultRun <- runDocker(group="sudo", params=params)
 	    }else{
 	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",xenome.folder,":/xenome -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome_pe.sh ", threads," ",fastq.folder, sep="")
-	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/xenome.2017.01", params=params)
+	      resultRun <- runDocker(group="docker", params=params)
 	    }
 	  }else if(seq.type=="se"){
 	    if(group=="sudo"){
 	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",xenome.folder,":/xenome -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome_se.sh ", threads," ",fastq.folder, sep="")
-	      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/xenome.2017.01", params=params)
+	      resultRun <- runDocker(group="sudo", params=params)
 		  }else{
 		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",xenome.folder,":/xenome -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome_se.sh ", threads," ",fastq.folder, sep="")
-		    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/xenome.2017.01", params=params)
+		    resultRun <- runDocker(group="docker", params=params)
 		  }
 	  }
     if(resultRun=="false"){

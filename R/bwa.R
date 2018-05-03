@@ -37,15 +37,15 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
     test <- dockerTest()
     if(!test){
       cat("\nERROR: Docker seems not to be installed in your system\n")
-
       system("echo 10 >& ExitStatusFile")
+      setwd(home)
       return(10)
     }
     #########check scratch folder exist###########
     if (!file.exists(scratch.folder)){
       cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
-      
       system("echo 3 >& ExitStatusFile")
+      setwd(home)
       return(3)
     }
     #############################################
@@ -68,6 +68,7 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
     if(length(dir)==0){
       cat(paste("It seems that in ", fastq.folder, "there are not fastq.gz files"))
       system("echo 1 >& ExitStatusFile")
+      setwd(home)
       return(1)
     }else if(length(dir.trim)>0){
       dir <- dir.trim
@@ -78,8 +79,8 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
       system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
     }else if(length(dir)>2){
       cat(paste("It seems that in ", fastq.folder, "there are more than two fastq.gz files"))
-
       system("echo 2 >& ExitStatusFile")
+      setwd(home)
       return(2)
     }else{
       system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
@@ -98,18 +99,18 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
     if(seq.type=="pe"){
     	if(group=="sudo"){
 		      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_pe.sh /data/scratch ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", sample.id, " ",fastq.folder, sep="")
-		      resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/bwa.2017.01", params=params)
+		      resultRun <- runDocker(group="sudo", params=params)
 	    }else{
 	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_pe.sh /data/scratch ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", sample.id, " ",fastq.folder, sep="")
-	      resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/bwa.2017.01", params=params)
+	      resultRun <- runDocker(group="docker", params=params)
 	    }
 	  }else if(seq.type=="se"){
 	    if(group=="sudo"){
 		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_se.sh /data/scratch ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
-		    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/bwa.2017.01", params=params)
+		    resultRun <- runDocker(group="sudo", params=params)
 		  }else{
 		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_se.sh /data/scratch ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
-		    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/bwa.2017.01", params=params)
+		    resultRun <- runDocker(group="docker", params=params)
 		  }
 	  }
     

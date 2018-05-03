@@ -30,6 +30,10 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 
   #FastQC
   setwd(fastq.folder)
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
+  
   dir.fastq <- dir()
   dir.fastq <- dir.fastq[grep("fastq.gz$", dir.fastq)]
   system("mkdir fastQC.folder")
@@ -57,7 +61,9 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    system("echo 10 >& ExitStatusFile")
+    setwd(home)
+    return(10)
   }
 
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
@@ -76,6 +82,8 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	dir <- dir[grep(".fastq.gz", dir)]
 	if(length(dir)==0){
 	  cat(paste("It seems that in ",fastq.folder, "there are not fastq.gz files"))
+	  system("echo 1 >& ExitStatusFile")
+	  setwd(home)
 	  return(1)
 	}else{
 	  system(paste("chmod 777 -R", scrat_tmp.folder))
@@ -86,17 +94,11 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	}
 	docker_fastq.folder=file.path("/data/scratch", tmp.folder)
 	cat("\nsetting as working dir the scratch folder and running mirna8 docker container\n")
-	if(group=="sudo"){
-	    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep="")
-	    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/mirnaseq.2017.01", params=params)
-	}else{
-	    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep="")
-	    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/mirnaseq.2017.01", params=params)
 
-	}
+  params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/mirnaseq.2017.01 sh /bin/wrapperRun_local ", mirbase.id," ",docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep="")
+  resultRun <- runDocker(group=group, params=params)
 
-
-	if(resultRun=="false"){
+	if(resultRun==0){
 	  cat("\nmirnaCounts analysis is finished\n")
 	}
 

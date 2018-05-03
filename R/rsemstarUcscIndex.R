@@ -56,17 +56,17 @@ rsemstarUscsIndex <- function(group=c("sudo","docker"), genome.folder=getwd(),
 
 	if(group=="sudo"){
 	     params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstarUCSC.index.sh "," ",genome.folder," ",uscs.urlgenome," ",uscs.gtf," ",threads," ",uscs.urlknownIsoforms," ", uscs.urlknownToLocusLink, sep="")
-	     resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	     resultRun <- runDocker(group="sudo", params=params)
 	  }else{
 #		system("docker pull docker.io/repbioinfo/rsemstar.2017.01")
 	    params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstarUCSC.index.sh "," ",genome.folder," ",uscs.urlgenome," ",uscs.gtf," ",threads," ",uscs.urlknownIsoforms," ", uscs.urlknownToLocusLink, sep="")
-	    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/rsemstar.2017.01", params=params)
+	    resultRun <- runDocker(group="docker", params=params)
 	  }
 
     if(resultRun=="false"){
     cat("\nrsemstarUscsIndex run is finished\n")
   }
-  
+
   #running time 2
   ptm <- proc.time() - ptm
   con <- file(paste(genome.folder,"run.info", sep="/"), "r")
@@ -89,6 +89,6 @@ rsemstarUscsIndex <- function(group=c("sudo","docker"), genome.folder=getwd(),
   system(paste("rm ",genome.folder,"/dockerID", sep=""))
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",genome.folder, sep=""))
   setwd(home)
-  
+
 }
 

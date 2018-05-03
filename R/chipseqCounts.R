@@ -65,8 +65,6 @@ chipseqCounts <- function( group=c("sudo","docker"),output.folder=getwd(), mock.
   fastqc(group="docker", data.folder=test.folder)
   setwd(output.folder)
   #trimming adapter and bwa
-  home <- getwd()
-  setwd(output.folder)
   cat("\nrunning skewer ctrl\n")
   check.skewer <- dir(mock.folder)
   if(length(grep("trimmed", check.skewer))==0){
