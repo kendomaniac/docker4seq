@@ -15,8 +15,6 @@ docker.io/repbioinfo/salmon.2017.01
 docker.io/rcaloger/casc
 docker.io/beccuti/hashclone
 docker.io/rcaloger/lorenz
-docker.io/rcaloger/permutationclustering
-docker.io/rcaloger/permutationanalysis
-docker.io/rcaloger/clulstereor
 docker.io/gferrero/sncrna
 docker.io/ewels/multiqc
+docker.io/repbioinfo/desc.2018.01

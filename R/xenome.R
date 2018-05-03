@@ -25,7 +25,7 @@
 xenome <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", xenome.folder, seq.type="pe", threads=1){
 
     home <- getwd()
-    setwd(data.folder)
+    setwd(fastq.folder)
     
     #initialize status
     system("echo 0 >& ExitStatusFile")
