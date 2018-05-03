@@ -9,7 +9,7 @@
 #' @param type, character with three options: gene, isoform, mirna. if gene is used two files are generated for geneset enrichment, the filtered Gene symbols and the background that contains all gene simbols.
 #' @param batch, logical FALSE, TRUE
 #' @author Raffaele Calogero
-#'
+#' 
 #' @return Returns a full table of differentially expressed genes (prefix DEfull), a filtered table of differentially expressed genes (prefix DEfiltered) and the normalized counts table (prefix normalized)
 
 #' @examples
@@ -24,17 +24,22 @@
 #' }
 #' @export
 wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.table, log2fc=1, fdr=0.1, ref.covar="0", type=c("gene","isoform","mirna"), batch=FALSE){
-
+  
   home <- getwd()
   setwd(output.folder)
 
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
   #running time 1
   ptm <- proc.time()
   #running time 1
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    system("echo 10 >& ExitStatusFile")
+    setwd(home)
+    return(10)
   }
 
   #removing the path from filename
@@ -42,15 +47,10 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
   experiment.table <-  filename.tmp[length(filename.tmp)]
 
 
-  if(group=="sudo"){
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
-    resultRun <- runDocker(group="sudo", params=params)
-  }else{
-    params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
-    resultRun <- runDocker(group="docker", params=params)
-  }
+  params <- paste("--cidfile ",output.folder, "/dockerID -v ",output.folder,":/data/scratch -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.wrapperDeseq2.R ", experiment.table, " ", log2fc, " ", fdr, " ", ref.covar, " ", type, " ", batch, sep="")
+  resultRun <- runDocker(group=group, params=params)
 
-  if(resultRun=="false"){
+  if(resultRun==0){
     cat("\nDESeq2 analysis is finished\n")
   }
 
