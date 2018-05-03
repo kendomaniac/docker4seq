@@ -22,8 +22,13 @@ This function executes the docker container annotate.1, where refGenome is used 
 \examples{
 \dontrun{
     #downloading fastq files
-    system("wget http://130.192.119.59/public/genes.results.gz")
-    system("gzip -d genes.results.gz")
+    system("wget http://130.192.119.59/public/test_R1.fastq.gz")
+    system("wget http://130.192.119.59/public/test_R2.fastq.gz")
+    library(docker4seq)
+   #running rsemstar nostrand pe
+   rsemstar(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch/",
+         genome.folder="/data/genomes/hg38star/", seq.type="pe", strandness="none",
+         threads=8, save.bam = FALSE)
     #running rsemannoByGtf
     rsemannoByGtf(group="docker", rsem.folder=getwd(), genome.folder="/data/scratch/hg38star")
 }
