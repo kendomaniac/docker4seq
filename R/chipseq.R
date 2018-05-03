@@ -23,17 +23,18 @@
 #' @examples
 #'\dontrun{
 #'     #downloading fastq files
-#'     system("wget http://130.192.119.59/public/YAPavCClp1.bam")
-#'     system("wget http://130.192.119.59/public/YAPIgG.bam")
+#'     system("wget http://130.192.119.59/public/SRR1172111.bam")#TEAD
+#'     system("wget http://130.192.119.59/public/SRR1172110.bam")#igg
+#'     system("wget http://130.192.119.59/public/SRR1592211.bam")#H3K27ac
 #'     #running chipseq for macs
-#'     chipseq(group="sudo",bam.folder=getwd(), sample.bam="YAPavCClp1.bam", ctrl.bam="YAPIgG.bam",
+#'     chipseq(group="sudo",bam.folder=getwd(), sample.bam="SRR1172111.bam", ctrl.bam="SRR1172110.bam",
 #'     scratch.folder="/data/scratch", genome="hg19", read.size=50,
 #'     tool="macs", macs.min.mfold=10, macs.max.mfold=30, macs.pval="1e-5",
 #'     sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10, tss.distance=0, max.upstream.distance=10000,
 #'     remove.duplicates="N")
 #'
 #'     #running chipseq for sicer H3K4Me3
-#'     chipseq(group="sudo",bam.folder=getwd(), sample.bam="YAPavCClp1.bam", ctrl.bam="YAPIgG.bam",
+#'     chipseq(group="sudo",bam.folder=getwd(), sample.bam="SRR1592211.bam", ctrl.bam="SRR1172110.bam",
 #'     scratch.folder="/data/scratch", genome="hg19", read.size=50,
 #'     tool="sicer", sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10,
 #'     tss.distance=0, max.upstream.distance=10000,remove.duplicates="N")
