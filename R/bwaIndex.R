@@ -3,32 +3,26 @@
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa will be located
-#' @param genome.fasta, a character string indicating the local path to the genome fasta file to index
 #' @param genome.url, a character string indicating the URL from download web page for the genome sequence of interest
 #' @param dbsnp.file, a character string indicating the name of dbSNP vcf located in the genome folder. The dbSNP vcf, dbsnp_138.b37.vcf.gz and dbsnp_138.hg19.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37
 #' @param g1000.file, a character string indicating the name of 1000 genome vcf located in the genome folder. The 1000 genomes vcf, Mills_and_1000G_gold_standard.indels.b37.vcf.gz and Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/
 #' @param gatk, a boolean TRUE and FALSE that indicate if the index will be used for GATK analysis
-#' @param download.genome, a boolean TRUE and FALSE that indicate if the genome file must but be downloaded
 #' @author Giulio Ferrero
 #'
 #' @return The indexed bwa genome reference sequence
 #' @examples
 #'\dontrun{
 #'
-#'     #running bwa index
-#'     bwaIndex(group="sudo",genome.folder="/data/genomes/mm10bwa", genome.fasta,
-#'     gatk=FALSE, download.genome=FALSE)
+#'     #running generic bwa index
+#'     bwaIndex(group="docker",genome.folder="~/Desktop", genome.url="ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz", gatk=FALSE)
 #
 #'     #running bwa index for gatk
-#'     bwaIndex(group="sudo",genome.folder="/data/genomes/hg19_bwa", genome.url=
-#'     "http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz",
-#'     dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz",
-#'     gatk=TRUE, download.genome=TRUE)
+#'     bwaIndex(group="docker",genome.folder="/data/genomes/hg19_bwa", genome.url="http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz", dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz", gatk=TRUE)
 #'
 #'
 #' }
-#' @export
-bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fasta, genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, gatk=FALSE, download.genome=FALSE){
+
+bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, gatk=FALSE){
 
   #########check genome folder exist###########
   if (!file.exists(genome.folder)){
@@ -58,18 +52,6 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
     return(10)
   }
 
-
-  if (!file.exists(genome.fasta)){
-    cat("\nERROR:",genome.fasta, "does not exist\n")
-    #initialize status
-    system("echo 1 >& ExitStatusFile")
-    setwd(home)
-    return(1)
-    }
-  
-  filename.genome.fasta=basename(genome.fasta)
-  path.genome.fasta=dirname(genome.fasta)
-
 	cat("\nSetting as working dir the genome folder and running bwa docker container\n")
 
   if(gatk){
@@ -97,7 +79,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.fas
     }
   }
 
-  params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch",path.genome.fasta,":/data/ref"," -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", genome.url, download.genome, filename.genome.fasta, sep="")
+	params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/gferrero/bwaindex sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", genome.url, sep="")
   
 	  resultRun <- runDocker(group=group, params=params)
   if(resultRun==0){
