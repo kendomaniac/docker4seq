@@ -30,7 +30,7 @@
 #'     bwaIndex(group="docker", genome.folder="/data/genomes/hg19_bwa", rc.version="9.0", rc.species="Homo Sapiens", length=80, other.ref=c("http://regulatoryrna.org/database/piRNA/download/archive/v1.0/fasta/piR_human_v1.0.fa.gz", mode="ncRNA")
 #' }
 #' @export
-bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, mode=c("General", "GATK", "miRNA", "ncRNA"), mb.version=NULL, mb.species=NULL, rc.version=NULL, rc.species=NULL, other.ref=c(NULL)){
+bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, mode=c("General","GATK","miRNA","ncRNA"), mb.version=NULL, mb.species=NULL, rc.version=NULL, rc.species=NULL, length=NULL, other.ref=NULL){
 
   #########check genome folder exist###########
   if (!file.exists(genome.folder)){
@@ -111,7 +111,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 	  
 	  rc_ok_ver = c("1.0","1.0beta","2.0","3.0","4.0","5.0","6.0","7.0","8.0","9.0")
 	  
-	  if(rc.version %!in% rc_ok_ver == FALSE){
+	  if(rc.version %in% rc_ok_ver == FALSE){
 	    cat("\nThe RNA Central version is not correct\n")
 	    system("echo 2 >& ExitStatusFile")
 	    setwd(home)
@@ -126,11 +126,12 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 	}
 
 ### BWA index case for generic analysis	
-	params <- paste("--cidfile ", genome.folder, "/dockerID -v ", genome.folder,":/data/scratch"," -d docker.io/gferrero/bwaindex sh /bin/bwa.index.sh ", genome.folder, " ", mode, " ", genome.url, " ", mb.version, " ", mb.species, " ", rc.version, " ", rc.species, " ", other.ref, sep="")
+  params <- paste("--cidfile ", genome.folder, "/dockerID -v ", genome.folder,":/data/scratch", " -d docker.io/gferrero/bwaindex sh /bin/bwa.index.sh ", genome.folder, " ", mode, " ", genome.url, " ", mb.version, " ", mb.species, " ", rc.version, " ", rc.species, " ", length, " ", other.ref, sep="")
 	
-	  resultRun <- runDocker(group=group, params=params)
+  resultRun <- runDocker(group=group, params=params)
+    
   if(resultRun==0){
-    cat("\nBwa index generation is finished\n")
+    cat("\nBWA index generation is finished\n")
   }
   
 	#running time 2
