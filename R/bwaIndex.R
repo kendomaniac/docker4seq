@@ -3,26 +3,33 @@
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa will be located
+#' @param mode, a character string indicating the required type of analysis. Compatible analysis mode are "General", "GATK", "miRNA", and "ncRNA". In "General" mode the url of any online fasta file ("genome.url" argument) can be provided and indexed. In the GATK analysis mode, the list of variants from dbsnp ("dbsnp.file" argument) and g1000 ("dbsnp.file" argument) are required in addition to the url of the genome fasta ("genome.url" argument). In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. In "ncRNA" analysis mode, the version ("rc.version" argument) and species prefix ("rc.species" argument) of RNA Central are required. This mode require also a desidered maximum length of the studied RNA annotations ("length" argument).
 #' @param genome.url, a character string indicating the URL from download web page for the genome sequence of interest
 #' @param dbsnp.file, a character string indicating the name of dbSNP vcf located in the genome folder. The dbSNP vcf, dbsnp_138.b37.vcf.gz and dbsnp_138.hg19.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37
 #' @param g1000.file, a character string indicating the name of 1000 genome vcf located in the genome folder. The 1000 genomes vcf, Mills_and_1000G_gold_standard.indels.b37.vcf.gz and Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/
-#' @param gatk, a boolean TRUE and FALSE that indicate if the index will be used for GATK analysis
+#' @param mb.version, a character string indicating the required version of miRBase database. Visit ftp://mirbase.org/pub/mirbase/ to select the proper version id.
+#' @param mb.species, a character string indicating the three-letter prefix of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to obtain the proper species prefix.
+#' @param rc.version, a character string indicating the required version of RNA Central database. Visit ftp://ftp.ebi.ac.uk/pub/databases/RNAcentral/releases/ to select the proper version id.
+#' @param rc.species, a character string indicating the name of a species annotated in RNA Central (e.g. "Homo sapiens" for human ncRNAs). Please refer to NCBI taxonomy annotations at https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi to proper species name.
 #' @author Giulio Ferrero
 #'
-#' @return The indexed bwa genome reference sequence
+#' @return The indexed bwa reference sequence
 #' @examples
 #'\dontrun{
 #'
 #'     #running generic bwa index
-#'     bwaIndex(group="docker",genome.folder="~/Desktop", genome.url="ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz", gatk=FALSE)
+#'     bwaIndex(group="docker", genome.folder="/data/genomes", genome.url="ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz", mode="General")
 #
 #'     #running bwa index for gatk
-#'     bwaIndex(group="docker",genome.folder="/data/genomes/hg19_bwa", genome.url="http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz", dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz", gatk=TRUE)
-#'
-#'
-#' }
+#'     bwaIndex(group="docker", genome.folder="/data/genomes", genome.url="http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz", dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz", mode="GATK")
+#'     
+#'     #running bwa index for miRNA analysis
+#'     bwaIndex(group="docker", genome.folder="/data/genomes", mb.version="22", mb.species="hsa", mode="miRNA")
+#'     
+#'     #running bwa index for ncRNA analysis
+#'     bwaIndex(group="docker", genome.folder="/data/genomes/hg19_bwa", rc.version="9.0", rc.species="Homo Sapiens", length=80, other.ref=c("http://regulatoryrna.org/database/piRNA/download/archive/v1.0/fasta/piR_human_v1.0.fa.gz", mode="ncRNA")
 
-bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, gatk=FALSE){
+bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, mode=c("General", "GATK", "miRNA", "ncRNA"), mb.version=NULL, mb.species=NULL, rc.version=NULL, rc.species=NULL, other.ref=c(NULL)){
 
   #########check genome folder exist###########
   if (!file.exists(genome.folder)){
@@ -54,7 +61,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 
 	cat("\nSetting as working dir the genome folder and running bwa docker container\n")
 
-  if(gatk){
+  if(mode=="GATK"){
     if(length(dir[grep(sub(".vcf.gz$", "", dbsnp.file),dir)])<2){
       cat("\ndbSNP vcf.gz and/or vcf.idx.gz missing\n")
       system("echo 2 >& ExitStatusFile")
@@ -78,14 +85,52 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
       system(paste("mv ", sub(".gz$", "",g1000.file), " g1k.vcf", sep=""))
     }
   }
+	
+### BWA index case for miRNA
+	if(mode=="miRNA"){
+	  
+	  mb_ok_ver = c("1.0","10.0","10.1","1.1","11.0","1.2","12.0","1.3","13.0","14","1.4","15","1.5","16","17","18","19","20","2.0","21","2.1","22","2.2","3.0","3.1","4.0","5.0","5.1","6.0","7.0","7.1","8.0","8.1","8.2","9.0","9.1","9.2")
+	  
+    if(mb.version %in% mb_ok_ver == FALSE){
+      cat("\nThe miRBase version is not correct\n")
+      system("echo 2 >& ExitStatusFile")
+      setwd(home)
+      return(2)
+    }
+	  if(is.null(mb.species)){
+	    cat("\nPlease insert a proper miRBase species identifier\n")
+	    system("echo 2 >& ExitStatusFile")
+	    setwd(home)
+	    return(2)
+	  }
+	}
 
-	params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/gferrero/bwaindex sh /bin/bwa.index.sh "," ",genome.folder, " ", gatk, " ", genome.url, sep="")
-  
+### BWA index case for non miRNA ncRNA
+	if(mode=="ncRNA"){
+	  
+	  rc_ok_ver = c("1.0","1.0beta","2.0","3.0","4.0","5.0","6.0","7.0","8.0","9.0")
+	  
+	  if(rc.version %!in% rc_ok_ver == FALSE){
+	    cat("\nThe RNA Central version is not correct\n")
+	    system("echo 2 >& ExitStatusFile")
+	    setwd(home)
+	    return(2)
+	  }
+	  if(is.null(rc.species)){
+	    cat("\nPlease insert a proper RNA Central species identifier\n")
+	    system("echo 2 >& ExitStatusFile")
+	    setwd(home)
+	    return(2)
+	  }
+	}
+
+### BWA index case for generic analysis	
+	params <- paste("--cidfile ", genome.folder, "/dockerID -v ", genome.folder,":/data/scratch"," -d docker.io/gferrero/bwaindex sh /bin/bwa.index.sh ", genome.folder, " ", mode, " ", genome.url, " ", mb.version, " ", mb.species, " ", rc.version, " ", rc.species, " ", other.ref, sep="")
+	
 	  resultRun <- runDocker(group=group, params=params)
   if(resultRun==0){
     cat("\nBwa index generation is finished\n")
   }
-  
   
 	#running time 2
 	ptm <- proc.time() - ptm
