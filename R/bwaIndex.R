@@ -85,6 +85,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
       system(paste("gzip -d ", sub(".vcf.gz$", ".vcf.idx.gz$",g1000.file), sep=""))
       system(paste("mv ", sub(".gz$", "",g1000.file), " g1k.vcf", sep=""))
     }
+ params <- paste("--cidfile ", genome.folder, "/dockerID -v ",     genome.folder,":/data/scratch", " -d docker.io/gferrero/bwaindex sh  /bin/bwa.index.sh ", genome.folder, " ", mode, " ", genome.url,   sep="")
   }
 	
 ### BWA index case for miRNA
@@ -104,9 +105,12 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 	    setwd(home)
 	    return(2)
 	  }
+	  else{
+	    params <- paste("--cidfile ", genome.folder, "/dockerID -v ", genome.folder,":/data/scratch", " -d docker.io/gferrero/bwaindex sh /bin/bwa.index.sh ", genome.folder, " ", mode, " ", mb.version, " ", mb.species, sep="")
+	  }
 	}
 
-### BWA index case for non miRNA ncRNA
+### BWA index case for non miRNA ncRNAs
 	if(mode=="ncRNA"){
 	  
 	  rc_ok_ver = c("1.0","1.0beta","2.0","3.0","4.0","5.0","6.0","7.0","8.0","9.0")
@@ -123,10 +127,18 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 	    setwd(home)
 	    return(2)
 	  }
+	  else{
+	    params <- paste("--cidfile ", genome.folder, "/dockerID -v ", genome.folder,":/data/scratch", " -d docker.io/gferrero/bwaindex sh /bin/bwa.index.sh ", genome.folder, " ", mode, " ", rc.version, " ", rc.species, " ", length, " ", other.ref, sep="")
+	  }
 	}
 
 ### BWA index case for generic analysis	
-  params <- paste("--cidfile ", genome.folder, "/dockerID -v ", genome.folder,":/data/scratch", " -d docker.io/gferrero/bwaindex sh /bin/bwa.index.sh ", genome.folder, " ", mode, " ", genome.url, " ", mb.version, " ", mb.species, " ", rc.version, " ", rc.species, " ", length, " ", other.ref, sep="")
+
+  if(mode=="General"){
+  
+  params <- paste("--cidfile ", genome.folder, "/dockerID -v ",     genome.folder,":/data/scratch", " -d docker.io/gferrero/bwaindex sh /bin/bwa.index.sh ", genome.folder, " ", mode, " ", genome.url,   sep="")
+
+}
 	
   resultRun <- runDocker(group=group, params=params)
     
