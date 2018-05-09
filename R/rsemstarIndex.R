@@ -12,7 +12,7 @@
 #' @examples
 #'\dontrun{
 #'     #running rsemstar index for human
-#'     rsemstarIndex(group="docker",genome.folder="/data/scratch/hg38star",
+#'     rsemstarIndex(group="sudo",genome.folder="/data/scratch/hg38star",
 #'     ensembl.urlgenome=
 #'     "ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz",
 #'     ensembl.urlgtf=
@@ -30,33 +30,38 @@
 rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ensembl.urlgenome=NULL, ensembl.urlgtf=NULL, threads=1){
 
   home <- getwd()
-  setwd(genome.folder)
 
-  #running time 1
-  ptm <- proc.time()
-  #running time 1
-  test <- dockerTest()
-  if(!test){
-    cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
-  }
   #########check scratch folder exist###########
   if (!file.exists(genome.folder)){
     cat(paste("\nIt seems that the ",genome.folder, "folder does not exist, I create it\n"))
     dir.create(genome.folder)
   }
   #############################################
-  cat("\nsetting as working dir the genome folder and running bwa docker container\n")
+  
+  setwd(genome.folder)
 
-	if(group=="sudo"){
-	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
-	      resultRun <- runDocker(group="sudo", params=params)
-	}else{
-	      params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
-	      resultRun <- runDocker(group="docker", params=params)
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
+  #running time 1
+  ptm <- proc.time()
+  #running time 1
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    system("echo 10 >& ExitStatusFile")
+    setwd(home)
+    return(10)
   }
+	
+	
+cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 
-  if(resultRun=="false"){
+
+	params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
+	resultRun <- runDocker(group=group, params=params)
+
+  if(resultRun==0){
     cat("\nRSEMSTAR index generation is finished\n")
   }
 
