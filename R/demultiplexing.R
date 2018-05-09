@@ -22,37 +22,39 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, threads=8){
   #running time 1
   ptm <- proc.time()
   #running time 1
-  test <- dockerTest()
-  if(!test){
-    cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
-  }
+
   #########check scratch folder exist###########
   if (!file.exists(data.folder)){
     cat(paste("\nIt seems that the ",data.folder, "folder does not exist.\n"))
     return(1)
   }
+  
+  #storing the position of the home folder  
+  home <- getwd()
+  setwd(data.folder)
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    system("echo 10 >& ExitStatusFile")
+    setwd(home)
+    return(10)
+  }
+  
   #############################################
   cat("\nsetting as working dir the genome folder and running bwa docker container\n")
+  params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/repbioinfo/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
+  resultRun=runDocker(group=group, params=params)
 
-	if(group=="sudo"){
-	      params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/repbioinfo/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
-	      runDocker(group="sudo", params=params)
-	}else{
-	  params <- paste("--cidfile ", main.folder,"/dockerID -v ", main.folder,":/data/scratch"," -d docker.io/repbioinfo/demultiplexing.2017.01 sh /bin/demultiplexing.sh ",illumina.folder," "," ",threads, sep="")
-	  runDocker(group="docker", params=params)
-	}
-  out <- "xxxx"
-  #waiting for the end of the container work
-  while(out != "out.info"){
-    Sys.sleep(10)
-    cat(".")
-    out.tmp <- dir(main.folder)
-    out.tmp <- out.tmp[grep("out.info",out.tmp)]
-    if(length(out.tmp)>0){
-      out <- "out.info"
-    }
-  }
+	 if(resultRun==0){
+	    cat("\nDemultiplexing is finished\n")
+	  }
+	  
+	  
+	  
+	  
   #running time 2
   system(paste("mv ",  data.folder,"/Data/Intensities/BaseCalls/*.fastq.gz ",main.folder, sep=""))
   ptm <- proc.time() - ptm
@@ -74,5 +76,6 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, threads=8){
   #running time 2
   system(paste("rm ",main.folder,"/dockerID", sep=""))
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",main.folder, sep=""))
+  setwd(home)
 }
 
