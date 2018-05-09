@@ -15,7 +15,7 @@
 #'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 #'     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 #'     #running bwa
-#'     gatkDna(group="sudo",bam.folder=getwd(), scratch.folder="/data/scratch",
+#'     gatkDNA(group="sudo",bam.folder=getwd(), scratch.folder="/data/scratch",
 #'     gatk.filename="GenomeAnalysisTK-3.7.tar.bz2"
 #'     genome.folder="/data/scratch/hg19_bwa", threads=24)
 #' }
@@ -23,12 +23,25 @@
 gatkDNA <- function(group=c("sudo","docker"), bam.folder=getwd(), scratch.folder="/data/scratch", gatk.filename, genome.folder, threads=1){
   #running time 1
   ptm <- proc.time()
+  
+  #remembering actual folder
+  home <- getwd()
+  #setting rsem output folder as working dir
+  setwd(bam.folder)
+  
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
+  
   #running time 1
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    system("echo 10 >& ExitStatusFile")
+    setwd(home)
+    return(10)
   }
+  
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
   cat("\ncreating a folder in scratch folder\n")
   dir.create(file.path(scratch.folder, tmp.folder))
@@ -43,6 +56,8 @@ gatkDNA <- function(group=c("sudo","docker"), bam.folder=getwd(), scratch.folder
   cat("\ncopying \n")
   if(length(dir)==0){
     cat(paste("It seems that in ", getwd(), "there is not dedup_reads.bam"))
+    system("echo 1 >& ExitStatusFile")
+    setwd(home)
     return(1)
   }
   docker_bam.folder=file.path("/data/scratch", tmp.folder)
@@ -51,10 +66,10 @@ gatkDNA <- function(group=c("sudo","docker"), bam.folder=getwd(), scratch.folder
   system(paste("cp ",getwd(),"/dedup_reads.bai ",docker_bam.folder,"/dedup_reads.bai", sep=""))
   system(paste("cp ",gatk.filename, " ",docker_bam.folder,"/GenomeAnalysisTK.tar.bz2", sep=""))
   if(group=="sudo"){
-#    system("sudo docker pull docker.io/rcaloger/snv.1")
+    system("sudo docker pull docker.io/rcaloger/snv.1")
     system(paste("sudo docker run --privileged=true --cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/snv.1 sh /bin/gatk.sh ",docker_bam.folder," ", threads," ", bam.folder, sep=""))
   }else{
- #   system("docker pull docker.io/rcaloger/snv.1")
+    system("docker pull docker.io/rcaloger/snv.1")
     system(paste("docker run --privileged=true --cidfile ",bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/snv.1 sh /bin/gatk.sh ",docker_bam.folder," ", threads," ", bam.folder, sep=""))
   }
   out <- "xxxx"
@@ -91,5 +106,5 @@ gatkDNA <- function(group=c("sudo","docker"), bam.folder=getwd(), scratch.folder
 #  system(paste("rm -R ",docker_bam.folder))
   system(paste("rm  ",bam.folder,"/dockerID", sep=""))
   #removing temporary folder
-
+  setwd(home)
 }

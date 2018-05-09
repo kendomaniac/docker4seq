@@ -35,11 +35,18 @@ rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/dat
       adapter5,adapter3,seq.type="pe",   min.length=40, genome.folder="/data/genomes/hg38star",
       strandness="none", save.bam=TRUE, org="hg38", annotation.type="gtfENSEMBL"){
 
+  
+  #storing the position of the home folder
+  home <- getwd()
+
 
   #FastQC
   fastqc(group="docker", data.folder=fastq.folder)
   setwd(fastq.folder)
 
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
   #trimming adapter
   skewer(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder,adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
   #running rsemstar
@@ -51,13 +58,20 @@ rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/dat
     rsemannoByGtf(group=group, rsem.folder=fastq.folder, genome.folder=genome.folder)
   }else{
     cat("\nERROR: an annotatin function not implemented was selected\n")
+
+    system("echo 1 >& ExitStatusFile")
+    setwd(home)
     return(1)
   }
   setwd(fastq.folder)
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
-  system("rm *.fastq")
-  system("rm *trimmed-pair*")
+  system("rm *.fastq",intern = TRUE)
+  system("rm *trimmed-pair*",intern =TRUE)
+  
+  system("echo 0 >& ExitStatusFile")
+  setwd(home)
   return(0)
+  
 }
 
 
