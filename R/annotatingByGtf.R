@@ -10,7 +10,7 @@
 #' @import utils
 #' @examples
 #' \dontrun{
-#'     #downloading fastq files
+##'     #downloading fastq files
 #'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 #'     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 #'     library(docker4seq)
@@ -30,27 +30,29 @@ rsemannoByGtf <- function(group="docker", rsem.folder=getwd(), genome.folder){
   #setting rsem output folder as working dir
   setwd(rsem.folder)
 
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
   #running time 1
   ptm <- proc.time()
   #running time 1
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    system("echo 10 >& ExitStatusFile")
+    setwd(home)
+    return(10)
   }
 
-  if(group=="sudo"){
-    params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",rsem.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.rsemannoByGtf.R", sep="")
-    resultRun <- runDocker(group="sudo", params=params)
-  }else{
-    params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",rsem.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.rsemannoByGtf.R", sep="")
-    resultRun <- runDocker(group="docker",params=params)
-  }
 
-  if(resultRun=="false"){
+  params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",rsem.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.rsemannoByGtf.R", sep="")
+    resultRun <- runDocker(group=group, params=params)
+
+
+  if(resultRun==0){
     cat("\nGTF based annotation is finished is finished\n")
   }
-
+  
   #running time 2
   ptm <- proc.time() - ptm
   dir <- dir(rsem.folder)
