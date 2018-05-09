@@ -24,12 +24,7 @@
 #' @export
 salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder, index.folder, threads=8, seq.type=c("se","pe"), strandness=c("none", "forward", "reverse")){
 
-  #testing if docker is running
-  test <- dockerTest()
-  if(!test){
-    cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
-  }
+
   #storing the position of the home folder
   home <- getwd()
   #running time 1
@@ -40,9 +35,23 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
     return(2)
   }
   setwd(fastq.folder)
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
+  #testing if docker is running
+  test <- dockerTest()
+  if(!test){
+    cat("\nERROR: Docker seems not to be installed in your system\n")
+    system("echo 10 >& ExitStatusFile")
+    setwd(home)
+    return(10)
+  }
+  
   #check  if scratch folder exist
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, " folder does not exist\n"))
+    system("echo 3 >& ExitStatusFile")
+    setwd(home)
     return(3)
   }
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
@@ -67,6 +76,8 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
   }else if(length(dir)>2){
     cat(paste("It seems that in ", fastq.folder, "there are more than two fastq.gz files"))
+    system("echo 2 >& ExitStatusFile")
+    setwd(home)
     return(2)
   }else{
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
@@ -102,12 +113,14 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
     }
   }else{
     cat("\nNot implemented, yet\n")
-    return(1)
+    system("echo 11 >& ExitStatusFile")
+    setwd(home)
+    return(11)
   }
 
 
   #waiting for the end of the container work
-  if(resultRun=="false"){
+  if(resultRun==0){
     #not saving fastq files
     dir.tmp <- dir(scrat_tmp.folder)
     dir.tmp <- setdiff(dir.tmp, dir.tmp[grep("fastq",dir.tmp)])
