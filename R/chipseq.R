@@ -22,37 +22,50 @@
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
 #' @examples
 #'\dontrun{
-#'     #downloading fastq files
-#'     system("wget http://130.192.119.59/public/SRR1172111.bam")#TEAD
-#'     system("wget http://130.192.119.59/public/SRR1172110.bam")#igg
-#'     system("wget http://130.192.119.59/public/SRR1592211.bam")#H3K27ac
-#'     #running chipseq for macs
-#'     chipseq(group="sudo",bam.folder=getwd(), sample.bam="SRR1172111.bam", ctrl.bam="SRR1172110.bam",
-#'     scratch.folder="/data/scratch", genome="hg19", read.size=50,
-#'     tool="macs", macs.min.mfold=10, macs.max.mfold=30, macs.pval="1e-5",
-#'     sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10, tss.distance=0, max.upstream.distance=10000,
-#'     remove.duplicates="N")
-#'
-#'     #running chipseq for sicer H3K4Me3
-#'     chipseq(group="sudo",bam.folder=getwd(), sample.bam="SRR1592211.bam", ctrl.bam="SRR1172110.bam",
-#'     scratch.folder="/data/scratch", genome="hg19", read.size=50,
-#'     tool="sicer", sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10,
-#'     tss.distance=0, max.upstream.distance=10000,remove.duplicates="N")
+	#'     system("wget http://130.192.119.59/public/SRR1172111.bam")#TEAD
+	#'     system("wget http://130.192.119.59/public/SRR1172110.bam")#igg
+	#'     system("wget http://130.192.119.59/public/SRR1592211.bam")#H3K27ac
+	#'     #running chipseq for macs
+	#'     chipseq(group="sudo",bam.folder=getwd(), sample.bam="SRR1172111.bam", ctrl.bam="SRR1172110.bam",
+	#'     scratch.folder="/data/scratch", genome="hg19", read.size=50,
+	#'     tool="macs", macs.min.mfold=10, macs.max.mfold=30, macs.pval="1e-5",
+	#'     sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10, tss.distance=0, max.upstream.distance=10000,
+	#'     remove.duplicates="N")
+	#'
+	#'     #running chipseq for sicer H3K4Me3
+	#'     chipseq(group="sudo",bam.folder=getwd(), sample.bam="SRR1592211.bam", ctrl.bam="SRR1172110.bam",
+	#'     scratch.folder="/data/scratch", genome="hg19", read.size=50,
+	#'     tool="sicer", sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10,
+	#'     tss.distance=0, max.upstream.distance=10000,remove.duplicates="N")
 #' }
 #' @export
 chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ctrl.bam, scratch.folder="/data/scratch", genome=c("hg19","hg38","mm9","mm10"), read.size, tool=c("macs","sicer"), macs.min.mfold=10, macs.max.mfold=30, macs.pval="1e-5", sicer.wsize=200, sicer.gsize=c(200,600), sicer.fdr=0.10, tss.distance=0, max.upstream.distance=10000,  remove.duplicates=c("Y","N")){
   #running time 1
   ptm <- proc.time()
   #running time 1
+  
+  
+  #remembering actual folder
+  home <- getwd()
+  
+  setwd(bam.folder)
+  
+  #initialize status
+  system("echo 0 >& ExitStatusFile")
+  
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    return()
+    system("echo 10 >& ExitStatusFile")
+    setwd(home)
+    return(10)
   }
 
   #########check scratch folder exist###########
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
+    system("echo 3 >& ExitStatusFile")
+    setwd(home)
     return(3)
   }
   #############################################
@@ -78,9 +91,13 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	cat("\ncopying \n")
 	if(length(dir)==0){
 		cat(paste("It seems that in ", bam.folder, "there are not bam files"))
+	  	system("echo 1 >& ExitStatusFile")
+ 		setwd(home)
 		return(1)
 	}else if(length(dir)>2){
 		cat(paste("It seems that in ", bam.folder, "there are more than two bam files"))
+	  	system("echo 2 >& ExitStatusFile")
+ 		setwd(home)		
 		return(2)
 	}else{
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
@@ -91,32 +108,17 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	}
 	cat("\nsetting as working dir the scratch folder and running chipseq docker container\n")
 
-	if(group=="sudo"){
-		   params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
-		             bam.folder," ", ctrl.bam," 000000 ",docker_chipseq.folder," ",
-		             genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ",
-		             macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",
-		             max.upstream.distance," ",remove.duplicates, sep="")
-	     runDocker(group="sudo", params=params)
-		}else{
-		  params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",
-             bam.folder," ", ctrl.bam," 000000 ",docker_chipseq.folder," ",
-             genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ",
-             macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",
-             max.upstream.distance," ",remove.duplicates, sep="")
-		  runDocker(group="docker", params=params)
+params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",bam.folder," ", ctrl.bam," 000000 ",docker_chipseq.folder," ",genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ", macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",max.upstream.distance," ",remove.duplicates, sep="")
+
+resultRun=runDocker(group=group, params=params)
+	
+
+	if(resultRun==0){
+	  cat("\nChipseq is finished\n")
 	}
-	out <- "xxxx"
-	#waiting for the end of the container work
-	while(out != "out.info"){
-		Sys.sleep(10)
-		cat(".")
-		out.tmp <- dir(scrat_tmp.folder)
-		out.tmp <- out.tmp[grep("out.info",out.tmp)]
-		if(length(out.tmp)>0){
-			out <- "out.info"
-		}
-	}
+	
+	
+	
 #	system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	con <- file(paste(scrat_tmp.folder,"out.info", sep="/"), "r")
 	tmp <- readLines(con)
@@ -148,5 +150,7 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
   system(paste("rm  ",bam.folder,"/tempFolderID", sep=""))
 	#removing temporary folder
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",bam.folder, sep=""))
+  
+  setwd(home)
 }
 

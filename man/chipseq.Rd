@@ -54,7 +54,6 @@ This function executes the docker container chipseq.8 and requires as input two 
 }
 \examples{
 \dontrun{
-    #downloading fastq files
     system("wget http://130.192.119.59/public/SRR1172111.bam")#TEAD
     system("wget http://130.192.119.59/public/SRR1172110.bam")#igg
     system("wget http://130.192.119.59/public/SRR1592211.bam")#H3K27ac
