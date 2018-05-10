@@ -4,14 +4,12 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param fastq.folder, a character string indicating where trimmed fastq files are located
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
-#' @param ref.folder, a character string indicating the folder where the indexed reference genome for bwa is located
-#' @param nh, a booleal value indicating if the analysis of non human small RNAs should be performed
-#' @param fastq.id, a character string indicating the name of the fastq file to analyse
+#' @param mode, a character string indicating the required type of analysis. Compatible analyses mode are "miRNA" and "ncRNA". In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. In "ncRNA" analysis mode, the version ("rc.version" argument) and species prefix ("rc.species" argument) of RNA Central are required. This mode require also a desidered maximum length of the studied RNA annotations ("length" argument).
+#' @param reference, a character string indicating the path to the reference fasta file used to create the BWA index
 #' @param threads, a number indicating the number of cores to be used from the application
-#' @param sample.id, a character string indicating the unique identifier of the dataset to analyse.
-#' @param g.id, character string indicating the name human reference genome
-#' @param refh.id, character string indicating the name human reference small RNA gene annotations
-#' @param refnh.id, list of character strings indicating the name of references of non human small RNA annotations
+#' @param mb.version, a character string indicating the required version of miRBase database. Visit ftp://mirbase.org/pub/mirbase/ to select the proper version id.
+#' @param mb.species, a character string indicating the three-letter prefix of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to obtain the proper species prefix.
+#' 
 #' @author Giulio Ferrero
 #
 #' @return read count files:
@@ -19,15 +17,16 @@
 #'\dontrun{
 #'     #downloading fastq files
 #'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
-#'     #running sncRNA quantification pipeline
-#'     sncRNA(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
-#'     ref.folder="/data/ref", nh=TRUE, fastq.id=test_R1.fastq.gz,
-#'     threads=24, sample.id="test", g.id=hg38.fa, refh.id = small_ncRNA.fa, refnh.id = c(virus.fa, bacteria.fa))
+#'     #running miRNAs quantification pipeline
+#'     sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="miRNA", reference="/data/ref", threads=24, mb.version="22", mb.species="hsa")
+#'     
+#'     #running non miRNA ncRNAs quantification pipeline
+#'     sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="ncRNA", reference="/data/ref", threads=24)
 #'
 #' }
 #' @export
 
-sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder, ref.folder, nh=T, threads=1, fastq.id, sample.id, g.id, refh.id, refnh.id){
+sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder, mode, reference, threads=1, mb.version=NULL, mb.species=NULL){
 
   home <- getwd()
   setwd(fastq.folder)
@@ -60,27 +59,40 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
   cat("\nsetting as working dir the scratch folder and running docker container\n")
   cat("\nsetting as working dir the scratch folder and running sncRNA docker container\n")
 
-  if(nh=="FALSE"){
-
-    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", scratch.folder,":/data/scratch -v ", ref.folder,":/data/ref -v ", fastq.folder,":/data/input -d gferrero/sncrna sh /bin/sncRNA.sh ", tmp.folder, " ", threads, " ", fastq.id, " ", sample.id, " ", g.id, " ", refh.id, sep="")
-    resultRun <- runDocker(group=group, container="gferrero/sncrna", params=params)
-
-  }
-
-  if(nh=="TRUE"){
-    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", scratch.folder,":/data/scratch -v ", ref.folder,":/data/ref -v ", fastq.folder,":/data/input -d gferrero/sncrna sh /bin/sncRNA_nh.sh ", tmp.folder, " ", threads, " ", fastq.id, " ", sample.id, " ", g.id, " ", refh.id, sep="")
-
-    for (i in 1:length(refnh.id)){
-      params <- paste(params,paste(refnh.id[i], sep=""), sep=" ")
+ref.folder=dirname(reference)
+ref.id=basename(reference)
+  
+  if(mode=="miRNA"){
+    
+    mb_ok_ver = c("1.0","10.0","10.1","1.1","11.0","1.2","12.0","1.3","13.0","14","1.4","15","1.5","16","17","18","19","20","2.0","21","2.1","22","2.2","3.0","3.1","4.0","5.0","5.1","6.0","7.0","7.1","8.0","8.1","8.2","9.0","9.1","9.2")
+    
+    if(mb.version %in% mb_ok_ver == FALSE){
+      cat("\nThe miRBase version is not correct\n")
+      system("echo 2 >& ExitStatusFile")
+      setwd(home)
+      return(2)
     }
-
-    resultRun <- runDocker(group=group, container="gferrero/sncrna", params=params)
+    
+    if(is.null(mb.species)){
+      cat("\nPlease insert a proper miRBase species identifier\n")
+      system("echo 2 >& ExitStatusFile")
+      setwd(home)
+      return(2)
+    }
+    
+    else{
+    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", scratch.folder,":/data/scratch -v ", ref.folder,":/data/ref -v ", fastq.folder,":/data/input -d docker.io/gferrero/sncrna sh /bin/sncRNA.sh ", mode, " ", threads, " ", ref.id, " ", mb.version, " ", mb.species, sep="")
+    }
   }
 
-  #    if(resultRun=="false"){
-  #      system(paste("cp ", docker_fastq.folder, "/* ", fastq.folder, sep=""))
-  #    }
+  if(mode=="ncRNA"){
+    
+    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", scratch.folder,":/data/scratch -v ", ref.folder,":/data/ref -v ", fastq.folder,":/data/input -d docker.io/gferrero/sncrna sh /bin/sncRNA.sh ", mode, " ", threads, " ", ref.id, sep="")
+    
+  }
 
+resultRun <- runDocker(group=group, container="docker.io/gferrero/sncrna", params=params)
+  
   ##############################################################
 
   #running time 2
