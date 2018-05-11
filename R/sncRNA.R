@@ -81,13 +81,13 @@ ref.id=basename(reference)
     }
     
     else{
-    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", scratch.folder,":/data/scratch -v ", ref.folder,":/data/ref -v ", fastq.folder,":/data/input -d docker.io/gferrero/sncrna sh /bin/sncRNA.sh ", mode, " ", threads, " ", ref.id, " ", mb.version, " ", mb.species, sep="")
+    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", scratch.folder,":/data/scratch -v ", ref.folder,":/data/ref -v ", fastq.folder,":/data/input -d docker.io/gferrero/sncrna /bin/bash /bin/sncRNA.sh ", mode, " ", threads, " ", ref.id, " ", mb.version, " ", mb.species, sep="")
     }
   }
 
   if(mode=="ncRNA"){
     
-    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", scratch.folder,":/data/scratch -v ", ref.folder,":/data/ref -v ", fastq.folder,":/data/input -d docker.io/gferrero/sncrna sh /bin/sncRNA.sh ", mode, " ", threads, " ", ref.id, sep="")
+    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", scratch.folder,":/data/scratch -v ", ref.folder,":/data/ref -v ", fastq.folder,":/data/input -d docker.io/gferrero/sncrna /bin/bash /bin/sncRNA.sh ", mode, " ", threads, " ", ref.id, sep="")
     
   }
 
