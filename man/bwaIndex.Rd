@@ -8,7 +8,7 @@ bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(),
   genome.url = NULL, dbsnp.file = NULL, g1000.file = NULL,
   mode = c("General", "GATK", "miRNA", "ncRNA"), mb.version = NULL,
   mb.species = NULL, rc.version = NULL, rc.species = NULL,
-  other.ref = c(NULL))
+  length = NULL, other.ref = NULL)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -21,11 +21,7 @@ bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(),
 
 \item{g1000.file, }{a character string indicating the name of 1000 genome vcf located in the genome folder. The 1000 genomes vcf, Mills_and_1000G_gold_standard.indels.b37.vcf.gz and Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/}
 
-\item{mode, }{a character string indicating the required type of analysis. Compatible analysis mode are "General", "GATK", "miRNA", and "ncRNA". In "General" mode the url of any online fasta file ("genome.url" argument) can be provided and indexed. In the GATK analysis mode, the list of variants from dbsnp ("dbsnp.file" argument) and g1000 ("dbsnp.file" argument) are required in addition to the url of the genome fasta ("genome.url" argument). In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. In "ncRNA" analysis mode, the version ("rc.version" argument) and species prefix ("rc.species" argument) of RNA Central are required. This mode require also a desidered maximum length of the studied RNA annotations ("length" argument).}
-
-\item{mb.version, }{a character string indicating the required version of miRBase database. Visit ftp://mirbase.org/pub/mirbase/ to select the proper version id.}
-
-\item{mb.species, }{a character string indicating the three-letter prefix of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to obtain the proper species prefix.}
+\item{mode, }{a character string indicating the required type of analysis. Compatible analyses mode are "General", "GATK", "miRNA", and "ncRNA". In "General" mode the url of any online fasta file ("genome.url" argument) can be provided and indexed. In the GATK analysis mode, the list of variants from dbsnp ("dbsnp.file" argument) and g1000 ("dbsnp.file" argument) are required in addition to the url of the genome fasta ("genome.url" argument). In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. In "ncRNA" analysis mode, the version ("rc.version" argument) and species prefix ("rc.species" argument) of RNA Central are required. This mode require also a desidered maximum length of the studied RNA annotations ("length" argument).}
 
 \item{rc.version, }{a character string indicating the required version of RNA Central database. Visit ftp://ftp.ebi.ac.uk/pub/databases/RNAcentral/releases/ to select the proper version id.}
 
