@@ -91,7 +91,7 @@ ref.id=basename(reference)
     
   }
 
-resultRun <- runDocker(group=group, container="docker.io/gferrero/sncrna", params=params)
+resultRun <- runDocker(group=group, params=params)
   
   ##############################################################
 
