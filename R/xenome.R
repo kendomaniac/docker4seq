@@ -26,10 +26,10 @@ xenome <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 
     home <- getwd()
     setwd(fastq.folder)
-    
+
     #initialize status
     system("echo 0 >& ExitStatusFile")
-    
+
     #running time 1
     ptm <- proc.time()
     #running time 1
@@ -86,7 +86,7 @@ xenome <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
     #fastq  linking fpr docker
     docker_fastq.folder=file.path(scratch.folder, tmp.folder)
     cat("\nsetting as working dir the scratch folder and running xenome docker container\n")
-    
+
     if(seq.type=="pe"){
     	if(group=="sudo"){
 		      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",xenome.folder,":/xenome -d docker.io/repbioinfo/xenome.2017.01 sh /bin/xenome_pe.sh ", threads," ",fastq.folder, sep="")
@@ -119,20 +119,20 @@ xenome <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 
     #saving log and removing docker container
     container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
-#    system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
+#   system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
     system(paste("docker logs ", container.id, " >& ","xenome_",substr(container.id,1,12),".log", sep=""))
-    system(paste("docker rm ", container.id, sep=""))
-    
-    
-    
+#    system(paste("docker rm ", container.id, sep=""))
+
+
+
     #removing temporary folder
     cat("\n\nRemoving the xenome temporary file ....\n")
-    system(paste("rm -R ",docker_fastq.folder))
+  #  system(paste("rm -R ",docker_fastq.folder))
     system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))
     system(paste("rm  -f ",fastq.folder,"/tempFolderID", sep=""))
-    
+
     system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
     setwd(home)
-    
+
 }
 
