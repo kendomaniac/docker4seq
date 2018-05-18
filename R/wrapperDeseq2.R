@@ -29,7 +29,7 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
   setwd(output.folder)
 
   #initialize status
-  system("echo 0 >& ExitStatusFile")
+  system("echo 0 > ExitStatusFile 2>&1")
   
   #running time 1
   ptm <- proc.time()
@@ -37,7 +37,7 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    system("echo 10 >& ExitStatusFile")
+    system("echo 10 > ExitStatusFile 2>&1")
     setwd(home)
     return(10)
   }

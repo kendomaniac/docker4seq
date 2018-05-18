@@ -45,7 +45,7 @@ rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/dat
   setwd(fastq.folder)
 
   #initialize status
-  system("echo 0 >& ExitStatusFile")
+  system("echo 0 > ExitStatusFile 2>&1")
   
   #trimming adapter
   skewer(group=group,fastq.folder=fastq.folder, scratch.folder=scratch.folder,adapter5=adapter5, adapter3=adapter3, seq.type=seq.type, threads=threads,  min.length=min.length)
@@ -59,7 +59,7 @@ rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/dat
   }else{
     cat("\nERROR: an annotatin function not implemented was selected\n")
 
-    system("echo 1 >& ExitStatusFile")
+    system("echo 1 > ExitStatusFile 2>&1")
     setwd(home)
     return(1)
   }
@@ -68,7 +68,7 @@ rnaseqCounts<- function( group="sudo",fastq.folder=getwd(), scratch.folder="/dat
   system("rm *.fastq",intern = TRUE)
   system("rm *trimmed-pair*",intern =TRUE)
   
-  system("echo 0 >& ExitStatusFile")
+  system("echo 0 > ExitStatusFile 2>&1")
   setwd(home)
   return(0)
   

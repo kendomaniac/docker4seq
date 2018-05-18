@@ -33,7 +33,7 @@ pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
   #setting rsem output folder as working dir
   setwd(output.folder)
   #initialize status
-  system("echo 0 >& ExitStatusFile")
+  system("echo 0 > ExitStatusFile 2>&1")
   
   tmp <- read.table(experiment.table, sep="\t", stringsAsFactors = TRUE, header=T, check.names = FALSE, row.names=1)
   if(covariatesInNames){

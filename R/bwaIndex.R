@@ -36,7 +36,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
     cat(paste("\n",genome.folder, "folder does not exist, It will be created \n"))
     if (!dir.create(genome.folder)){
       cat(paste("\nError ",genome.folder, "folder cannot be created\n"))
-      system("echo 4 >& ExitStatusFile")
+      system("echo 4 > ExitStatusFile 2>&1")
       return(4) 
     }
   }
@@ -45,7 +45,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
   home <- getwd()
   setwd(genome.folder)
   #initialize status
-  system("echo 0 >& ExitStatusFile")
+  system("echo 0 > ExitStatusFile 2>&1")
   
   #running time 1
   ptm <- proc.time()
@@ -54,7 +54,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
     #initialize status
-    system("echo 10 >& ExitStatusFile")
+    system("echo 10 > ExitStatusFile 2>&1")
     setwd(home)
     return(10)
   }
@@ -64,7 +64,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
   if(mode=="GATK"){
     if(length(dir[grep(sub(".vcf.gz$", "", dbsnp.file),dir)])<2){
       cat("\ndbSNP vcf.gz and/or vcf.idx.gz missing\n")
-      system("echo 2 >& ExitStatusFile")
+      system("echo 2 > ExitStatusFile 2>&1")
       setwd(home)
       return(2)
     }else{
@@ -75,7 +75,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
     }
     if(length(dir[grep(sub(".vcf.gz$", "", g1000.file),dir)])<2){
       cat("\1000 genomes vcf and/or vcf.idx.gz missing\n")
-      system("echo 3 >& ExitStatusFile")
+      system("echo 3 > ExitStatusFile 2>&1")
       setwd(home)
       return(3)
     }else{
@@ -94,13 +94,13 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 	  
     if(mb.version %in% mb_ok_ver == FALSE){
       cat("\nThe miRBase version is not correct\n")
-      system("echo 2 >& ExitStatusFile")
+      system("echo 2 > ExitStatusFile 2>&1")
       setwd(home)
       return(2)
     }
 	  if(is.null(mb.species)){
 	    cat("\nPlease insert a proper miRBase species identifier\n")
-	    system("echo 2 >& ExitStatusFile")
+	    system("echo 2 > ExitStatusFile 2>&1")
 	    setwd(home)
 	    return(2)
 	  }
@@ -116,13 +116,13 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 	  
 	  if(rc.version %in% rc_ok_ver == FALSE){
 	    cat("\nThe RNA Central version is not correct\n")
-	    system("echo 2 >& ExitStatusFile")
+	    system("echo 2 > ExitStatusFile 2>&1")
 	    setwd(home)
 	    return(2)
 	  }
 	  if(is.null(rc.species)){
 	    cat("\nPlease insert a proper RNA Central species identifier\n")
-	    system("echo 2 >& ExitStatusFile")
+	    system("echo 2 > ExitStatusFile 2>&1")
 	    setwd(home)
 	    return(2)
 	  }

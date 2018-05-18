@@ -31,13 +31,13 @@ oncosnpAnnotation <- function(group=c("sudo","docker"), data.folder, genome.fold
   
   setwd(data.folder)
   #initialize status
-  system("echo 0 >& ExitStatusFile")
+  system("echo 0 > ExitStatusFile 2>&1")
   
   #testing if docker is running
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    system("echo 10 >& ExitStatusFile")
+    system("echo 10 > ExitStatusFile 2>&1")
     setwd(home)
     return(10)
   }
@@ -45,7 +45,7 @@ oncosnpAnnotation <- function(group=c("sudo","docker"), data.folder, genome.fold
   #check  if genome folder exist
   if (!file.exists(genome.folder)){
     cat(paste("\nIt seems that the ",genome.folder, " folder does not exist\n"))
-    system("echo 3 >& ExitStatusFile")
+    system("echo 3 > ExitStatusFile 2>&1")
     setwd(home)
     return(3)
   }

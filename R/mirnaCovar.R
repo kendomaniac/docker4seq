@@ -27,7 +27,7 @@ mirnaCovar <- function(experiment.folder, covariates=NULL, batches=NULL, output.
   #setting rsem output folder as working dir
   setwd(dirname(experiment.folder))
   #initialize status
-  system("echo 0 >& ExitStatusFile")
+  system("echo 0 > ExitStatusFile 2>&1")
   
        tmp <- read.table(experiment.folder, sep="\t", header=T, stringsAsFactors = F, row.names = 1)
        if(!is.null(covariates)){
@@ -37,7 +37,7 @@ mirnaCovar <- function(experiment.folder, covariates=NULL, batches=NULL, output.
                 tmp.n <- paste(tmp.n,covariates, sep="_")
            }else{
              cat("\nERROR: the covariates and the samples names do not have the same length\n")
-             system("echo 1 >& ExitStatusFile")
+             system("echo 1 > ExitStatusFile 2>&1")
  	     setwd(home)
              return(1)
            }
@@ -47,7 +47,7 @@ mirnaCovar <- function(experiment.folder, covariates=NULL, batches=NULL, output.
            tmp.n <- paste(tmp.n,batches, sep="_")
          }else{
            cat("\nERROR: the batches and the samples names do not have the same length\n")
-           system("echo 2 >& ExitStatusFile")
+           system("echo 2 > ExitStatusFile 2>&1")
  	   setwd(home)
            return(2)
          }
@@ -60,7 +60,7 @@ mirnaCovar <- function(experiment.folder, covariates=NULL, batches=NULL, output.
          names(tmp) <- tmp.n
          write.table(tmp, "w_covar_all.counts.txt", sep="\t", col.names = NA, quote = F)
        }
-       system("echo 0 >& ExitStatusFile")
+       system("echo 0 > ExitStatusFile 2>&1")
        setwd(home)
        return(0)
 }
