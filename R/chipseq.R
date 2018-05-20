@@ -22,21 +22,21 @@
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
 #' @examples
 #'\dontrun{
-#'     #downloading fastq files
-#'     system("wget http://130.192.119.59/public/YAPavCClp1.bam")
-#'     system("wget http://130.192.119.59/public/YAPIgG.bam")
-#'     #running chipseq for macs
-#'     chipseq(group="sudo",bam.folder=getwd(), sample.bam="YAPavCClp1.bam", ctrl.bam="YAPIgG.bam",
-#'     scratch.folder="/data/scratch", genome="hg19", read.size=50,
-#'     tool="macs", macs.min.mfold=10, macs.max.mfold=30, macs.pval="1e-5",
-#'     sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10, tss.distance=0, max.upstream.distance=10000,
-#'     remove.duplicates="N")
-#'
-#'     #running chipseq for sicer H3K4Me3
-#'     chipseq(group="sudo",bam.folder=getwd(), sample.bam="YAPavCClp1.bam", ctrl.bam="YAPIgG.bam",
-#'     scratch.folder="/data/scratch", genome="hg19", read.size=50,
-#'     tool="sicer", sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10,
-#'     tss.distance=0, max.upstream.distance=10000,remove.duplicates="N")
+	#'     system("wget http://130.192.119.59/public/SRR1172111.bam")#TEAD
+	#'     system("wget http://130.192.119.59/public/SRR1172110.bam")#igg
+	#'     system("wget http://130.192.119.59/public/SRR1592211.bam")#H3K27ac
+	#'     #running chipseq for macs
+	#'     chipseq(group="sudo",bam.folder=getwd(), sample.bam="SRR1172111.bam", ctrl.bam="SRR1172110.bam",
+	#'     scratch.folder="/data/scratch", genome="hg19", read.size=50,
+	#'     tool="macs", macs.min.mfold=10, macs.max.mfold=30, macs.pval="1e-5",
+	#'     sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10, tss.distance=0, max.upstream.distance=10000,
+	#'     remove.duplicates="N")
+	#'
+	#'     #running chipseq for sicer H3K4Me3
+	#'     chipseq(group="sudo",bam.folder=getwd(), sample.bam="SRR1592211.bam", ctrl.bam="SRR1172110.bam",
+	#'     scratch.folder="/data/scratch", genome="hg19", read.size=50,
+	#'     tool="sicer", sicer.wsize=200, sicer.gsize=200, sicer.fdr=0.10,
+	#'     tss.distance=0, max.upstream.distance=10000,remove.duplicates="N")
 #' }
 #' @export
 chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ctrl.bam, scratch.folder="/data/scratch", genome=c("hg19","hg38","mm9","mm10"), read.size, tool=c("macs","sicer"), macs.min.mfold=10, macs.max.mfold=30, macs.pval="1e-5", sicer.wsize=200, sicer.gsize=c(200,600), sicer.fdr=0.10, tss.distance=0, max.upstream.distance=10000,  remove.duplicates=c("Y","N")){
@@ -51,12 +51,12 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
   setwd(bam.folder)
   
   #initialize status
-  system("echo 0 >& ExitStatusFile")
+  system("echo 0 > ExitStatusFile 2>&1")
   
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    system("echo 10 >& ExitStatusFile")
+    system("echo 10 > ExitStatusFile 2>&1")
     setwd(home)
     return(10)
   }
@@ -64,7 +64,7 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
   #########check scratch folder exist###########
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
-    system("echo 3 >& ExitStatusFile")
+    system("echo 3 > ExitStatusFile 2>&1")
     setwd(home)
     return(3)
   }
@@ -91,12 +91,12 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	cat("\ncopying \n")
 	if(length(dir)==0){
 		cat(paste("It seems that in ", bam.folder, "there are not bam files"))
-	  	system("echo 1 >& ExitStatusFile")
+	  	system("echo 1 > ExitStatusFile 2>&1")
  		setwd(home)
 		return(1)
 	}else if(length(dir)>2){
 		cat(paste("It seems that in ", bam.folder, "there are more than two bam files"))
-	  	system("echo 2 >& ExitStatusFile")
+	  	system("echo 2 > ExitStatusFile 2>&1")
  		setwd(home)		
 		return(2)
 	}else{

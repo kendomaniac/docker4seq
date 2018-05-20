@@ -28,7 +28,7 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
   setwd(fastq.folder)
   
   #initialize status
-  system("echo 0 >& ExitStatusFile")
+  system("echo 0 > ExitStatusFile 2>&1")
   
   #running time 1
   ptm <- proc.time()
@@ -36,7 +36,7 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    system("echo 10 >& ExitStatusFile")
+    system("echo 10 > ExitStatusFile 2>&1")
     setwd(home)
     return(10)
   }
@@ -59,7 +59,7 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
   cat("\ncopying \n")
   if(length(dir)==0){
     cat(paste("It seems that in ", fastq.folder, "there are not fastq.gz files"))
-    system("echo 1 >& ExitStatusFile")
+    system("echo 1 > ExitStatusFile 2>&1")
     setwd(home)
     return(1)
   }else if(length(dir.trim)>0){
@@ -71,7 +71,7 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
     system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
   }else if(length(dir)>2){
     cat(paste("It seems that in ", fastq.folder, "there are more than two fastq.gz files"))
-    system("echo 2 >& ExitStatusFile")
+    system("echo 2 > ExitStatusFile 2>&1")
     setwd(home)
     return(2)
   }else{

@@ -17,7 +17,7 @@ This function executes MultiQC docker (Ewels et al., 2016. Bioinformatics. 32(19
 \examples{
 \dontrun{
     #running skeleton
-    MultiQC(group="docker", data.folder=getwd())
+    multiQC(group="docker", data.folder=getwd())
 }
 
 }

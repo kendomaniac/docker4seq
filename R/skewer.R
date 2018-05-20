@@ -28,7 +28,7 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
   setwd(fastq.folder)
   
   #initialize status
-  system("echo 0 >& ExitStatusFile")
+  system("echo 0 > ExitStatusFile 2>&1")
   
   #running time 1
   ptm <- proc.time()
@@ -36,14 +36,14 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    system("echo 10 >& ExitStatusFile")
+    system("echo 10 > ExitStatusFile 2>&1")
     setwd(home)
     return(10)
   }
   #########check scratch folder exist###########
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
-    system("echo 3 >& ExitStatusFile")
+    system("echo 3 > ExitStatusFile 2>&1")
     setwd(home)
     return(3)
   }
@@ -59,12 +59,12 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	if(length(dir)==0){
 		cat(paste("It seems that in ",fastq.folder, "there are not fastq.gz files"))
 
-	  system("echo 1 >& ExitStatusFile")
+	  system("echo 1 > ExitStatusFile 2>&1")
 		setwd(home)
 		return(1)
 	}else if(length(dir)>2){
 		cat(paste("It seems that in ",fastq.folder, "there are more than two fastq.gz files"))
-	  system("echo 2 >& ExitStatusFile")
+	  system("echo 2 > ExitStatusFile 2>&1")
 		setwd(home)
 		return(2)
 	}else{

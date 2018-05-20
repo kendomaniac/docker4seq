@@ -42,13 +42,13 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   setwd(data.folder)
   
   #initialize status
-  system("echo 0 >& ExitStatusFile")
+  system("echo 0 > ExitStatusFile 2>&1")
   
   #testing if docker is running
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    system("echo 0 >& ExitStatusFile")
+    system("echo 0 > ExitStatusFile 2>&1")
     setwd(home)
     return(10)
   }
@@ -58,7 +58,7 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
   #check  if scratch folder exist
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, " folder does not exist\n"))
-    system("echo 3 >& ExitStatusFile")
+    system("echo 3 > ExitStatusFile 2>&1")
     setwd(home)
     return(3)
   }
@@ -74,7 +74,7 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
     if (system(paste("cp ",input.files[i],scrat_tmp.folder),intern = FALSE) != 0)
       {
       cat("Error input file ",input.files[i],scrat_tmp.folder," does not exist\n")
-      system("echo 4 >& ExitStatusFile")
+      system("echo 4 > ExitStatusFile 2>&1")
       setwd(home)
       return(4)
       }
@@ -84,7 +84,7 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
       if (system(paste("cp ",spike,scrat_tmp.folder)))
       {
       cat("Error input file ",input.files[i],scrat_tmp.folder," does not exist\n")
-      system("echo 4 >& ExitStatusFile")
+      system("echo 4 > ExitStatusFile 2>&1")
       setwd(home)
       return(4)
       }

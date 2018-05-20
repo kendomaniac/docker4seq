@@ -5,8 +5,7 @@
 \title{Running small RNA-seq single-end reads alignment and quantification using BWA and custom scripts}
 \usage{
 sncRNA(group = c("sudo", "docker"), fastq.folder = getwd(), scratch.folder,
-  ref.folder, nh = T, threads = 1, fastq.id, sample.id, g.id, refh.id,
-  refnh.id)
+  mode, reference, threads = 1, mb.version = NULL, mb.species = NULL)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -15,21 +14,15 @@ sncRNA(group = c("sudo", "docker"), fastq.folder = getwd(), scratch.folder,
 
 \item{scratch.folder, }{a character string indicating the scratch folder where docker container will be mounted}
 
-\item{ref.folder, }{a character string indicating the folder where the indexed reference genome for bwa is located}
+\item{mode, }{a character string indicating the required type of analysis. Compatible analyses mode are "miRNA" and "ncRNA". In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. In "ncRNA" analysis mode, the version ("rc.version" argument) and species prefix ("rc.species" argument) of RNA Central are required. This mode require also a desidered maximum length of the studied RNA annotations ("length" argument).}
 
-\item{nh, }{a booleal value indicating if the analysis of non human small RNAs should be performed}
+\item{reference, }{a character string indicating the path to the reference fasta file used to create the BWA index}
 
 \item{threads, }{a number indicating the number of cores to be used from the application}
 
-\item{fastq.id, }{a character string indicating the name of the fastq file to analyse}
+\item{mb.version, }{a character string indicating the required version of miRBase database. Visit ftp://mirbase.org/pub/mirbase/ to select the proper version id.}
 
-\item{sample.id, }{a character string indicating the unique identifier of the dataset to analyse.}
-
-\item{g.id, }{character string indicating the name human reference genome}
-
-\item{refh.id, }{character string indicating the name human reference small RNA gene annotations}
-
-\item{refnh.id, }{list of character strings indicating the name of references of non human small RNA annotations}
+\item{mb.species, }{a character string indicating the three-letter prefix of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to obtain the proper species prefix.}
 }
 \value{
 read count files:
@@ -41,10 +34,11 @@ This function executes the docker container where BWA is installed. BWA is a rea
 \dontrun{
     #downloading fastq files
     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
-    #running sncRNA quantification pipeline
-    sncRNA(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
-    ref.folder="/data/ref", nh=TRUE, fastq.id=test_R1.fastq.gz,
-    threads=24, sample.id="test", g.id=hg38.fa, refh.id = small_ncRNA.fa, refnh.id = c(virus.fa, bacteria.fa))
+    #running miRNAs quantification pipeline
+    sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="miRNA", reference="/data/ref", threads=24, mb.version="22", mb.species="hsa")
+    
+    #running non miRNA ncRNAs quantification pipeline
+    sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="ncRNA", reference="/data/ref", threads=24)
 
 }
 }
