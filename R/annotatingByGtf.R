@@ -31,7 +31,7 @@ rsemannoByGtf <- function(group="docker", rsem.folder=getwd(), genome.folder){
   setwd(rsem.folder)
 
   #initialize status
-  system("echo 0 >& ExitStatusFile")
+  system("echo 0 > ExitStatusFile 2>&1")
   
   #running time 1
   ptm <- proc.time()
@@ -39,7 +39,7 @@ rsemannoByGtf <- function(group="docker", rsem.folder=getwd(), genome.folder){
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    system("echo 10 >& ExitStatusFile")
+    system("echo 10 > ExitStatusFile 2>&1")
     setwd(home)
     return(10)
   }

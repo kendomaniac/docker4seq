@@ -65,12 +65,12 @@ platypusFilter <- function(group=c("sudo","docker"), data.folder=getwd(), scratc
   #getting in the tmp folder in scratch folder
   setwd(data.folder)
   
-  system("echo 0 >& ExitStatusFile")
+  system("echo 0 > ExitStatusFile 2>&1")
 
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    system("echo 10 >& ExitStatusFile")
+    system("echo 10 > ExitStatusFile 2>&1")
     setwd(home)
     return(10)
   }

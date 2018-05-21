@@ -25,19 +25,19 @@ rsemBw <- function(group=c("sudo","docker"),bam.folder=getwd(), scratch.folder="
   setwd(bam.folder)
   
   #initialize status
-  system("echo 0 >& ExitStatusFile")
+  system("echo 0 > ExitStatusFile 2>&1")
   
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
-    system("echo 10 >& ExitStatusFile")
+    system("echo 10 > ExitStatusFile 2>&1")
     setwd(home)
     return(10)
   }
   #########check scratch folder exist###########
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, "folder does not exist\n"))
-    system("echo 3 >& ExitStatusFile")
+    system("echo 3 > ExitStatusFile 2>&1")
     setwd(home)
     return(3)
   }
