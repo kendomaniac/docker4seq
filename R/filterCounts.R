@@ -19,21 +19,21 @@
 #' }
 #' @export
 filterCounts <- function(data.folder, type=c("gene", "isoform", "mirna")){
-  
-  
-  
+
+
+
   #remembering actual folder
   home <- getwd()
   #setting rsem output folder as working dir
   setwd(data.folder)
-  
+
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
+
   dir <- dir()
-  print(dir,"\n")
-  
-  
+#  print(dir,"\n")
+
+
   if(type=="mirna"){
     counts.file <- dir[grep("counts.txt", dir)]
     cpm.file <- dir[grep("cpm.txt", dir)]
