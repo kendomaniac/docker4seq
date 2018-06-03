@@ -7,6 +7,7 @@
 #' @param logFC.threshold, minimal logFC present in at least one of the comparisons with respect to reference covariate
 #' @param FDR.threshold, minimal FDR present in at least one of the comparisons with respect to reference covariate
 #' @param logCPM.threshold,  minimal average abundance
+#' @param plot, TRUE if differentially expressed genes are represented in a plot.
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, University of Torino, Italy
 #'
 #' @examples
@@ -18,7 +19,7 @@
 #' }
 #'
 #' @export
-anovaLike <- function(group=c("sudo","docker"), data.folder, counts.table, file.type=c("txt","csv"), logFC.threshold=1, FDR.threshold, logCPM.threshold=4){
+anovaLike <- function(group=c("sudo","docker"), data.folder, counts.table, file.type=c("txt","csv"), logFC.threshold=1, FDR.threshold, logCPM.threshold=4, plot=c(TRUE, FALSE)){
 
 
 
@@ -54,25 +55,29 @@ anovaLike <- function(group=c("sudo","docker"), data.folder, counts.table, file.
   if(resultRun==0){
     cat("\nDifferential expression analysis is finished\n")
   }
-
-  tmp0 <- read.table(paste("DE_", counts.table, sep=""), sep="\t", header=T, row.names=1)
-  max0.logfc <- apply(tmp0[,grep("logFC", names(tmp0))], 1, function(x) unique(x[which(abs(x)== max(abs(x)))]))
+  system(paste("mv DE_", counts.table, " ANOVAlike_", counts.table, sep=""))
+  tmp0 <- read.table(paste("ANOVAlike_", counts.table, sep=""), sep="\t", header=T, row.names=1)
+  max0.logfc.tmp <- apply(tmp0[,grep("logFC", names(tmp0))], 1, function(x) unique(x[which(abs(x)== max(abs(x)))]))
+  max0.logfc <- sapply(max0.logfc.tmp, function(x)as.numeric(x[[1]]))
 
   tmp <- tmp0[which(tmp0$logCPM >= logCPM.threshold),]
   max.logfc <- apply(tmp[,grep("logFC", names(tmp))], 1, function(x) max(abs(x)))
   tmp <- tmp[which(max.logfc >= logFC.threshold),]
   tmp <- tmp[which(tmp$FDR <= FDR.threshold),]
-  max1.logfc <- apply(tmp[,grep("logFC", names(tmp))], 1, function(x){
+  max1.logfc.tmp <- apply(tmp[,grep("logFC", names(tmp))], 1, function(x){
     x[which(abs(x)== max(abs(x)))]
   })
-  pdf("filteredDE.pdf")
-    plot(tmp0$logCPM, max0.logfc, xlab="log2CPM", ylab="log2FC", type="n")
-    points(tmp$logCPM, max1.logfc, pch=19, cex=0.5, col="red")
-    points(tmp0$logCPM, max0.logfc, pch=".", col="black")
-    abline(h=0, col="black", lty=2)
-  dev.off()
+  max1.logfc <- sapply(max1.logfc.tmp, function(x)as.numeric(x[[1]]))
+  if(plot){
+    pdf("filtered_ANOVAlike.pdf")
+      plot(tmp0$logCPM, max0.logfc, xlab="log2CPM", ylab="log2FC", type="n")
+      points(tmp$logCPM, max1.logfc, pch=19, cex=0.5, col="red")
+      points(tmp0$logCPM, max0.logfc, pch=".", col="black")
+      abline(h=0, col="black", lty=2)
+    dev.off()
+  }
 
-write.table(tmp, paste("filtered_DE_", counts.table, sep=""), sep="\t", col.names=NA)
+write.table(tmp, paste("filtered_ANOVAlike_", counts.table, sep=""), sep="\t", col.names=NA)
 
   #running time 2
   ptm <- proc.time() - ptm
