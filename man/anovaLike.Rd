@@ -6,7 +6,7 @@
 \usage{
 anovaLike(group = c("sudo", "docker"), data.folder, counts.table,
   file.type = c("txt", "csv"), logFC.threshold = 1, FDR.threshold,
-  logCPM.threshold = 4)
+  logCPM.threshold = 4, plot = c(TRUE, FALSE))
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
@@ -22,6 +22,8 @@ anovaLike(group = c("sudo", "docker"), data.folder, counts.table,
 \item{FDR.threshold, }{minimal FDR present in at least one of the comparisons with respect to reference covariate}
 
 \item{logCPM.threshold, }{minimal average abundance}
+
+\item{plot, }{TRUE if differentially expressed genes are represented in a plot.}
 }
 \description{
 This function executes in a docker edgeR for the identification of differentially expressed genes in bulk RNAseq
