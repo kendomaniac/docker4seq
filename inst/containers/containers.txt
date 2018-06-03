@@ -17,3 +17,4 @@ docker.io/rcaloger/lorenz
 docker.io/rcaloger/permutationanalysis
 docker.io/rcaloger/permutationclustering
 docker.io/rcaloger/clustereorg
+docker.io/rcaloger/heatmapbase4seq
