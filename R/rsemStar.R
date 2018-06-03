@@ -29,10 +29,10 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 
   home <- getwd()
   setwd(fastq.folder)
-  
+
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -64,7 +64,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	  system(paste("cp ",fastq.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
 
 	}
-	dir <- dir[grep(".fastq.gz", dir)]
+	dir <- dir[grep(".fastq.gz$", dir)]
 	dir.trim <- dir[grep("trimmed", dir)]
 	cat("\ncopying \n")
 	if(length(dir)==0){

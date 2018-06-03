@@ -24,13 +24,13 @@
 #' @export
 bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), threads=1, sample.id){
 
-  
+
     home <- getwd()
     setwd(fastq.folder)
-  
+
     #initialize status
     system("echo 0 >& ExitStatusFile")
-    
+
     #running time 1
     ptm <- proc.time()
     #running time 1
@@ -62,7 +62,7 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
       system(paste("cp ",fastq.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
 
     }
-    dir <- dir[grep(".fastq.gz", dir)]
+    dir <- dir[grep(".fastq.gz$", dir)]
     dir.trim <- dir[grep("trimmed", dir)]
     cat("\ncopying \n")
     if(length(dir)==0){
@@ -113,7 +113,7 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
 		    resultRun <- runDocker(group="docker", params=params)
 		  }
 	  }
-    
+
     if(resultRun==0){
       system(paste("cp ", docker_fastq.folder, "/* ", fastq.folder, sep=""))
     }
@@ -134,21 +134,21 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
       tmp.run[1] <- paste("run time mins ",ptm[1]/60, sep="")
       tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
       tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
-      
+
       writeLines(tmp.run,"run.info")
     }
-    
+
     #saving log and removing docker container
     container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
     system(paste("docker logs ", container.id, " >& ", "bwa_",substr(container.id,1,12),".log", sep=""))
     system(paste("docker rm ", container.id, sep=""))
-    
+
     #removing temporary folder
     cat("\n\nRemoving the bwa temporary file ....\n")
     system(paste("rm -R ",scrat_tmp.folder))
     system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))
     system(paste("rm  -f ",fastq.folder,"/tempFolderID", sep=""))
-    
+
     system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
     setwd(home)
 }

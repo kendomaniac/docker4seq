@@ -24,10 +24,10 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
 
   home <- getwd()
   setwd(fastq.folder)
-  
+
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -58,8 +58,8 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
   }else{
     system(paste("mv run.info ", scrat_tmp.folder,sep=""))
   }
-  
-  dir <- dir[grep(".fastq.gz", dir)]
+
+  dir <- dir[grep(".fastq.gz$", dir)]
   dir.trim <- dir[grep("trimmed", dir)]
   cat("\ncopying \n")
   if(length(dir)==0){
@@ -120,8 +120,8 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
 #    system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
     system(paste("docker logs ", container.id, " >& ","starChimeric_",substr(container.id,1,12),".log", sep=""))
     system(paste("docker rm ", container.id, sep=""))
-    
-    
+
+
     cat("\n\nRemoving the rsemStar temporary file ....\n")
     system(paste("rm -R ",scrat_tmp.folder))
     system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))

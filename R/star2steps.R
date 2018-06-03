@@ -26,10 +26,10 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
 
   home <- getwd()
   setwd(fastq.folder)
-  
+
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -54,7 +54,7 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
     system(paste("cp ",scratch.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
 
   }
-  dir <- dir[grep(".fastq.gz", dir)]
+  dir <- dir[grep(".fastq.gz$", dir)]
   dir.trim <- dir[grep("trimmed", dir)]
   cat("\ncopying \n")
   if(length(dir)==0){
@@ -86,19 +86,19 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
   #Trimmed fastq  linking fpr docker
   fastq <- sub(".gz$", "", dir)
   cat("\nsetting as working dir the scratch folder and running  docker container\n")
-  
-  
+
+
   if(group=="sudo"){
   #    system("sudo docker pull docker.io/repbioinfo/star251.2017.01")
       if(opossum.preprocessing){
         params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/2step_star_opossum.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep="")
         resultRun <- runDocker(group="sudo", params=params)
-        
+
 #        system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star_opossum.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
       }else{
         params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep="")
         resultRun <- runDocker(group="docker", params=params)
-        
+
 #        system(paste("sudo docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
       }
    }else{
@@ -106,12 +106,12 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
         if(opossum.preprocessing){
             params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/2step_star_opossum.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep="")
             resultRun <- runDocker(group="sudo", params=params)
-          
+
 #          system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star_opossum.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
         }else{
            params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep="")
            resultRun <- runDocker(group="docker", params=params)
-          
+
 #          system(paste("docker run --privileged=true  -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/rcaloger/star25.1 sh /bin/2step_star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep=""))
         }
    }
@@ -141,14 +141,14 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
     #    system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
     system(paste("docker logs ", container.id, " >& ","star2steps_",substr(container.id,1,12),".log", sep=""))
     system(paste("docker rm ", container.id, sep=""))
-    
-    
+
+
     cat("\n\nRemoving the rsemStar temporary file ....\n")
     system(paste("rm -R ",scrat_tmp.folder))
     system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))
     system(paste("rm  -f ",fastq.folder,"/tempFolderID", sep=""))
-    
- 
+
+
   }
   setwd(home)
 }
