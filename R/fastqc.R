@@ -17,9 +17,9 @@ fastqc <- function(group=c("sudo","docker"), data.folder){
 
   #storing the position of the home folder
   home <- getwd()
-  
 
-  
+
+
   #running time 1
   ptm <- proc.time()
   #setting the data.folder as working folder
@@ -27,13 +27,13 @@ fastqc <- function(group=c("sudo","docker"), data.folder){
     cat(paste("\nIt seems that the ",data.folder, " folder does not exist\n"))
     return(2)
   }
-   
+
   setwd(data.folder)
-  
+
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
-  
+
+
   #testing if docker is running
   test <- dockerTest()
   if(!test){
@@ -42,12 +42,12 @@ fastqc <- function(group=c("sudo","docker"), data.folder){
     setwd(home)
     return(10)
   }
-  
+
 
   #executing the docker job
-  params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/scratch -d docker.io/repbioinfo/r340.2017.01 sh /bin/fastqc.sh", sep="")
+  params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/scratch -d docker.io/repbioinfo/r340.2017.01 bash /bin/fastqc.sh", sep="")
  resultRun <- runDocker(group=group, params=params)
-  
+
   #waiting for the end of the container work
   if(resultRun==0){
     cat("\nFastQC analysis is finished\n")
