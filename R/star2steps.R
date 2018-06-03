@@ -54,7 +54,7 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
     system(paste("cp ",scratch.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
 
   }
-  dir <- dir[grep(".fastq.gz", dir)]
+  dir <- dir[grep(".fastq.gz$", dir)]
   dir.trim <- dir[grep("trimmed", dir)]
   cat("\ncopying \n")
   if(length(dir)==0){

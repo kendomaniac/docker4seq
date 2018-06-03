@@ -61,7 +61,7 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   dir.create(file.path(scrat_tmp.folder))
 
   dir <- dir()
-  dir <- dir[grep(".fastq.gz", dir)]
+  dir <- dir[grep(".fastq.gz$", dir)]
   dir.trim <- dir[grep("trimmed", dir)]
   cat("\ncopying \n")
   if(length(dir)==0){

@@ -79,7 +79,7 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	  system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	  system(paste("cp run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
 	}
-	dir <- dir[grep(".fastq.gz", dir)]
+	dir <- dir[grep(".fastq.gz$", dir)]
 	if(length(dir)==0){
 	  cat(paste("It seems that in ",fastq.folder, "there are not fastq.gz files"))
 	  system("echo 1 > ExitStatusFile 2>&1")

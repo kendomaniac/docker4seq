@@ -54,7 +54,7 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
   dir.create(file.path(scratch.folder, tmp.folder))
   writeLines(scrat_tmp.folder,paste(fastq.folder,"/tempFolderID", sep=""))
 	dir <- dir(path=fastq.folder)
-	dir <- dir[grep(".fastq.gz", dir)]
+	dir <- dir[grep(".fastq.gz$", dir)]
 	cat("\ncopying and unzipping\n")
 	if(length(dir)==0){
 		cat(paste("It seems that in ",fastq.folder, "there are not fastq.gz files"))

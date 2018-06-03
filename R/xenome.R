@@ -61,7 +61,7 @@ xenome <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
       system(paste("cp ",fastq.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
 
     }
-    dir <- dir[grep(".fastq.gz", dir)]
+    dir <- dir[grep(".fastq.gz$", dir)]
     cat("\ncopying \n")
     if(length(dir)==0){
       cat(paste("It seems that in ", fastq.folder, "there are not fastq.gz files"))
