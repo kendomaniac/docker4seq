@@ -20,19 +20,20 @@ heatmapBase(group = c("sudo", "docker"), scratch.folder, data.folder,
 
 \item{separator, }{separator used in count file, e.g. '\\t', ','}
 
-\item{geneNameControl, }{0 if the matrix has gene name without ENSEMBL code; 1 if the gene names are formatted as : ENSMUSG00000000001:Gnai3. If the gene names is only the ENSEMBL ID please run SCannoByGtf, before start using this function.}
+\item{geneNameControl, }{0 if the matrix has gene name without ENSEMBL code.1 if the gene names is formatted like this : ENSMUSG00000000001:Gnai3. If the gene names is only ensamble name you have to run SCannoByGtf before start using this script.}
 
 \item{status, }{0 if is raw count, 1 otherwise}
 }
 \value{
-stability plot for each nCluster,two files with score information for each cell for each permutation.
+A heatmap.
 }
 \description{
 This function generate heatmap and other plot based on clustering and on a specific gene list
 }
 \examples{
 \dontrun{
-heatmapBase("sudo",scratch.folder,data.folder,"random_10000_filtered_annotated_lorenz_naive_penta2_0","csv",",",1,1)#
+heatmapBase("sudo",getwd(),getwd(),"random_10000_filtered_annotated_lorenz_naive_penta2_0","csv",",",1,0)
+heatmapBase("sudo",getwd(),getwd(),"LS_cc_random_10000_filtered_annotated_lorenz_naive_penta2_0","csv",",",1,1)
 }
 }
 \author{
