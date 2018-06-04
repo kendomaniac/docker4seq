@@ -32,7 +32,7 @@ This function generate heatmap and other plot based on clustering and on a speci
 }
 \examples{
 \dontrun{
-heatmapBase("sudo",scratch.folder,data.folder,"random_10000_filtered_annotated_lorenz_naive_penta2_0","csv",",",1,1)# 
+heatmapBase("sudo",scratch.folder,data.folder,"random_10000_filtered_annotated_lorenz_naive_penta2_0","csv",",",1,1)#
 }
 }
 \author{
