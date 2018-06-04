@@ -6,18 +6,18 @@
 #' @param matrixName, counts table name. Matrix data file must be in data.folder. The file MUST contain RAW counts, without any modification, such as log transformation, normalizatio etc. 
 #' @param format, matrix count format, "csv", "txt"
 #' @param separator, separator used in count file, e.g. '\\t', ','
-#' @param geneNameControl, 0 if the matrix has gene name without ENSEMBL code; 1 if the gene names are formatted as : ENSMUSG00000000001:Gnai3. If the gene names is only the ENSEMBL ID please run SCannoByGtf, before start using this function.
+#' @param geneNameControl, 0 if the matrix has gene name without ENSEMBL code.1 if the gene names is formatted like this : ENSMUSG00000000001:Gnai3. If the gene names is only ensamble name you have to run SCannoByGtf before start using this script.
 #' @param status, 0 if is raw count, 1 otherwise
 #' @author Luca Alessandri , alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
-#' @return stability plot for each nCluster,two files with score information for each cell for each permutation. 
+#' @return An heatmap. 
 #' @examples
 #'\dontrun{
-#'heatmapBase("sudo",scratch.folder,data.folder,"random_10000_filtered_annotated_lorenz_naive_penta2_0","csv",",",1,1)# 
+#' heatmapBase("sudo",getwd(),getwd(),"random_10000_filtered_annotated_lorenz_naive_penta2_0","csv",",",1,0)
+#' heatmapBase("sudo",getwd(),getwd(),"LS_cc_random_10000_filtered_annotated_lorenz_naive_penta2_0","csv",",",1,1)
 #'}
 #' @export
-heatmapBase <- function(group=c("sudo","docker"), scratch.folder, data.folder,
-                        matrixName, format, separator, geneNameControl=1, status){
+heatmapBase <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,format,separator,geneNameControl=1,status){
 
 
   
@@ -69,16 +69,16 @@ separator2="tab"
 
 if(geneNameControl==0){
 system(paste("cp ",data.folder,"/",matrixName,".",format," ",data.folder,"/",matrixName,"_old.",format,sep=""))
-mainMatrix=read.table(paste(data.folder,"/",matrixName,".",format,sep=""),header=TRUE,row.names=1,sep=separator2)
+mainMatrix=read.table(paste(data.folder,"/",matrixName,".",format,sep=""),header=TRUE,row.names=1,sep=separator)
 rownames(mainMatrix)=paste(seq(1,nrow(mainMatrix)),":",rownames(mainMatrix),sep="")
-write.table(mainMatrix,paste(data.folder,"/",matrixName,".",format,sep=""),sep=separator2,col.names=NA)
+write.table(mainMatrix,paste(data.folder,"/",matrixName,".",format,sep=""),sep=separator,col.names=NA)
 }
 
 
 system(paste("cp ",data.folder,"/",matrixName,".",format," ",scrat_tmp.folder,sep=""))
 
   #executing the docker job
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/heatmapbase4seq Rscript /home/main.R ",matrixName," ",format," ",separator," ",status, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/heatmapbase4seq Rscript /home/main.R ",matrixName," ",format," ",separator2," ",status, sep="")
  
 resultRun <- runDocker(group=group, params=params)
   

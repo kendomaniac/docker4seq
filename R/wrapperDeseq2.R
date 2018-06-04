@@ -67,7 +67,7 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
     de.out1 <- sub("DEfiltered", "DEfiltered_isoform", de.out0)
     system(paste("mv ", de.out0, " ", de.out1, sep=""))
   }
-  
+  system("mv genes4david.txt genes2GO.txt")
   
   #running time 2
   ptm <- proc.time() - ptm
