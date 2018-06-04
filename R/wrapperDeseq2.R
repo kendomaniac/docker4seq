@@ -56,8 +56,19 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
 
   home <- getwd()
   setwd(output.folder)
-
-
+  
+  dir.out <- dir()
+  if(type=="gene"){
+    de.out0 <- dir.out[grep("DEfiltered", dir.out)]
+    de.out1 <- sub("DEfiltered", "DEfiltered_gene", de.out0)
+    system(paste("mv ", de.out0, " ", de.out1, sep=""))
+  }else if(type=="isoform"){
+    de.out0 <- dir.out[grep("DEfiltered", dir.out)]
+    de.out1 <- sub("DEfiltered", "DEfiltered_isoform", de.out0)
+    system(paste("mv ", de.out0, " ", de.out1, sep=""))
+  }
+  
+  
   #running time 2
   ptm <- proc.time() - ptm
   dir <- dir(output.folder)
