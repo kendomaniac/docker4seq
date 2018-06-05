@@ -13,8 +13,11 @@
 #' @return A heatmap.
 #' @examples
 #'\dontrun{
-#' heatmapBase("sudo",getwd(),getwd(),"random_10000_filtered_annotated_lorenz_naive_penta2_0","csv",",",1,0)
-#' heatmapBase("sudo",getwd(),getwd(),"LS_cc_random_10000_filtered_annotated_lorenz_naive_penta2_0","csv",",",1,1)
+#' system("wget http://130.192.119.59/public/heatmap_test.zip")
+#' system("unzip heatmap_test.zip")
+#' setwd("heatmap_test")
+#' heatmapBase(group="docker",scratch.folder="/data/scratch",data.folder=getwd(),matrixName="DEfiltered__log2TPM",format="txt",separator="\t",geneNameControl=1,status=hcl1)
+
 #'}
 #' @export
 heatmapBase <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,format,separator,geneNameControl=1,status){
