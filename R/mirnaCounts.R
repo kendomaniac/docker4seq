@@ -53,7 +53,7 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
   #}
 
   #setwd(fastq.folder)
-  system("mv ./fastQC.folder/*.log .")
+  #system("mv ./fastQC.folder/*.log .")
 
 
   #running time 1
