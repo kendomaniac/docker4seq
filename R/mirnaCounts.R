@@ -33,26 +33,27 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
   
-  
-  dir.fastq <- dir()
-  dir.fastq <- dir.fastq[grep("fastq.gz$", dir.fastq)]
-  system("mkdir fastQC.folder")
-  for(i in dir.fastq){
-    system(paste("cp ", i, " fastQC.folder", sep=""))
-    setwd("fastQC.folder")
-    fastqc(group="docker", data.folder=getwd())
-    j <- sub("fastq.gz","stdin_fastqc.html", i)
-    system(paste("mv stdin_fastqc.html ", j, sep=""))
-    system(paste("mv ", j, " ../", sep=""))
-    z <- sub("fastq.gz","stdin_fastqc.zip", i)
-    system(paste("mv stdin_fastqc.zip ", z, sep=""))
-    system(paste("mv ", z, " ../", sep=""))
-    system(paste("rm ", i, sep=""))
-    setwd(fastq.folder)
-  }
+  fastqc(group="docker", data.folder=getwd())
 
-  setwd(fastq.folder)
-  system("mv ./fastQC.folder/*.log .")
+  #dir.fastq <- dir()
+  #dir.fastq <- dir.fastq[grep("fastq.gz$", dir.fastq)]
+  #system("mkdir fastQC.folder")
+  #for(i in dir.fastq){
+  #  system(paste("cp ", i, " fastQC.folder", sep=""))
+  #  setwd("fastQC.folder")
+  #  fastqc(group="docker", data.folder=getwd())
+  #  j <- sub("fastq.gz","stdin_fastqc.html", i)
+  #  system(paste("mv stdin_fastqc.html ", j, sep=""))
+  #  system(paste("mv ", j, " ../", sep=""))
+  #  z <- sub("fastq.gz","stdin_fastqc.zip", i)
+  #  system(paste("mv stdin_fastqc.zip ", z, sep=""))
+  #  system(paste("mv ", z, " ../", sep=""))
+  #  system(paste("rm ", i, sep=""))
+  #  setwd(fastq.folder)
+  #}
+
+  #setwd(fastq.folder)
+  #system("mv ./fastQC.folder/*.log .")
 
 
   #running time 1
