@@ -82,7 +82,7 @@ chmod 777 /data/scratch
 
 The functions in docker4seq package require that user is sudo or part of a docker group.
 See the following document for more info:
-https://docs.docker.com/engine/installation/linux/ubuntulinux/#/manage-docker-as-a-non-root-user
+https://docs.docker.com/install/linux/linux-postinstall/
 
 **IMPORTANT** The first time *docker4seq* is installed the **downloadContainers** needs to be executed  to download to the local repository the containers that are needed for the use of *docker4seq*
 
