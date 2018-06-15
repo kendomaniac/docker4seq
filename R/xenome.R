@@ -105,7 +105,7 @@ xenome <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 		  }
 	  }
     if(resultRun==0){
-      system(paste("cp -R", docker_fastq.folder, "/* ", fastq.folder, sep=""))
+      system(paste("cp -R ", docker_fastq.folder, "/* ", fastq.folder, sep=""))
     }
     #running time 2
     ptm <- proc.time() - ptm
