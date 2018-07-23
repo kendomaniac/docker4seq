@@ -6,6 +6,7 @@
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for STAR is located.
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param chimSegmentMin, is a positive value indicating the minimal lenght of the overlap of a read to the chimeric element
+#' @param chimJunctionOverhangMin, is a positive value indicating the minimum overhang for a chimeric junction
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 #'
 #' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
@@ -16,11 +17,11 @@
 #'     system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 #'     #running star2step nostrand pe
 #'     starChimeric(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch",
-#'     genome.folder="/data/scratch/hg38star", threads=8, chimSegmentMin=20)
+#'     genome.folder="/data/scratch/hg38star", threads=8, chimSegmentMin=20, chimJunctionOverhangMin=15)
 #'
 #' }
 #' @export
-starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, threads=1, chimSegmentMin=20){
+starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, threads=1, chimSegmentMin=20, chimJunctionOverhangMin=15){
 
   home <- getwd()
   setwd(fastq.folder)
@@ -87,7 +88,7 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
     system(paste("gzip -d ",scratch.folder,"/",tmp.folder,"/*.gz",sep=""))
   }
 
- params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/fastq.folder -v ",scrat_tmp.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/star_chimeric_2.sh ",chimSegmentMin," ", threads," ", sub(".gz$", "", dir[1])," ", sub(".gz$", "", dir[2]), sep="")
+ params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/fastq.folder -v ",scrat_tmp.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/star_chimeric_2.sh ",chimSegmentMin," ", chimJunctionOverhangMin," ", threads," ", sub(".gz$", "", dir[1])," ", sub(".gz$", "", dir[2]), sep="")
  resultRun <- runDocker(group=group, params=params)
 
  if(resultRun==0){
