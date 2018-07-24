@@ -95,16 +95,16 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
    #not saving fastq files
    cat("\nStar to detect chimeric transcripts is finished\n")
  }
-    system(paste("mv ", scrat_tmp.folder,"/run.info ",fastq.folder, sep=""))
-    system(paste("mv ", scrat_tmp.folder,"/Chimeric.out.sam ",fastq.folder, sep=""))
-    system(paste("mv ", scrat_tmp.folder,"/Chimeric.out.junction ",fastq.folder, sep=""))
-    system(paste("mv ", scrat_tmp.folder,"/Unmapped.out.mate1 ",fastq.folder, sep=""))
-    system(paste("mv ", scrat_tmp.folder,"/Unmapped.out.mate2 ",fastq.folder, sep=""))
-    system(paste("mv ", scrat_tmp.folder,"/Aligned.sortedByCoord.out.bam ",fastq.folder, sep=""))
-    system(paste("mv ", scrat_tmp.folder,"/Log.out ",fastq.folder, sep=""))
-    system(paste("mv ", scrat_tmp.folder,"/Log.final.out ",fastq.folder, sep=""))
-    system(paste("mv ", scrat_tmp.folder,"/Log.progress.out ",fastq.folder, sep=""))
-    system(paste("mv ", scrat_tmp.folder,"/SJ.out.tab ",fastq.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder,"/run.info ",fastq.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder,"/Chimeric.out.sam ",fastq.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder,"/Chimeric.out.junction ",fastq.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder,"/Unmapped.out.mate1 ",fastq.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder,"/Unmapped.out.mate2 ",fastq.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder,"/Aligned.sortedByCoord.out.bam ",fastq.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder,"/Log.out ",fastq.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder,"/Log.final.out ",fastq.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder,"/Log.progress.out ",fastq.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder,"/SJ.out.tab ",fastq.folder, sep=""))
     #running time 2
     ptm <- proc.time() - ptm
     con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
@@ -120,11 +120,11 @@ starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
     container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
 #    system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
     system(paste("docker logs ", container.id, " >& ","starChimeric_",substr(container.id,1,12),".log", sep=""))
-    system(paste("docker rm ", container.id, sep=""))
+#    system(paste("docker rm ", container.id, sep=""))
 
 
     cat("\n\nRemoving the rsemStar temporary file ....\n")
-    system(paste("rm -R ",scrat_tmp.folder))
+ #   system(paste("rm -R ",scrat_tmp.folder))
     system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))
     system(paste("rm  -f ",fastq.folder,"/tempFolderID", sep=""))
     setwd(home)
