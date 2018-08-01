@@ -4,8 +4,9 @@
 \alias{sncRNA}
 \title{Running small RNA-seq single-end reads alignment and quantification using BWA and custom scripts}
 \usage{
-sncRNA(group = c("sudo", "docker"), fastq.folder = getwd(), scratch.folder,
-  mode, reference, threads = 1, mb.version = NULL, mb.species = NULL)
+sncRNA(group = c("sudo", "docker"), fastq.folder = getwd(),
+  scratch.folder, mode, reference, threads = 1, mb.version = NULL,
+  mb.species = NULL)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -14,7 +15,7 @@ sncRNA(group = c("sudo", "docker"), fastq.folder = getwd(), scratch.folder,
 
 \item{scratch.folder, }{a character string indicating the scratch folder where docker container will be mounted}
 
-\item{mode, }{a character string indicating the required type of analysis. Compatible analyses mode are "miRNA" and "ncRNA". In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. In "ncRNA" analysis mode, the version ("rc.version" argument) and species prefix ("rc.species" argument) of RNA Central are required. This mode require also a desidered maximum length of the studied RNA annotations ("length" argument).}
+\item{mode, }{a character string indicating the required type of analysis. Compatible analyses mode are "miRNA" and "ncRNA". In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. This mode require also the "reference" argument. In the "ncRNA" mode only the "reference" argument is required.}
 
 \item{reference, }{a character string indicating the path to the reference fasta file used to create the BWA index}
 

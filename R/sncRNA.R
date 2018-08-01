@@ -4,7 +4,7 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param fastq.folder, a character string indicating where trimmed fastq files are located
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
-#' @param mode, a character string indicating the required type of analysis. Compatible analyses mode are "miRNA" and "ncRNA". In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. In "ncRNA" analysis mode, the version ("rc.version" argument) and species prefix ("rc.species" argument) of RNA Central are required. This mode require also a desidered maximum length of the studied RNA annotations ("length" argument).
+#' @param mode, a character string indicating the required type of analysis. Compatible analyses mode are "miRNA" and "ncRNA". In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. This mode require also the "reference" argument. In the "ncRNA" mode only the "reference" argument is required.
 #' @param reference, a character string indicating the path to the reference fasta file used to create the BWA index
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param mb.version, a character string indicating the required version of miRBase database. Visit ftp://mirbase.org/pub/mirbase/ to select the proper version id.
