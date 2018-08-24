@@ -5,9 +5,10 @@
 \title{generating a PCA from counts, FPKM and TPM tables from rnaseqCounts outuputs}
 \usage{
 pca(experiment.table = "_counts.txt", type = c("counts", "FPKM", "TPM"),
-  covariatesInNames = FALSE, principal.components = c(1, 2),
-  legend.position = c("bottom", "bottomleft", "left", "topleft", "top",
-  "topright", "right", "center"), pdf = TRUE, output.folder = getwd())
+  covariatesInNames = FALSE, samplesName = TRUE,
+  principal.components = c(1, 2), legend.position = c("bottom",
+  "bottomleft", "left", "topleft", "top", "topright", "right", "center"),
+  pdf = TRUE, output.folder = getwd())
 }
 \arguments{
 \item{experiment.table, }{a character string indicating the counts, FPKM or TPM table file name}
@@ -15,6 +16,8 @@ pca(experiment.table = "_counts.txt", type = c("counts", "FPKM", "TPM"),
 \item{type, }{a character value indicating the content of the file: counts, FPKM or TPM}
 
 \item{covariatesInNames, }{a boolean value indicating if covariates are inserted after \_ in the filename}
+
+\item{samplesName, }{a boolean value indicating if in the plot samples names are present or not}
 
 \item{principal.components, }{a numerical vector with two values indicating the principal components to be plotted}
 
@@ -36,9 +39,9 @@ This function generates PCA plot from counts, FPKM and TPM tables from rnaseqCou
   unzip("test.analysis.zip")
   setwd("test.analysis")
   library(docker4seq)
-  pca(experiment.table="_log2FPKM.txt", type="FPKM", 
-      legend.position="topleft", covariatesInNames=FALSE, 
-      principal.components=c(1,2), pdf = TRUE, 
+  pca(experiment.table="_log2FPKM.txt", type="FPKM",
+      legend.position="topleft", covariatesInNames=FALSE, samplesName=TRUE,
+      principal.components=c(1,2), pdf = TRUE,
       output.folder=getwd())
 
 }

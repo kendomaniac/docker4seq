@@ -3,12 +3,13 @@
 #' @param experiment.table, a character string indicating the counts, FPKM or TPM table file name
 #' @param type, a character value indicating the content of the file: counts, FPKM or TPM
 #' @param covariatesInNames, a boolean value indicating if covariates are inserted after \_ in the filename
+#' @param samplesName, a boolean value indicating if in the plot samples names are plotted or not
 #' @param principal.components, a numerical vector with two values indicating the principal components to be plotted
 #' @param legend.position, a character string indicating the location of the covariates legend
 #' @param pdf, a boolean value indicating if results has to be saved in a pdf
 #' @param output.folder, output folder
 #' @author Raffaele Calogero
-#' 
+#'
 #' @return Returns a PCA plot
 #' @examples
 #'\dontrun{
@@ -16,25 +17,25 @@
 #'   unzip("test.analysis.zip")
 #'   setwd("test.analysis")
 #'   library(docker4seq)
-#'   pca(experiment.table="_log2FPKM.txt", type="FPKM", 
-#'       legend.position="topleft", covariatesInNames=FALSE, 
-#'       principal.components=c(1,2), pdf = TRUE, 
+#'   pca(experiment.table="_log2FPKM.txt", type="FPKM",
+#'       legend.position="topleft", covariatesInNames=FALSE, samplesName=TRUE,
+#'       principal.components=c(1,2), pdf = TRUE,
 #'       output.folder=getwd())
 #'
 #' }
 #' @export
 
 pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
-                covariatesInNames=FALSE, principal.components=c(1,2),
+                covariatesInNames=FALSE, samplesName=TRUE, principal.components=c(1,2),
                 legend.position=c("bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center"), pdf = TRUE, output.folder=getwd()){
-  
+
   #storing the position of the home folder
   home <- getwd()
   #setting rsem output folder as working dir
   setwd(output.folder)
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
+
   tmp <- read.table(experiment.table, sep="\t", stringsAsFactors = TRUE, header=T, check.names = FALSE, row.names=1)
   if(covariatesInNames){
     covar.tmp <- strsplit(names(tmp), '_')
@@ -59,15 +60,22 @@ pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
       my.colors <- rainbow(n=length(levels(covar)))
       plot(pca$x[,principal.components], main=experiment.table, col=my.colors[covar], pch=19, xlab=paste(dimnames(pca$x)[[2]][principal.components[1]],' (',
                                                                                                          signif(variance.proportion[principal.components[1]]*100,3),' %',')', sep=""), ylab=paste(dimnames(pca$x)[[2]][principal.components[2]],' (',
-                                                                                                                                                                                                  signif(variance.proportion[principal.components[2]]*100,3),'%',')', sep=""))
-      text(pca$x[,principal.components], label=sample.names)
+                                                                                                       signif(variance.proportion[principal.components[2]]*100,3),'%',')', sep=""))
+      if(samplesName){
+                 text(pca$x[,principal.components], label=sample.names)
+      }
+
       legend(legend.position, legend=levels(covar), pch=rep(19,length(levels(covar))), col=my.colors)
 
     }else{
       plot(pca$x[,principal.components], main=experiment.table, pch=19, col="gold", xlab=paste(dimnames(pca$x)[[2]][principal.components[1]],' (',
                                                                                                signif(variance.proportion[principal.components[1]]*100,3),' %',')', sep=""), ylab=paste(dimnames(pca$x)[[2]][principal.components[2]],' (',
-                                                                                                                                                                                        signif(variance.proportion[principal.components[2]]*100,3),'%',')', sep=""))
-      text(pca$x[,principal.components], label=sample.names)
+                                                                                               signif(variance.proportion[principal.components[2]]*100,3),'%',')', sep=""))
+
+      if(samplesName){
+                 text(pca$x[,principal.components], label=sample.names)
+      }
+
     }
     grid()
     dev.off()
@@ -86,7 +94,7 @@ pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
      text(pca$x[,principal.components], label=sample.names)
    }
   }
-  
+
   setwd(home)
 }
 
