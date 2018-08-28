@@ -26,7 +26,7 @@
 #'     bwaIndex(group="docker", genome.folder="/data/genomes", mb.version="22", mb.species="hsa", mode="miRNA")
 #'     
 #'     #running bwa index for ncRNA analysis
-#'     bwaIndex(group="docker", genome.folder="/data/genomes/hg19_bwa", rc.version="9.0", rc.species="Homo Sapiens", length=80, other.ref=c("http://regulatoryrna.org/database/piRNA/download/archive/v1.0/fasta/piR_human_v1.0.fa.gz", mode="ncRNA")
+#'     bwaIndex(group="docker", genome.folder="/data/genomes/hg19_bwa", rc.version="9.0", rc.species="Homo Sapiens", length=80, other.ref=c("http://regulatoryrna.org/database/piRNA/download/archive/v1.0/fasta/piR_human_v1.0.fa.gz"), mode="ncRNA")
 #' }
 #' @export
 bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, mode=c("General","GATK","miRNA","ncRNA"), mb.version=NULL, mb.species=NULL, rc.version=NULL, rc.species=NULL, length=NULL, other.ref=NULL){
@@ -151,13 +151,14 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 	tmp.run <- readLines(con)
 	close(con)
 
-	tmp.run <- NULL
+	
 	tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
 	tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
 	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
 	writeLines(tmp.run, paste(genome.folder,"run.info", sep="/"))
   #running time 2
-	system(paste("rm ",genome.folder,"/out.info",sep=""))
+	
+	#system(paste("rm ",genome.folder,"/out.info",sep=""))
 	
 	#saving log and removing docker container
 	container.id <- readLines(paste(genome.folder,"/dockerID", sep=""), warn = FALSE)

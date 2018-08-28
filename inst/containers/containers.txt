@@ -13,9 +13,7 @@ docker.io/repbioinfo/star251.2017.01
 docker.io/repbioinfo/indrop.2017.01
 docker.io/repbioinfo/salmon.2017.01
 docker.io/repbioinfo/multiqc.2018.01
-docker.io/rcaloger/casc
 docker.io/beccuti/hashclone
-docker.io/rcaloger/lorenz
 docker.io/gferrero/sncrna
 docker.io/ewels/multiqc
 docker.io/repbioinfo/desc.2018.01
