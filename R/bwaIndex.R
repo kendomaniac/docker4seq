@@ -166,6 +166,9 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 	system(paste("docker rm ", container.id, sep=""))
 	
 	system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",genome.folder, sep=""))
+	
+	system(paste("rm ",genome.folder,"/dockerID",sep="" ))
+	
   setwd(home)
 }
 
