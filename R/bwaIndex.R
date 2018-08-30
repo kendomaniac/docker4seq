@@ -26,10 +26,10 @@
 #'     bwaIndex(group="docker", genome.folder="/data/genomes", mb.version="22", mb.species="hsa", mode="miRNA")
 #'     
 #'     #running bwa index for ncRNA analysis
-#'     bwaIndex(group="docker", genome.folder="/data/genomes/hg19_bwa", rc.version="9.0", rc.species="Homo sapiens", length=80, other.ref=c("http://regulatoryrna.org/database/piRNA/download/archive/v1.0/fasta/piR_human_v1.0.fa.gz"), mode="ncRNA")
+#'     bwaIndex(group="docker", genome.folder="/data/genomes/hg19_bwa", rc.version="9.0", rc.species="Homo sapiens", length=80, mode="ncRNA")
 #' }
 #' @export
-bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, mode=c("General","GATK","miRNA","ncRNA"), mb.version=NULL, mb.species=NULL, rc.version=NULL, rc.species=NULL, length=NULL, other.ref=NULL){
+bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, mode=c("General","GATK","miRNA","ncRNA"), mb.version=NULL, mb.species=NULL, rc.version=NULL, rc.species=NULL, length=NULL){
 
   #########check genome folder exist###########
   if (!file.exists(genome.folder)){
