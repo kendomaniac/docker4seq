@@ -127,7 +127,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 	    return(2)
 	  }
 	  else{
-	    params <- paste("--cidfile ", genome.folder, "/dockerID -v ", genome.folder,":/data/scratch", " -d docker.io/gferrero/bwaindex sh /bin/bwa.index.sh ", genome.folder, " ", mode, " ", rc.version, " \"", rc.species, "\" ", length, " ", other.ref, sep="")
+	    params <- paste("--cidfile ", genome.folder, "/dockerID -v ", genome.folder,":/data/scratch", " -d docker.io/gferrero/bwaindex sh /bin/bwa.index.sh ", genome.folder, " ", mode, " ", rc.version, " \"", rc.species, "\" ", length, sep="")
 	  }
 	}
 
