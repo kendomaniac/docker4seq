@@ -34,11 +34,14 @@ This function executes the docker container where BWA is installed. BWA is a rea
 \dontrun{
     #downloading fastq files
     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
+
     #running miRNAs quantification pipeline
-    sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="miRNA", reference="/data/ref", threads=24, mb.version="22", mb.species="hsa")
+    bwaIndex(group="docker", genome.folder="/data/genomes", mb.version="22", mb.species="hsa", mode="miRNA")
+    sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="miRNA", reference="/data/genome/hairpin_hsa_miRBase_22.fa", threads=8, mb.version="22", mb.species="hsa")
     
     #running non miRNA ncRNAs quantification pipeline
-    sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="ncRNA", reference="/data/ref", threads=24)
+    bwaIndex(group="docker", genome.folder="/data/genomes/", rc.version="9.0", rc.species="Homo sapiens", length=80, mode="ncRNA")
+    sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="ncRNA", reference="/data/genome/ncRNA_Homo_sapiens_RNA_Central_9_len_80.fa", threads=8)
 
 }
 }
