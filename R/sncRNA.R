@@ -24,7 +24,7 @@
 #'     
 #'     #running non miRNA ncRNAs quantification pipeline
 #'     bwaIndex(group="docker", genome.folder="/data/genomes/", rc.version="9.0", rc.species="Homo sapiens", length=80, mode="ncRNA")
-#'     sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="ncRNA", reference=/data/genome/ncRNA_Homo_sapiens_RNA_Central_9_len_80.fa", threads=8)
+#'     sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="ncRNA", reference="/data/genome/ncRNA_Homo_sapiens_RNA_Central_9_len_80.fa", threads=8)
 #'
 #' }
 #' @export
