@@ -130,3 +130,4 @@ resultRun <- runDocker(group=group, params=params)
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
   setwd(home)
 }
+
