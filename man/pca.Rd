@@ -17,7 +17,7 @@ pca(experiment.table = "_counts.txt", type = c("counts", "FPKM", "TPM"),
 
 \item{covariatesInNames, }{a boolean value indicating if covariates are inserted after \_ in the filename}
 
-\item{samplesName, }{a boolean value indicating if in the plot samples names are present or not}
+\item{samplesName, }{a boolean value indicating if in the plot samples names are plotted or not}
 
 \item{principal.components, }{a numerical vector with two values indicating the principal components to be plotted}
 
