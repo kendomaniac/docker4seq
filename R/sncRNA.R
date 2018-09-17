@@ -4,7 +4,7 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param fastq.folder, a character string indicating where trimmed fastq files are located
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
-#' @param mode, a character string indicating the required type of analysis. Compatible analyses mode are "miRNA" and "ncRNA". In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. In "ncRNA" analysis mode, the version ("rc.version" argument) and species prefix ("rc.species" argument) of RNA Central are required. This mode require also a desidered maximum length of the studied RNA annotations ("length" argument).
+#' @param mode, a character string indicating the required type of analysis. Compatible analyses mode are "miRNA" and "ncRNA". In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. This mode require also the "reference" argument. In the "ncRNA" mode only the "reference" argument is required.
 #' @param reference, a character string indicating the path to the reference fasta file used to create the BWA index
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param mb.version, a character string indicating the required version of miRBase database. Visit ftp://mirbase.org/pub/mirbase/ to select the proper version id.
@@ -17,11 +17,14 @@
 #'\dontrun{
 #'     #downloading fastq files
 #'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
+#'
 #'     #running miRNAs quantification pipeline
-#'     sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="miRNA", reference="/data/ref", threads=24, mb.version="22", mb.species="hsa")
+#'     bwaIndex(group="docker", genome.folder="/data/genomes", mb.version="22", mb.species="hsa", mode="miRNA")
+#'     sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="miRNA", reference="/data/genome/hairpin_hsa_miRBase_22.fa", threads=8, mb.version="22", mb.species="hsa")
 #'     
 #'     #running non miRNA ncRNAs quantification pipeline
-#'     sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="ncRNA", reference="/data/ref", threads=24)
+#'     bwaIndex(group="docker", genome.folder="/data/genomes/", rc.version="9.0", rc.species="Homo sapiens", length=80, mode="ncRNA")
+#'     sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="ncRNA", reference="/data/genome/ncRNA_Homo_sapiens_RNA_Central_9_len_80.fa", threads=8)
 #'
 #' }
 #' @export
@@ -130,4 +133,3 @@ resultRun <- runDocker(group=group, params=params)
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
   setwd(home)
 }
-
