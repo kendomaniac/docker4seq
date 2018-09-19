@@ -4,19 +4,15 @@
 \alias{heatmapBase}
 \title{hfc, heatmap for clustering}
 \usage{
-heatmapBase(group = c("sudo", "docker"), scratch.folder, data.folder,
-  matrixName, format, separator, geneNameControl = 1, status)
+heatmapBase(group = c("sudo", "docker"), scratch.folder, file, separator,
+  geneNameControl = 1, status = 0)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
 
 \item{scratch.folder, }{a character string indicating the path of the scratch folder}
 
-\item{data.folder, }{a character string indicating the folder where input data are located and where output will be written}
-
-\item{matrixName, }{counts table name. Matrix data file must be in data.folder. The file MUST contain RAW counts, without any modification, such as log transformation, normalizatio etc.}
-
-\item{format, }{matrix count format, "csv", "txt"}
+\item{file, }{a character string indicating the path of the file, with counts.table name and extension included}
 
 \item{separator, }{separator used in count file, e.g. '\\t', ','}
 
@@ -35,7 +31,7 @@ This function generate heatmap and other plot based on clustering and on a speci
 system("wget http://130.192.119.59/public/heatmap_test.zip")
 system("unzip heatmap_test.zip")
 setwd("heatmap_test")
-heatmapBase(group="docker",scratch.folder="/data/scratch",data.folder=getwd(),matrixName="DEfiltered__log2TPM",format="txt",separator="\\t",geneNameControl=1,status=hcl1)
+heatmapBase(group="docker",scratch.folder="/data/scratch",file=paste(getwd(),"DEfiltered__log2TPM", sep="/"), separator="\\t",geneNameControl=1, status=hcl1)
 }
 }
 \author{

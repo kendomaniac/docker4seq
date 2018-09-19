@@ -4,18 +4,13 @@
 \alias{anovaLike}
 \title{A function allowing the identification of differentially expressed genes if multiple groups are provided.}
 \usage{
-anovaLike(group = c("sudo", "docker"), data.folder, counts.table,
-  file.type = c("txt", "csv"), logFC.threshold = 1, FDR.threshold,
-  logCPM.threshold = 4, plot = c(TRUE, FALSE))
+anovaLike(group = c("sudo", "docker"), file, logFC.threshold = 1,
+  FDR.threshold, logCPM.threshold = 4, plot = c(TRUE, FALSE))
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
 
-\item{data.folder, }{a character string indicating the folder where input data are located and where output will be written}
-
-\item{counts.table, }{a character string indicating the counts table file. IMPORTANT in the header of the file the covariate group MUST be associated to the column name using underscore, e.g. samplelX0_cov1, samplelX1_cov1, samplelY1_cov2, samplelY0_cov2}
-
-\item{file.type, }{type of file: txt tab separated columns csv comma separated columns}
+\item{file, }{a character string indicating the path of the file, with counts.table name and extension included}
 
 \item{logFC.threshold, }{minimal logFC present in at least one of the comparisons with respect to reference covariate}
 
@@ -31,9 +26,8 @@ This function executes in a docker edgeR for the identification of differentiall
 \examples{
 \dontrun{
     #running deDetection
-    anovaLike(group="docker", data.folder=getwd(),
-               counts.table="annotated_lorenz_buettner_counts_noSymb.txt",
-               file.type="txt", logFC.threshold=1, FDR.threshold=0.05, logCPM.threshold=4)
+    anovaLike(group="docker", file=paste(getwd(),"annotated_lorenz_buettner_counts_noSymb.txt", sep="/"),
+       logFC.threshold=1, FDR.threshold=0.05, logCPM.threshold=4)
 }
 
 }
