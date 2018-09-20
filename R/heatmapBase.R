@@ -25,8 +25,17 @@ heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0
   matrixNameC=strsplit(basename(file),"\\.")[[1]]
   matrixName=paste(matrixNameC[seq(1,positions-1)],collapse="")
   format=strsplit(basename(basename(file)),"\\.")[[1]][positions]
+  separator2="tab"
 
+  #updating rownames structure
+   tmp <- read.table(file, sep="\t", header=T, row.names=1)
+   tmp.n <- rownames(tmp)
+   tmp.n <- strsplit(tmp.n, ":")
+   tmp.ensembl <- sapply(tmp.n, function(x)x[2])
+   tmp.symbol <- sapply(tmp.n, function(x)x[1])
 
+   rownames(tmp) <- paste(tmp.ensembl, tmp.symbol, sep=":")
+   write.table(tmp, file, sep="\t", col.names=NA)
 
   #running time 1
   ptm <- proc.time()
@@ -66,20 +75,6 @@ heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0
   cat("\ncreating a folder in scratch folder\n")
   dir.create(file.path(scrat_tmp.folder))
   #preprocess matrix and copying files
-
-
-
-if(format=="txt"){
-separator2="tab"
-}else{separator2=","}
-
-
-if(geneNameControl==0){
-system(paste("cp ",data.folder,"/",matrixName,".",format," ",data.folder,"/",matrixName,"_old.",format,sep=""))
-mainMatrix=read.table(paste(data.folder,"/",matrixName,".",format,sep=""),header=TRUE,row.names=1,sep=separator)
-rownames(mainMatrix)=paste(seq(1,nrow(mainMatrix)),":",rownames(mainMatrix),sep="")
-write.table(mainMatrix,paste(data.folder,"/",matrixName,".",format,sep=""),sep=separator,col.names=NA)
-}
 
 
 system(paste("cp ",data.folder,"/",matrixName,".",format," ",scrat_tmp.folder,sep=""))
