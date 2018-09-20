@@ -3,7 +3,6 @@
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param file, a character string indicating the path of the file, with counts.table name and extension included
-#' @param separator, separator used in count file, e.g. '\\t', ','
 #' @param geneNameControl, 0 if the matrix has gene name without ENSEMBL code.1 if the gene names is formatted like this : ENSMUSG00000000001:Gnai3. If the gene names is only ensamble name you have to run SCannoByGtf before start using this script.
 #' @param status, 0 if is raw count, 1 otherwise
 #' @author Luca Alessandri , alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
@@ -14,11 +13,11 @@
 #' system("wget http://130.192.119.59/public/heatmap_test.zip")
 #' system("unzip heatmap_test.zip")
 #' setwd("heatmap_test")
-#' heatmapBase(group="docker",scratch.folder="/data/scratch",file=paste(getwd(),"DEfiltered__log2TPM", sep="/"), separator="\t",geneNameControl=1, status=hcl1)
+#' heatmapBase(group="docker",scratch.folder="/data/scratch",file=paste(getwd(),"DEfiltered__log2TPM", sep="/"), geneNameControl=1, status=hcl1)
 
 #'}
 #' @export
-heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, separator, geneNameControl=1, status=0){
+heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, geneNameControl=1, status=0){
 
   data.folder=dirname(file)
   positions=length(strsplit(basename(file),"\\.")[[1]])
@@ -69,9 +68,9 @@ heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, separato
 
 
 
-if(separator=="\t"){
+if(format=="txt"){
 separator2="tab"
-}else{separator2=separator}
+}else{separator2=","}
 
 
 if(geneNameControl==0){
