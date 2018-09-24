@@ -85,7 +85,7 @@ heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0
 system(paste("cp ",data.folder,"/",matrixName,".",format," ",scrat_tmp.folder,sep=""))
 
   #executing the docker job
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/heatmapbase4seq Rscript /home/main.R ",matrixName," ",format," ",separator2," ",status, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/heatmapbase4seq Rscript /home/main.R ",matrixName," ",format," ",separator2," ",status, " ", b1," ", b2, sep="")
 
 resultRun <- runDocker(group=group, params=params)
 
