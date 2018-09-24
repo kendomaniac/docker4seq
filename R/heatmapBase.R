@@ -19,7 +19,8 @@
 #'}
 #' @export
 heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0, lower.range=NULL, upper.range=NULL){
-
+  b1=lower.range
+  b2=upper.range
   if(is.null(lower.range)){b1=0}
   if(is.null(upper.range)){b2=0}
 
