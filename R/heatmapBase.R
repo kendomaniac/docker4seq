@@ -44,7 +44,7 @@ heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0
    rownames(tmp) <- paste(tmp.ensembl, tmp.symbol, sep=":")
 
   #updating samples names
-   tmp.c <- rownames(tmp)
+   tmp.c <- names(tmp)
    tmp.c <- strsplit(tmp.c, "_")
    tmp.samples <- sapply(tmp.c, function(x)x[1])
    names(tmp) <- tmp.samples
