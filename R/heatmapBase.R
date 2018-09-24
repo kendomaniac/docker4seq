@@ -19,6 +19,7 @@
 #'}
 #' @export
 heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0, lower.range=NULL, upper.range=NULL){
+
   b1=lower.range
   b2=upper.range
   if(is.null(lower.range)){b1=0}
@@ -41,6 +42,12 @@ heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0
    tmp.symbol <- sapply(tmp.n, function(x)x[1])
 
    rownames(tmp) <- paste(tmp.ensembl, tmp.symbol, sep=":")
+
+  #updating samples names
+   tmp.c <- rownames(tmp)
+   tmp.c <- strsplit(tmp.c, "_")
+   tmp.samples <- sapply(tmp.c, function(x)x[1])
+   names(tmp) <- tmp.samples
    write.table(tmp, file, sep="\t", col.names=NA)
 
   #running time 1
