@@ -14,7 +14,7 @@
 #' system("wget http://130.192.119.59/public/heatmap_test.zip")
 #' system("unzip heatmap_test.zip")
 #' setwd("heatmap_test")
-#' heatmapBase(group="docker",scratch.folder="/data/scratch",file=paste(getwd(),"DEfiltered__log2TPM", sep="/"), status=1, lower.range="/-1", upper.range="1")
+#' heatmapBase(group="docker",scratch.folder="/data/scratch",file=paste(getwd(),"DEfiltered__log2TPM.txt", sep="/"), status=1, lower.range="/-1", upper.range="1")
 
 #'}
 #' @export
