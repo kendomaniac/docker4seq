@@ -5,8 +5,8 @@
 \title{Running Star two steps for variant calls}
 \usage{
 star2steps(group = c("sudo", "docker"), fastq.folder = getwd(),
-  scratch.folder = "/data/scratch", genome.folder, groupid, threads = 1,
-  opossum.preprocessing = FALSE)
+  scratch.folder = "/data/scratch", genome.folder, groupid,
+  threads = 1, opossum.preprocessing = FALSE)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

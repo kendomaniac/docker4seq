@@ -4,8 +4,9 @@
 \alias{sncRNA}
 \title{Running small RNA-seq single-end reads alignment and quantification using BWA and custom scripts}
 \usage{
-sncRNA(group = c("sudo", "docker"), fastq.folder = getwd(), scratch.folder,
-  mode, reference, threads = 1, mb.version = NULL, mb.species = NULL)
+sncRNA(group = c("sudo", "docker"), fastq.folder = getwd(),
+  scratch.folder, mode, reference, threads = 1, mb.version = NULL,
+  mb.species = NULL)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

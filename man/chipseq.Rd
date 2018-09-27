@@ -5,11 +5,12 @@
 \title{Detection and annotation of TF binding sites and histone marks, based on the workflow used in Galli et al Mol Cell. 2015 Oct 15;60(2):328-37}
 \usage{
 chipseq(group = c("sudo", "docker"), bam.folder = getwd(), sample.bam,
-  ctrl.bam, scratch.folder = "/data/scratch", genome = c("hg19", "hg38",
-  "mm9", "mm10"), read.size, tool = c("macs", "sicer"), macs.min.mfold = 10,
-  macs.max.mfold = 30, macs.pval = "1e-5", sicer.wsize = 200,
-  sicer.gsize = c(200, 600), sicer.fdr = 0.1, tss.distance = 0,
-  max.upstream.distance = 10000, remove.duplicates = c("Y", "N"))
+  ctrl.bam, scratch.folder = "/data/scratch", genome = c("hg19",
+  "hg38", "mm9", "mm10"), read.size, tool = c("macs", "sicer"),
+  macs.min.mfold = 10, macs.max.mfold = 30, macs.pval = "1e-5",
+  sicer.wsize = 200, sicer.gsize = c(200, 600), sicer.fdr = 0.1,
+  tss.distance = 0, max.upstream.distance = 10000,
+  remove.duplicates = c("Y", "N"))
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

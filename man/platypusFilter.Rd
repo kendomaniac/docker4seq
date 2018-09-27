@@ -5,9 +5,9 @@
 \title{Platypus filter analysis NOT READY TO GO ON STABLE to be used in case the full platypus workflow fail.}
 \usage{
 platypusFilter(group = c("sudo", "docker"), data.folder = getwd(),
-  scratch.folder, GQ, minSampGQ, NR, minSampNR, NV, minSampNV, normal_samples,
-  GT_normal, minSampGT_normal, tumoral_samples, GT_tumoral, minSampGT_tumoral,
-  stringent_filter, annotation)
+  scratch.folder, GQ, minSampGQ, NR, minSampNR, NV, minSampNV,
+  normal_samples, GT_normal, minSampGT_normal, tumoral_samples, GT_tumoral,
+  minSampGT_tumoral, stringent_filter, annotation)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

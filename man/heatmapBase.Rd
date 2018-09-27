@@ -4,8 +4,8 @@
 \alias{heatmapBase}
 \title{hfc, heatmap for clustering}
 \usage{
-heatmapBase(group = c("sudo", "docker"), scratch.folder, file, status = 0,
-  lower.range = NULL, upper.range = NULL)
+heatmapBase(group = c("sudo", "docker"), scratch.folder, file,
+  status = 0, lower.range = NULL, upper.range = NULL)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
@@ -31,7 +31,7 @@ This function generate heatmap and other plot based on clustering and on a speci
 system("wget http://130.192.119.59/public/heatmap_test.zip")
 system("unzip heatmap_test.zip")
 setwd("heatmap_test")
-heatmapBase(group="docker",scratch.folder="/data/scratch",file=paste(getwd(),"DEfiltered__log2TPM.txt", sep="/"), status=1, lower.range="/-1", upper.range="1")
+heatmapBase(group="docker",scratch.folder="/data/scratch",file=paste(getwd(),"DEfiltered__log2TPM", sep="/"), status=1, lower.range="/-1", upper.range="1")
 }
 }
 \author{

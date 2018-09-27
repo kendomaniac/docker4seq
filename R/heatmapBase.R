@@ -14,7 +14,7 @@
 #' system("wget http://130.192.119.59/public/heatmap_test.zip")
 #' system("unzip heatmap_test.zip")
 #' setwd("heatmap_test")
-#' heatmapBase(group="docker",scratch.folder="/data/scratch",file=paste(getwd(),"DEfiltered__log2TPM.txt", sep="/"), status=1, lower.range="/-1", upper.range="1")
+#' heatmapBase(group="docker",scratch.folder="/data/scratch",file=paste(getwd(),"DEfiltered__log2TPM", sep="/"), status=1, lower.range="/-1", upper.range="1")
 
 #'}
 #' @export
@@ -22,6 +22,9 @@ heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0
 
   b1=lower.range
   b2=upper.range
+  if(b1<0){b1=paste("/",b1,sep="")}
+    if(b2<0){b2=paste("/",b2,sep="")}
+
   if(is.null(lower.range)){b1=0}
   if(is.null(upper.range)){b2=0}
 
@@ -139,4 +142,4 @@ resultRun <- runDocker(group=group, params=params)
   system("rm  -fR tempFolderID")
   #system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
   setwd(home)
-}
+} 
