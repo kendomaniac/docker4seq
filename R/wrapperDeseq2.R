@@ -69,6 +69,7 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
   }
 
   system("mv genes4david.txt genes2GO.txt")
+  system("mv gbkg4david.txtt gbkg2GO.txt")
 
   #running time 2
   ptm <- proc.time() - ptm
