@@ -40,18 +40,28 @@ heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0
   #updating rownames structure
    tmp <- read.table(file, sep="\t", header=T, row.names=1)
    tmp.n <- rownames(tmp)
-   tmp.n <- strsplit(tmp.n, ":")
-   tmp.ensembl <- sapply(tmp.n, function(x)x[2])
-   tmp.symbol <- sapply(tmp.n, function(x)x[1])
-
+   if(length(grep("-miR-", tmp.n)) > 0){
+     tmp.n1 <- strsplit(tmp.n, "-")
+     tmp.ensembl <- sapply(tmp.n1, function(x){
+       paste(x[2:length(x)], collapse="-")
+     })
+     tmp.symbol <- sapply(tmp.n1, function(x){
+         paste(x[2:length(x)],collapse='.')
+     })
+   }else{
+       tmp.n <- strsplit(tmp.n, ":")
+       tmp.ensembl <- sapply(tmp.n, function(x)x[2])
+       tmp.symbol <- sapply(tmp.n, function(x)x[1])
+   }
    rownames(tmp) <- paste(tmp.ensembl, tmp.symbol, sep=":")
-
-  #updating samples names
+   #updating samples names
    tmp.c <- names(tmp)
    tmp.c <- strsplit(tmp.c, "_")
    tmp.samples <- sapply(tmp.c, function(x)x[1])
    names(tmp) <- tmp.samples
-   write.table(tmp, file, sep="\t", col.names=NA)
+   write.table(tmp, "heatmap.txt", sep="\t", col.names=NA)
+
+
 
   #running time 1
   ptm <- proc.time()
@@ -96,7 +106,7 @@ heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0
 system(paste("cp ",data.folder,"/",matrixName,".",format," ",scrat_tmp.folder,sep=""))
 
   #executing the docker job
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/heatmapbase4seq Rscript /home/main.R ",matrixName," ",format," ",separator2," ",status, " ", b1," ", b2, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/heatmapbase4seq Rscript /home/main.R heatmap txt tab ",status, " ", b1," ", b2, sep="")
 
 resultRun <- runDocker(group=group, params=params)
 
@@ -142,4 +152,4 @@ resultRun <- runDocker(group=group, params=params)
   system("rm  -fR tempFolderID")
   #system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
   setwd(home)
-} 
+}
