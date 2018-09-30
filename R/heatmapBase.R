@@ -112,7 +112,7 @@ resultRun <- runDocker(group=group, params=params)
 
   #waiting for the end of the container work
   if(resultRun==0){
-    #system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
   }
   #running time 2
   ptm <- proc.time() - ptm
@@ -150,6 +150,6 @@ resultRun <- runDocker(group=group, params=params)
   system("rm -fR out.info")
   system("rm -fR dockerID")
   system("rm  -fR tempFolderID")
-  #system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
   setwd(home)
 }
