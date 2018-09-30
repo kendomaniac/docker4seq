@@ -14,7 +14,7 @@
 #' system("wget http://130.192.119.59/public/heatmap_test.zip")
 #' system("unzip heatmap_test.zip")
 #' setwd("heatmap_test")
-#' heatmapBase(group="docker",scratch.folder="/data/scratch",file=paste(getwd(),"DEfiltered__log2TPM", sep="/"), status=1, lower.range="/-1", upper.range="1")
+#' heatmapBase(group="docker",scratch.folder="/data/scratch",file=paste(getwd(),"DEfiltered__log2TPM.txt", sep="/"), status=1, lower.range="/-1", upper.range="1")
 
 #'}
 #' @export
@@ -59,7 +59,7 @@ heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0
    tmp.c <- strsplit(tmp.c, "_")
    tmp.samples <- sapply(tmp.c, function(x)x[1])
    names(tmp) <- tmp.samples
-   write.table(tmp, "heatmap.txt", sep="\t", col.names=NA)
+   write.table(tmp, paste(data.folder, "heatmap.txt", sep="/"), sep="\t", col.names=NA)
 
 
 
@@ -103,7 +103,7 @@ heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0
   #preprocess matrix and copying files
 
 
-system(paste("cp ",data.folder,"/",matrixName,".",format," ",scrat_tmp.folder,sep=""))
+system(paste("cp ",data.folder,"/heatmap.txt ",scrat_tmp.folder,sep=""))
 
   #executing the docker job
     params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/heatmapbase4seq Rscript /home/main.R heatmap txt tab ",status, " ", b1," ", b2, sep="")
