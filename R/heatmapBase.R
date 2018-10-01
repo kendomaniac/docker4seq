@@ -143,7 +143,7 @@ resultRun <- runDocker(group=group, params=params)
 
   #Copy result folder
   cat("Copying Result Folder")
-  system(paste("cp -r ",scrat_tmp.folder,"/",matrixName,"_heatmap.pdf ",data.folder,"/",sep=""))
+#  system(paste("cp -r ",scrat_tmp.folder,"/",matrixName,"_heatmap.pdf ",data.folder,"/",sep=""))
   #removing temporary folder
   cat("\n\nRemoving the temporary file ....\n")
   system(paste("rm -R ",scrat_tmp.folder))
