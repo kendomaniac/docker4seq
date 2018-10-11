@@ -55,7 +55,12 @@ filterCounts <- function(data.folder, type=c("gene", "isoform", "mirna")){
       setwd(home)
       return(3)
     }
-
+    if(length(de.file) > 1){
+      cat("\nYou have more then one file with prefix Defilter, please remove all except one.\n")
+      system("echo 4 > ExitStatusFile 2>&1")
+      setwd(home)
+      return(4)
+     }
 
     for(i in counts.file){
       counts.df <- read.table(i, sep="\t", header=T, row.names=1, stringsAsFactors = F)
