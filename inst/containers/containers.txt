@@ -13,3 +13,4 @@ docker.io/repbioinfo/salmon.2017.01
 docker.io/repbioinfo/multiqc.2018.01
 docker.io/rcaloger/heatmapbase4seq
 docker.io/gferrero/sncrna
+docker.io/repbioinfo/desc.2018.01
