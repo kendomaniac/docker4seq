@@ -35,7 +35,7 @@ getInfo <- function(group=c("sudo","docker"), data.folder=getwd(), url){
   resultRun <- runDocker(group=group, params=params)
 
   if(resultRun==0){
-    system(paste("cp ", docker_fastq.folder, "/* ", fastq.folder, sep=""))
+    cat("\nData download is finished\n")
   }
   #running time 2
   ptm <- proc.time() - ptm
@@ -59,7 +59,7 @@ getInfo <- function(group=c("sudo","docker"), data.folder=getwd(), url){
   }
 
   #saving log and removing docker container
-  container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
+  container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", container.id, " >& ", "bwa_",substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
 
