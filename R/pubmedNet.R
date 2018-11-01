@@ -7,8 +7,7 @@
 #' @return one graph plot
 #' @examples
 #'\dontrun{
-#'     pubmedNet(group="docker",data.folder=getwd(),
-#'     file=paste(getwd(),"DE_anova_rankedBySD_filteredByPositivePatient.txt", sep="/"))
+#'     pubmedNet(group="docker", file=paste(getwd(),"DE_anova_rankedBySD_filteredByPositivePatient.txt", sep="/"))
 #'
 #' }
 #' @export
@@ -62,11 +61,11 @@ pubmedNet <- function(group=c("sudo","docker"), file){
 
   #saving log and removing docker container
   container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", container.id, " >& ", "bwa_",substr(container.id,1,12),".log", sep=""))
+  system(paste("docker logs ", container.id, " >& ", "pubmedNet_",substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
 
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
-  system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))
+  system(paste("rm  -f ",data.folder,"/dockerID", sep=""))
   setwd(home)
 }
 

@@ -60,11 +60,11 @@ getInfo <- function(group=c("sudo","docker"), data.folder=getwd(), url){
 
   #saving log and removing docker container
   container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", container.id, " >& ", "bwa_",substr(container.id,1,12),".log", sep=""))
+  system(paste("docker logs ", container.id, " >& ", "getInfo_",substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
 
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
-  system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))
+  system(paste("rm  -f ",data.folder,"/dockerID", sep=""))
   setwd(home)
 }
 
