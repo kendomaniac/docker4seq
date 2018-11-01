@@ -12,6 +12,8 @@ getInfo(group = c("sudo", "docker"), data.folder = getwd(), url)
 \item{data.folder, }{a character string indicating where downloaded data will be stored}
 
 \item{url, }{the url to download the full dataset}
+
+\item{type, }{PUBMED or OMIM}
 }
 \value{
 one file files: gene_with_protein_product.txt
@@ -22,7 +24,7 @@ This function retrieves the full table of curated genes annotations
 \examples{
 \dontrun{
     getInfo(group="docker",data.folder=getwd(),
-    url="ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt")
+    url="ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt", type=c("pubmed", "omim"))
 
 }
 }

@@ -4,13 +4,14 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param data.folder, a character string indicating where downloaded data will be stored
 #' @param url, the url to download the full dataset
+#' @param type, PUBMED or OMIM
 #' @author Raffaele Calogero
 #'
 #' @return one file files: gene_with_protein_product.txt
 #' @examples
 #'\dontrun{
 #'     getInfo(group="docker",data.folder=getwd(),
-#'     url="ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt")
+#'     url="ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt", type=c("pubmed", "omim"))
 #'
 #' }
 #' @export
@@ -31,7 +32,7 @@ getInfo <- function(group=c("sudo","docker"), data.folder=getwd(), url){
     setwd(home)
     return(10)
   }
-  params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data -d docker.io/repbioinfo/genes.2018.01 sh /bin/getinfo.sh ", url, sep="")
+  params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data -d docker.io/repbioinfo/genes.2018.01 sh /bin/getinfo.sh ", url, " ", type, sep="")
   resultRun <- runDocker(group=group, params=params)
 
   if(resultRun==0){
