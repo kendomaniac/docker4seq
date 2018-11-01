@@ -64,6 +64,7 @@ getInfo <- function(group=c("sudo","docker"), data.folder=getwd(), url){
   system(paste("docker rm ", container.id, sep=""))
 
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
+  system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))
   setwd(home)
 }
 
