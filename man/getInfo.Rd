@@ -4,7 +4,8 @@
 \alias{getInfo}
 \title{Downloading the full set of genes information from HGNC}
 \usage{
-getInfo(group = c("sudo", "docker"), data.folder = getwd(), url)
+getInfo(group = c("sudo", "docker"), data.folder = getwd(), url,
+  type = c("pubmed", "omim"))
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -24,7 +25,7 @@ This function retrieves the full table of curated genes annotations
 \examples{
 \dontrun{
     getInfo(group="docker",data.folder=getwd(),
-    url="ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt", type=c("pubmed", "omim"))
+    url="ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt", type="pubmed"))
 
 }
 }

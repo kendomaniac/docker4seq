@@ -11,11 +11,11 @@
 #' @examples
 #'\dontrun{
 #'     getInfo(group="docker",data.folder=getwd(),
-#'     url="ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt", type=c("pubmed", "omim"))
+#'     url="ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt", type="pubmed"))
 #'
 #' }
 #' @export
-getInfo <- function(group=c("sudo","docker"), data.folder=getwd(), url){
+getInfo <- function(group=c("sudo","docker"), data.folder=getwd(), url, type=c("pubmed", "omim")){
   home <- getwd()
   setwd(data.folder)
 
