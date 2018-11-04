@@ -24,7 +24,7 @@
 #'
 #' }
 #' @export
-rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), strandness=c("none","forward","reverse"), threads=1){
+bowtie2 <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), strandness=c("none","forward","reverse"), threads=1){
 
   home <- getwd()
   setwd(fastq.folder)
