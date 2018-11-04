@@ -12,7 +12,7 @@
 #' @examples
 #'\dontrun{
 #'     #running rsemstar index for human
-#'     bowtie2Index(group="sudo",genome.folder="/data/scratch/hg38bowtie2",
+#'     bowtie2Index(group="docker",genome.folder="/data/scratch/hg38bowtie2",
 #'     ensembl.urlgenome=
 #'     "ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz",
 #'     ensembl.urlgtf=
