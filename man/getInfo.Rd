@@ -25,7 +25,7 @@ This function retrieves the full table of curated genes annotations
 \examples{
 \dontrun{
     getInfo(group="docker",data.folder=getwd(),
-    url="ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt", type="pubmed"))
+    url="ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt", type="pubmed")
 
 }
 }

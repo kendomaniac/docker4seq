@@ -14,3 +14,4 @@ docker.io/repbioinfo/multiqc.2018.01
 docker.io/rcaloger/heatmapbase4seq
 docker.io/gferrero/sncrna
 docker.io/repbioinfo/desc.2018.01
+docker.io/repbioinfo/bowtie2.2018.01:bowtie2-2.2.9-R3.4.4-Bioconductor3.6-Biostrings_2.46.0

@@ -11,13 +11,17 @@
 #' @examples
 #'\dontrun{
 #'     getInfo(group="docker",data.folder=getwd(),
-#'     url="ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt", type="pubmed"))
+#'     url="ftp.ebi.ac.uk/pub/databases/genenames/new/tsv/locus_types/gene_with_protein_product.txt", type="pubmed")
 #'
 #' }
 #' @export
 getInfo <- function(group=c("sudo","docker"), data.folder=getwd(), url, type=c("pubmed", "omim")){
   home <- getwd()
   setwd(data.folder)
+  dir <- dir()
+  if(length(grep("gene_with_protein_product.txt", dir)) > 0){
+    file.rename("gene_with_protein_product.txt", paste(gsub(":","-",gsub(" ","-",date())), "gene_with_protein_product.txt", sep="_"))
+  }
 
   #initialize status
   system("echo 0 >& ExitStatusFile")
