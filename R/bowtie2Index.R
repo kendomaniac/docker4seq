@@ -49,7 +49,7 @@ bowtie2Index <- function(group=c("sudo","docker"),  genome.folder=getwd(), ensem
   }
 
 
-cat("\nsetting as working dir the genome folder and running bwa docker container\n")
+cat("\nsetting as working dir the genome folder and running bowtie2 docker container\n")
 
 
 	params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/genome"," -d repbioinfo/bowtie2.2018.01:bowtie2-2.2.9-R3.4.4-Bioconductor3.6-Biostrings_2.46.0 sh /bin/bowtie2.index.sh ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
