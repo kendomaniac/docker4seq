@@ -123,18 +123,12 @@ bowtie2 <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folde
 	if(resultRun==0){
 	  cat("\nBowtie2 analysis is finished\n")
 	  system(paste("cp ",scrat_tmp.folder," ", fastq.folder, sep=""))
+	  system(paste("cp ",scrat_tmp.folder,"/run.info ", fastq.folder, sep=""))
 	}
 
 	#running time 2
 	ptm <- proc.time() - ptm
 	run.info.file <- grep("run.info", dir(fastq.folder))
-	if(length(run.info.file)==1){
-	   con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
-	   tmp.run <- readLines(con)
-	   close(con)
-	}else{
-	  tmp.run <- ""
-	}
 	tmp.run[length(tmp.run)+1] <- paste("bowtie user run time mins ",ptm[1]/60, sep="")
 	tmp.run[length(tmp.run)+1] <- paste("bowtie system run time mins ",ptm[2]/60, sep="")
 	tmp.run[length(tmp.run)+1] <- paste("bowtie elapsed run time mins ",ptm[3]/60, sep="")

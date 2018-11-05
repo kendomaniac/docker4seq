@@ -13,7 +13,6 @@
 #' system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 #' system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 #' library(docker4seq)
-#' #running bowtie nostrand pe
 #' deeptoolBwig(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch/")
 #'
 #' }
@@ -76,24 +75,18 @@ deeptoolBwig <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
 	docker_fastq.folder=file.path("/data/scratch", tmp.folder)
 	cat("\nsetting as working dir the scratch folder and running  docker container\n")
 
-		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d repbioinfo/bowtie2.2018.01:bowtie2-2.2.9-R3.4.4-Bioconductor3.6-Biostrings_2.46.0 sh /bin/deeptoolsBwig.sh ",docker_fastq.folder," ", bam," ", fastq.folder, sep="")
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d repbioinfo/bowtie2.2018.01:bowtie2-2.2.9-R3.4.4-Bioconductor3.6-Biostrings_2.46.0 sh /bin/deeptoolsBwig.sh ",docker_fastq.folder," ", bam," ", fastq.folder, sep="")
 		    resultRun <- runDocker(group=group, params=params)
 
 	if(resultRun==0){
 	  cat("\nbigWig creation is finished\n")
 	  system(paste("cp ",scrat_tmp.folder,"/*.bw ", fastq.folder, sep=""))
+	  system(paste("cp ",scrat_tmp.folder,"/run.info ", fastq.folder, sep=""))
 	}
 
 	#running time 2
 	ptm <- proc.time() - ptm
 	run.info.file <- grep("run.info", dir(fastq.folder))
-	if(length(run.info.file)==1){
-	  con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
-	  tmp.run <- readLines(con)
-	  close(con)
-	}else{
-	  tmp.run <- ""
-	}
 	tmp.run[length(tmp.run)+1] <- paste("bigWig user run time mins ",ptm[1]/60, sep="")
 	tmp.run[length(tmp.run)+1] <- paste("bigWig system run time mins ",ptm[2]/60, sep="")
 	tmp.run[length(tmp.run)+1] <- paste("bigWig elapsed run time mins ",ptm[3]/60, sep="")

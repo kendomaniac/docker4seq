@@ -26,7 +26,6 @@ This function executes the docker container bowtie2 embedding deeptools the outp
 system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 library(docker4seq)
-#running bowtie nostrand pe
 deeptoolBwig(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch/")
 
 }
