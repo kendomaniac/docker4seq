@@ -57,6 +57,7 @@ deeptoolBwig <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
 	  system(paste("cp ",fastq.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
 
 	}
+	dir <- dir(path=fastq.folder)
 	dir <- dir[grep(".bam", dir)]
 	cat("\ncopying \n")
 	if(length(dir)==0){
@@ -64,6 +65,8 @@ deeptoolBwig <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
 	  system("echo 1 > ExitStatusFile 2>&1")
 		return(1)
 	}else{
+	  bam=dir[1]
+	  bai=dir[2]
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 		for(i in dir){
 		      system(paste("cp ",fastq.folder,"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
@@ -73,11 +76,11 @@ deeptoolBwig <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
 	docker_fastq.folder=file.path("/data/scratch", tmp.folder)
 	cat("\nsetting as working dir the scratch folder and running  docker container\n")
 
-		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d repbioinfo/bowtie2.2018.01:bowtie2-2.2.9-R3.4.4-Bioconductor3.6-Biostrings_2.46.0 sh /bin/bowtie2pe_nostrand.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", fastq.folder, sep="")
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d repbioinfo/bowtie2.2018.01:bowtie2-2.2.9-R3.4.4-Bioconductor3.6-Biostrings_2.46.0 sh /bin/deeptoolsBwig.sh ",docker_fastq.folder," ", bam," ", fastq.folder, sep="")
 		    resultRun <- runDocker(group=group, params=params)
 
 	if(resultRun==0){
-	  cat("\nbiWig creation is finished\n")
+	  cat("\nbigWig creation is finished\n")
 	  system(paste("cp ",scrat_tmp.folder,"/*.bw ", fastq.folder, sep=""))
 	}
 
