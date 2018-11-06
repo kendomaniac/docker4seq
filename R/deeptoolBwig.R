@@ -4,6 +4,7 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param fastq.folder, a character string indicating where bam, bai files  are located
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
+#' @param threads, a number indicating the number of cores to be used from the application
 #' @author Raffaele Calogero
 #'
 #' @return sorted.bw
@@ -13,11 +14,11 @@
 #' system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 #' system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 #' library(docker4seq)
-#' deeptoolBwig(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch/")
+#' deeptoolBwig(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch/", threads=8)
 #'
 #' }
 #' @export
-deeptoolBwig <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch"){
+deeptoolBwig <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", threads){
 
   home <- getwd()
   setwd(fastq.folder)
@@ -75,7 +76,7 @@ deeptoolBwig <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.
 	docker_fastq.folder=file.path("/data/scratch", tmp.folder)
 	cat("\nsetting as working dir the scratch folder and running  docker container\n")
 
-		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d repbioinfo/bowtie2.2018.01:bowtie2-2.2.9-R3.4.4-Bioconductor3.6-Biostrings_2.46.0 sh /bin/deeptoolsBwig.sh ",docker_fastq.folder," ", bam," ", fastq.folder, sep="")
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -d repbioinfo/bowtie2.2018.01:bowtie2-2.2.9-R3.4.4-Bioconductor3.6-Biostrings_2.46.0 sh /bin/deeptoolsBwig.sh ",docker_fastq.folder," ", bam," ",threads," ", fastq.folder, sep="")
 		    resultRun <- runDocker(group=group, params=params)
 
 	if(resultRun==0){

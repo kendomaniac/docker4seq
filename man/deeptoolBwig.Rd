@@ -5,7 +5,7 @@
 \title{Create a bigWig from the output of bowtie2}
 \usage{
 deeptoolBwig(group = c("sudo", "docker"), fastq.folder = getwd(),
-  scratch.folder = "/data/scratch")
+  scratch.folder = "/data/scratch", threads)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -13,6 +13,8 @@ deeptoolBwig(group = c("sudo", "docker"), fastq.folder = getwd(),
 \item{fastq.folder, }{a character string indicating where bam, bai files  are located}
 
 \item{scratch.folder, }{a character string indicating the scratch folder where docker container will be mounted}
+
+\item{threads, }{a number indicating the number of cores to be used from the application}
 }
 \value{
 sorted.bw
@@ -26,7 +28,7 @@ This function executes the docker container bowtie2 embedding deeptools the outp
 system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 system("wget http://130.192.119.59/public/test_R2.fastq.gz")
 library(docker4seq)
-deeptoolBwig(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch/")
+deeptoolBwig(group="docker",fastq.folder=getwd(), scratch.folder="/data/scratch/", threads=8)
 
 }
 }
