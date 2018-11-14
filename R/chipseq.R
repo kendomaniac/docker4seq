@@ -149,11 +149,11 @@ resultRun=runDocker(group=group, params=params)
 	#saving log and removing docker container
 	container.id <- readLines(paste(bam.folder,"/dockerID", sep=""), warn = FALSE)
 	system(paste("docker logs ", container.id, " &> ", substr(container.id,1,12),".log", sep=""))
-#	system(paste("docker rm ", container.id, sep=""))
+	system(paste("docker rm ", container.id, sep=""))
 
 	#removing temporary folder
 	cat("\n\nRemoving the rsemStar temporary file ....\n")
-#	system(paste("rm -R ",scrat_tmp.folder))
+	system(paste("rm -R ",scrat_tmp.folder))
   system(paste("rm  ",bam.folder,"/dockerID", sep=""))
   system(paste("rm  ",bam.folder,"/tempFolderID", sep=""))
 	#removing temporary folder
