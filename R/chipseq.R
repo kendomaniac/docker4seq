@@ -134,7 +134,7 @@ resultRun=runDocker(group=group, params=params)
   system(paste("cp ",scrat_tmp.folder,"/*.bed ",bam.folder,sep=""))
   system(paste("cp ",scrat_tmp.folder,"/*.bw ",bam.folder,sep=""))
   system(paste("cp ",scrat_tmp.folder,"/*.pdf ",bam.folder,sep=""))
-
+  system("mv mypeaks.annotated.xls_entrez.xls mypeaks.xls")
 	#running time 2
 	ptm <- proc.time() - ptm
 	con <- file(paste(bam.folder,"run.info", sep="/"), "r")
