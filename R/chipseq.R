@@ -43,16 +43,16 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
   #running time 1
   ptm <- proc.time()
   #running time 1
-  
-  
+
+
   #remembering actual folder
   home <- getwd()
-  
+
   setwd(bam.folder)
-  
+
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
+
   test <- dockerTest()
   if(!test){
     cat("\nERROR: Docker seems not to be installed in your system\n")
@@ -97,7 +97,7 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 	}else if(length(dir)>2){
 		cat(paste("It seems that in ", bam.folder, "there are more than two bam files"))
 	  	system("echo 2 > ExitStatusFile 2>&1")
- 		setwd(home)		
+ 		setwd(home)
 		return(2)
 	}else{
 		system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
@@ -111,14 +111,14 @@ chipseq <- function(group=c("sudo","docker"), bam.folder=getwd(), sample.bam, ct
 params <- paste("--cidfile ", bam.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/rcaloger/chipseq.2017.01 /usr/local/bin/Rscript /wrapper.R ",sample.bam, " ",bam.folder," ", ctrl.bam," 000000 ",docker_chipseq.folder," ",genome," ",read.size," ",tool," ",macs.min.mfold," ",macs.max.mfold," ", macs.pval," ",sicer.wsize," ", sicer.gsize," ",sicer.fdr," ",tss.distance," ",max.upstream.distance," ",remove.duplicates, sep="")
 
 resultRun=runDocker(group=group, params=params)
-	
+
 
 	if(resultRun==0){
 	  cat("\nChipseq is finished\n")
 	}
-	
-	
-	
+
+
+
 #	system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
 	con <- file(paste(scrat_tmp.folder,"out.info", sep="/"), "r")
 	tmp <- readLines(con)
@@ -140,17 +140,17 @@ resultRun=runDocker(group=group, params=params)
 
 	#saving log and removing docker container
 	container.id <- readLines(paste(bam.folder,"/dockerID", sep=""), warn = FALSE)
-	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
-	system(paste("docker rm ", container.id, sep=""))
+	system(paste("docker logs ", container.id, " &> ", substr(container.id,1,12),".log", sep=""))
+#	system(paste("docker rm ", container.id, sep=""))
 
 	#removing temporary folder
 	cat("\n\nRemoving the rsemStar temporary file ....\n")
-	system(paste("rm -R ",scrat_tmp.folder))
+#	system(paste("rm -R ",scrat_tmp.folder))
   system(paste("rm  ",bam.folder,"/dockerID", sep=""))
   system(paste("rm  ",bam.folder,"/tempFolderID", sep=""))
 	#removing temporary folder
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",bam.folder, sep=""))
-  
+
   setwd(home)
 }
 
