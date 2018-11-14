@@ -120,13 +120,21 @@ resultRun=runDocker(group=group, params=params)
 
 
 #	system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-	con <- file(paste(scrat_tmp.folder,"out.info", sep="/"), "r")
-	tmp <- readLines(con)
-	close(con)
-	for(i in tmp){
-		i <- sub("cp ",paste("cp ",scrat_tmp.folder,"/",sep=""),i)
-		system(i)
-	}
+#	con <- file(paste(scrat_tmp.folder,"out.info", sep="/"), "r")
+#	tmp <- readLines(con)
+#	close(con)
+#	for(i in tmp){
+#		i <- sub("cp ",paste("cp ",scrat_tmp.folder,"/",sep=""),i)
+#		system(i)
+#	}
+
+  system(paste("cp ",scrat_tmp.folder,"/*.xls ",bam.folder,sep=""))
+  system(paste("cp ",scrat_tmp.folder,"/*.info ",bam.folder,sep=""))
+  system(paste("cp ",scrat_tmp.folder,"/*.counts ",bam.folder,sep=""))
+  system(paste("cp ",scrat_tmp.folder,"/*.bed ",bam.folder,sep=""))
+  system(paste("cp ",scrat_tmp.folder,"/*.bw ",bam.folder,sep=""))
+  system(paste("cp ",scrat_tmp.folder,"/*.pdf ",bam.folder,sep=""))
+
 	#running time 2
 	ptm <- proc.time() - ptm
 	con <- file(paste(bam.folder,"run.info", sep="/"), "r")
