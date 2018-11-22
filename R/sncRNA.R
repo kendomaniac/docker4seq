@@ -12,7 +12,7 @@
 #' 
 #' @author Giulio Ferrero
 #
-#' @return read count files:
+#' @return Read count table of RNA-Seq reads aligned miRNA or non-miRNA annotations
 #' @examples
 #'\dontrun{
 #'     #downloading fastq files

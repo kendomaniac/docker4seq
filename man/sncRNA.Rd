@@ -4,8 +4,9 @@
 \alias{sncRNA}
 \title{Running small RNA-seq single-end reads alignment and quantification using BWA and custom scripts}
 \usage{
-sncRNA(group = c("sudo", "docker"), fastq.folder = getwd(), scratch.folder,
-  mode, reference, threads = 1, mb.version = NULL, mb.species = NULL)
+sncRNA(group = c("sudo", "docker"), fastq.folder = getwd(),
+  scratch.folder, mode, reference, threads = 1, mb.version = NULL,
+  mb.species = NULL)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -25,7 +26,7 @@ sncRNA(group = c("sudo", "docker"), fastq.folder = getwd(), scratch.folder,
 \item{mb.species, }{a character string indicating the three-letter prefix of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to obtain the proper species prefix.}
 }
 \value{
-read count files:
+Read count table of RNA-Seq reads aligned miRNA or non-miRNA annotations
 }
 \description{
 This function executes the docker container where BWA is installed. BWA is a read alignment package that efficiently align short sequencing reads against a large reference sequence. Alignment is performed against annotations of human small RNAs. Read count is performed by GenomicAlignments R package and custom Python and bash commands.
@@ -41,7 +42,7 @@ This function executes the docker container where BWA is installed. BWA is a rea
     
     #running non miRNA ncRNAs quantification pipeline
     bwaIndex(group="docker", genome.folder="/data/genomes/", rc.version="9.0", rc.species="Homo sapiens", length=80, mode="ncRNA")
-    sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="ncRNA", reference="/data/genome/ncRNA_Homo_sapiens_RNA_Central_9_len_80.fa", threads=8)
+    sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="ncRNA", reference="/data/genome/ncRNA_Homo_sapiens_RNA_Central_9.0_len_80.fa", threads=8)
 
 }
 }
