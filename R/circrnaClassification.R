@@ -8,7 +8,7 @@
 #' @param isoform.data, string indicating the path to the isoform annotation file
 #' @param assembly, string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38
 #' @author Nicola Licheri and Giulio Ferrero
-#'
+#
 #' @return Two tab-delimited tables reporting the transcript- and gene-level classification of a list of circRNAs
 #' @examples
 #'\dontrun{
