@@ -9,7 +9,7 @@
 #' @param max.span, an integer reporting the maximum spanning distance of a circRNA (default = 200000 bp)
 #' @param strigency.value, the selected stringency level of the analysis. Three possible options are available: "high" (high strigency, default), in which CIRI2 only provides circRNAs supported by more than 2 distinct PCC signals; "low" (low stringency), CIRI2 only provides circRNAs supported by more than 2 junction reads; "zero", CIRI2 provides all circRNAs regardless junction read counts or PCC signals
 #' @param strigency.value, integer indicating the threshold for mappqing quality of each segment of junction reads (default=10)
-#' @threads, integer indicating the number of threads used for the analysis (default=1)
+#' @param threads, integer indicating the number of threads used for the analysis (default=1)
 #' @author Nicola Licheri and Giulio Ferrero
 #'
 #' @return The list of CIRI 2 predicted circRNAs
@@ -21,7 +21,7 @@
 #'     system("unzip CIRI_v2.0.6.zip")
 #'
 #'     #running ciri2 function
-#'     ciri2 <- function(group="docker"), scratch.folder="/data/scratch", sam.file="./CIRI_v2.0.6/data/sample.sam", genome.file="./CIRI_v2.0.6/data/chr1.fa", annotation.file="", max.span=200000, strigency.value="high", quality.threshold=10, threads=1){
+#'     ciri2 <- function(group="docker", scratch.folder="/data/scratch", sam.file="./CIRI_v2.0.6/data/sample.sam", genome.file="./CIRI_v2.0.6/data/chr1.fa", annotation.file="", max.span=200000, strigency.value="high", quality.threshold=10, threads=1)
 #
 #' }
 #' 

@@ -12,7 +12,7 @@
 #'\dontrun{
 #'
 #'     #running the circrnaPrepareFiles function
-#'     circrnaPrepareFiles <- function(group="docker"), scratch.folder="/data/scratch", data.folder="/data/output", assembly="hg19"){
+#'     circrnaPrepareFiles <- function(group="docker", scratch.folder="/data/scratch", data.folder="/data/output", assembly="hg19"){
 #
 #' }
 #' @export

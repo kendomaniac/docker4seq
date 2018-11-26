@@ -24,6 +24,19 @@ A count table reporting the number of RNA-Seq reads supporting specific circRNA 
 \description{
 This function executes the docker container circhunter by running the circRNA quantification module of CircHunter to quantify the level of expression of a set of circRNA BS sequences in a given RNA-Seq experiment. For CircHunter algorithm detail please refer to: https://github.com/carlo-deintinis/circhunter/tree/master/CircHunter.
 }
+\examples{
+\dontrun{
+
+    #retrieve the example data
+    system("wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR588/006/SRR5889366/SRR5889366_1.fastq.gz") #retrieve the RNA-Seq example data
+    system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip") #retrieve the BS junction example data
+    system("gzip SRR5889366_1.fastq.gz")
+    system("unzip master.zip")
+
+    #running the circrnaQuantification function
+    circrnaQuantification <- function(group="docker", scratch.folder="/data/scratch", rnaseq.data="SRR5889366_1.fastq", backsplicing_junctions.data="./circhunter-master/CircHunter/data/CRC_circRNA_backsplicing_sequences.fasta", hc.params=c(27, 40, 1000000, 1000000 17, 30))
+}
+}
 \author{
 Nicola Licheri and Giulio Ferrero
 }

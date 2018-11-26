@@ -14,12 +14,32 @@ ciri2MergePredictions(group = c("sudo", "docker"), scratch.folder,
 \item{scratch.folder, }{a character string indicating the scratch folder where docker container will be mounted}
 
 \item{data.folder, }{a character string indicating the data folder where the CIRI 2 output files are located}
+
+\item{min_reads, }{the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)}
+
+\item{min_reps, }{the minimum number of replicates associated with at least min_reads supporting a circRNA (default = 0)}
+
+\item{min_avg, }{the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)}
+
+\item{group_file, }{a character string indicating the path to the file reporting in each row the identifier of the input data to be considered and the associated experimental group}
 }
 \value{
 Two tab-delimited tables reporting the transcript- and gene-level classification of a list of circRNAs
 }
 \description{
 This function executes the docker container ciri2merge by running the merge of different list of circRNAs predicted by CIRI2  following a sample data files provided by the user. The function executes also a filter based on the number of back-splicing reads computed in each experiment and across replicates of the same biological condition.
+}
+\examples{
+\dontrun{
+
+    #retrieve the example data
+    system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip") #retrieve the example data
+    system("unzip master.zip")
+    system("unzip ./circhunter-master/CircHunter/data/CIRI_predictions.zip")
+
+    #running the ciri2MergePredictions function		
+    ciri2MergePredictions <- function(group="docker", scratch.folder="/data/scratch", data.folder="./circhunter-master/CircHunter/data/CIRI_predictions", groups.file="./circhunter-master/CircHunter/data/CIRI_predictions/SampleData.tsv", min_reads = 2, min_reps = 2, min_avg = 10)
+}
 }
 \author{
 Nicola Licheri and Giulio Ferrero

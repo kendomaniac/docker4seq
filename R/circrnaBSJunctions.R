@@ -17,8 +17,8 @@
 #'     system("unzip master.zip")
 #'
 #'     #running the circrnaBSJunctions function
-#'     circrnaBSJunctions <- function(group="docker"), scratch.folder="/data/scratch", circrna.data="./circhunter-master/CircHunter/toyexample/toy_circRNA", exon.data="./circhunter-master/CircHunter/toyexample/toy_genome", assembly="hg19"){
-#
+#'     circrnaBSJunctions <- function(group="docker", scratch.folder="/data/scratch", circrna.data="./circhunter-master/CircHunter/toyexample/toy_circRNA", exon.data="./circhunter-master/CircHunter/toyexample/toy_genome", assembly="hg19"){
+#'
 #' }
 #' @export
 

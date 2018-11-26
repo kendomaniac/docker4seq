@@ -4,10 +4,10 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param data.folder, a character string indicating the data folder where the CIRI 2 output files are located
-#' @group_file, a character string indicating the path to the file reporting in each row the identifier of the input data to be considered and the associated experimental group 
-#' @min_reads, the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)
-#' @min_reps, the minimum number of replicates associated with at least min_reads supporting a circRNA (default = 0)
-#' @min_avg, the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)
+#' @param group_file, a character string indicating the path to the file reporting in each row the identifier of the input data to be considered and the associated experimental group 
+#' @param min_reads, the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)
+#' @param min_reps, the minimum number of replicates associated with at least min_reads supporting a circRNA (default = 0)
+#' @param min_avg, the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)
 #' @author Nicola Licheri and Giulio Ferrero
 #'
 #' @return Two tab-delimited tables reporting the transcript- and gene-level classification of a list of circRNAs
@@ -20,7 +20,7 @@
 #'     system("unzip ./circhunter-master/CircHunter/data/CIRI_predictions.zip")
 #'
 #'     #running the ciri2MergePredictions function		
-#'     ciri2MergePredictions <- function(group="docker"), scratch.folder="/data/scratch", data.folder="./circhunter-master/CircHunter/data/CIRI_predictions", groups.file="./circhunter-master/CircHunter/data/CIRI_predictions/SampleData.tsv", min_reads = 2, min_reps = 2, min_avg = 10){
+#'     ciri2MergePredictions <- function(group="docker", scratch.folder="/data/scratch", data.folder="./circhunter-master/CircHunter/data/CIRI_predictions", groups.file="./circhunter-master/CircHunter/data/CIRI_predictions/SampleData.tsv", min_reads = 2, min_reps = 2, min_avg = 10)
 #
 #' }
 #' @export

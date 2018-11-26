@@ -23,6 +23,8 @@ ciri2(group = c("sudo", "docker"), scratch.folder, sam.file, genome.file,
 
 \item{strigency.value, }{the selected stringency level of the analysis. Three possible options are available: "high" (high strigency, default), in which CIRI2 only provides circRNAs supported by more than 2 distinct PCC signals; "low" (low stringency), CIRI2 only provides circRNAs supported by more than 2 junction reads; "zero", CIRI2 provides all circRNAs regardless junction read counts or PCC signals}
 
+\item{threads, }{integer indicating the number of threads used for the analysis (default=1)}
+
 \item{strigency.value, }{integer indicating the threshold for mappqing quality of each segment of junction reads (default=10)}
 }
 \value{
@@ -30,6 +32,18 @@ The list of CIRI 2 predicted circRNAs
 }
 \description{
 This function executes the docker container ciri2 where CIRI v2.0.6 is installed and it provides the list of circRNA predicted from a RNA-Seq experiment. For CIRI 2 tool detail refer to: "Gao, Y., Zhang, J., & Zhao, F. (2017). Circular RNA identification based on multiple seed matching. Brief Bioinform. 2018 Sep 28;19(5):803-810."
+}
+\examples{
+\dontrun{
+
+    #retrieve the example data
+    system("wget https://sourceforge.net/projects/ciri/files/CIRI2/CIRI_v2.0.6.zip") #retrieve the example data
+    system("unzip CIRI_v2.0.6.zip")
+
+    #running ciri2 function
+    ciri2 <- function(group="docker", scratch.folder="/data/scratch", sam.file="./CIRI_v2.0.6/data/sample.sam", genome.file="./CIRI_v2.0.6/data/chr1.fa", annotation.file="", max.span=200000, strigency.value="high", quality.threshold=10, threads=1)
+}
+
 }
 \author{
 Nicola Licheri and Giulio Ferrero

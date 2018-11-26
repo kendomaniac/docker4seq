@@ -8,7 +8,7 @@
 #' @param isoform.data, string indicating the path to the isoform annotation file
 #' @param assembly, string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38
 #' @author Nicola Licheri and Giulio Ferrero
-#
+#'
 #' @return Two tab-delimited tables reporting the transcript- and gene-level classification of a list of circRNAs
 #' @examples
 #'\dontrun{
@@ -18,8 +18,8 @@
 #'     system("unzip master.zip")
 #'
 #'     #running the circrnaClassification function
-#'     circrnaClassification <- function(group="docker"), scratch.folder="/data/scratch", circrna.data="./circhunter-master/CircHunter/toyexample/toy_circRNA", exon.data="./circhunter-master/CircHunter/toyexample/toy_genome", exon.data="./circhunter-master/CircHunter/toyexample/toy_isoformdata", assembly="hg19"){
-#
+#'     circrnaClassification <- function(group="docker", scratch.folder="/data/scratch", circrna.data="./circhunter-master/CircHunter/toyexample/toy_circRNA", exon.data="./circhunter-master/CircHunter/toyexample/toy_genome", exon.data="./circhunter-master/CircHunter/toyexample/toy_isoformdata", assembly="hg19")
+#'
 #' }
 #' @export
 
