@@ -32,7 +32,7 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
   setwd(fastq.folder)
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
+
   fastqc(group="docker", data.folder=getwd())
 
   #dir.fastq <- dir()
@@ -128,7 +128,7 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 
 	#removing temporary folder
 	cat("\n\nRemoving the rsemStar temporary file ....\n")
-	system(paste("rm -R ",scrat_tmp.folder))
+#	system(paste("rm -R ",scrat_tmp.folder))
 	system(paste("rm  ",fastq.folder,"/dockerID", sep=""))
 	system(paste("rm  ",fastq.folder,"/tempFolderID", sep=""))
 	#removing temporary folder
