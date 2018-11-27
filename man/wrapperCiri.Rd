@@ -44,13 +44,14 @@ This function calls sequencially the docker containers for FASTQC, BWA, and CIRI
 \dontrun{
 
     #retrieve the example data
-    system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip") #retrieve the sample data
+    system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip") #retrieve the data of the indexed genome (chromosome 21 of hg38 human genome assembly)
     system("unzip master.zip")
+    system("unzip ./circhunter-master/CircHunter/data/hg38.chr21.fa.zip")
     system("wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR582/001/SRR5824251/SRR5824251_1.fastq.gz") #retrieve the RNA-Seq data
     system("wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR582/001/SRR5824251/SRR5824251_2.fastq.gz") #retrieve the RNA-Seq data
 
     #running the wrapperCiri function
-wrapperCiri <- function(group = "docker", scratch.folder="/data/scratch", data.folder=getwd(), genome.file="/data/genome/genome.fasta", seq.type = "pe", sample.id="test", threads = 1, max.span = 200000, strigency.value = "high", quality.threshold = 10) 
+wrapperCiri <- function(group = "docker", scratch.folder="/data/scratch", data.folder=getwd(), genome.file="./circhunter-master/CircHunter/data/hg38.chr21.fa", seq.type = "pe", sample.id="test", threads = 1, max.span = 200000, strigency.value = "high", quality.threshold = 10) 
 
 }
 }
