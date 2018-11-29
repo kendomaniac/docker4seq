@@ -1,5 +1,5 @@
 #' @title Running starchip to detect circular RNAs on paired-end sequences
-#' @description This function execute starchip on a set of folders containing the output of starChimeric. It requires a specific bed generated with starChipIndex in teh genome folder used by starChimeric
+#' @description This function execute starchip on a set of folders containing the output of starChimeric. It requires a specific bed generated with starChipIndex in the genome folder used by starChimeric
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for STAR is located.
 #' @param scratch.folder,  a character string indicating the scratch folder where docker container will be mounted
@@ -9,7 +9,7 @@
 #' @param do.splice, true false. The splices within the cRNA be detected and reported. Linear splices are searched within each cRNA in each individual. Any linear splice with >= 60\% of the read count of the cRNA is considered a splice within the cRNA. Two files are then created, .consensus with most common splice pattern, and .allvariants with all reported splice patterns.
 #' @param cpm.cutoff, Float. Reads counts are loaded into R and log2(CountsPerMillion) is calculated using the limma package. With cpmCutoff > 0, cRNA with log2(CPM) below this value will be filtered from this analysis
 #' @param subjectCPM.cutoff, Integer. See above. This value is the lower limit for number of individuals required to have the cRNA expressed at a value higher than cpmCutoff.
-#' @param annotation, rue/false. cRNA are provided with gene annotations
+#' @param annotation, true/false. cRNA are provided with gene annotations
 #' @param samples.folder, the folder where are located all the folders of the samples processed with starChimeric
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 #'

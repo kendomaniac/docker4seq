@@ -57,7 +57,7 @@ wrapperCiri <- function(group = c("sudo", "docker"), scratch.folder, data.folder
   # circRNA prediction with Ciri2
   cat("\nrunning ciri2\n")
   ciri2(
-    group = group, scratch.folder = scratch.folder, sam.file = "dedup_reads.bam",
+    group = group, scratch.folder = scratch.folder, sam.file = paste(data.folder, "dedup_reads.bam", sep="/"),
     genome.file = genome.file, annotation.file = annotation.file,
     max.span = max.span, strigency.value = strigency.value,
     quality.threshold = quality.threshold, threads = threads
