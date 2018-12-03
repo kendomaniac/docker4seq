@@ -18,7 +18,7 @@
 #'     system("unzip master.zip")
 #'
 #'     #running the circrnaClassification function
-#'     circrnaClassification <- function(group="docker", scratch.folder="/data/scratch", circrna.data="./circhunter-master/CircHunter/toyexample/toy_circRNA", exon.data="./circhunter-master/CircHunter/toyexample/toy_genome", exon.data="./circhunter-master/CircHunter/toyexample/toy_isoformdata", assembly="hg19")
+#'     circrnaClassification(group="docker", scratch.folder="/data/scratch", circrna.data=paste(getwd(),"/circhunter-master/CircHunter/toyexample/toy_circRNA", sep=""), exon.data=paste(getwd(),"/circhunter-master/CircHunter/toyexample/toy_genome", sep=""), isoform.data=paste(getwd(),"/circhunter-master/CircHunter/toyexample/toy_isoformdata", sep=""), assembly="hg19")
 #'
 #' }
 #' @export

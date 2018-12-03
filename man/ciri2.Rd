@@ -41,7 +41,7 @@ This function executes the docker container ciri2 where CIRI v2.0.6 is installed
     system("unzip CIRI_v2.0.6.zip")
 
     #running ciri2 function
-    ciri2 <- function(group="docker", scratch.folder="/data/scratch", sam.file="./CIRI_v2.0.6/data/sample.sam", genome.file="./CIRI_v2.0.6/data/chr1.fa", annotation.file="", max.span=200000, strigency.value="high", quality.threshold=10, threads=1)
+    ciri2(group="docker", scratch.folder="/data/scratch", sam.file=paste(getwd(),"/CIRI_v2.0.6/data/sample.sam", sep=""), genome.file=paste(getwd(),"/CIRI_v2.0.6/data/chr1.fa", sep=""), annotation.file="", max.span=200000, strigency.value="high", quality.threshold=10, threads=1)
 }
 
 }

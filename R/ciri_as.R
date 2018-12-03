@@ -1,36 +1,32 @@
-#' @title Running CIRI v2 tool for circRNAs prediction
-#' @description This function executes the docker container ciri2 where CIRI v2.0.6 is installed and it provides the list of circRNA predicted from a RNA-Seq experiment. For CIRI 2 tool detail refer to: "Gao, Y., Zhang, J., & Zhao, F. (2017). Circular RNA identification based on multiple seed matching. Brief Bioinform. 2018 Sep 28;19(5):803-810."
+#' @title Running CIRI_AS tool for circRNAs structure prediction
+#' @description This function executes the docker container ciri2 where CIRI_AS is installed
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
-#' @param sam.file, a character string indicating the path to the RNA-Seq alignment SAM file from BWA
+#' @param sam.file, a character string indicating the path to the RNA-Seq alignment SAM/BAM file from BWA.
 #' @param genome.file, a character string indicating the path to the Fasta file of the reference genomic sequence (it should be the same reference indexed for the BWA alignment)
 #' @param annotation.file, a character string indicating the path to the GTF/GFF file reporting the reference gene annotations
-#' @param max.span, an integer reporting the maximum spanning distance of a circRNA (default = 200000 bp)
-#' @param strigency.value, the selected stringency level of the analysis. Three possible options are available: "high" (high strigency, default), in which CIRI2 only provides circRNAs supported by more than 2 distinct PCC signals; "low" (low stringency), CIRI2 only provides circRNAs supported by more than 2 junction reads; "zero", CIRI2 provides all circRNAs regardless junction read counts or PCC signals
-#' @param strigency.value, integer indicating the threshold for mappqing quality of each segment of junction reads (default=10)
-#' @param threads, integer indicating the number of threads used for the analysis (default=1)
 #' @author Nicola Licheri and Giulio Ferrero
 #'
-#' @return The list of CIRI 2 predicted circRNAs
+#' @return The function returns the list of alternative circRNAs internal structures
+#'
 #' @examples
-#'\dontrun{
-#'
-#'     #retrieve the example data
-#'     system("wget https://sourceforge.net/projects/ciri/files/CIRI2/CIRI_v2.0.6.zip") #retrieve the example data
-#'     system("unzip CIRI_v2.0.6.zip")
-#'
-#'     #running ciri2 function
-#'     ciri2(group="docker", scratch.folder="/data/scratch", sam.file=paste(getwd(),"/CIRI_v2.0.6/data/sample.sam", sep=""), genome.file=paste(getwd(),"/CIRI_v2.0.6/data/chr1.fa", sep=""), annotation.file="", max.span=200000, strigency.value="high", quality.threshold=10, threads=1)
-#
+#' \dontrun{
+#' 
+#'     #Download the example data
+#'     system("wget https://sourceforge.net/projects/ciri/files/CIRI-AS/test_data_CIRI_AS.zip/download")
+#'     
+#'     system("mv download test_data_CIRI_AS.zip")
+#'     system("unzip test_data_CIRI_AS.zip")
+#' 
+#'  # Run the ciriAS function 
+#' ciriAS(group = "docker", scratch.folder="/data/scratch", sam.file=paste(getwd,"/test_data_CIRI_AS/test.sam",sep=""), ciri.file=paste(getwd,"/test_data_CIRI_AS/test.ciri", genome.file=paste(getwd,"/test_data_CIRI_AS/chr1.fa", sep=""), annotation.file = paste(getwd,"/test_data_CIRI_AS/chr1.gtf", sep="")
 #' }
 #' 
 #' @export
 
 
-ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.file, annotation.file = "",
-                  max.span = 200000, strigency.value = c("high", "low", "zero"), quality.threshold = 10, threads = 1) {
-
+ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.file, genome.file, annotation.file = NA) {
 
 
 
@@ -68,7 +64,7 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
   # checking if the user provided the annotation file
   annotation.flag <- ""
   annotation.volume <- ""
-  if (annotation.file != "") {
+  if (!is.na(annotation.file)) {
     if (!file.exists(annotation.file)) {
       cat(paste("\nIt seems that the ", annotation.file, " file does not exist\n"))
       system("echo 2 > ExitStatusFile 2>&1")
@@ -78,33 +74,9 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
     else {
       # defining volume to mount annotation file
       annotation.flag <- " -A "
-      annotation.volume <- paste(" -v ", annotatio.file, ":/data/annotation ", sep = "")
+      annotation.volume <- paste(" -v ", annotation.file, ":/data/gtf_annotation.gtf ", sep = "")
     }
   }
-  # converting strigency.value in correct parameter value
-  if (strigency.value %in% c("high", "low", "zero")) {
-    strigency <- paste("-", strigency.value, sep = "")
-    if (strigency.value == "zero") {
-      strigency <- "-0"
-    }
-  }
-  else {
-    # assuming default value
-    strigency <- "-high"
-  }
-
-  # testing if docker is running
-  if (FALSE) {
-    test <- dockerTest()
-    if (!test) {
-      cat("\nERROR: Docker seems not to be installed in your system\n")
-      system("echo 10 > ExitStatusFile 2>&1")
-      setwd(home)
-      return(10)
-    }
-  }
-
-
 
   # check  if scratch folder exist
   if (!file.exists(scratch.folder)) {
@@ -113,17 +85,16 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
     setwd(data.folder)
     return(3)
   }
-  
+
   # executing the docker job
   params <- paste("--cidfile ", data.folder, "/dockerID ",
     " -v ", scratch.folder, ":/scratch ",
     " -v ", sam.file, ":/data/samfile ",
+    " -v ", ciri.file, ":/data/cirifile ",
     " -v ", genome.file, ":/data/reference ",
     " -v ", data.folder, ":/data/ciri_prediction ",
-    annotation.volume, # it can be an empty string
-    #                  " -v ", data.folder, ":/output ",
-    " -d docker.io/cursecatcher/ciri2 ",
-    annotation.flag, " ", strigency, " -S ", max.span, " -T ", threads, " -U ", quality.threshold,
+    annotation.volume,
+    " -d docker.io/cursecatcher/ciri2 structure ", annotation.flag,
     sep = ""
   )
   resultRun <- runDocker(group = group, params = params)

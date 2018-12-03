@@ -1,35 +1,35 @@
-#' @title Function to merge different circRNA lists from CIRI 2
-#' @description This function executes the docker container ciri2merge by running the merge of different list of circRNAs predicted by CIRI2  following a sample data files provided by the user. The function executes also a filter based on the number of back-splicing reads computed in each experiment and across replicates of the same biological condition.
+#' @title Annotation of a list of circRNAs
+#' @description This function executes the docker container ciri2 in the annotation mode to overlap a list of circRNAs with the annotations from circBase and TSCD
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
-#' @param data.folder, a character string indicating the data folder where the CIRI 2 output files are located
-#' @param group_file, a character string indicating the path to the file reporting in each row the identifier of the input data to be considered and the associated experimental group 
-#' @param min_reads, the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)
-#' @param min_reps, the minimum number of replicates associated with at least min_reads supporting a circRNA (default = 0)
-#' @param min_avg, the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)
+#' @param ciri.file, a list of circRNAs derived from a CIRI2 prediction analysis
+#' @param genome.version, a character string indicating the reference genome assembly. The function currently work with the hg19 human genome assembly 
 #' @author Nicola Licheri and Giulio Ferrero
 #'
-#' @return Two tab-delimited tables reporting the transcript- and gene-level classification of a list of circRNAs
+#' @return The annotations of a list of circRNAs from different databases
+#'
 #' @examples
-#'\dontrun{
-#'
-#'     #retrieve the example data
-#'     system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip") #retrieve the example data
+#' \dontrun{
+#' 
+#' # Retrieve the example data
+#'     system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip")
 #'     system("unzip master.zip")
-#'     system("unzip ./circhunter-master/CircHunter/data/CIRI_predictions.zip")
-#'
-#'     #running the ciri2MergePredictions function		
-#'     ciri2MergePredictions(group="docker", scratch.folder="/data/scratch", data.folder="./circhunter-master/CircHunter/data/CIRI_predictions", groups.file="./circhunter-master/CircHunter/data/CIRI_predictions/SampleData.tsv", min_reads = 2, min_reps = 2, min_avg = 10)
-#
+#'     
+#' # Run the circAnnotations function
+#'  circAnnotations(group = "docker", scratch.folder="/data/scratch", ciri.file=paste(getwd(),"/circhunter-master/CircHunter/data/circRNA_CRC.bed", sep=""), genome.version="hg19")
+#'  
+#' circAnnotations()
 #' }
 #' @export
 
-ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, data.folder, groups.file, min_reads = 2, min_reps = 0, min_avg = 10) {
 
+circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.file, genome.version) {
 
   # running time 1
   ptm <- proc.time()
+
+  data.folder <- dirname(ciri.file)
 
   # setting the data.folder as working folder
   if (!file.exists(data.folder)) {
@@ -43,30 +43,29 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, d
   # initialize status
   system("echo 0 > ExitStatusFile 2>&1")
 
-  if (!file.exists(groups.file)) {
-    cat(paste("\nIt seems that the ", groups.file, " file does not exist\n"))
+  # checking input files exist
+  if (!file.exists(ciri.file)) {
+    cat(paste("\nIt seems that the ", ciri.file, " file does not exist\n"))
     system("echo 2 > ExitStatusFile 2>&1")
     setwd(home)
     return(2)
   }
-
   # check  if scratch folder exist
   if (!file.exists(scratch.folder)) {
     cat(paste("\nIt seems that the ", scratch.folder, " folder does not exist\n"))
     system("echo 3 > ExitStatusFile 2>&1")
-    setwd(home)
+    setwd(data.folder)
     return(3)
   }
 
   # executing the docker job
   params <- paste("--cidfile ", data.folder, "/dockerID ",
-    " -v ", scratch.folder, ":/scratch ",
-    " -v ", data.folder, ":/data/ciri_predictions ",
-    " -v ", data.folder, ":/data/output_merge ",
-    " -v ", groups.file, ":/data/samples_file ",
-    " -d docker.io/cursecatcher/ciri2 merge ",
-    " --mr ", min_reads, " --mrep ", min_reps, " --avg ", min_avg,
-    sep = "")
+                  " -v ", scratch.folder, ":/scratch ",
+                  " -v ", ciri.file, ":/data/cirifile ",
+                  " -v ", data.folder, ":/data/ ",
+                  " -d docker.io/cursecatcher/ciri2 annotation -v ", genome.version,
+                  sep = ""
+  )
   resultRun <- runDocker(group = group, params = params)
 
   # running time 2

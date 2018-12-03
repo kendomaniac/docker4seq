@@ -38,7 +38,7 @@ This function executes the docker container ciri2merge by running the merge of d
     system("unzip ./circhunter-master/CircHunter/data/CIRI_predictions.zip")
 
     #running the ciri2MergePredictions function		
-    ciri2MergePredictions <- function(group="docker", scratch.folder="/data/scratch", data.folder="./circhunter-master/CircHunter/data/CIRI_predictions", groups.file="./circhunter-master/CircHunter/data/CIRI_predictions/SampleData.tsv", min_reads = 2, min_reps = 2, min_avg = 10)
+    ciri2MergePredictions(group="docker", scratch.folder="/data/scratch", data.folder="./circhunter-master/CircHunter/data/CIRI_predictions", groups.file="./circhunter-master/CircHunter/data/CIRI_predictions/SampleData.tsv", min_reads = 2, min_reps = 2, min_avg = 10)
 }
 }
 \author{

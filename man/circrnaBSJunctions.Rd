@@ -24,6 +24,18 @@ A fasta file reporting the sequence of circRNA back-splice junctions
 \description{
 This function executes the docker container circhunter by running the circRNA back-splicing sequence reconstruction module of CircHunter starting from a set of circRNAs. For CircHunter algorithm detail please refer to: https://github.com/carlo-deintinis/circhunter/tree/master/CircHunter.
 }
+\examples{
+\dontrun{
+
+    #retrieve the example data
+    system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip")
+    system("unzip master.zip")
+
+    #running the circrnaBSJunctions function
+    circrnaBSJunctions(group="docker", scratch.folder="/data/scratch", circrna.data=paste(getwd(),"/circhunter-master/CircHunter/toyexample/toy_circRNA", sep=""), exon.data=paste(getwd(),"/circhunter-master/CircHunter/toyexample/toy_genome", sep=""), assembly="hg19")
+
+}
+}
 \author{
 Nicola Licheri and Giulio Ferrero
 }

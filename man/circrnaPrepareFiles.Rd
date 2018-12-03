@@ -22,6 +22,17 @@ Two tab-delimited tables reporting the transcript- and gene-level classification
 \description{
 This function executes the docker container circhunter by running the circRNA classification module of CircHunter starting from a set of circRNAs. For CircHunter algorithm detail please refer to: https://github.com/carlo-deintinis/circhunter/tree/master/CircHunter.
 }
+\examples{
+\dontrun{
+    #Download the example data
+    system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip")
+    system("unzip master.zip")
+
+    #running the circrnaPrepareFiles function
+    circrnaPrepareFiles(group="docker", scratch.folder="/data/scratch", data.folder="/data/output", assembly="hg19")
+
+}
+}
 \author{
 Nicola Licheri and Giulio Ferrero
 }

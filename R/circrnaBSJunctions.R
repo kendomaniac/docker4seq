@@ -13,11 +13,11 @@
 #'\dontrun{
 #'
 #'     #retrieve the example data
-#'     system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip") #retrieve the example data
+#'     system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip")
 #'     system("unzip master.zip")
 #'
 #'     #running the circrnaBSJunctions function
-#'     circrnaBSJunctions <- function(group="docker", scratch.folder="/data/scratch", circrna.data="./circhunter-master/CircHunter/toyexample/toy_circRNA", exon.data="./circhunter-master/CircHunter/toyexample/toy_genome", assembly="hg19"){
+#'     circrnaBSJunctions(group="docker", scratch.folder="/data/scratch", circrna.data=paste(getwd(),"/circhunter-master/CircHunter/toyexample/toy_circRNA", sep=""), exon.data=paste(getwd(),"/circhunter-master/CircHunter/toyexample/toy_genome", sep=""), assembly="hg19")
 #'
 #' }
 #' @export

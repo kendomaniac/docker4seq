@@ -10,10 +10,13 @@
 #' @return Two tab-delimited tables reporting the transcript- and gene-level classification of a list of circRNAs
 #' @examples
 #'\dontrun{
+#'     #Download the example data
+#'     system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip")
+#'     system("unzip master.zip")
 #'
 #'     #running the circrnaPrepareFiles function
-#'     circrnaPrepareFiles <- function(group="docker", scratch.folder="/data/scratch", data.folder="/data/output", assembly="hg19"){
-#
+#'     circrnaPrepareFiles(group="docker", scratch.folder="/data/scratch", data.folder="/data/output", assembly="hg19")
+#'
 #' }
 #' @export
 

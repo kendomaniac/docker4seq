@@ -19,7 +19,7 @@
 #'     system("unzip master.zip")
 #'
 #'     #running the circrnaQuantification function
-#'     circrnaQuantification <- function(group="docker", scratch.folder="/data/scratch", rnaseq.data="SRR5889366_1.fastq", backsplicing_junctions.data="./circhunter-master/CircHunter/data/CRC_circRNA_backsplicing_sequences.fasta", hc.params=c(27, 40, 1000000, 1000000 17, 30))
+#'     circrnaQuantification(group="docker", scratch.folder="/data/scratch", rnaseq.data=paste(getwd,"/SRR5889366_1.fastq",sep=""), backsplicing_junctions.data="./circhunter-master/CircHunter/data/CRC_circRNA_backsplicing_sequences.fasta", hc.params=c(27, 40, 1000000, 1000000, 17, 30))
 #
 #' }
 #' @export

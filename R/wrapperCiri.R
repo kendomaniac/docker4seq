@@ -27,7 +27,7 @@
 #'     system("wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR582/001/SRR5824251/SRR5824251_2.fastq.gz") #retrieve the RNA-Seq data
 #'
 #'     #running the wrapperCiri function
-#' wrapperCiri <- function(group = "docker", scratch.folder="/data/scratch", data.folder=getwd(), genome.file="./circhunter-master/CircHunter/data/hg38.chr21.fa", seq.type = "pe", sample.id="test", threads = 1, max.span = 200000, strigency.value = "high", quality.threshold = 10) 
+#' wrapperCiri(group = "docker", scratch.folder="/data/scratch", data.folder=getwd(), genome.file="./circhunter-master/CircHunter/data/hg38.chr21.fa", seq.type = "pe", sample.id="test", threads = 1, max.span = 200000, strigency.value = "high", quality.threshold = 10) 
 #'
 #' }
 #' @export
