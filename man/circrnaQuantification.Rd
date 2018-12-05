@@ -28,13 +28,12 @@ This function executes the docker container circhunter by running the circRNA qu
 \dontrun{
 
     #retrieve the example data
-    system("wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR588/006/SRR5889366/SRR5889366_1.fastq.gz") #retrieve the RNA-Seq example data
-    system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip") #retrieve the BS junction example data
-    system("gzip SRR5889366_1.fastq.gz")
-    system("unzip master.zip")
+    system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip") #'     system("unzip master.zip")
+    system("gzip ./circhunter-master/CircHunter/data/test_rna-seq.fastq.gz")
 
     #running the circrnaQuantification function
-    circrnaQuantification(group="docker", scratch.folder="/data/scratch", rnaseq.data=paste(getwd,"/SRR5889366_1.fastq",sep=""), backsplicing_junctions.data="./circhunter-master/CircHunter/data/CRC_circRNA_backsplicing_sequences.fasta", hc.params=c(27, 40, 1000000, 1000000, 17, 30))
+    circrnaQuantification(group="docker", scratch.folder="/data/scratch", rnaseq.data=paste(getwd,"/circhunter-master/CircHunter/data/test_rna-seq.fastq.fastq", sep=""), backsplicing_junctions.data=paste(getwd,"/circhunter-master/CircHunter/data/CRC_circRNA_backsplicing_sequences.fasta", sep=""), hc.params=c(27, 40, 1000000, 1000000, 17, 30))
+
 }
 }
 \author{
