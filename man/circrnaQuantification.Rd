@@ -16,7 +16,7 @@ circrnaQuantification(group = c("sudo", "docker"), scratch.folder,
 
 \item{backsplicing_junctions.data, }{string indicating the path to the fasta file of the circRNA back-splicing sequences to search in the RNA-Seq dataset}
 
-\item{hc.params, }{vector of six parametes to set the analysis. The element of the vector indicate in order: the k-mer size, the thread number, the dimension of the hash table, the dimension of the collision list, the number of k-mers that must be matched to the sequence to consider the sequence itself as represented in the RNA-Seq data, and the number of perfect matches required in the k-mer to consider it matched to a sequence.}
+\item{hc.params, }{vector of six parameters to set the analysis. The element of the vector indicate in order: the k-mer size, the thread number, the dimension of the hash table, the dimension of the collision list, the number of k-mers that must be matched to the sequence to consider the sequence itself as represented in the RNA-Seq data, and the number of perfect matches required in the k-mer to consider it matched to a sequence.}
 }
 \value{
 A count table reporting the number of RNA-Seq reads supporting specific circRNA back-splice junctions

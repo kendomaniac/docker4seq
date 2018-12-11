@@ -1,9 +1,11 @@
+
 #' @title Running CIRI_AS tool for circRNAs structure prediction
 #' @description This function executes the docker container ciri2 where CIRI_AS is installed
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
-#' @param sam.file, a character string indicating the path to the RNA-Seq alignment SAM/BAM file from BWA.
+#' @param sam.file, a character string indicating the path to the RNA-Seq alignment SAM/BAM file from BWA
+#' @param ciri.file, string indicating the path to the list of circRNAs
 #' @param genome.file, a character string indicating the path to the Fasta file of the reference genomic sequence (it should be the same reference indexed for the BWA alignment)
 #' @param annotation.file, a character string indicating the path to the GTF/GFF file reporting the reference gene annotations
 #' @author Nicola Licheri and Giulio Ferrero

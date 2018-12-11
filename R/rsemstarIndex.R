@@ -8,7 +8,7 @@
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @author Raffaele Calogero
 #'
-#' @return The indexed bwa genome reference sequence
+#' @return The index of the reference genomic sequence for STAR analysis
 #' @examples
 #'\dontrun{
 #'     #running rsemstar index for human

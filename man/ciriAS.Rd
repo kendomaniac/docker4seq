@@ -12,7 +12,9 @@ ciriAS(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.file,
 
 \item{scratch.folder, }{a character string indicating the scratch folder where docker container will be mounted}
 
-\item{sam.file, }{a character string indicating the path to the RNA-Seq alignment SAM/BAM file from BWA.}
+\item{sam.file, }{a character string indicating the path to the RNA-Seq alignment SAM/BAM file from BWA}
+
+\item{ciri.file, }{string indicating the path to the list of circRNAs}
 
 \item{genome.file, }{a character string indicating the path to the Fasta file of the reference genomic sequence (it should be the same reference indexed for the BWA alignment)}
 

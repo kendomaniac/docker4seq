@@ -21,13 +21,13 @@ ciri2MergePredictions(group = c("sudo", "docker"), scratch.folder,
 
 \item{min_avg, }{the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)}
 
-\item{group_file, }{a character string indicating the path to the file reporting in each row the identifier of the input data to be considered and the associated experimental group}
+\item{groups_file, }{a character string indicating the path to the file reporting in each row the identifier of the input data to be considered and the associated experimental group}
 }
 \value{
-Two tab-delimited tables reporting the transcript- and gene-level classification of a list of circRNAs
+Two tab-delimited tables reporting the BS supporting reads and the coordinates of the filtered circRNAs are reported
 }
 \description{
-This function executes the docker container ciri2merge by running the merge of different list of circRNAs predicted by CIRI2  following a sample data files provided by the user. The function executes also a filter based on the number of back-splicing reads computed in each experiment and across replicates of the same biological condition.
+This function executes the docker container ciri2merge by running the merge of different lists of circRNAs predicted by CIRI2  following a sample data files provided by the user. The function executes also a filter based on the number of back-splicing reads computed in each experiment and across replicates of the same biological condition.
 }
 \examples{
 \dontrun{

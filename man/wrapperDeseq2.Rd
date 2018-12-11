@@ -21,7 +21,7 @@ wrapperDeseq2(output.folder, group = c("sudo", "docker"),
 
 \item{ref.covar, }{covariate to be used as reference}
 
-\item{type, }{character with three options: gene, isoform, mirna. if gene is used two files are generated for geneset enrichment, the filtered Gene symbols and the background that contains all gene simbols.}
+\item{type, }{character with three options: gene, isoform, mirna. if gene is used two files are generated for geneset enrichment, the filtered Gene symbols and the background that contains all gene symbols.}
 
 \item{batch, }{logical FALSE, TRUE}
 }
@@ -29,7 +29,7 @@ wrapperDeseq2(output.folder, group = c("sudo", "docker"),
 Returns a full table of differentially expressed genes (prefix DEfull), a filtered table of differentially expressed genes (prefix DEfiltered) and the normalized counts table (prefix normalized)
 }
 \description{
-This function runs deseq2 on a table genrated with sample2experiment having the covariates added in the names of the columns, separated by the names with underscore.
+This function runs deseq2 on a table generated with sample2experiment having the covariates added in the names of the columns, separated by the names with underscore.
 }
 \examples{
 \dontrun{

@@ -6,8 +6,8 @@
 \usage{
 wrapperCiri(group = c("sudo", "docker"), scratch.folder, data.folder,
   genome.file, seq.type = c("se", "pe"), sample.id, threads = 1,
-  annotation.file = "", max.span = 2e+05, strigency.value = c("high",
-  "low", "zero"), quality.threshold = 10)
+  annotation.file = "", max.span = 2e+05,
+  stringency.value = c("high", "low", "zero"), quality.threshold = 10)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -28,9 +28,9 @@ wrapperCiri(group = c("sudo", "docker"), scratch.folder, data.folder,
 
 \item{max.span, }{an integer reporting the maximum spanning distance of a circRNA (default = 200000 bp)}
 
-\item{strigency.value, }{the selected stringency level of the analysis. Three possible options are available: "high" (high strigency, default), in which CIRI2 only provides circRNAs supported by more than 2 distinct PCC signals; "low" (low stringency), CIRI2 only provides circRNAs supported by more than 2 junction reads; "zero", CIRI2 provides all circRNAs regardless junction read counts or PCC signals}
+\item{stringency.value, }{the selected stringency level of the analysis. Three possible options are available: "high" (high stringency, default), in which CIRI2 only provides circRNAs supported by more than 2 distinct PCC signals; "low" (low stringency), CIRI2 only provides circRNAs supported by more than 2 junction reads; "zero", CIRI2 provides all circRNAs regardless junction read counts or PCC signals}
 
-\item{quality.threshold, }{integer indicating the threshold for mappqing quality of each segment of junction reads (default=10)}
+\item{quality.threshold, }{integer indicating the threshold for mapping quality of each segment of junction reads (default=10)}
 
 \item{sam.file, }{a character string indicating the path to the RNA-Seq alignment SAM file from BWA}
 }
@@ -38,7 +38,7 @@ wrapperCiri(group = c("sudo", "docker"), scratch.folder, data.folder,
 The list of circRNAs predicted by CIRI starting from the raw RNA-Seq datasets
 }
 \description{
-This function calls sequencially the docker containers for FASTQC, BWA, and CIRI to predict the list of circRNAs starting from the raw RNA-Seq reads
+This function calls sequentially the docker containers for FASTQC, BWA, and CIRI to predict the list of circRNAs starting from the raw RNA-Seq reads
 }
 \examples{
 \dontrun{
@@ -51,7 +51,7 @@ This function calls sequencially the docker containers for FASTQC, BWA, and CIRI
     system("wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR582/001/SRR5824251/SRR5824251_2.fastq.gz") #retrieve the RNA-Seq data
 
     #running the wrapperCiri function
-wrapperCiri(group = "docker", scratch.folder="/data/scratch", data.folder=getwd(), genome.file="./circhunter-master/CircHunter/data/hg38.chr21.fa", seq.type = "pe", sample.id="test", threads = 1, max.span = 200000, strigency.value = "high", quality.threshold = 10) 
+wrapperCiri(group = "docker", scratch.folder="/data/scratch", data.folder=getwd(), genome.file="./circhunter-master/CircHunter/data/hg38.chr21.fa", seq.type = "pe", sample.id="test", threads = 1, max.span = 200000, stringency.value = "high", quality.threshold = 10) 
 
 }
 }

@@ -1,5 +1,5 @@
 #' @title Wrapper function for circRNAs prediction using CIRI 2
-#' @description This function calls sequencially the docker containers for FASTQC, BWA, and CIRI to predict the list of circRNAs starting from the raw RNA-Seq reads
+#' @description This function calls sequentially the docker containers for FASTQC, BWA, and CIRI to predict the list of circRNAs starting from the raw RNA-Seq reads
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param data.folder, a character string indicating where gzip fastq files are located
@@ -11,8 +11,8 @@
 #' @param sam.file, a character string indicating the path to the RNA-Seq alignment SAM file from BWA
 #' @param annotation.file, a character string indicating the path to the GTF/GFF file reporting the reference gene annotations
 #' @param max.span, an integer reporting the maximum spanning distance of a circRNA (default = 200000 bp)
-#' @param strigency.value, the selected stringency level of the analysis. Three possible options are available: "high" (high strigency, default), in which CIRI2 only provides circRNAs supported by more than 2 distinct PCC signals; "low" (low stringency), CIRI2 only provides circRNAs supported by more than 2 junction reads; "zero", CIRI2 provides all circRNAs regardless junction read counts or PCC signals
-#' @param quality.threshold, integer indicating the threshold for mappqing quality of each segment of junction reads (default=10)
+#' @param stringency.value, the selected stringency level of the analysis. Three possible options are available: "high" (high stringency, default), in which CIRI2 only provides circRNAs supported by more than 2 distinct PCC signals; "low" (low stringency), CIRI2 only provides circRNAs supported by more than 2 junction reads; "zero", CIRI2 provides all circRNAs regardless junction read counts or PCC signals
+#' @param quality.threshold, integer indicating the threshold for mapping quality of each segment of junction reads (default=10)
 #' @author Nicola Licheri and Giulio Ferrero
 #'
 #' @return The list of circRNAs predicted by CIRI starting from the raw RNA-Seq datasets
@@ -27,14 +27,14 @@
 #'     system("wget ftp://ftp.sra.ebi.ac.uk/vol1/fastq/SRR582/001/SRR5824251/SRR5824251_2.fastq.gz") #retrieve the RNA-Seq data
 #'
 #'     #running the wrapperCiri function
-#' wrapperCiri(group = "docker", scratch.folder="/data/scratch", data.folder=getwd(), genome.file="./circhunter-master/CircHunter/data/hg38.chr21.fa", seq.type = "pe", sample.id="test", threads = 1, max.span = 200000, strigency.value = "high", quality.threshold = 10) 
+#' wrapperCiri(group = "docker", scratch.folder="/data/scratch", data.folder=getwd(), genome.file="./circhunter-master/CircHunter/data/hg38.chr21.fa", seq.type = "pe", sample.id="test", threads = 1, max.span = 200000, stringency.value = "high", quality.threshold = 10) 
 #'
 #' }
 #' @export
 
 wrapperCiri <- function(group = c("sudo", "docker"), scratch.folder, data.folder,
                         genome.file, seq.type = c("se", "pe"), sample.id, threads = 1,
-                        annotation.file = "", max.span = 200000, strigency.value = c("high", "low", "zero"), quality.threshold = 10) {
+                        annotation.file = "", max.span = 200000, stringency.value = c("high", "low", "zero"), quality.threshold = 10) {
 
   # storing the position of the home folder
   home <- getwd()
@@ -59,7 +59,7 @@ wrapperCiri <- function(group = c("sudo", "docker"), scratch.folder, data.folder
   ciri2(
     group = group, scratch.folder = scratch.folder, sam.file = paste(data.folder, "dedup_reads.bam", sep="/"),
     genome.file = genome.file, annotation.file = annotation.file,
-    max.span = max.span, strigency.value = strigency.value,
+    max.span = max.span, stringency.value = stringency.value,
     quality.threshold = quality.threshold, threads = threads
   )
 

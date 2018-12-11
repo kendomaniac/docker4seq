@@ -4,12 +4,13 @@
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for STAR is located.
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 #'
-#' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
+#' @return the bed files of the reference genome for STARChip analysis
 #' @examples
 #'\dontrun{
 #'     starChipIndex(group="docker", genome.folder="/data/genomes/hg38star")
 #' }
 #' @export
+
 starChipIndex <- function(group=c("sudo","docker"), genome.folder=getwd()){
 
   home <- getwd()

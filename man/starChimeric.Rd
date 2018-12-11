@@ -19,12 +19,12 @@ starChimeric(group = c("sudo", "docker"), fastq.folder = getwd(),
 
 \item{threads, }{a number indicating the number of cores to be used from the application}
 
-\item{chimSegmentMin, }{is a positive value indicating the minimal lenght of the overlap of a read to the chimeric element}
+\item{chimSegmentMin, }{is a positive integer indicating the minimal length of the overlap of a read to the chimeric element}
 
-\item{chimJunctionOverhangMin, }{is a positive value indicating the minimum overhang for a chimeric junction}
+\item{chimJunctionOverhangMin, }{is a positive integer indicating the minimum overhang for a chimeric junction}
 }
 \value{
-three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
+the set of chimeric transcripts identified by STAR chimeric
 }
 \description{
 This function executes STAR to detect chimeric transcripts

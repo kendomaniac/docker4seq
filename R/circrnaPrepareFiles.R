@@ -7,7 +7,7 @@
 #' @param assembly, string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38
 #' @author Nicola Licheri and Giulio Ferrero
 #'
-#' @return Two tab-delimited tables reporting the transcript- and gene-level classification of a list of circRNAs
+#' @return Two tab-delimited tables reporting the exons and the transcript isoforms annotations of an user-selected human genome assembly
 #' @examples
 #'\dontrun{
 #'     #Download the example data

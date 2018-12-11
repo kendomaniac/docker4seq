@@ -5,11 +5,11 @@
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for STAR is located.
 #' @param threads, a number indicating the number of cores to be used from the application
-#' @param chimSegmentMin, is a positive value indicating the minimal lenght of the overlap of a read to the chimeric element
-#' @param chimJunctionOverhangMin, is a positive value indicating the minimum overhang for a chimeric junction
+#' @param chimSegmentMin, is a positive integer indicating the minimal length of the overlap of a read to the chimeric element
+#' @param chimJunctionOverhangMin, is a positive integer indicating the minimum overhang for a chimeric junction
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 #'
-#' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
+#' @return the set of chimeric transcripts identified by STAR chimeric
 #' @examples
 #'\dontrun{
 #'     #downloading fastq files

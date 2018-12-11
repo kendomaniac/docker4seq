@@ -5,7 +5,7 @@
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param rnaseq.data, string indicating the path to the fastq file of the RNA-Seq dataset to analyse
 #' @param backsplicing_junctions.data, string indicating the path to the fasta file of the circRNA back-splicing sequences to search in the RNA-Seq dataset
-#' @param hc.params, vector of six parametes to set the analysis. The element of the vector indicate in order: the k-mer size, the thread number, the dimension of the hash table, the dimension of the collision list, the number of k-mers that must be matched to the sequence to consider the sequence itself as represented in the RNA-Seq data, and the number of perfect matches required in the k-mer to consider it matched to a sequence.
+#' @param hc.params, vector of six parameters to set the analysis. The element of the vector indicate in order: the k-mer size, the thread number, the dimension of the hash table, the dimension of the collision list, the number of k-mers that must be matched to the sequence to consider the sequence itself as represented in the RNA-Seq data, and the number of perfect matches required in the k-mer to consider it matched to a sequence.
 #' @author Nicola Licheri and Giulio Ferrero
 #'
 #' @return A count table reporting the number of RNA-Seq reads supporting specific circRNA back-splice junctions

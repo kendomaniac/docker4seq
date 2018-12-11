@@ -17,7 +17,7 @@ circrnaPrepareFiles(group = c("sudo", "docker"), scratch.folder,
 \item{assembly, }{string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38}
 }
 \value{
-Two tab-delimited tables reporting the transcript- and gene-level classification of a list of circRNAs
+Two tab-delimited tables reporting the exons and the transcript isoforms annotations of an user-selected human genome assembly
 }
 \description{
 This function executes the docker container circhunter by running the circRNA classification module of CircHunter starting from a set of circRNAs. For CircHunter algorithm detail please refer to: https://github.com/carlo-deintinis/circhunter/tree/master/CircHunter.

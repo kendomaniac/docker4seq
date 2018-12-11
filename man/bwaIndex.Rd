@@ -26,6 +26,8 @@ bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(),
 \item{rc.version, }{a character string indicating the required version of RNA Central database. Visit ftp://ftp.ebi.ac.uk/pub/databases/RNAcentral/releases/ to select the proper version id.}
 
 \item{rc.species, }{a character string indicating the name of a species annotated in RNA Central (e.g. "Homo sapiens" for human ncRNAs). Please refer to NCBI taxonomy annotations at https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi to proper species name.}
+
+\item{length, }{an integer corresponding on the length threshold selected to define the ncRNA reference from RNA Central.}
 }
 \value{
 The indexed bwa reference sequence

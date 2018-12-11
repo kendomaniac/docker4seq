@@ -19,7 +19,7 @@ rsemstarIndex(group = c("sudo", "docker"), genome.folder = getwd(),
 \item{threads, }{a number indicating the number of cores to be used from the application}
 }
 \value{
-The indexed bwa genome reference sequence
+The index of the reference genomic sequence for STAR analysis
 }
 \description{
 This function executes the docker container rsem-star1 where RSEM and STAR are installed. The index is created using ENSEMBL genome fasta file. User needs to provide the URL for ENSEMBL genome located in the ENSEMBL ftp

@@ -1,5 +1,5 @@
 #' @title Running CIRI v2 tool for circRNAs prediction
-#' @description This function executes the docker container ciri2 where CIRI v2.0.6 is installed and it provides the list of circRNA predicted from a RNA-Seq experiment. For CIRI 2 tool detail refer to: "Gao, Y., Zhang, J., & Zhao, F. (2017). Circular RNA identification based on multiple seed matching. Brief Bioinform. 2018 Sep 28;19(5):803-810."
+#' @description This function executes the docker container ciri2 where CIRI v2.0.6 is installed and it provides the list of circRNAs predicted from a RNA-Seq experiment. For CIRI 2 tool detail refer to: "Gao, Y., Zhang, J., & Zhao, F. (2017). Circular RNA identification based on multiple seed matching. Brief Bioinform. 2018 Sep 28;19(5):803-810."
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
@@ -7,8 +7,8 @@
 #' @param genome.file, a character string indicating the path to the Fasta file of the reference genomic sequence (it should be the same reference indexed for the BWA alignment)
 #' @param annotation.file, a character string indicating the path to the GTF/GFF file reporting the reference gene annotations
 #' @param max.span, an integer reporting the maximum spanning distance of a circRNA (default = 200000 bp)
-#' @param strigency.value, the selected stringency level of the analysis. Three possible options are available: "high" (high strigency, default), in which CIRI2 only provides circRNAs supported by more than 2 distinct PCC signals; "low" (low stringency), CIRI2 only provides circRNAs supported by more than 2 junction reads; "zero", CIRI2 provides all circRNAs regardless junction read counts or PCC signals
-#' @param strigency.value, integer indicating the threshold for mappqing quality of each segment of junction reads (default=10)
+#' @param stringency.value, the selected stringency level of the analysis. Three possible options are available: "high" (high stringency, default), in which CIRI2 only provides circRNAs supported by more than 2 distinct Paired Chiastic Clipping (PCC) signals; "low" (low stringency), CIRI2 only provides circRNAs supported by more than 2 junction reads; "zero", CIRI2 provides all circRNAs regardless junction read counts or PCC signals
+#' @param stringency.value, integer indicating the threshold for mapping quality of each segment of junction reads (default=10)
 #' @param threads, integer indicating the number of threads used for the analysis (default=1)
 #' @author Nicola Licheri and Giulio Ferrero
 #'
@@ -21,7 +21,7 @@
 #'     system("unzip CIRI_v2.0.6.zip")
 #'
 #'     #running ciri2 function
-#'     ciri2(group="docker", scratch.folder="/data/scratch", sam.file=paste(getwd(),"/CIRI_v2.0.6/data/sample.sam", sep=""), genome.file=paste(getwd(),"/CIRI_v2.0.6/data/chr1.fa", sep=""), annotation.file="", max.span=200000, strigency.value="high", quality.threshold=10, threads=1)
+#'     ciri2(group="docker", scratch.folder="/data/scratch", sam.file=paste(getwd(),"/CIRI_v2.0.6/data/sample.sam", sep=""), genome.file=paste(getwd(),"/CIRI_v2.0.6/data/chr1.fa", sep=""), annotation.file="", max.span=200000, stringency.value="high", quality.threshold=10, threads=1)
 #
 #' }
 #' 
@@ -29,7 +29,7 @@
 
 
 ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.file, annotation.file = "",
-                  max.span = 200000, strigency.value = c("high", "low", "zero"), quality.threshold = 10, threads = 1) {
+                  max.span = 200000, stringency.value = c("high", "low", "zero"), quality.threshold = 10, threads = 1) {
 
 
 
@@ -81,16 +81,16 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
       annotation.volume <- paste(" -v ", annotatio.file, ":/data/annotation ", sep = "")
     }
   }
-  # converting strigency.value in correct parameter value
-  if (strigency.value %in% c("high", "low", "zero")) {
-    strigency <- paste("-", strigency.value, sep = "")
-    if (strigency.value == "zero") {
-      strigency <- "-0"
+  # converting stringency.value in correct parameter value
+  if (stringency.value %in% c("high", "low", "zero")) {
+    stringency <- paste("-", stringency.value, sep = "")
+    if (stringency.value == "zero") {
+      stringency <- "-0"
     }
   }
   else {
     # assuming default value
-    strigency <- "-high"
+    stringency <- "-high"
   }
 
   # testing if docker is running
@@ -123,7 +123,7 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
     annotation.volume, # it can be an empty string
     #                  " -v ", data.folder, ":/output ",
     " -d docker.io/cursecatcher/ciri2 ",
-    annotation.flag, " ", strigency, " -S ", max.span, " -T ", threads, " -U ", quality.threshold,
+    annotation.flag, " ", stringency, " -S ", max.span, " -T ", threads, " -U ", quality.threshold,
     sep = ""
   )
   resultRun <- runDocker(group = group, params = params)
