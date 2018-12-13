@@ -4,6 +4,8 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param data.folder, a character string indicating the data folder where the CIRI 2 output files are located
+#' @param samples.list, 
+#' @param covariates.list, 
 #' @param groups_file, a character string indicating the path to the file reporting in each row the identifier of the input data to be considered and the associated experimental group 
 #' @param min_reads, the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)
 #' @param min_reps, the minimum number of replicates associated with at least min_reads supporting a circRNA (default = 0)
@@ -25,7 +27,7 @@
 #' }
 #' @export
 
-ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, data.folder, groups.file, min_reads = 2, min_reps = 0, min_avg = 10) {
+ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, data.folder, samples.list, covariates.list, min_reads = 2, min_reps = 0, min_avg = 10) {
 
 
   # running time 1
@@ -43,13 +45,6 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, d
   # initialize status
   system("echo 0 > ExitStatusFile 2>&1")
 
-  if (!file.exists(groups.file)) {
-    cat(paste("\nIt seems that the ", groups.file, " file does not exist\n"))
-    system("echo 2 > ExitStatusFile 2>&1")
-    setwd(home)
-    return(2)
-  }
-
   # check  if scratch folder exist
   if (!file.exists(scratch.folder)) {
     cat(paste("\nIt seems that the ", scratch.folder, " folder does not exist\n"))
@@ -57,16 +52,25 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, d
     setwd(home)
     return(3)
   }
+  
+  # check if each sample is associated to a covariate and viceversa
+  if (length(samples.list) != length(covariates.list)) {
+    cat("\nSamples and covariates lists must have the same length.\n")
+    system("echo 2 > ExitStatusFile 2>&1")
+    setwd(home)
+    return(2)
+  }
 
   # executing the docker job
   params <- paste("--cidfile ", data.folder, "/dockerID ",
-    " -v ", scratch.folder, ":/scratch ",
-    " -v ", data.folder, ":/data/ciri_predictions ",
-    " -v ", data.folder, ":/data/output_merge ",
-    " -v ", groups.file, ":/data/samples_file ",
-    " -d docker.io/cursecatcher/ciri2 merge ",
-    " --mr ", min_reads, " --mrep ", min_reps, " --avg ", min_avg,
-    sep = "")
+                  " -v ", scratch.folder, ":/scratch ",
+                  " -v ", data.folder, ":/data/ciri_predictions ",
+                  " -v ", data.folder, ":/data/output_merge ",
+                  " -d docker.io/cursecatcher/ciri2 merge2 ",
+                  " --samples ", paste(samples.list, collapse = " "),
+                  " --cov ", paste(covariates.list, collapse = " "), 
+                  " --mr ", min_reads, " --mrep ", min_reps, " --avg ", min_avg,
+                  sep = "")
   resultRun <- runDocker(group = group, params = params)
 
   # running time 2
