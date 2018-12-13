@@ -4,6 +4,7 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param ciri.file, a list of circRNAs derived from a CIRI2 prediction analysis
+#' @param annotation.sources, 
 #' @param genome.version, a character string indicating the reference genome assembly. The function currently work with the hg19 human genome assembly 
 #' @author Nicola Licheri and Giulio Ferrero
 #'
@@ -24,7 +25,7 @@
 #' @export
 
 
-circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.file, genome.version) {
+circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.file, annotation.sources=c("circbase", "tscd", "cscd"), genome.version) {
 
   # running time 1
   ptm <- proc.time()
@@ -57,13 +58,22 @@ circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.fi
     setwd(data.folder)
     return(3)
   }
+  #check if there is at least one annotation source 
+  if (length(annotation.sources) < 1) {
+    cat("\It seems that you do not specified any annotation source\n")
+    system("echo 4 > ExitStatusFile 2>&1")
+    setwd(data.folder)
+    return(4)
+  }
 
   # executing the docker job
   params <- paste("--cidfile ", data.folder, "/dockerID ",
                   " -v ", scratch.folder, ":/scratch ",
                   " -v ", ciri.file, ":/data/cirifile ",
                   " -v ", data.folder, ":/data/ ",
-                  " -d docker.io/cursecatcher/ciri2 annotation -v ", genome.version,
+                  " -d docker.io/cursecatcher/ciri2 annotation ",  
+                  " -v ", genome.version,
+                  " -s ", paste(annotation.sources, collapse=" "),
                   sep = ""
   )
   resultRun <- runDocker(group = group, params = params)
