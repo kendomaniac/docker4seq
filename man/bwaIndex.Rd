@@ -23,9 +23,15 @@ bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(),
 
 \item{mode, }{a character string indicating the required type of analysis. Compatible analyses mode are "General", "GATK", "miRNA", and "ncRNA". In "General" mode the url of any online fasta file ("genome.url" argument) can be provided and indexed. In the GATK analysis mode, the list of variants from dbsnp ("dbsnp.file" argument) and g1000 ("dbsnp.file" argument) are required in addition to the url of the genome fasta ("genome.url" argument). In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. In "ncRNA" analysis mode, the version ("rc.version" argument) and species prefix ("rc.species" argument) of RNA Central are required. This mode require also a desidered maximum length of the studied RNA annotations ("length" argument).}
 
-\item{rc.version, }{a character string indicating the required version of RNA Central database. Visit ftp://ftp.ebi.ac.uk/pub/databases/RNAcentral/releases/ to select the proper version id.}
+\item{mb.version, }{a character string indicating the required version of miRBase database. Visit http://www.mirbase.org to select the proper version number.}
+
+\item{mb.species, }{a character string indicating the name of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to proper species name.}
+
+\item{rc.version, }{a character string indicating the required version of RNA Central database. Visit ftp://ftp.ebi.ac.uk/pub/databases/RNAcentral/releases/ to select the proper version number.}
 
 \item{rc.species, }{a character string indicating the name of a species annotated in RNA Central (e.g. "Homo sapiens" for human ncRNAs). Please refer to NCBI taxonomy annotations at https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi to proper species name.}
+
+\item{length, }{an integer corresponding on the length threshold selected to define the ncRNA reference from RNA Central.}
 }
 \value{
 The indexed bwa reference sequence

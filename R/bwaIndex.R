@@ -7,9 +7,11 @@
 #' @param genome.url, a character string indicating the URL from download web page for the genome sequence of interest
 #' @param dbsnp.file, a character string indicating the name of dbSNP vcf located in the genome folder. The dbSNP vcf, dbsnp_138.b37.vcf.gz and dbsnp_138.hg19.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37
 #' @param g1000.file, a character string indicating the name of 1000 genome vcf located in the genome folder. The 1000 genomes vcf, Mills_and_1000G_gold_standard.indels.b37.vcf.gz and Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/
-
-#' @param rc.version, a character string indicating the required version of RNA Central database. Visit ftp://ftp.ebi.ac.uk/pub/databases/RNAcentral/releases/ to select the proper version id.
+#' @param mb.version, a character string indicating the required version of miRBase database. Visit http://www.mirbase.org to select the proper version number.
+#' @param mb.species, a character string indicating the name of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to proper species name.
+#' @param rc.version, a character string indicating the required version of RNA Central database. Visit ftp://ftp.ebi.ac.uk/pub/databases/RNAcentral/releases/ to select the proper version number.
 #' @param rc.species, a character string indicating the name of a species annotated in RNA Central (e.g. "Homo sapiens" for human ncRNAs). Please refer to NCBI taxonomy annotations at https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi to proper species name.
+#' @param length, an integer corresponding on the length threshold selected to define the ncRNA reference from RNA Central. 
 #' @author Giulio Ferrero
 #'
 #' @return The indexed bwa reference sequence
@@ -112,7 +114,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 ### BWA index case for non miRNA ncRNAs
 	if(mode=="ncRNA"){
 	  
-	  rc_ok_ver = c("1.0","1.0beta","2.0","3.0","4.0","5.0","6.0","7.0","8.0","9.0")
+	  rc_ok_ver = c("1.0","1.0beta","2.0","3.0","4.0","5.0","6.0","7.0","8.0","9.0", "10.0")
 	  
 	  if(rc.version %in% rc_ok_ver == FALSE){
 	    cat("\nThe RNA Central version is not correct\n")
