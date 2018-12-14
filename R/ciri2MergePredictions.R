@@ -4,9 +4,9 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param data.folder, a character string indicating the data folder where the CIRI 2 output files are located
-#' @param samples.list, 
-#' @param covariates.list, 
-#' @param groups_file, a character string indicating the path to the file reporting in each row the identifier of the input data to be considered and the associated experimental group 
+#' @param samples.list,
+#' @param covariates.list,
+#' @param groups_file, a character string indicating the path to the file reporting in each row the identifier of the input data to be considered and the associated experimental group
 #' @param min_reads, the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)
 #' @param min_reps, the minimum number of replicates associated with at least min_reads supporting a circRNA (default = 0)
 #' @param min_avg, the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)
@@ -21,7 +21,7 @@
 #'     system("unzip master.zip")
 #'     system("unzip ./circhunter-master/CircHunter/data/CIRI_predictions.zip")
 #'
-#'     #running the ciri2MergePredictions function		
+#'     #running the ciri2MergePredictions function
 #'     ciri2MergePredictions(group="docker", scratch.folder="/data/scratch", data.folder="./circhunter-master/CircHunter/data/CIRI_predictions", groups.file="./circhunter-master/CircHunter/data/CIRI_predictions/SampleData.tsv", min_reads = 2, min_reps = 2, min_avg = 10)
 #
 #' }
@@ -52,7 +52,7 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, d
     setwd(home)
     return(3)
   }
-  
+
   # check if each sample is associated to a covariate and viceversa
   if (length(samples.list) != length(covariates.list)) {
     cat("\nSamples and covariates lists must have the same length.\n")
@@ -66,9 +66,9 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, d
                   " -v ", scratch.folder, ":/scratch ",
                   " -v ", data.folder, ":/data/ciri_predictions ",
                   " -v ", data.folder, ":/data/output_merge ",
-                  " -d docker.io/cursecatcher/ciri2 merge2 ",
+                  " -d docker.io/cursecatcher/ciri2 merge ",
                   " --samples ", paste(samples.list, collapse = " "),
-                  " --cov ", paste(covariates.list, collapse = " "), 
+                  " --cov ", paste(covariates.list, collapse = " "),
                   " --mr ", min_reads, " --mrep ", min_reps, " --avg ", min_avg,
                   sep = "")
   resultRun <- runDocker(group = group, params = params)
