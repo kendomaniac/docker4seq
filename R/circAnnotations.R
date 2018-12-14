@@ -60,7 +60,7 @@ circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.fi
   }
   #check if there is at least one annotation source 
   if (length(annotation.sources) < 1) {
-    cat("\It seems that you do not specified any annotation source\n")
+    cat("\nIt seems that you do not specified any annotation source\n")
     system("echo 4 > ExitStatusFile 2>&1")
     setwd(data.folder)
     return(4)
