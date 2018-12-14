@@ -121,9 +121,9 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
     " -v ", genome.file, ":/data/reference ",
     " -v ", data.folder, ":/data/ciri_prediction ",
     annotation.volume, # it can be an empty string
-    #                  " -v ", data.folder, ":/output ",
-    " -d docker.io/cursecatcher/ciri2 ciri2",
-    annotation.flag, " ", stringency, " -S ", max.span, " -T ", threads, " -U ", quality.threshold,
+    #                  " -v ", data.folder, ":/output ",  
+    " -d docker.io/cursecatcher/ciri2 ciri2  ",
+    paste(annotation.flag, stringency, "-S ", max.span, "-T ", threads, "-U ", quality.threshold, sep=" "),
     sep = ""
   )
   resultRun <- runDocker(group = group, params = params)
