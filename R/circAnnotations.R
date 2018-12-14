@@ -4,8 +4,8 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param ciri.file, a list of circRNAs derived from a CIRI2 prediction analysis
-#' @param annotation.sources, 
-#' @param genome.version, a character string indicating the reference genome assembly. The function currently work with the hg19 human genome assembly 
+#' @param annotation.sources, a vector of character strings indicating the...
+#' @param genome.version, a character string indicating the reference genome assembly. The function currently work with the hg18, hg19 and hg38 human genome assemblies
 #' @author Nicola Licheri and Giulio Ferrero
 #'
 #' @return The annotations of a list of circRNAs from different databases
@@ -25,7 +25,7 @@
 #' @export
 
 
-circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.file, annotation.sources=c("circbase", "tscd", "cscd"), genome.version) {
+circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.file, annotation.sources=c("circbase", "tscd", "cscd"), genome.version=c("hg18", "hg19", "hg38")) {
 
   # running time 1
   ptm <- proc.time()
@@ -70,7 +70,7 @@ circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.fi
   params <- paste("--cidfile ", data.folder, "/dockerID ",
                   " -v ", scratch.folder, ":/scratch ",
                   " -v ", ciri.file, ":/data/cirifile ",
-                  " -v ", data.folder, ":/data/ ",
+                  " -v ", data.folder, ":/data/out ",
                   " -d docker.io/cursecatcher/ciri2 annotation ",  
                   " -v ", genome.version,
                   " -s ", paste(annotation.sources, collapse=" "),
