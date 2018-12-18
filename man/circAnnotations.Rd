@@ -5,7 +5,8 @@
 \title{Annotation of a list of circRNAs}
 \usage{
 circAnnotations(group = c("sudo", "docker"), scratch.folder, ciri.file,
-  genome.version)
+  annotation.sources = c("circbase", "tscd"),
+  genome.version = c("hg18", "hg19", "hg38"))
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -14,7 +15,9 @@ circAnnotations(group = c("sudo", "docker"), scratch.folder, ciri.file,
 
 \item{ciri.file, }{a list of circRNAs derived from a CIRI2 prediction analysis}
 
-\item{genome.version, }{a character string indicating the reference genome assembly. The function currently work with the hg19 human genome assembly}
+\item{annotation.sources, }{a vector of character strings indicating the circRNA databases to analyse}
+
+\item{genome.version, }{a character string indicating the reference genome assembly. The function currently work with the hg18, hg19 and hg38 human genome assemblies}
 }
 \value{
 The annotations of a list of circRNAs from different databases

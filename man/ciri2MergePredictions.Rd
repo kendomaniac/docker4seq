@@ -5,8 +5,8 @@
 \title{Function to merge different circRNA lists from CIRI 2}
 \usage{
 ciri2MergePredictions(group = c("sudo", "docker"), scratch.folder,
-  data.folder, groups.file, min_reads = 2, min_reps = 0,
-  min_avg = 10)
+  data.folder, samples.list, covariates.list, min_reads = 2,
+  min_reps = 0, min_avg = 10)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -15,13 +15,15 @@ ciri2MergePredictions(group = c("sudo", "docker"), scratch.folder,
 
 \item{data.folder, }{a character string indicating the data folder where the CIRI 2 output files are located}
 
+\item{samples.list, }{a character vector indicating the identifiers of the samples}
+
+\item{covariates.list, }{a character vector indicating the classes of the samples}
+
 \item{min_reads, }{the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)}
 
 \item{min_reps, }{the minimum number of replicates associated with at least min_reads supporting a circRNA (default = 0)}
 
 \item{min_avg, }{the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)}
-
-\item{groups_file, }{a character string indicating the path to the file reporting in each row the identifier of the input data to be considered and the associated experimental group}
 }
 \value{
 Two tab-delimited tables reporting the BS supporting reads and the coordinates of the filtered circRNAs are reported
@@ -37,7 +39,7 @@ This function executes the docker container ciri2merge by running the merge of d
     system("unzip master.zip")
     system("unzip ./circhunter-master/CircHunter/data/CIRI_predictions.zip")
 
-    #running the ciri2MergePredictions function		
+    #running the ciri2MergePredictions function
     ciri2MergePredictions(group="docker", scratch.folder="/data/scratch", data.folder="./circhunter-master/CircHunter/data/CIRI_predictions", groups.file="./circhunter-master/CircHunter/data/CIRI_predictions/SampleData.tsv", min_reads = 2, min_reps = 2, min_avg = 10)
 }
 }

@@ -4,7 +4,7 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param ciri.file, a list of circRNAs derived from a CIRI2 prediction analysis
-#' @param annotation.sources, a vector of character strings indicating the...
+#' @param annotation.sources, a vector of character strings indicating the circRNA databases to analyse
 #' @param genome.version, a character string indicating the reference genome assembly. The function currently work with the hg18, hg19 and hg38 human genome assemblies
 #' @author Nicola Licheri and Giulio Ferrero
 #'
@@ -25,7 +25,7 @@
 #' @export
 
 
-circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.file, annotation.sources=c("circbase", "tscd", "cscd"), genome.version=c("hg18", "hg19", "hg38")) {
+circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.file, annotation.sources=c("circbase", "tscd"), genome.version=c("hg18", "hg19", "hg38")) {
 
   # running time 1
   ptm <- proc.time()
