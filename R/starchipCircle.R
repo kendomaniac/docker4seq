@@ -113,10 +113,10 @@ starchipCircle <- function(group=c("sudo","docker"), genome.folder, scratch.fold
 
   if(group=="sudo"){
     params <- paste("--cidfile ", samples.folder,"/dockerID -v ", paste(scrat_tmp.folder,"/samples", sep=""),":/samples -v ", genome.folder,":/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/starChipCircle.sh", sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/star251.2017.01", params=params)
+    resultRun <- runDocker(group="sudo", params=params)
   }else{
     params <- paste("--cidfile ", samples.folder,"/dockerID -v ", paste(scrat_tmp.folder,"/samples", sep=""),":/samples -v ", genome.folder,":/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/starChipCircle.sh", sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/star251.2017.01", params=params)
+    resultRun <- runDocker(group="docker", params=params)
   }
 
   if(resultRun=="false"){
