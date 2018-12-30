@@ -33,7 +33,7 @@ Under development are:
 
 All workflows are controlled by a set of R fuctions, part of docker4seq package, and the algorithms used are all encapsulated into Docker images and stored at docker.io/repbioinfo repository.
 
-More info on docker4seq [here](http://rpubs.com/rcaloger/293366)
+More info on docker4seq: [docker4seq web page](https://kendomaniac.github.io/docker4seq/index.html)
 
 
 ### How to be part of the Reproducible Bioinformatics Project community
