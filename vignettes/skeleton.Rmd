@@ -4,10 +4,22 @@ author: "Raffaele A Calogero"
 output: 
   rmarkdown::html_vignette
 vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{Skeleton tutorial}
   %\VignetteEncoding{UTF-8}   
+  
+header-includes:
+- \usepackage{makeidx}
+- \makeindex
+- \usepackage{setspace}\doublespacing
+- \usepackage{pdfpages}
+  
+
+fig_caption: true
 ---
+
+\newpage
+\tableofcontents
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -89,10 +101,10 @@ Executing the docker command:
   #executing the docker job
   if(group=="sudo"){
     params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh", sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/ubuntu", params=params)
+    resultRun <- runDocker(group="sudo", params=params)
   }else{
     params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh", sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/ubuntu", params=params)
+    resultRun <- runDocker(group="docker", params=params)
   }
 ```
 
