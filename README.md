@@ -46,12 +46,12 @@ Steps required to submit a new application/workflow:
 - Edit the [skeleton.R](https://github.com/kendomaniac/docker4seq/blob/devel/R/skeleton.R) function and the ubuntu docker image (docker.io/repbioinfo/ubuntu) to create the new application.
 
 
-    + Please have a look at: [Controlling jobs in a docker image, a brief tutorial](http://rpubs.com/rcaloger/300960).
+    + Please have a look at: [Controlling jobs in a docker image, a brief tutorial](https://kendomaniac.github.io/docker4seq/articles/skeleton.html).
     
     
 - Create a public docker repository for the docker image, e.g. at [docker.com](http://docker.com).
 
-- Create a workflow.Rmd vignette using RStudio and publish it via RStudio. As example of a vignette see [docker4seq vignette](http://rpubs.com/rcaloger/293366).
+- Create a workflow.Rmd vignette using RStudio and publish it via RStudio. As example of a vignette see [docker4seq vignette](https://kendomaniac.github.io/docker4seq/).
 
 - Once the docker image, the function(s) and vignette are ready please fill this [submission form](http://goo.gl/bb42EN). 
 
@@ -116,11 +116,6 @@ In *docker4seq* library is now present the function *testSeqbox*, allowing to ch
 - The **Circular RNA identification module**, which allows the identification circRNAs, embedding starChipIndex.R, starChimeric.R and starchipCircle.R fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285)
 
 - The **ChIPseq workflow** embedding demultiplexing.R, chipseq.R, chipseqCounts.R, bwa.R, bwaIndexUcsc.R does not satisfy Rule 4 (Version Control All Custom Scripts) because it download for annotation the latest version of ENSEMBL annotation. Thus, annotation executed at different time might differ because of the changes in the ENSEMBL downoaded information. We are working to fix this issue, expected fixing Q3 2018. Not all intermediate results are available as part of the final results (Sandve rule 5), expected fixing Q3 2018.
-
-#### Demonstrative workflows:
-
-Demonstrative workflows tutorial is available [here](http://rpubs.com/rcaloger/360801).
-
 
 #### Diclaimer:
 docker4seq developers have no liability for any use of docker4seq functions, including without limitation, any loss of data, incorrect results, or any costs, liabilities, or damages that result from use of docker4seq. 
