@@ -86,7 +86,7 @@ https://docs.docker.com/install/linux/linux-postinstall/
 
 **IMPORTANT** The first time *docker4seq* is installed the **downloadContainers** needs to be executed  to download to the local repository the containers that are needed for the use of *docker4seq*
 
-More info on the functionalities of the package are available at: [**docker4seq/4SeqGUI vignette**](http://rpubs.com/rcaloger/293366)
+More info on the functionalities of the package are available at: [**docker4seq/4SeqGUI vignette**](https://kendomaniac.github.io/docker4seq/index.html)
 
 - **docker4seq/4SeqGUI Video Tutorials:**
 
