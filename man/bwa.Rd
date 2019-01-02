@@ -6,7 +6,7 @@
 \usage{
 bwa(group = c("sudo", "docker"), fastq.folder = getwd(),
   scratch.folder = "/data/scratch", genome.folder, seq.type = c("se",
-  "pe"), threads = 1, sample.id)
+  "pe"), threads = 1, sample.id, circRNA = FALSE)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -22,6 +22,8 @@ bwa(group = c("sudo", "docker"), fastq.folder = getwd(),
 \item{threads, }{a number indicating the number of cores to be used from the application}
 
 \item{sample.id, }{a character string indicating the unique id to be associated to the bam that will be created}
+
+\item{circRNA, }{a boolean variable indicating whether the analysis concerns a circRNA prediction or not.}
 }
 \value{
 three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
