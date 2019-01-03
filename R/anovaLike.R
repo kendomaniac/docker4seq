@@ -60,6 +60,12 @@ anovaLike <- function(group=c("sudo","docker"), file, logFC.threshold=1, FDR.thr
   }
   system(paste("mv DE_", counts.table, " ANOVAlike_", counts.table, sep=""))
   tmp0 <- read.table(paste("ANOVAlike_", counts.table, sep=""), sep="\t", header=T, row.names=1)
+  tmp0.names <- rownames(tmp0)
+  tmp0.names1 <- strsplit(tmp0.names, ":")
+  tmp0.names2 <- sapply(tmp0.names1, function(x)x[1])
+  zz <- file("bkg2GO.txt", "w")
+  writeLines(tmp0.names2, con=zz)
+  close(zz)
   max0.logfc.tmp <- apply(tmp0[,grep("logFC", names(tmp0))], 1, function(x) unique(x[which(abs(x)== max(abs(x)))]))
   max0.logfc <- sapply(max0.logfc.tmp, function(x)as.numeric(x[[1]]))
 
@@ -81,6 +87,12 @@ anovaLike <- function(group=c("sudo","docker"), file, logFC.threshold=1, FDR.thr
   }
 
 write.table(tmp, paste("filtered_ANOVAlike_", counts.table, sep=""), sep="\t", col.names=NA)
+tmp.names <- rownames(tmp)
+tmp.names1 <- strsplit(tmp.names, ":")
+tmp.names2 <- sapply(tmp.names1, function(x)x[1])
+zz <- file("genesGO.txt", "w")
+writeLines(tmp.names2, con=zz)
+close(zz)
 
   #running time 2
   ptm <- proc.time() - ptm
