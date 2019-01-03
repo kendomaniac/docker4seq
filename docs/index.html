@@ -30,7 +30,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">docker4seq</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.8</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.9</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@
 <span class="op">-</span><span class="st"> </span>Single cell analysis workflow
 <span class="op">-</span><span class="st"> </span>Metagenomics workflow</code></pre></div>
 <p>All workflows are controlled by a set of R fuctions, part of docker4seq package, and the algorithms used are all encapsulated into Docker images and stored at docker.io/repbioinfo repository.</p>
-<p>More info on docker4seq <a href="http://rpubs.com/rcaloger/293366">here</a></p>
+<p>More info on docker4seq: <a href="https://kendomaniac.github.io/docker4seq/index.html">docker4seq web page</a></p>
 <div id="how-to-be-part-of-the-reproducible-bioinformatics-project-community" class="section level3">
 <h3 class="hasAnchor">
 <a href="#how-to-be-part-of-the-reproducible-bioinformatics-project-community" class="anchor"></a>How to be part of the Reproducible Bioinformatics Project community</h3>
@@ -108,11 +108,11 @@
 <li>
 <p>Edit the <a href="https://github.com/kendomaniac/docker4seq/blob/devel/R/skeleton.R">skeleton.R</a> function and the ubuntu docker image (docker.io/repbioinfo/ubuntu) to create the new application.</p>
 <ul>
-<li>Please have a look at: <a href="http://rpubs.com/rcaloger/300960">Controlling jobs in a docker image, a brief tutorial</a>.</li>
+<li>Please have a look at: <a href="https://kendomaniac.github.io/docker4seq/articles/skeleton.html">Controlling jobs in a docker image, a brief tutorial</a>.</li>
 </ul>
 </li>
 <li><p>Create a public docker repository for the docker image, e.g. at <a href="http://docker.com">docker.com</a>.</p></li>
-<li><p>Create a workflow.Rmd vignette using RStudio and publish it via RStudio. As example of a vignette see <a href="http://rpubs.com/rcaloger/293366">docker4seq vignette</a>.</p></li>
+<li><p>Create a workflow.Rmd vignette using RStudio and publish it via RStudio. As example of a vignette see <a href="https://kendomaniac.github.io/docker4seq/">docker4seq vignette</a>.</p></li>
 <li>
 <p>Once the docker image, the function(s) and vignette are ready please fill this <a href="http://goo.gl/bb42EN">submission form</a>.</p>
 <ul>
@@ -136,7 +136,7 @@ install_github("kendomaniac/docker4seq", ref="master")</a></code></pre>
 <pre><code>chmod 777 /data/scratch</code></pre>
 <p>The functions in docker4seq package require that user is sudo or part of a docker group. See the following document for more info: <a href="https://docs.docker.com/install/linux/linux-postinstall/" class="uri">https://docs.docker.com/install/linux/linux-postinstall/</a></p>
 <p><strong>IMPORTANT</strong> The first time <em>docker4seq</em> is installed the <strong>downloadContainers</strong> needs to be executed to download to the local repository the containers that are needed for the use of <em>docker4seq</em></p>
-<p>More info on the functionalities of the package are available at: <a href="http://rpubs.com/rcaloger/293366"><strong>docker4seq/4SeqGUI vignette</strong></a></p>
+<p>More info on the functionalities of the package are available at: <a href="https://kendomaniac.github.io/docker4seq/index.html"><strong>docker4seq/4SeqGUI vignette</strong></a></p>
 <ul>
 <li>
 <p><strong>docker4seq/4SeqGUI Video Tutorials:</strong></p>
@@ -161,11 +161,6 @@ install_github("kendomaniac/docker4seq", ref="master")</a></code></pre>
 <li><p>The <strong>Circular RNA identification module</strong>, which allows the identification circRNAs, embedding starChipIndex.R, starChimeric.R and starchipCircle.R fullfils all <a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285">Sandve</a></p></li>
 <li><p>The <strong>ChIPseq workflow</strong> embedding demultiplexing.R, chipseq.R, chipseqCounts.R, bwa.R, bwaIndexUcsc.R does not satisfy Rule 4 (Version Control All Custom Scripts) because it download for annotation the latest version of ENSEMBL annotation. Thus, annotation executed at different time might differ because of the changes in the ENSEMBL downoaded information. We are working to fix this issue, expected fixing Q3 2018. Not all intermediate results are available as part of the final results (Sandve rule 5), expected fixing Q3 2018.</p></li>
 </ul>
-</div>
-<div id="demonstrative-workflows" class="section level4">
-<h4 class="hasAnchor">
-<a href="#demonstrative-workflows" class="anchor"></a>Demonstrative workflows:</h4>
-<p>Demonstrative workflows tutorial is available <a href="http://rpubs.com/rcaloger/360801">here</a>.</p>
 </div>
 <div id="diclaimer" class="section level4">
 <h4 class="hasAnchor">

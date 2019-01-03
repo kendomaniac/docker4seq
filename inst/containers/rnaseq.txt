@@ -8,3 +8,4 @@ docker.io/repbioinfo/salmon.2017.01
 docker.io/repbioinfo/multiqc.2018.01
 docker.io/rcaloger/heatmapbase4seq
 docker.io/repbioinfo/desc.2018.01
+docker.io/repbioinfo/sra.2018.01
