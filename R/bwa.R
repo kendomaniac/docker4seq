@@ -5,6 +5,7 @@
 #' @param fastq.folder, a character string indicating where gzip fastq files are located
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa is located
+#' @param genome.name, a character string indicating the prefix of the genome, e.g. genome in case of genome.fa
 #' @param seq.type, a character string indicating the type of reads to be trimmed. Two options: \code{"se"} or \code{"pe"} respectively for single end and pair end sequencing
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param sample.id, a character string indicating the unique id to be associated to the bam that will be created
@@ -22,7 +23,7 @@
 #'
 #' }
 #' @export
-bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, seq.type=c("se","pe"), threads=1, sample.id){
+bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, genome.name, seq.type=c("se","pe"), threads=1, sample.id){
 
 
     home <- getwd()
@@ -98,18 +99,18 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
 
     if(seq.type=="pe"){
     	if(group=="sudo"){
-		      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_pe.sh /data/scratch ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", sample.id, " ",fastq.folder, sep="")
+		      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_pe.sh /data/scratch ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", sample.id, " ",fastq.folder, " ", genome.name, sep="")
 		      resultRun <- runDocker(group="sudo", params=params)
 	    }else{
-	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_pe.sh /data/scratch ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", sample.id, " ",fastq.folder, sep="")
+	      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_pe.sh /data/scratch ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", sample.id, " ",fastq.folder, " ", genome.name, sep="")
 	      resultRun <- runDocker(group="docker", params=params)
 	    }
 	  }else if(seq.type=="se"){
 	    if(group=="sudo"){
-		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_se.sh /data/scratch ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_se.sh /data/scratch ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, " ", genome.name, sep="")
 		    resultRun <- runDocker(group="sudo", params=params)
 		  }else{
-		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_se.sh /data/scratch ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2017.01 sh /bin/bwa_se.sh /data/scratch ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, " ", genome.name, sep="")
 		    resultRun <- runDocker(group="docker", params=params)
 		  }
 	  }

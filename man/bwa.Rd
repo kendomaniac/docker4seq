@@ -5,8 +5,8 @@
 \title{Running bwa, Li and Durbin Bioinformatics, 2009 Jul 15;25(14):1754-60}
 \usage{
 bwa(group = c("sudo", "docker"), fastq.folder = getwd(),
-  scratch.folder = "/data/scratch", genome.folder, seq.type = c("se",
-  "pe"), threads = 1, sample.id)
+  scratch.folder = "/data/scratch", genome.folder, genome.name,
+  seq.type = c("se", "pe"), threads = 1, sample.id)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -16,6 +16,8 @@ bwa(group = c("sudo", "docker"), fastq.folder = getwd(),
 \item{scratch.folder, }{a character string indicating the scratch folder where docker container will be mounted}
 
 \item{genome.folder, }{a character string indicating the folder where the indexed reference genome for bwa is located}
+
+\item{genome.name, }{a character string indicating the prefix of the genome, e.g. genome in case of genome.fa}
 
 \item{seq.type, }{a character string indicating the type of reads to be trimmed. Two options: \code{"se"} or \code{"pe"} respectively for single end and pair end sequencing}
 
