@@ -1,4 +1,5 @@
 docker.io/repbioinfo/annotate.2017.01
+docker.io/repbioinfo/bwaindex
 docker.io/repbioinfo/bwa.2017.01
 docker.io/repbioinfo/chipseq.2017.01
 docker.io/repbioinfo/r332.2017.01
