@@ -51,7 +51,7 @@ anovaLike <- function(group=c("sudo","docker"), file, logFC.threshold=1, FDR.thr
   }
 
   #executing the docker job
-  params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder, ":/data -d docker.io/repbioinfo/desc.2018.01 Rscript /bin/debulk.R ", counts.table, " ", file.type, sep="")
+  params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder, ":/data -d docker.io/repbioinfo/desc.2018.02 Rscript /bin/debulk.R ", counts.table, " ", file.type, sep="")
   resultRun <- runDocker(group=group, params=params)
 
   #waiting for the end of the container work
