@@ -1,4 +1,4 @@
-##Parameters for starchimp-circles
+##Parameters for starchip-circles
 readsCutoff = 5
 minSubjectLimit = 10
 cpus = 8
