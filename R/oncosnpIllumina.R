@@ -51,9 +51,9 @@ oncosnp <- function(group=c("sudo","docker"), data.folder, scratch.folder, sampl
 
   #executing the docker job
   if(is.null(blood.name)){
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/ -v ", scratch.folder,":/scratch"," -d docker.io/repbioinfo/arracnv.2019.01 bash /bin/oncosnp_command.sh ", sample.name, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/ -v ", scratch.folder,":/scratch"," -d docker.io/repbioinfo/arraycnv.2019.01 bash /bin/oncosnp_command.sh ", sample.name, sep="")
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/ -v ", scratch.folder,":/scratch"," -d docker.io/repbioinfo/arracnv.2019.01 bash /bin/oncosnp_command2.sh ", sample.name, " ", blood.name, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/ -v ", scratch.folder,":/scratch"," -d docker.io/repbioinfo/arraycnv.2019.01 bash /bin/oncosnp_command2.sh ", sample.name, " ", blood.name, sep="")
   }
   resultRun <- runDocker(group=group, params=params)
 
