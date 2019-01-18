@@ -3,48 +3,39 @@
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
-#' @param data.folder, a character string indicating the data folder where the CIRI 2 output files are located
-#' @param samples.list, a character vector indicating the identifiers of the samples
-#' @param covariates.list, a character vector indicating the classes of the samples
+#' @param data.folder, a character string indicating the data folder where the file to merge are located
+#' @param samples.ids, a character vector indicating the identifiers of the samples
+#' @param covariates, a character vector indicating the classes of the samples
 #' @param covariate.order, a character vector indicating ... 
-#' @param min_reads, the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)
-#' @param min_reps, the minimum number of replicates associated with at least min_reads supporting a circRNA (default = 0)
-#' @param min_avg, the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)
+#' @param extension, a character string indicating the filename extension of the files that have to merge 
+#' @param column_index, an integer value > 1 indicating which column values have to been reported in the output file
 #' @author Nicola Licheri and Giulio Ferrero
 #'
 #' @return Two tab-delimited tables reporting the BS supporting reads and the coordinates of the filtered circRNAs are reported
 #' @examples
 #'\dontrun{
 #'
-#'     #retrieve the example data
-#'     system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip") #retrieve the example data
-#'     system("unzip master.zip")
-#'     system("unzip ./circhunter-master/CircHunter/data/CIRI_predictions.zip")
-#'
-#'     #running the ciri2MergePredictions function
-#'     ciri2MergePredictions(group="docker", scratch.folder="/data/scratch", data.folder="./circhunter-master/CircHunter/data/CIRI_predictions", groups.file="./circhunter-master/CircHunter/data/CIRI_predictions/SampleData.tsv", min_reads = 2, min_reps = 2, min_avg = 10)
-#
 #' }
 #' @export
 
-ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, data.folder, samples.list, covariates.list, covariate.order, min_reads = 2, min_reps = 0, min_avg = 10) {
-
-
+mergeData <- function(group = c("sudo", "docker"), scratch.folder, data.folder, samples.ids, covariates, covariate.order, extension, column_index) {
+  
+  
   # running time 1
   ptm <- proc.time()
-
+  
   # setting the data.folder as working folder
   if (!file.exists(data.folder)) {
     cat(paste("\nIt seems that the ", data.folder, " folder does not exist\n"))
     return(2)
   }
-
+  
   # storing the position of the home folder
   home <- getwd()
   setwd(data.folder)
   # initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-
+  
   # check  if scratch folder exist
   if (!file.exists(scratch.folder)) {
     cat(paste("\nIt seems that the ", scratch.folder, " folder does not exist\n"))
@@ -52,28 +43,36 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, d
     setwd(home)
     return(3)
   }
-
+  
   # check if each sample is associated to a covariate and viceversa
-  if (length(samples.list) != length(covariates.list)) {
+  if (length(samples.ids) != length(covariates)) {
     cat("\nSamples and covariates lists must have the same length.\n")
     system("echo 2 > ExitStatusFile 2>&1")
     setwd(home)
     return(2)
   }
-
+  
+  #validate column index 
+  if (column_index <= 1) {
+    cat("\nThe column index must be greater than 1.\n")
+    system("echo 2 > ExitStatusFile 2>&1")
+    setwd(home)
+    return(2)
+  }
+  
   # executing the docker job
   params <- paste("--cidfile ", data.folder, "/dockerID ",
                   " -v ", scratch.folder, ":/scratch ",
-                  " -v ", data.folder, ":/data/ciri_predictions ",
+                  " -v ", data.folder, "://data/input_data ",
                   " -v ", data.folder, ":/data/output_merge ",
-                  " -d docker.io/cursecatcher/ciri2 merge ",
-                  " --samples ", paste(samples.list, collapse = " "),
-                  " --cov ", paste(covariates.list, collapse = " "),
+                  " -d docker.io/cursecatcher/ciri2 merge_data ",
+                  " --samples ", paste(samples.ids, collapse = " "),
+                  " --cov ", paste(covariates, collapse = " "),
                   " --order ", paste(covariate.order, collapse = " "),
-                  " --mr ", min_reads, " --mrep ", min_reps, " --avg ", min_avg,
+                  " --col ", column_index, " --ext ", extension,
                   sep = "")
   resultRun <- runDocker(group = group, params = params)
-
+  
   # running time 2
   ptm <- proc.time() - ptm
   dir <- dir(data.folder)
@@ -91,10 +90,10 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, d
     tmp.run[1] <- paste("run time mins ", ptm[1] / 60, sep = "")
     tmp.run[length(tmp.run) + 1] <- paste("system run time mins ", ptm[2] / 60, sep = "")
     tmp.run[length(tmp.run) + 1] <- paste("elapsed run time mins ", ptm[3] / 60, sep = "")
-
+    
     writeLines(tmp.run, "run.info")
   }
-
+  
   # saving log and removing docker container
   container.id <- readLines(paste(data.folder, "/dockerID", sep = ""), warn = FALSE)
   system(paste("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/", substr(container.id, 1, 12), ".log", sep = ""))
