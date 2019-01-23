@@ -18,6 +18,9 @@ oncosnp(group = c("sudo", "docker"), data.folder, scratch.folder,
 
 \item{blood.name, }{a character string indicating snp data file name for blood snp}
 }
+\value{
+cnv1.cnvs, cnv2,cnvs and other oncosnp elements, see oncosnp help page for further information
+}
 \description{
 This function executes a ubuntu docker that produces as output oncosnp and request as input a tabl delimited file with Name	Chromosome	Position	Log R Ratio	B Allele Freq, where Name is the snp id from Illumina arrays, Chromosome is the chr, POsition is the SNP location in the chr Log R Ratio	B Allele Freq are genrated from genomestudio
 }

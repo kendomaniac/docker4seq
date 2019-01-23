@@ -6,6 +6,8 @@
 #' @param sample.name, a character string indicating snp data file name
 #' @param blood.name, a character string indicating snp data file name for blood snp
 #'
+#'
+#' @return cnv1.cnvs, cnv2,cnvs and other oncosnp elements, see oncosnp help page for further information
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, University of Torino
 #'
 #' @examples
