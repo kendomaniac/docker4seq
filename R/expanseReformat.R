@@ -9,9 +9,9 @@
 #'
 #' @examples
 #' \dontrun{
-#'     system("wget http://130.192.119.59/public/testcnv.zip")
-#'     #running fastqc
-#'     prepare4expanse(group="docker", data.folder=getwd(), scratch.folder="/data/scratch", sample.name="sampleXX.txt", blood.name=NULL)
+#'     system("wget http://130.192.119.59/public/prepare4expanse.zip")
+#'     system("unzip prepare4expanse.zip")
+#'     prepare4expanse(group="docker", data.folder=paste(getwd(), "prepare4expanse", sep="/"))
 #' }
 #'
 #' @export
