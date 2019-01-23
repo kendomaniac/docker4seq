@@ -1,5 +1,5 @@
 #' @title Running CircHunter circRNA quantification module
-#' @description This function executes the docker container circhunter by running the circRNA quantification module of CircHunter to quantify the level of expression of a set of circRNA BS sequences in a given RNA-Seq experiment. For CircHunter algorithm detail please refer to: https://github.com/carlo-deintinis/circhunter/tree/master/CircHunter. 
+#' @description This function executes the docker container circhunter by running the circRNA quantification module of CircHunter to quantify the level of expression of a set of circRNA BS sequences in a given RNA-Seq experiment. For CircHunter algorithm detail please refer to: https://github.com/carlo-deintinis/circhunter/tree/master/CircHunter.
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
@@ -25,26 +25,26 @@
 
 circrnaQuantification <- function(group = c("sudo", "docker"), scratch.folder, rnaseq.data, backsplicing_junctions.data, hc.params) {
 
-  
+
   # running time 1
   ptm <- proc.time()
-  
+
   # obtaining output data folder
   data.folder <- dirname(rnaseq.data)
-  
+
   # setting the data.folder as working folder
   if (!file.exists(data.folder)) {
     cat(paste("\nIt seems that the ", data.folder, " folder does not exist\n"))
     return(2)
   }
-  
+
   # storing the position of the home folder
   home <- getwd()
   setwd(data.folder)
   # initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
-  
+
+
   # check if input files exist
   if (!file.exists(rnaseq.data)) {
     cat(paste("\nIt seems that the ", rnaseq.data, " file does not exist\n"))
@@ -75,11 +75,11 @@ circrnaQuantification <- function(group = c("sudo", "docker"), scratch.folder, r
 
   # executing the docker job
   params <- paste("--cidfile ", data.folder, "/dockerID ",
-    "-v ", scratch.folder, ":/scratch ",
-    "-v ", data.folder, ":/output ",
-    "-v ", rnaseq.data, ":/circhunter/rnaseq ",
-    "-v ", backsplicing_junctions.data, ":/circhunter/bksj ",
-    "-d docker.io/carlodeintinis/circhunter Rscript /circhunter/functions/main_new.R ",
+    " -v ", scratch.folder, ":/circhunter/data ",
+    " -v ", data.folder, ":/output ",
+    " -v ", rnaseq.data, ":/circhunter/rnaseq ",
+    " -v ", backsplicing_junctions.data, ":/circhunter/bksj ",
+    " -d docker.io/carlodeintinis/circhunter Rscript /circhunter/functions/main_new.R ",
     " --readcount ",
     " -rs ", # rnaseq.data
     " -bj ", # backsplicing_junctions.data
@@ -89,7 +89,7 @@ circrnaQuantification <- function(group = c("sudo", "docker"), scratch.folder, r
   )
   resultRun <- runDocker(group = group, params = params)
 
-  
+
   # running time 2
   ptm <- proc.time() - ptm
   dir <- dir(data.folder)
@@ -123,4 +123,3 @@ circrnaQuantification <- function(group = c("sudo", "docker"), scratch.folder, r
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
   setwd(home)
 }
-
