@@ -11,12 +11,12 @@
 #' \dontrun{
 #'     system("wget http://130.192.119.59/public/prepare4expanse.zip")
 #'     system("unzip prepare4expanse.zip")
-#'     prepare4expanse(group="docker", data.folder=paste(getwd(), "prepare4expanse", sep="/"))
+#'     prepare4expands(group="docker", data.folder=paste(getwd(), "prepare4expanse", sep="/"))
 #' }
 #'
 #' @export
 #'
-prepare4expanse <- function(group=c("sudo","docker"), data.folder){
+prepare4expands <- function(group=c("sudo","docker"), data.folder){
 
 
   #storing the position of the home folder
