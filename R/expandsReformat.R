@@ -47,7 +47,7 @@ prepare4expands <- function(group=c("sudo","docker"), data.folder){
 
 
   #executing the docker job
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/ -v -d docker.io/repbioinfo/arraycnv.2019.01 Rscript /bin/reformat_expands.R ", data.folder, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/ -v -d docker.io/repbioinfo/arraycnv.2019.01 R CMD BATCH /bin/reformat_expands.R ", sep="")
   resultRun <- runDocker(group=group, params=params)
 
   #waiting for the end of the container work
