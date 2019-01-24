@@ -45,7 +45,7 @@ multiQC <- function(group=c("sudo","docker"), data.folder){
 
   tmp.folder <- gsub(":","-",gsub(" ","-",date()))
 
-  params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":", data.folder, " -w ", data.folder, " docker.io/repbioinfo/multiqc.2018.01/multiqc multiqc .", sep="")
+  params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder,":", data.folder, " -w ", data.folder, " docker.io/repbioinfo/multiqc.2018.01 multiqc .", sep="")
   resultRun <- runDocker(group=group, params=params)
 
   #waiting for the end of the container work
