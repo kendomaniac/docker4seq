@@ -19,7 +19,7 @@
 #'\dontrun{
 #'
 #'     #running generic bwa index
-#'     bwaIndex(group="docker", genome.folder="/data/genomes", genome.url="ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz", mode="General")
+#'     bwaIndex(group="docker", genome.folder="/data/genomes/mm10bwa", genome.url="ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz", mode="General")
 #
 #'     #running bwa index for gatk
 #'     bwaIndex(group="docker", genome.folder="/data/genomes", genome.url="http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz", dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz", mode="GATK")
@@ -86,7 +86,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
       system(paste("gzip -d ", sub(".vcf.gz$", ".vcf.idx.gz$",g1000.file), sep=""))
       system(paste("mv ", sub(".gz$", "",g1000.file), " g1k.vcf", sep=""))
     }
- params <- paste("--cidfile ", genome.folder, "/dockerID -v ",     genome.folder,":/data/scratch", " -d docker.io/gferrero/bwaindex sh  /bin/bwa.index.sh ", genome.folder, " ", mode, " ", genome.url,   sep="")
+ params <- paste("--cidfile ", genome.folder, "/dockerID -v ",     genome.folder,":/data/scratch", " -d docker.io/repbioinfo/bwaindex sh  /bin/bwa.index.sh ", genome.folder, " ", mode, " ", genome.url,   sep="")
   }
 
 ### BWA index case for miRNA
