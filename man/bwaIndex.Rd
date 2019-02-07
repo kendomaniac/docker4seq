@@ -43,7 +43,7 @@ This function executes the docker container bwa1 where BWA is installed. Optiona
 \dontrun{
 
     #running generic bwa index
-    bwaIndex(group="docker", genome.folder="/data/genomes", genome.url="ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz", mode="General")
+    bwaIndex(group="docker", genome.folder="/data/genomes/mm10bwa", genome.url="ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/005/845/GCF_000005845.2_ASM584v2/GCF_000005845.2_ASM584v2_genomic.fna.gz", mode="General")
     #running bwa index for gatk
     bwaIndex(group="docker", genome.folder="/data/genomes", genome.url="http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz", dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz", mode="GATK")
 
