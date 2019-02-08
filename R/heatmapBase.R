@@ -4,8 +4,8 @@
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param file, a character string indicating the path of the file, with counts.table name and extension included
 #' @param status, 0 if is raw count, 1 otherwise
-#' @param lower.range, the lower range of signal in the heatmap,for negative value write "/-5". To ask the function to do automatic value assignment set NULL
-#' @param upper.range, the upper range of signal in the heatmap,for negative value write "/-2". To ask the function to do automatic value assignment set NULL
+#' @param lower.range, the lower range of signal in the heatmap. 
+#' @param upper.range, the upper range of signal in the heatmap. 
 #' @author Luca Alessandri , alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
 #' @return A heatmap.
