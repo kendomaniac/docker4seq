@@ -67,7 +67,7 @@ mergeData <- function(group = c("sudo", "docker"), scratch.folder, data.folder, 
   params <- paste(
       "--cidfile", paste0(data.folder, "/dockerID"),
       "-v", paste0(scratch.folder, ":/scratch"),
-      "-v", paste0(data.folder, ":/data/input_data"),
+      "-v", paste0(data.folder, ":/data/input_merge"),
       "-v", paste0(data.folder, ":/data/"),
       "-d docker.io/cursecatcher/ciri2 merge_data",
       "--samples", paste(samples.ids, collapse = " "),
