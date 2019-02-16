@@ -5,8 +5,8 @@
 \title{Function to merge different circRNA lists from CIRI 2}
 \usage{
 ciri2MergePredictions(group = c("sudo", "docker"), scratch.folder,
-  data.folder, samples.list, covariates.list, min_reads = 2,
-  min_reps = 0, min_avg = 10)
+  data.folder, samples.list, covariates.list, covariate.order,
+  min_reads = 2, min_reps = 0, min_avg = 10)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -18,6 +18,8 @@ ciri2MergePredictions(group = c("sudo", "docker"), scratch.folder,
 \item{samples.list, }{a character vector indicating the identifiers of the samples}
 
 \item{covariates.list, }{a character vector indicating the classes of the samples}
+
+\item{covariate.order, }{a character vector indicating ...}
 
 \item{min_reads, }{the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)}
 

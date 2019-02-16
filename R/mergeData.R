@@ -6,7 +6,7 @@
 #' @param data.folder, a character string indicating the data folder where the file to merge are located
 #' @param samples.ids, a character vector indicating the identifiers of the samples
 #' @param covariates, a character vector indicating the classes of the samples
-#' @param covariate.order, a character vector indicating ...
+#' @param covariate.order, a character vector indicating a vector reporting the covariate classes ordered as desidered in the output file
 #' @param extension, a character string indicating the filename extension of the files that have to merge
 #' @param column_index, an integer value > 1 indicating which column values have to been reported in the output file
 #' @author Nicola Licheri and Giulio Ferrero
