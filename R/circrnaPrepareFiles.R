@@ -52,10 +52,11 @@ circrnaPrepareFiles <- function(group=c("sudo","docker"), scratch.folder, data.f
   #executing the docker job
   params <- paste("--cidfile", paste0(data.folder, "/dockerID"),
                   "-v", paste0(scratch.folder, ":/scratch"),
-                  "-v", paste0(data.folder, ":/output"),
+                  "-v", paste0(data.folder, ":/data"),
                   "-d docker.io/cursecatcher/docker4circ Rscript /scripts/circhunter/circhunter.R",
                   "--preparedata ",
-                  "-as", assembly
+                  "-as", assembly,
+                  "-of"
   )
   resultRun <- runDocker(group=group, params=params)
 

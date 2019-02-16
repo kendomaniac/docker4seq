@@ -86,19 +86,18 @@ circrnaClassification <- function(group=c("sudo","docker"), scratch.folder, circ
 
   #executing the docker job
   params <- paste(
-      "--cidfile ", paste0(data.folder, "/dockerID"),
+      "--cidfile", paste0(data.folder, "/dockerID"),
       "-v", paste0(scratch.folder, ":/scratch"),
-      "-v", paste0(data.folder, ":/output"),
-      "-v", paste0(isoform.data, ":/circhunter/isoformdata"),
-      "-v", paste0(exon.data, ":/circhunter/genome"),
-      "-v", paste0(circrna.data, ":/circhunter/circRNA"),
+      "-v", paste0(data.folder, ":/data"),
+      "-v", paste0(isoform.data, ":/data/isoformdata"),
+      "-v", paste0(exon.data, ":/data/genome"),
+      "-v", paste0(circrna.data, ":/data/circRNA"),
       "-d docker.io/cursecatcher/docker4circ Rscript /scripts/circhunter/circhunter.R",
       "--classification",
       "-as", assembly,
-      "-cr", #circrna.data
       "-sg", #exon.data,
       "-id", #isoform.data,
-	          "-of", #output_folder
+	  "-of" #output_folder
   )
 
   resultRun <- runDocker(group=group, params=params)

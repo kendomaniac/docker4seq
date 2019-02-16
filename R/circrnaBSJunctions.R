@@ -91,8 +91,7 @@ circrnaBSJunctions <- function(group=c("sudo","docker"), scratch.folder, circrna
       "--sequences",
       "-as", assembly,
       "-of", #output folder
-      "-cr", #circrna.data
-      "-sg", #exon.data
+      "-sg" #exon.data
   )
   resultRun <- runDocker(group=group, params=params)
 
