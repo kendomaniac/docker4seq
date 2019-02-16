@@ -24,6 +24,10 @@ circrnaPrepareFiles <- function(group=c("sudo","docker"), scratch.folder, data.f
 
   #running time 1
   ptm <- proc.time()
+
+  scratch.folder <- normalizePath(scratch.folder)
+  data.folder <- normalizePath(data.folder)
+
   #setting the data.folder as working folder
   if (!file.exists(data.folder)) {
     cat(paste("\nIt seems that the ",data.folder, " folder does not exist\n"))
@@ -46,13 +50,13 @@ circrnaPrepareFiles <- function(group=c("sudo","docker"), scratch.folder, data.f
   }
 
   #executing the docker job
-  params <- paste("--cidfile ", data.folder, "/dockerID ",
-                  "-v ", scratch.folder, ":/scratch ",
-                  "-v ", data.folder, ":/output ",
-                  "-d docker.io/carlodeintinis/circhunter Rscript /circhunter/functions/main_new.R ",
-                  " --preparedata ",
-                  " -as ", assembly,
-                  sep="")
+  params <- paste("--cidfile", paste0(data.folder, "/dockerID"),
+                  "-v", paste0(scratch.folder, ":/scratch"),
+                  "-v", paste0(data.folder, ":/output"),
+                  "-d docker.io/cursecatcher/docker4circ Rscript /scripts/circhunter/circhunter.R",
+                  "--preparedata ",
+                  "-as", assembly
+  )
   resultRun <- runDocker(group=group, params=params)
 
 
