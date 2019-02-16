@@ -1,5 +1,5 @@
 #' @title Function to prepare the CircHunter reference annotations
-#' @description This function executes the docker container circhunter by running the circRNA classification module of CircHunter starting from a set of circRNAs. For CircHunter algorithm detail please refer to: https://github.com/carlo-deintinis/circhunter/tree/master/CircHunter. 
+#' @description This function executes the docker container circhunter by running the circRNA classification module of CircHunter starting from a set of circRNAs. For CircHunter algorithm detail please refer to: https://github.com/carlo-deintinis/circhunter/tree/master/CircHunter.
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
@@ -21,7 +21,7 @@
 #' @export
 
 circrnaPrepareFiles <- function(group=c("sudo","docker"), scratch.folder, data.folder, assembly="hg19") {
-  
+
   #running time 1
   ptm <- proc.time()
   #setting the data.folder as working folder
@@ -29,14 +29,14 @@ circrnaPrepareFiles <- function(group=c("sudo","docker"), scratch.folder, data.f
     cat(paste("\nIt seems that the ",data.folder, " folder does not exist\n"))
     return(2)
   }
-  
-  
-  #storing the position of the home folder  
+
+
+  #storing the position of the home folder
   home <- getwd()
   setwd(data.folder)
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
+
   #check  if scratch folder exist
   if (!file.exists(scratch.folder)) {
     cat(paste("\nIt seems that the ",scratch.folder, " folder does not exist\n"))
@@ -44,18 +44,18 @@ circrnaPrepareFiles <- function(group=c("sudo","docker"), scratch.folder, data.f
     setwd(data.folder)
     return(3)
   }
-  
+
   #executing the docker job
-  params <- paste("--cidfile ", data.folder, "/dockerID ", 
-                  "-v ", scratch.folder, ":/scratch ", 
-                  "-v ", data.folder, ":/output ", 
+  params <- paste("--cidfile ", data.folder, "/dockerID ",
+                  "-v ", scratch.folder, ":/scratch ",
+                  "-v ", data.folder, ":/output ",
                   "-d docker.io/carlodeintinis/circhunter Rscript /circhunter/functions/main_new.R ",
                   " --preparedata ",
-                  " -as ", assembly, 
+                  " -as ", assembly,
                   sep="")
   resultRun <- runDocker(group=group, params=params)
-  
-  
+
+
   #running time 2
   ptm <- proc.time() - ptm
   dir <- dir(data.folder)
@@ -74,10 +74,10 @@ circrnaPrepareFiles <- function(group=c("sudo","docker"), scratch.folder, data.f
     tmp.run[1] <- paste("run time mins ",ptm[1]/60, sep="")
     tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
     tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
-    
+
     writeLines(tmp.run,"run.info")
   }
-  
+
   #saving log and removing docker container
   container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/", substr(container.id,1,12),".log", sep=""))

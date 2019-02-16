@@ -29,6 +29,10 @@ circrnaQuantification <- function(group = c("sudo", "docker"), scratch.folder, r
   # running time 1
   ptm <- proc.time()
 
+  scratch.folder <- normalizePath(scratch.folder)
+  rnaseq.data <- normalizePath(rnaseq.data)
+  backsplicing_junctions.data <- normalizePath(backsplicing_junctions.data)
+
   # obtaining output data folder
   data.folder <- dirname(rnaseq.data)
 
@@ -74,18 +78,18 @@ circrnaQuantification <- function(group = c("sudo", "docker"), scratch.folder, r
   }
 
   # executing the docker job
-  params <- paste("--cidfile ", data.folder, "/dockerID ",
-    " -v ", scratch.folder, ":/circhunter/data ",
-    " -v ", data.folder, ":/output ",
-    " -v ", rnaseq.data, ":/circhunter/rnaseq ",
-    " -v ", backsplicing_junctions.data, ":/circhunter/bksj ",
-    " -d docker.io/carlodeintinis/circhunter Rscript /circhunter/functions/main_new.R ",
-    " --readcount ",
-    " -rs ", # rnaseq.data
-    " -bj ", # backsplicing_junctions.data
-    " -of ", # output_folder
-    " -hc ", paste(hc.params, collapse = " "),
-    sep = ""
+  params <- paste(
+    "--cidfile", paste0(data.folder, "/dockerID"),
+    "-v", paste0(scratch.folder, ":/scratch"),
+    "-v", paste0(data.folder, ":/data"),
+    "-v", paste0(rnaseq.data, ":/data/rnaseq"),
+    "-v", paste0(backsplicing_junctions.data, ":/data/bksj"),
+    "-d docker.io/cursecatcher/docker4circ Rscript /scripts/circhunter/circhunter.R",
+    "--readcount",
+    "-rs", # rnaseq.data
+    "-bj", # backsplicing_junctions.data
+    "-of", # output_folder
+    "-hc", paste(format(hc.params, scientific=FALSE), collapse=" ")
   )
   resultRun <- runDocker(group = group, params = params)
 

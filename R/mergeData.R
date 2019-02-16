@@ -6,8 +6,8 @@
 #' @param data.folder, a character string indicating the data folder where the file to merge are located
 #' @param samples.ids, a character vector indicating the identifiers of the samples
 #' @param covariates, a character vector indicating the classes of the samples
-#' @param covariate.order, a character vector indicating ... 
-#' @param extension, a character string indicating the filename extension of the files that have to merge 
+#' @param covariate.order, a character vector indicating ...
+#' @param extension, a character string indicating the filename extension of the files that have to merge
 #' @param column_index, an integer value > 1 indicating which column values have to been reported in the output file
 #' @author Nicola Licheri and Giulio Ferrero
 #'
@@ -19,23 +19,26 @@
 #' @export
 
 mergeData <- function(group = c("sudo", "docker"), scratch.folder, data.folder, samples.ids, covariates, covariate.order, extension, column_index) {
-  
-  
+
+
   # running time 1
   ptm <- proc.time()
-  
+
+  scratch.folder <- normalizePath(scratch.folder)
+  data.folder <- normalizePath(data.folder)
+
   # setting the data.folder as working folder
   if (!file.exists(data.folder)) {
     cat(paste("\nIt seems that the ", data.folder, " folder does not exist\n"))
     return(2)
   }
-  
+
   # storing the position of the home folder
   home <- getwd()
   setwd(data.folder)
   # initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
+
   # check  if scratch folder exist
   if (!file.exists(scratch.folder)) {
     cat(paste("\nIt seems that the ", scratch.folder, " folder does not exist\n"))
@@ -43,7 +46,7 @@ mergeData <- function(group = c("sudo", "docker"), scratch.folder, data.folder, 
     setwd(home)
     return(3)
   }
-  
+
   # check if each sample is associated to a covariate and viceversa
   if (length(samples.ids) != length(covariates)) {
     cat("\nSamples and covariates lists must have the same length.\n")
@@ -51,28 +54,30 @@ mergeData <- function(group = c("sudo", "docker"), scratch.folder, data.folder, 
     setwd(home)
     return(2)
   }
-  
-  #validate column index 
+
+  #validate column index
   if (column_index <= 1) {
     cat("\nThe column index must be greater than 1.\n")
     system("echo 2 > ExitStatusFile 2>&1")
     setwd(home)
     return(2)
   }
-  
+
   # executing the docker job
-  params <- paste("--cidfile ", data.folder, "/dockerID ",
-                  " -v ", scratch.folder, ":/scratch ",
-                  " -v ", data.folder, "://data/input_data ",
-                  " -v ", data.folder, ":/data/output_merge ",
-                  " -d docker.io/cursecatcher/ciri2 merge_data ",
-                  " --samples ", paste(samples.ids, collapse = " "),
-                  " --cov ", paste(covariates, collapse = " "),
-                  " --order ", paste(covariate.order, collapse = " "),
-                  " --col ", column_index, " --ext ", extension,
-                  sep = "")
+  params <- paste(
+      "--cidfile", paste0(data.folder, "/dockerID"),
+      "-v", paste0(scratch.folder, ":/scratch"),
+      "-v", paste0(data.folder, ":/data/input_data"),
+      "-v", paste0(data.folder, ":/data/"),
+      "-d docker.io/cursecatcher/ciri2 merge_data",
+      "--samples", paste(samples.ids, collapse = " "),
+      "--cov", paste(covariates, collapse = " "),
+      "--order", paste(covariate.order, collapse = " "),
+      "--col", column_index,
+      "--ext", extension
+  )
   resultRun <- runDocker(group = group, params = params)
-  
+
   # running time 2
   ptm <- proc.time() - ptm
   dir <- dir(data.folder)
@@ -90,10 +95,10 @@ mergeData <- function(group = c("sudo", "docker"), scratch.folder, data.folder, 
     tmp.run[1] <- paste("run time mins ", ptm[1] / 60, sep = "")
     tmp.run[length(tmp.run) + 1] <- paste("system run time mins ", ptm[2] / 60, sep = "")
     tmp.run[length(tmp.run) + 1] <- paste("elapsed run time mins ", ptm[3] / 60, sep = "")
-    
+
     writeLines(tmp.run, "run.info")
   }
-  
+
   # saving log and removing docker container
   container.id <- readLines(paste(data.folder, "/dockerID", sep = ""), warn = FALSE)
   system(paste("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/", substr(container.id, 1, 12), ".log", sep = ""))

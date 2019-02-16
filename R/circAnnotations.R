@@ -12,14 +12,14 @@
 #'
 #' @examples
 #' \dontrun{
-#' 
+#'
 #' # Retrieve the example data
 #'     system("wget https://github.com/carlo-deintinis/circhunter/archive/master.zip")
 #'     system("unzip master.zip")
-#'     
+#'
 #' # Run the circAnnotations function
 #'  circAnnotations(group = "docker", scratch.folder="/data/scratch", ciri.file=paste(getwd(),"/circhunter-master/CircHunter/data/circRNA_CRC.bed", sep=""), genome.version="hg19")
-#'  
+#'
 #' circAnnotations()
 #' }
 #' @export
@@ -29,6 +29,9 @@ circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.fi
 
   # running time 1
   ptm <- proc.time()
+
+  scratch.folder <- normalizePath(scratch.folder)
+  ciri.file <- normalizePath(ciri.file)
 
   data.folder <- dirname(ciri.file)
 
@@ -58,7 +61,7 @@ circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.fi
     setwd(data.folder)
     return(3)
   }
-  #check if there is at least one annotation source 
+  #check if there is at least one annotation source
   if (length(annotation.sources) < 1) {
     cat("\nIt seems that you do not specified any annotation source\n")
     system("echo 4 > ExitStatusFile 2>&1")
@@ -67,14 +70,14 @@ circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.fi
   }
 
   # executing the docker job
-  params <- paste("--cidfile ", data.folder, "/dockerID ",
-                  " -v ", scratch.folder, ":/scratch ",
-                  " -v ", ciri.file, ":/data/cirifile ",
-                  " -v ", data.folder, ":/data/out ",
-                  " -d docker.io/cursecatcher/ciri2 annotation ",  
-                  " -v ", genome.version,
-                  " -s ", paste(annotation.sources, collapse=" "),
-                  sep = ""
+  params <- paste(
+      "--cidfile", paste0(data.folder, "/dockerID"),
+      "-v", paste0(scratch.folder, ":/scratch"),
+      "-v", paste0(ciri.file, ":/data/cirifile"),
+      "-v", paste0(data.folder, ":/data/"),
+      "-d docker.io/cursecatcher/docker4circ python3 /ciri2/docker4ciri.py annotation",
+      "-s", paste(annotation.sources, collapse=" "),
+      "-v", genome.version
   )
   resultRun <- runDocker(group = group, params = params)
 

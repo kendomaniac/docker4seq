@@ -1,4 +1,3 @@
-
 #' @title Running CIRI_AS tool for circRNAs structure prediction
 #' @description This function executes the docker container ciri2 where CIRI_AS is installed
 #'
@@ -14,17 +13,17 @@
 #'
 #' @examples
 #' \dontrun{
-#' 
+#'
 #'     #Download the example data
 #'     system("wget https://sourceforge.net/projects/ciri/files/CIRI-AS/test_data_CIRI_AS.zip/download")
-#'     
+#'
 #'     system("mv download test_data_CIRI_AS.zip")
 #'     system("unzip test_data_CIRI_AS.zip")
-#' 
-#'  # Run the ciriAS function 
+#'
+#'  # Run the ciriAS function
 #' ciriAS(group = "docker", scratch.folder="/data/scratch", sam.file=paste(getwd,"/test_data_CIRI_AS/test.sam",sep=""), ciri.file=paste(getwd,"/test_data_CIRI_AS/test.ciri", genome.file=paste(getwd,"/test_data_CIRI_AS/chr1.fa", sep=""), annotation.file = paste(getwd,"/test_data_CIRI_AS/chr1.gtf", sep="")
 #' }
-#' 
+#'
 #' @export
 
 
@@ -35,11 +34,17 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
   # running time 1
   ptm <- proc.time()
 
+  scratch.folder <- normalizePath(scratch.folder)
+  sam.file <- normalizePath(sam.file)
+  ciri.file <- normalizePath(ciri.file)
+  genome.file <- normalizePath(genome.file)
+  annotation.file <- ifelse(is.na(annotation.file), NA, normalizePath(annotation.file))
+
   data.folder <- dirname(sam.file)
 
   # setting the data.folder as working folder
   if (!file.exists(data.folder)) {
-    cat(paste("\nIt seems that the ", data.folder, " folder does not exist\n"))
+    cat(paste("\nIt seems that the", data.folder, "folder does not exist\n"))
     return(2)
   }
 
@@ -51,13 +56,13 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
 
   # checking input files exist
   if (!file.exists(sam.file)) {
-    cat(paste("\nIt seems that the ", sam.file, " file does not exist\n"))
+    cat(paste("\nIt seems that the", sam.file, "file does not exist\n"))
     system("echo 2 > ExitStatusFile 2>&1")
     setwd(home)
     return(2)
   }
   if (!file.exists(genome.file)) {
-    cat(paste("\nIt seems that the ", genome.file, " file does not exist\n"))
+    cat(paste("\nIt seems that the", genome.file, "file does not exist\n"))
     system("echo 2 > ExitStatusFile 2>&1")
     setwd(home)
     return(2)
@@ -68,36 +73,36 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
   annotation.volume <- ""
   if (!is.na(annotation.file)) {
     if (!file.exists(annotation.file)) {
-      cat(paste("\nIt seems that the ", annotation.file, " file does not exist\n"))
+      cat(paste("\nIt seems that the", annotation.file, "file does not exist\n"))
       system("echo 2 > ExitStatusFile 2>&1")
       setwd(home)
       return(2)
     }
     else {
       # defining volume to mount annotation file
-      annotation.flag <- " -A "
-      annotation.volume <- paste(" -v ", annotation.file, ":/data/gtf_annotation.gtf ", sep = "")
+      annotation.flag <- "-A"
+      annotation.volume <- paste("-v", paste0(annotation.file, ":/data/gtf_annotation.gtf"))
     }
   }
 
   # check  if scratch folder exist
   if (!file.exists(scratch.folder)) {
-    cat(paste("\nIt seems that the ", scratch.folder, " folder does not exist\n"))
+    cat(paste("\nIt seems that the", scratch.folder, "folder does not exist\n"))
     system("echo 3 > ExitStatusFile 2>&1")
     setwd(data.folder)
     return(3)
   }
 
   # executing the docker job
-  params <- paste("--cidfile ", data.folder, "/dockerID ",
-    " -v ", scratch.folder, ":/scratch ",
-    " -v ", sam.file, ":/data/samfile ",
-    " -v ", ciri.file, ":/data/cirifile ",
-    " -v ", genome.file, ":/data/reference ",
-    " -v ", data.folder, ":/data/ciri_prediction ",
+  params <- paste(
+    "--cidfile", paste0(data.folder, "/dockerID"),
+    "-v ", paste0(scratch.folder, ":/scratch"),
+    "-v ", paste0(sam.file, ":/data/samfile"),
+    "-v ", paste0(ciri.file, ":/data/cirifile"),
+    "-v ", paste0(genome.file, ":/data/reference"),
+    "-v ", paste0(data.folder, ":/data"),
     annotation.volume,
-    " -d docker.io/cursecatcher/ciri2 structure ", annotation.flag,
-    sep = ""
+    "-d docker.io/cursecatcher/ciri2 structure", annotation.flag
   )
   resultRun <- runDocker(group = group, params = params)
 
@@ -123,13 +128,13 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
   }
 
   # saving log and removing docker container
-  container.id <- readLines(paste(data.folder, "/dockerID", sep = ""), warn = FALSE)
+  container.id <- readLines(paste0(data.folder, "/dockerID"), warn = FALSE)
   system(paste("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/", substr(container.id, 1, 12), ".log", sep = ""))
-  system(paste("docker rm ", container.id, sep = ""))
+  system(paste("docker rm", container.id))
   # removing temporary files
   cat("\n\nRemoving the temporary file ....\n")
   system("rm -fR out.info")
   system("rm -fR dockerID")
-  system(paste("cp ", paste(path.package(package = "docker4seq"), "containers/containers.txt", sep = "/"), " ", data.folder, sep = ""))
+  system(paste("cp", paste(path.package(package = "docker4seq"), "containers/containers.txt", sep = "/"), data.folder))
   setwd(home)
 }

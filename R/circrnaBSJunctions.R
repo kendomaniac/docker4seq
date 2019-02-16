@@ -1,5 +1,5 @@
 #' @title Running CircHunter circRNA backsplicing sequence reconstruction module
-#' @description This function executes the docker container circhunter by running the circRNA back-splicing sequence reconstruction module of CircHunter starting from a set of circRNAs. For CircHunter algorithm detail please refer to: https://github.com/carlo-deintinis/circhunter/tree/master/CircHunter. 
+#' @description This function executes the docker container circhunter by running the circRNA back-splicing sequence reconstruction module of CircHunter starting from a set of circRNAs. For CircHunter algorithm detail please refer to: https://github.com/carlo-deintinis/circhunter/tree/master/CircHunter.
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
@@ -24,28 +24,32 @@
 
 
 circrnaBSJunctions <- function(group=c("sudo","docker"), scratch.folder, circrna.data, exon.data, assembly="hg19") {
-  
-  
+
+
   #running time 1
   ptm <- proc.time()
-  
-  #obtaining output data folder 
+
+  scratch.folder <- normalizePath(scratch.folder)
+  circrna.data <- normalizePath(circrna.data)
+  exon.data <- normalizePath(exon.data)
+
+  #obtaining output data folder
   data.folder <- dirname(circrna.data)
-  
+
   #setting the data.folder as working folder
   if (!file.exists(data.folder)) {
-    cat(paste("\nIt seems that the ",data.folder, " folder does not exist\n"))
+    cat(paste("\nIt seems that the",data.folder, "folder does not exist\n"))
     return(2)
   }
-  
-  
-  #storing the position of the home folder  
+
+
+  #storing the position of the home folder
   home <- getwd()
   setwd(data.folder)
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
-  
+
+
   #check if input files exist
   if (!file.exists(circrna.data)) {
     cat(paste("\nIt seems that the ",circrna.data, " file does not exist\n"))
@@ -66,8 +70,8 @@ circrnaBSJunctions <- function(group=c("sudo","docker"), scratch.folder, circrna
     setwd(home)
     return(4)
   }
-  
-  
+
+
   #check  if scratch folder exist
   if (!file.exists(scratch.folder)) {
     cat(paste("\nIt seems that the ",scratch.folder, " folder does not exist\n"))
@@ -75,22 +79,23 @@ circrnaBSJunctions <- function(group=c("sudo","docker"), scratch.folder, circrna
     setwd(data.folder)
     return(3)
   }
-  
+
   #executing the docker job
-  params <- paste("--cidfile ", data.folder, "/dockerID ", 
-                  "-v ", scratch.folder, ":/scratch ", 
-                  "-v ", data.folder, ":/output ", 
-                  "-v ", exon.data, ":/circhunter/genome ", 
-                  "-v ", circrna.data, ":/circhunter/circRNA ", 
-                  "-d docker.io/carlodeintinis/circhunter Rscript /circhunter/functions/main_new.R ",
-                  " --sequences ",
-                  " -as ", assembly, 
-                  " -of ", #output folder
-                  " -cr ", #circrna.data
-                  " -sg ", #exon.data 
-                  sep="")
+  params <- paste(
+      "--cidfile", paste0(data.folder, "/dockerID"),
+      "-v", paste0(scratch.folder, ":/scratch"),
+      "-v", paste0(data.folder, ":/data"),
+      "-v", paste0(exon.data, ":/data/genome"),
+      "-v", paste0(circrna.data, ":/data/circRNA"),
+      "-d docker.io/cursecatcher/docker4circ Rscript /scripts/circhunter/circhunter.R",
+      "--sequences",
+      "-as", assembly,
+      "-of", #output folder
+      "-cr", #circrna.data
+      "-sg", #exon.data
+  )
   resultRun <- runDocker(group=group, params=params)
-  
+
   #running time 2
   ptm <- proc.time() - ptm
   dir <- dir(data.folder)
@@ -109,10 +114,10 @@ circrnaBSJunctions <- function(group=c("sudo","docker"), scratch.folder, circrna
     tmp.run[1] <- paste("run time mins ",ptm[1]/60, sep="")
     tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
     tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
-    
+
     writeLines(tmp.run,"run.info")
   }
-  
+
   #saving log and removing docker container
   container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/", substr(container.id,1,12),".log", sep=""))

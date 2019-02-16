@@ -24,7 +24,7 @@
 #'     ciri2(group="docker", scratch.folder="/data/scratch", sam.file=paste(getwd(),"/CIRI_v2.0.6/data/sample.sam", sep=""), genome.file=paste(getwd(),"/CIRI_v2.0.6/data/chr1.fa", sep=""), annotation.file="", max.span=200000, stringency.value="high", quality.threshold=10, threads=1)
 #
 #' }
-#' 
+#'
 #' @export
 
 
@@ -36,6 +36,11 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
 
   # running time 1
   ptm <- proc.time()
+
+  scratch.folder <- normalizePath(scratch.folder)
+  sam.file <- normalizePath(sam.file)
+  genome.file <- normalizePath(genome.file)
+  annotation.file <- ifelse(annotation.file != "", normalizePath(annotation.file), "")
 
   data.folder <- dirname(sam.file)
 
@@ -77,20 +82,19 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
     }
     else {
       # defining volume to mount annotation file
-      annotation.flag <- " -A "
-      annotation.volume <- paste(" -v ", annotatio.file, ":/data/annotation ", sep = "")
+      annotation.flag <- "-A"
+      annotation.volume <- paste("-v", paste0(annotation.file, ":/data/annotation"))
     }
   }
   # converting stringency.value in correct parameter value
   if (stringency.value %in% c("high", "low", "zero")) {
-    stringency <- paste("-", stringency.value, sep = "")
+    stringency <- stringency.value  #paste("-", stringency.value, sep = "")
     if (stringency.value == "zero") {
-      stringency <- "-0"
+      stringency <- "0"
     }
-  }
-  else {
+  } else {
     # assuming default value
-    stringency <- "-high"
+    stringency <- "high"
   }
 
   # testing if docker is running
@@ -113,18 +117,21 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
     setwd(data.folder)
     return(3)
   }
-  
+
   # executing the docker job
-  params <- paste("--cidfile ", data.folder, "/dockerID ",
-    " -v ", scratch.folder, ":/scratch ",
-    " -v ", sam.file, ":/data/samfile ",
-    " -v ", genome.file, ":/data/reference ",
-    " -v ", data.folder, ":/data/ciri_prediction ",
+  params <- paste(
+    "--cidfile", paste0(data.folder, "/dockerID"),
+    "-v", paste0(scratch.folder, ":/scratch"),
+    "-v", paste0(sam.file, ":/data/samfile"),
+    "-v", paste0(genome.file, ":/data/reference"),
+    "-v", paste0(data.folder, ":/data/"),
     annotation.volume, # it can be an empty string
-    #                  " -v ", data.folder, ":/output ",  
-    " -d docker.io/cursecatcher/ciri2 ciri2  ",
-    paste(annotation.flag, stringency, "-S ", max.span, "-T ", threads, "-U ", quality.threshold, sep=" "),
-    sep = ""
+    "-d docker.io/cursecatcher/docker4circ python3 /ciri2/docker4ciri.py ciri2",
+    annotation.flag,
+    "--strigency", stringency,
+    "-S", format(max.span, scientific=FALSE),
+    "-T", threads,
+    "-U", quality.threshold
   )
   resultRun <- runDocker(group = group, params = params)
 

@@ -6,7 +6,7 @@
 #' @param data.folder, a character string indicating the data folder where the CIRI 2 output files are located
 #' @param samples.list, a character vector indicating the identifiers of the samples
 #' @param covariates.list, a character vector indicating the classes of the samples
-#' @param covariate.order, a character vector indicating ... 
+#' @param covariate.order, a character vector indicating ...
 #' @param min_reads, the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)
 #' @param min_reps, the minimum number of replicates associated with at least min_reads supporting a circRNA (default = 0)
 #' @param min_avg, the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)
@@ -32,6 +32,9 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, d
 
   # running time 1
   ptm <- proc.time()
+
+  scratch.folder <- normalizePath(scratch.folder)
+  data.folder <- normalizePath(data.folder)
 
   # setting the data.folder as working folder
   if (!file.exists(data.folder)) {
@@ -62,16 +65,19 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, d
   }
 
   # executing the docker job
-  params <- paste("--cidfile ", data.folder, "/dockerID ",
-                  " -v ", scratch.folder, ":/scratch ",
-                  " -v ", data.folder, ":/data/ciri_predictions ",
-                  " -v ", data.folder, ":/data/output_merge ",
-                  " -d docker.io/cursecatcher/ciri2 merge ",
-                  " --samples ", paste(samples.list, collapse = " "),
-                  " --cov ", paste(covariates.list, collapse = " "),
-                  " --order ", paste(covariate.order, collapse = " "),
-                  " --mr ", min_reads, " --mrep ", min_reps, " --avg ", min_avg,
-                  sep = "")
+  params <- paste(
+      "--cidfile", paste0(data.folder, "/dockerID"),
+      "-v", paste0(scratch.folder, ":/scratch"),
+      "-v", paste0(data.folder, ":/data/ciri_predictions"),
+      "-v", paste0(data.folder, ":/data"),
+      "-d docker.io/cursecatcher/docker4circ python3 /ciri2/docker4ciri.py merge",
+      "--samples", paste(samples.list, collapse = " "),
+      "--cov", paste(covariates.list, collapse = " "),
+      "--order", paste(covariate.order, collapse = " "),
+      "--mr", min_reads,
+      "--mrep", min_reps,
+      "--avg", min_avg
+  )
   resultRun <- runDocker(group = group, params = params)
 
   # running time 2
