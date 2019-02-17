@@ -69,20 +69,11 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
   }
 
   # checking if the user provided the annotation file
-  annotation.flag <- ""
-  annotation.volume <- ""
-  if (!is.na(annotation.file)) {
-    if (!file.exists(annotation.file)) {
+  if (!is.na(annotation.file) & !file.exists(annotation.file)) {
       cat(paste("\nIt seems that the", annotation.file, "file does not exist\n"))
       system("echo 2 > ExitStatusFile 2>&1")
       setwd(home)
       return(2)
-    }
-    else {
-      # defining volume to mount annotation file
-      annotation.flag <- "-A"
-      annotation.volume <- paste("-v", paste0(annotation.file, ":/data/gtf_annotation.gtf"))
-    }
   }
 
   # check  if scratch folder exist
@@ -96,13 +87,14 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
   # executing the docker job
   params <- paste(
     "--cidfile", paste0(data.folder, "/dockerID"),
-    "-v ", paste0(scratch.folder, ":/scratch"),
-    "-v ", paste0(sam.file, ":/data/samfile"),
-    "-v ", paste0(ciri.file, ":/data/cirifile"),
-    "-v ", paste0(genome.file, ":/data/reference"),
-    "-v ", paste0(data.folder, ":/data"),
-    annotation.volume,
-    "-d docker.io/cursecatcher/ciri2 structure", annotation.flag
+    "-v", paste0(scratch.folder, ":/scratch"),
+    "-v", paste0(sam.file, ":/data/samfile"),
+    "-v", paste0(ciri.file, ":/data/cirifile"),
+    "-v", paste0(genome.file, ":/data/reference"),
+    "-v", paste0(data.folder, ":/data"),
+    ifelse(is.na(annotation.file), "", paste("-v", paste0(annotation.file, ":/data/annotation.gtf"))),
+    "-d docker.io/cursecatcher/docker4circ python3 /ciri2/docker4ciri.py structure",
+    ifelse(is.na(annotation.file), "", "--anno")
   )
   resultRun <- runDocker(group = group, params = params)
 
