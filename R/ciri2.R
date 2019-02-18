@@ -28,7 +28,7 @@
 #' @export
 
 
-ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.file, annotation.file = "",
+ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.file, annotation.file = NA,
                   max.span = 200000, stringency.value = c("high", "low", "zero"), quality.threshold = 10, threads = 1) {
 
 
@@ -40,13 +40,18 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
   scratch.folder <- normalizePath(scratch.folder)
   sam.file <- normalizePath(sam.file)
   genome.file <- normalizePath(genome.file)
-  annotation.file <- ifelse(annotation.file != "", normalizePath(annotation.file), "")
+
+  if (!is.na(annotation.file)) {
+      annotation.file <- normalizePath(annotation.file)
+      tokens <- strsplit(annotation.file, "\\.")[[1]]
+      annotation_extension <- tokens[length(tokens)]
+  }
 
   data.folder <- dirname(sam.file)
 
   # setting the data.folder as working folder
   if (!file.exists(data.folder)) {
-    cat(paste("\nIt seems that the ", data.folder, " folder does not exist\n"))
+    cat(paste("\nIt seems that the", data.folder, "folder does not exist\n"))
     return(2)
   }
 
@@ -58,55 +63,43 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
 
   # checking input files exist
   if (!file.exists(sam.file)) {
-    cat(paste("\nIt seems that the ", sam.file, " file does not exist\n"))
+    cat(paste("\nIt seems that the", sam.file, "file does not exist\n"))
     system("echo 2 > ExitStatusFile 2>&1")
     setwd(home)
     return(2)
   }
   if (!file.exists(genome.file)) {
-    cat(paste("\nIt seems that the ", genome.file, " file does not exist\n"))
+    cat(paste("\nIt seems that the", genome.file, "file does not exist\n"))
     system("echo 2 > ExitStatusFile 2>&1")
     setwd(home)
     return(2)
   }
 
   # checking if the user provided the annotation file
-  if (annotation.file != "" & !file.exists(annotation.file)) {
-      cat(paste("\nIt seems that the ", annotation.file, " file does not exist\n"))
+  if (!is.na(annotation.file) && !file.exists(annotation.file)) {
+      cat(paste("\nIt seems that the", annotation.file, "file does not exist\n"))
       system("echo 2 > ExitStatusFile 2>&1")
       setwd(home)
       return(2)
   }
 
-  # converting stringency.value in correct parameter value
-  if (stringency.value %in% c("high", "low", "zero")) {
-    stringency <- stringency.value  #paste("-", stringency.value, sep = "")
-    if (stringency.value == "zero") {
-      stringency <- "0"
-    }
-  } else {
-    # assuming default value
-    stringency <- "high"
-  }
-
-  # testing if docker is running
-  if (FALSE) {
-    test <- dockerTest()
-    if (!test) {
-      cat("\nERROR: Docker seems not to be installed in your system\n")
-      system("echo 10 > ExitStatusFile 2>&1")
+  #checking strigency value
+  available.options <- c("high", "low", "zero")
+  stringency <- stringency.value
+  if (!stringency.value %in% available.options) {
+      cat(paste("\nStrigency value in not allowed. Available options are:",
+        paste(available.options, collapse=" "))
+      )
+      system("echo 5 > ExitStatusFile 2>&1")
       setwd(home)
-      return(10)
-    }
+      return(5)
   }
-
-
 
   # check  if scratch folder exist
   if (!file.exists(scratch.folder)) {
-    cat(paste("\nIt seems that the ", scratch.folder, " folder does not exist\n"))
+    cat(paste("\nIt seems that the", scratch.folder, "folder does not exist\n"))
     system("echo 3 > ExitStatusFile 2>&1")
-    setwd(data.folder)
+    setwd(home)
     return(3)
   }
 
@@ -117,13 +110,16 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
     "-v", paste0(sam.file, ":/data/samfile"),
     "-v", paste0(genome.file, ":/data/reference"),
     "-v", paste0(data.folder, ":/data/"),
-    ifelse(annotation.file != "", paste("-v", paste0(annotation.file, ":/data/annotation")), ""),
+    ifelse(!is.na(annotation.file),
+        paste("-v", paste0(annotation.file, ":/data/annotation.", annotation_extension)),
+        ""
+    ),
     "-d docker.io/cursecatcher/docker4circ python3 /ciri2/docker4ciri.py ciri2",
     "--strigency", stringency,
     "-S", format(max.span, scientific=FALSE),
     "-T", threads,
     "-U", quality.threshold,
-    ifelse(annotation.file != "", "--anno", "")
+    ifelse(!is.na(annotation.file), "--anno", "")
   )
   resultRun <- runDocker(group = group, params = params)
 

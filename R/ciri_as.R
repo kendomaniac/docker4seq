@@ -38,7 +38,12 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
   sam.file <- normalizePath(sam.file)
   ciri.file <- normalizePath(ciri.file)
   genome.file <- normalizePath(genome.file)
-  annotation.file <- ifelse(is.na(annotation.file), NA, normalizePath(annotation.file))
+
+  if (!is.na(annotation.file)) {
+      annotation.file <- normalizePath(annotation.file)
+      tokens <- strsplit(annotation.file, "\\.")[[1]]
+      annotation_extension <- tokens[length(tokens)]
+  }
 
   data.folder <- dirname(sam.file)
 
@@ -69,7 +74,7 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
   }
 
   # checking if the user provided the annotation file
-  if (!is.na(annotation.file) & !file.exists(annotation.file)) {
+  if (!is.na(annotation.file) && !file.exists(annotation.file)) {
       cat(paste("\nIt seems that the", annotation.file, "file does not exist\n"))
       system("echo 2 > ExitStatusFile 2>&1")
       setwd(home)
@@ -92,9 +97,12 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
     "-v", paste0(ciri.file, ":/data/cirifile"),
     "-v", paste0(genome.file, ":/data/reference"),
     "-v", paste0(data.folder, ":/data"),
-    ifelse(is.na(annotation.file), "", paste("-v", paste0(annotation.file, ":/data/annotation.gtf"))),
+    ifelse(!is.na(annotation.file),
+        paste("-v", paste0(annotation.file, ":/data/annotation.", annotation_extension)),
+        ""
+    ),
     "-d docker.io/cursecatcher/docker4circ python3 /ciri2/docker4ciri.py structure",
-    ifelse(is.na(annotation.file), "", "--anno")
+    ifelse(!is.na(annotation.file),"--anno", "")
   )
   resultRun <- runDocker(group = group, params = params)
 
