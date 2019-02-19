@@ -14,6 +14,7 @@
 starChipIndex <- function(group=c("sudo","docker"), genome.folder=getwd()){
 
   home <- getwd()
+  genome.folder <- normalizePath(genome.folder)
   setwd(genome.folder)
   #running time 1
   ptm <- proc.time()
@@ -27,7 +28,7 @@ starChipIndex <- function(group=c("sudo","docker"), genome.folder=getwd()){
   if(group=="sudo"){
     params <- paste("--cidfile ", genome.folder,"/dockerID -v ", genome.folder,":/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/starchipIndex.sh", sep="")
     resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/star251.2017.01", params=params)
-  }else{
+  } else{
     params <- paste("--cidfile ", genome.folder,"/dockerID -v ", genome.folder,":/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/starchipIndex.sh", sep="")
     resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/star251.2017.01", params=params)
   }

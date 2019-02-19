@@ -119,7 +119,10 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
     "-S", format(max.span, scientific=FALSE),
     "-T", threads,
     "-U", quality.threshold,
-    ifelse(!is.na(annotation.file), "--anno", "")
+    ifelse(!is.na(annotation.file),
+        "--anno",
+        ""
+    )
   )
   resultRun <- runDocker(group = group, params = params)
 
