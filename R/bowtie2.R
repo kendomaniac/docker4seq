@@ -122,7 +122,7 @@ bowtie2 <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folde
 
 	if(resultRun==0){
 	  cat("\nBowtie2 analysis is finished\n")
-	  system(paste("cp ",scrat_tmp.folder," ", fastq.folder, sep=""))
+	  system(paste("cp -r ",scrat_tmp.folder," ", fastq.folder, sep=""))
 	  system(paste("cp ",scrat_tmp.folder,"/run.info ", fastq.folder, sep=""))
 	}
 
