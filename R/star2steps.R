@@ -152,4 +152,3 @@ star2steps <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fo
   }
   setwd(home)
 }
-

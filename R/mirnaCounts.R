@@ -139,4 +139,3 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 
 	setwd(home)
 }
-

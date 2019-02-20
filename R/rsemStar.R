@@ -205,4 +205,3 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	setwd(home)
 
 }
-

@@ -16,9 +16,9 @@ heatmapBase(group = c("sudo", "docker"), scratch.folder, file,
 
 \item{status, }{0 if is raw count, 1 otherwise}
 
-\item{lower.range, }{the lower range of signal in the heatmap,for negative value write "/-5". To ask the function to do automatic value assignment set NULL}
+\item{lower.range, }{the lower range of signal in the heatmap.}
 
-\item{upper.range, }{the upper range of signal in the heatmap,for negative value write "/-2". To ask the function to do automatic value assignment set NULL}
+\item{upper.range, }{the upper range of signal in the heatmap.}
 }
 \value{
 A heatmap.

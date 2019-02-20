@@ -12,7 +12,7 @@ starChipIndex(group = c("sudo", "docker"), genome.folder = getwd())
 \item{genome.folder, }{a character string indicating the folder where the indexed reference genome for STAR is located.}
 }
 \value{
-three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
+the bed files of the reference genome for STARChip analysis
 }
 \description{
 This function prepare the genome bed file for starchip, the GTF must be the one used by starChimeric

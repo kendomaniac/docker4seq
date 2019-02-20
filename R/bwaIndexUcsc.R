@@ -34,17 +34,17 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
     if (!dir.create(genome.folder)){
       cat(paste("\nError ",genome.folder, "folder cannot be created\n"))
       system("echo 4 >& ExitStatusFile")
-      return(4) 
+      return(4)
     }
   }
   #############################################
-  
+
   home <- getwd()
   setwd(genome.folder)
   #initialize status
   system("echo 0 >& ExitStatusFile")
- 
-  
+
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -57,7 +57,7 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
     return(10)
   }
 
-  
+
 
 	cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 
@@ -65,7 +65,7 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
     if(length(dir[grep(sub(".vcf.gz$", "", dbsnp.file),dir)])<2){
       cat("\ndbSNP vcf.gz and/or vcf.idx.gz missing\n")
       system("echo 2 >& ExitStatusFile")
-      setwd(home)    
+      setwd(home)
       return(2)
     }else{
       cat("\nPreparing dbsnp vcf\n")
@@ -93,8 +93,8 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
   if(resultRun==0){
     cat("\nBwa index generation is finished\n")
   }
-  
-  
+
+
 	#running time 2
 	ptm <- proc.time() - ptm
 	con <- file(paste(genome.folder,"run.info", sep="/"), "r")
@@ -108,13 +108,12 @@ bwaIndexUcsc <- function(group=c("sudo","docker"),genome.folder=getwd(), uscs.ur
 	writeLines(tmp.run, paste(genome.folder,"run.info", sep="/"))
   #running time 2
 	system(paste("rm ",genome.folder,"/out.info",sep=""))
-	
+
 	#saving log and removing docker container
 	container.id <- readLines(paste(genome.folder,"/dockerID", sep=""), warn = FALSE)
 	system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
 	system(paste("docker rm ", container.id, sep=""))
-	
+
 	system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",genome.folder, sep=""))
         setwd(home)
 }
-

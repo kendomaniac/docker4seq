@@ -161,4 +161,3 @@ resultRun=runDocker(group=group, params=params)
 
   setwd(home)
 }
-

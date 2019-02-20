@@ -1,19 +1,19 @@
 ---
 title: "Skeleton tutorial"
 author: "Raffaele A Calogero"
-output: 
+output:
   rmarkdown::html_vignette
 vignette: >
   %\VignetteEngine{knitr::knitr}
   %\VignetteIndexEntry{Skeleton tutorial}
   %\VignetteEncoding{UTF-8}   
-  
+
 header-includes:
 - \usepackage{makeidx}
 - \makeindex
 - \usepackage{setspace}\doublespacing
 - \usepackage{pdfpages}
-  
+
 
 fig_caption: true
 ---
@@ -86,15 +86,15 @@ checking if scratch folder exists and creating a temporary folder.
 Executing the docker command:
 
 * first is created a parameter string, which is made of:
-  
+
     + --cidfile creates in data.folder the dockerID file that contains the docker job ID
-  
+
     + -v the temporary folder, created in the scratch folder, is mounted as /scratch
-  
+
     + -v the data folder is mounted as /data
-  
+
     + -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh is the command that executes the skeleton.sh script.
-  
+
 * the parameter string is passed to the runDocker that execute the job. runDocker check if docker is running and return **false** when is finished
 
 ```{r, echo=TRUE,eval=FALSE}
@@ -129,15 +129,15 @@ else
 fi
 #writing the result file helloworld in data scratch
 echo "hello world" > $SCRATCH_FOLDER/helloworld.txt
-# creating the out.info file indicating that run is finished 
+# creating the out.info file indicating that run is finished
 echo "analysis is finished" > $SCRATCH_FOLDER/out.info
-#changing the properties of files and folders in /data/scratch 
+#changing the properties of files and folders in /data/scratch
 chmod 777 -R $SCRATCH_FOLDER/*
 
 ```
 
 It writes hello world in the **helloworld.txt** and moves **helloworld.txt** to the data folder together with the **run.info** file, used to store information about the run, and the **out.info**, used to tell to the R script when the doker job is finished.
-The **skeleton.sh** scripts is a prototype for the handling of docker application(s). 
+The **skeleton.sh** scripts is a prototype for the handling of docker application(s).
 
 Lets go back to the skeleton.R dissection:
 
@@ -160,7 +160,7 @@ The **resultRun** is used to check when the docker job is finished. The log of t
     system("rm  -fR tempFolderID")
     system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
  }
- 
+
 ```
 
 Then, the computing time is estimated and saved in the run.info file
@@ -191,6 +191,3 @@ Then, the computing time is estimated and saved in the run.info file
 ```{r, echo=TRUE, eval=FALSE}
   setwd(home)
 ```
-
-
-
