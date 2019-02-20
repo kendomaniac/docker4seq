@@ -62,7 +62,7 @@ Steps required to submit a new application/workflow:
 
 ### docker4seq 
 
-**docker4seq** is registed with RRID SCR_017006 at [*SciCrunch*](scicrunch.org). 
+**docker4seq** is registed with RRID SCR_017006 at [*SciCrunch*](scicrunch.org). *docker4seq** is part of  [*Elixir bio.tools*](https://bio.tools/).
 
 A collection of functions to execute NGS computing demanding applications, e.g reads mapping and counting, wrapped in docker containers.
 To install it you can use use **devtools**:
