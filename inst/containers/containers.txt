@@ -1,4 +1,5 @@
 docker.io/repbioinfo/annotate.2017.01
+docker.io/repbioinfo/bwaindex
 docker.io/repbioinfo/bwa.2017.01
 docker.io/repbioinfo/chipseq.2017.01
 docker.io/repbioinfo/r332.2017.01
@@ -8,13 +9,11 @@ docker.io/repbioinfo/skewer.2017.01
 docker.io/repbioinfo/r340.2017.01
 docker.io/repbioinfo/demultiplexing.2017.01
 docker.io/repbioinfo/xenome.2017.01
-docker.io/repbioinfo/ubuntu
 docker.io/repbioinfo/star251.2017.01
-docker.io/repbioinfo/indrop.2017.01
 docker.io/repbioinfo/salmon.2017.01
 docker.io/repbioinfo/multiqc.2018.01
-docker.io/beccuti/hashclone
-docker.io/gferrero/sncrna
-docker.io/ewels/multiqc
-docker.io/repbioinfo/desc.2018.01
 docker.io/rcaloger/heatmapbase4seq
+docker.io/gferrero/sncrna
+docker.io/repbioinfo/desc.2018.01
+docker.io/repbioinfo/bowtie2.2018.01:bowtie2-2.2.9-R3.4.4-Bioconductor3.6-Biostrings_2.46.0
+docker.io/repbioinfo/sra.2018.01

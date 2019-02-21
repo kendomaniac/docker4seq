@@ -1,18 +1,20 @@
 Package: docker4seq
-Version: 1.1.3
-Date: 2018-05-24
+Version: 2.2.9
+Date: 2018-12-30
 Title: Running NGS computing demanding applications, e.g reads mapping and counting, wrapped in docker containers
 Authors@R: c(person("Raffaele", "Calogero", role = c("aut", "cre"),
                      email = "raffaele.calogero@unito.it"),
               person("Neha", "Kulkarni", role = "aut"),
               person("Luca", "Alessandri", role = "aut"),
               person("Marco", "Beccuti", role = "aut"),
-              person("Greta", "Romano", role = "aut"))
+              person("Greta", "Romano", role = "aut"),
+              person("Francesca", "Cordero", role = "aut"))
 Author: Raffaele Calogero [aut, cre],
     Neha Kulkarni [aut],
     Luca Alessandri [aut]
     Marco Beccuti [aut]
     Greta Romano [aut]
+    Francesca Cordero [aut]
 Maintainer: Raffaele Calogero <raffaele.calogero@unito.it>
 Depends:
     R (>= 3.0.0)
@@ -23,4 +25,4 @@ Description: A collection of functions to execute NGS computing demanding applic
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.1

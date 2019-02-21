@@ -1,9 +1,7 @@
 #' @title A function allowing the identification of differentially expressed genes if multiple groups are provided.
 #' @description This function executes in a docker edgeR for the identification of differentially expressed genes in bulk RNAseq
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
-#' @param data.folder, a character string indicating the folder where input data are located and where output will be written
-#' @param counts.table, a character string indicating the counts table file. IMPORTANT in the header of the file the covariate group MUST be associated to the column name using underscore, e.g. samplelX0_cov1, samplelX1_cov1, samplelY1_cov2, samplelY0_cov2
-#' @param file.type, type of file: txt tab separated columns csv comma separated columns
+#' @param file, a character string indicating the path of the file, with counts.table name and extension included
 #' @param logFC.threshold, minimal logFC present in at least one of the comparisons with respect to reference covariate
 #' @param FDR.threshold, minimal FDR present in at least one of the comparisons with respect to reference covariate
 #' @param logCPM.threshold,  minimal average abundance
@@ -13,15 +11,20 @@
 #' @examples
 #' \dontrun{
 #'     #running deDetection
-#'     anovaLike(group="docker", data.folder=getwd(),
-#'                counts.table="annotated_lorenz_buettner_counts_noSymb.txt",
-#'                file.type="txt", logFC.threshold=1, FDR.threshold=0.05, logCPM.threshold=4)
+#'     anovaLike(group="docker", file=paste(getwd(),"annotated_lorenz_buettner_counts_noSymb.txt", sep="/"),
+#'        logFC.threshold=1, FDR.threshold=0.05, logCPM.threshold=4)
 #' }
 #'
 #' @export
-anovaLike <- function(group=c("sudo","docker"), data.folder, counts.table, file.type=c("txt","csv"), logFC.threshold=1, FDR.threshold, logCPM.threshold=4, plot=c(TRUE, FALSE)){
+anovaLike <- function(group=c("sudo","docker"), file, logFC.threshold=1, FDR.threshold, logCPM.threshold=4, plot=c(TRUE, FALSE)){
 
-
+  data.folder=dirname(file)
+  positions=length(strsplit(basename(file),"\\.")[[1]])
+  matrixNameC=strsplit(basename(file),"\\.")[[1]]
+  matrixName=paste(matrixNameC[seq(1,positions-1)],collapse="")
+  format=strsplit(basename(basename(file)),"\\.")[[1]][positions]
+  file.type=format
+  counts.table=paste(matrixName, file.type, sep=".")
 
 
   #running time 1
@@ -48,7 +51,7 @@ anovaLike <- function(group=c("sudo","docker"), data.folder, counts.table, file.
   }
 
   #executing the docker job
-  params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder, ":/data -d docker.io/repbioinfo/desc.2018.01 Rscript /bin/debulk.R ", counts.table, " ", file.type, sep="")
+  params <- paste("--cidfile ",data.folder,"/dockerID -v ", data.folder, ":/data -d docker.io/repbioinfo/desc.2018.02 Rscript /bin/debulk.R ", counts.table, " ", file.type, sep="")
   resultRun <- runDocker(group=group, params=params)
 
   #waiting for the end of the container work
@@ -57,6 +60,12 @@ anovaLike <- function(group=c("sudo","docker"), data.folder, counts.table, file.
   }
   system(paste("mv DE_", counts.table, " ANOVAlike_", counts.table, sep=""))
   tmp0 <- read.table(paste("ANOVAlike_", counts.table, sep=""), sep="\t", header=T, row.names=1)
+  tmp0.names <- rownames(tmp0)
+  tmp0.names1 <- strsplit(tmp0.names, ":")
+  tmp0.names2 <- sapply(tmp0.names1, function(x)x[1])
+  zz <- file("bkg2GO.txt", "w")
+  writeLines(tmp0.names2, con=zz)
+  close(zz)
   max0.logfc.tmp <- apply(tmp0[,grep("logFC", names(tmp0))], 1, function(x) unique(x[which(abs(x)== max(abs(x)))]))
   max0.logfc <- sapply(max0.logfc.tmp, function(x)as.numeric(x[[1]]))
 
@@ -78,6 +87,12 @@ anovaLike <- function(group=c("sudo","docker"), data.folder, counts.table, file.
   }
 
 write.table(tmp, paste("filtered_ANOVAlike_", counts.table, sep=""), sep="\t", col.names=NA)
+tmp.names <- rownames(tmp)
+tmp.names1 <- strsplit(tmp.names, ":")
+tmp.names2 <- sapply(tmp.names1, function(x)x[1])
+zz <- file("genesGO.txt", "w")
+writeLines(tmp.names2, con=zz)
+close(zz)
 
   #running time 2
   ptm <- proc.time() - ptm

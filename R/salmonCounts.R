@@ -37,7 +37,7 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
   setwd(fastq.folder)
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
+
   #testing if docker is running
   test <- dockerTest()
   if(!test){
@@ -46,7 +46,7 @@ salmonCounts <- function(group=c("sudo","docker"), scratch.folder, fastq.folder,
     setwd(home)
     return(10)
   }
-  
+
   #check  if scratch folder exist
   if (!file.exists(scratch.folder)){
     cat(paste("\nIt seems that the ",scratch.folder, " folder does not exist\n"))

@@ -4,8 +4,9 @@
 \alias{sampleSize}
 \title{A wrapper function for sample_size_distribution function from RnaSeqSampleSize Bioconductor package}
 \usage{
-sampleSize(group = c("sudo", "docker"), filename, power = 0.8, FDR = 0.1,
-  genes4dispersion = 200, log2fold.change = 1, output.folder = getwd())
+sampleSize(group = c("sudo", "docker"), filename, power = 0.8,
+  FDR = 0.1, genes4dispersion = 200, log2fold.change = 1,
+  output.folder = getwd())
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

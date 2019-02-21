@@ -4,17 +4,17 @@
 \alias{starchipCircle}
 \title{Running starchip to detect circular RNAs on paired-end sequences}
 \usage{
-starchipCircle(group = c("sudo", "docker"), genome.folder, scratch.folder,
-  samples.folder, reads.cutoff, min.subject.limit, threads,
-  do.splice = c("True", "False"), cpm.cutoff = 0, subjectCPM.cutoff = 0,
-  annotation = c("true", "false"))
+starchipCircle(group = c("sudo", "docker"), scratch.folder,
+  genome.folder, samples.folder, reads.cutoff, min.subject.limit, threads,
+  do.splice = c("True", "False"), cpm.cutoff = 0,
+  subjectCPM.cutoff = 0, annotation = c("true", "false"))
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
 
-\item{genome.folder, }{a character string indicating the folder where the indexed reference genome for STAR is located.}
-
 \item{scratch.folder, }{a character string indicating the scratch folder where docker container will be mounted}
+
+\item{genome.folder, }{a character string indicating the folder where the indexed reference genome for STAR is located.}
 
 \item{samples.folder, }{the folder where are located all the folders of the samples processed with starChimeric}
 
@@ -30,13 +30,13 @@ starchipCircle(group = c("sudo", "docker"), genome.folder, scratch.folder,
 
 \item{subjectCPM.cutoff, }{Integer. See above. This value is the lower limit for number of individuals required to have the cRNA expressed at a value higher than cpmCutoff.}
 
-\item{annotation, }{rue/false. cRNA are provided with gene annotations}
+\item{annotation, }{true/false. cRNA are provided with gene annotations}
 }
 \value{
-1. Count matrixes : raw cRNA backsplice counts: circRNA.cutoff[readthreshold]reads.[subjectthreshold]ind.countmatrix log2CPM of above: norm_log2_counts_circRNA.[readthreshold]reads.[subjectthreshold]ind.0cpm_0samples.txt Maximum Linear Splices at Circular Loci: rawdata/linear.[readthreshold]reads.[subjectthreshold]ind.sjmax 2. Info about each circRNA:  Consensus Information about Internal Splicing: Circs[reads].[subjects].spliced.consensus Complete Gene Annotation: circRNA.[readthreshold]reads.[subjectthreshold]ind.annotated Consise Gene Annotation + Splice Type:  circRNA.[readthreshold]reads.[subjectthreshold]ind.genes 3. Images: PCA plots: circRNA.[readthreshold]reads.[subjectthreshold]ind.0cpm_0samples_variance_PCA.pdf Heatmap: circRNA.[readthreshold]reads.[subjectthreshold]ind.heatmap.pdf
+1. Count matrices : raw cRNA backsplice counts: circRNA.cutoff[readthreshold]reads.[subjectthreshold]ind.countmatrix log2CPM of above: norm_log2_counts_circRNA.[readthreshold]reads.[subjectthreshold]ind.0cpm_0samples.txt Maximum Linear Splices at Circular Loci: rawdata/linear.[readthreshold]reads.[subjectthreshold]ind.sjmax 2. Info about each circRNA:  Consensus Information about Internal Splicing: Circs[reads].[subjects].spliced.consensus Complete Gene Annotation: circRNA.[readthreshold]reads.[subjectthreshold]ind.annotated Consise Gene Annotation + Splice Type:  circRNA.[readthreshold]reads.[subjectthreshold]ind.genes 3. Images: PCA plots: circRNA.[readthreshold]reads.[subjectthreshold]ind.0cpm_0samples_variance_PCA.pdf Heatmap: circRNA.[readthreshold]reads.[subjectthreshold]ind.heatmap.pdf
 }
 \description{
-This function execute starchip on a set of folders containing the output of starChimeric. It requires a specific bed generated with starChipIndex in teh genome folder used by starChimeric
+This function execute starchip on a set of folders containing the output of starChimeric. It requires a specific bed generated with starChipIndex in the genome folder used by starChimeric
 }
 \examples{
 \dontrun{

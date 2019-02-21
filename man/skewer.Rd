@@ -5,8 +5,8 @@
 \title{Running skewer, an adapter trimmer application, Jiang et al BMC Bioinformatics201415:182}
 \usage{
 skewer(group = c("sudo", "docker"), fastq.folder = getwd(),
-  scratch.folder = "/data/scratch", adapter5, adapter3, seq.type = c("se",
-  "pe"), threads = 1, min.length = 18)
+  scratch.folder = "/data/scratch", adapter5, adapter3,
+  seq.type = c("se", "pe"), threads = 1, min.length = 18)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

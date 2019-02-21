@@ -1,0 +1,384 @@
+seqnames	start	strand	GENEID	LOCATION	symbol	CONSEQUENCE	REFCODON	VARCODON	REFAA	VARAA	ID	REF	ALT	QUAL	FILTER	freq
+chr1	152277484	-	2312	coding	FLG	nonsynonymous	CAG	CCG	Q	P	.	T	G	2965	badReads	0.31372549
+chr1	159558271	+	325	coding	APCS	nonsynonymous	AAG	CAG	K	Q	.	A	C	2965	badReads	0.4
+chr1	167870930	-	55811	coding	ADCY10	nonsynonymous	GAA	CAA	E	Q	.	C	G	2965	badReads	0.381818182
+chr1	173799866	+	55157	coding	DARS2	synonymous	ACA	ACT	T	T	.	A	T	2965	badReads	0.482758621
+chr1	177915597	-	89866	coding	SEC16B	nonsynonymous	ACC	AAC	T	N	.	G	T	2965	badReads	0.541666667
+chr1	200843074	+	2848	coding	GPR25	nonsynonymous	AAC	AAA	N	K	.	C	A	2965	badReads	0.333333333
+chr1	229771564	+	9816	coding	URB2	nonsynonymous	CAA	AAA	Q	K	.	C	A	2965	badReads	0.947368421
+chr1	237947262	+	6262	coding	RYR2	nonsynonymous	GTC	ATC	V	I	.	G	A	2965	badReads	0.285714286
+chr1	46089267	-	149483	coding	CCDC17	nonsense	CAG	TAG	Q	*	.	G	A	2965	badReads	0.384615385
+chr1	51613416	+	284546	coding	C1orf185	synonymous	ACT	ACA	T	T	.	T	A	2965	badReads	0.722222222
+chr1	5965834	-	261734	coding	NPHP4	nonsynonymous	CCG	TCG	P	S	.	G	A	2965	badReads	1
+chr1	99771588	+	9890	coding	PLPPR4	synonymous	TCT	TCC	S	S	.	T	C	2965	badReads	0.923076923
+chr1	151107741	-	10500	coding	SEMA6C	nonsynonymous	GGG	GCG	G	A	.	C	G	2965	badReads	0.4
+chr1	65310465	-	3716	coding	JAK1	nonsynonymous	AGTGACCCCGGC	AGC	SDPG	S	.	GCCGGGGTCA	G	2941	badReads	1
+chr1	65310475	-	3716	coding	JAK1	nonsynonymous	AGT	ATT	S	I	.	C	A	2965	badReads	0.75
+chr1	9027826	+	765	coding	CA6	nonsynonymous	AAC	AGC	N	S	.	A	G	2965	badReads	1
+chr1	91404856	-	84146	coding	ZNF644	nonsynonymous	CAG	CAC	Q	H	.	C	G	2965	badReads	1
+chr1	10709441	-	54897	coding	CASZ1	synonymous	GCG	GCA	A	A	.	C	T	2965	badReads	1
+chr1	204412707	-	5287	coding	PIK3C2B	nonsynonymous	CTC	CTG	L	M	.	G	C	2965	badReads	0.7
+chr1	151679989	-	11189	coding	CELF3	nonsynonymous	TCC	ACC	S	T	.	A	T	2965	badReads	0.642857143
+chr1	208391213	-	5362	coding	PLXNA2	nonsynonymous	GTC	ATC	V	I	.	C	T	2965	badReads	0.75
+chr1	226034774	-	9725	coding	TMEM63A	synonymous	ACG	ACA	T	T	.	C	T	2965	badReads	1
+chr1	65310531	-	3716	coding	JAK1	frameshift	AAC	C			.	GTT	G	2973	badReads	0.5
+chr1	21924940	-	5909	coding	RAP1GAP	nonsynonymous	ACG	ATG	T	M	.	G	A	2960	badReads	0.333333333
+chr1	47533285	+	199974	coding	CYP4Z1	nonsynonymous	AGAGCCCTGCACCTGTTTCCTGCACCCCCT	AGA	RALHLFPAPP	R	.	AGCCCTGCACCTGTTTCCTGCACCCCCT	A	2965	badReads	0.25
+chr1	209768371	+	57172	coding	CAMK1G	nonsynonymous	CAG	GAG	Q	E	.	C	G	2656	badReads	0.090909091
+chr1	145608428	-	10623	coding	POLR3C	nonsynonymous	GAC	CAC	D	H	.	C	G	2164	badReads	0
+chr1	226075708	-	10637	coding	LEFTY1	nonsynonymous	TTG	TCG	M	S	.	A	G	1049	badReads	0
+chr1	226075708	-	10637	coding	LEFTY1	synonymous	GTT	GTC	V	V	.	A	G	1049	badReads	0
+chr1	220789281	+	4139	coding	MARK1	frameshift	ATTGTATCTGCT	A			.	ATTGTATCTGCT	A	482	alleleBias	0
+chr1	153967571	-	91181	coding	NUP210L	frameshift	TCA	TA			.	TG	T	300	badReads	0.2
+chr1	85736476	-	8915	coding	BCL10	frameshift	GAAGAAATTTCTTGT	GT			.	ACAAGAAATTTCTT	A	525	alleleBias	0
+chr1	43888441	+	23334	coding	SZT2	frameshift	GCC	GC			.	GC	G	65	badReads	0
+chr1	40713707	+	127391	coding	TMCO2	frameshift	GAGTCT	GAGT			.	GTC	G	119	alleleBias	0.133333333
+chr1	1356271	-	441869	coding	ANKRD65	nonsynonymous	CCTAGTGTTGTC	GTC	PSVV	V	.	CAACACTAGG	C	614	badReads	0
+chr1	156955953	-	9826	coding	ARHGEF11	frameshift	AGTAGCCTG	G			.	CAGGCTACT	C	101	alleleBias	0
+chr1	228560266	+	84033	coding	OBSCN	frameshift	AGGAGCTCTCCAGAGCCCACCCCATGGGAGGACATC	A			.	AGGAGCTCTCCAGAGCCCACCCCATGGGAGGACATC	A	444	alleleBias	0
+chr1	235973499	-	1130	coding	LYST	nonsynonymous	CGC	TGC	R	C	.	G	A	362	badReads	0
+chr1	36784862	+	79729	coding	SH3D21	frameshift	ACATCTCGGACACCC	AC			.	ACATCTCGGACACC	A	299	badReads	0
+chr1	197398143	+	23418	coding	CRB1	frameshift	TCC	TC			.	TC	T	238	alleleBias	0
+chr1	201966670	+	6051	coding	RNPEP	frameshift	ACC	AC			.	AC	A	57	alleleBias	0
+chr1	196762533	+	10878	coding	CFHR3	frameshift	GGGGATACCATT	G			.	GGGGATACCATT	G	205	alleleBias	0
+chr1	152749008	+	353137	coding	LCE1F	nonsynonymous	TCCAGCTCTGGGGGCTGCTGCAGCTCTGGGGGTGGTGGCTGCTGC	TCC	SSSGGCCSSGGGGCC	S	.	CCAGCTCTGGGGGCTGCTGCAGCTCTGGGGGTGGTGGCTGCTG	C	447	alleleBias	0
+chr1	213037127	+	28982	coding	FLVCR1	nonsynonymous	ACAAATCTCCTGGCT	ACT	TNLLA	T	.	ACAAATCTCCTGG	A	263	alleleBias	0
+chr1	235969798	-	1130	coding	LYST	frameshift	AAAGAA	AAGAA			.	CT	C	240	alleleBias	0
+chr1	173499165	-	284525	coding	SLC9C2	nonsynonymous	CTGATAAGAATTGCA	CCA	MIRIA	P	.	GCAATTCTTATCA	G	371	badReads	0
+chr10	24908603	-	57584	coding	ARHGAP21	nonsynonymous	CCT	ACT	P	T	.	G	T	2965	badReads	0.483870968
+chr10	26414355	+	53904	coding	MYO3A	nonsynonymous	GAT	GAG	D	E	.	T	G	2965	badReads	0.263157895
+chr10	102740063	+	57715	coding	SEMA4G	nonsynonymous	CCT	CGT	P	R	.	C	G	2965	badReads	0.454545455
+chr10	105172978	+	22984	coding	PDCD11	nonsynonymous	CAG	GAG	Q	E	.	C	G	2965	badReads	0.317073171
+chr10	94834267	+	1592	coding	CYP26A1	nonsynonymous	TCC	TTC	S	F	.	C	T	2965	badReads	0.310344828
+chr10	131934747	+	10539	coding	GLRX3	nonsynonymous	CAG	CAC	Q	H	.	G	C	2965	badReads	0.9375
+chr10	98145924	-	7093	coding	TLL2	nonsynonymous	CCT	CGT	P	R	.	G	C	2965	badReads	0.222222222
+chr10	71168685	-	6865	coding	TACR2	nonsynonymous	ATG	AAG	M	K	.	A	T	2965	badReads	0
+chr10	69830266	-	26091	coding	HERC4	nonsynonymous	CCT	CTT	P	L	.	G	A	1867	badReads	0
+chr10	133109602	-	256536	coding	TCERG1L	synonymous	TCC	TCT	S	S	.	G	A	848	badReads	0.125
+chr10	46998894	+	9721	coding	GPRIN2	nonsynonymous	CGC	CAC	R	H	.	G	A	1086	badReads	1
+chr10	47000239	+	9721	coding	GPRIN2	synonymous	TCC	TCT	S	S	.	C	T	1437	PASS	0.5
+chr10	135273463	+	619207	coding	SCART1	nonsynonymous	GAC	GAG	D	E	.	C	G	2030	badReads	1
+chr10	61023906	-	220965	coding	FAM13C	nonsynonymous	GACAAGACT	GAT	DKT	D	.	AGTCTTG	A	105	badReads	0
+chr10	108427535	-	114815	coding	SORCS1	nonsynonymous	GACTATGGTTATGAGCGACACAGCAAT	AAT	DYGYERHSN	N	.	TGCTGTGTCGCTCATAACCATAGTC	T	563	alleleBias	0.037037037
+chr10	70719807	+	9188	coding	DDX21	frameshift	ACCAAA	ACCAA			.	CA	C	204	alleleBias	0.01754386
+chr10	78870058	-	3778	coding	KCNMA1	frameshift	CAG	AG			.	TG	T	253	alleleBias	0.03125
+chr10	129905997	-	4288	coding	MKI67	frameshift	CAGACCCCTGGTCATACTGAAGAAGCAGTGGCTGCTGGCAAAACTACT	T			.	AGTAGTTTTGCCAGCAGCCACTGCTTCTTCAGTATGACCAGGGGTCTG	A	251	alleleBias	0
+chr10	98715126	+	84458	coding	LCOR	nonsynonymous	CCTGTAGATTTAAAG	CCG	PVDLK	P	.	CTGTAGATTTAAA	C	76	alleleBias	0
+chr11	10651101	-	10335	coding	MRVI1	synonymous	CCC	CCG	P	P	.	G	C	2965	badReads	0.333333333
+chr11	118773327	-	283149	coding	BCL9L	synonymous	CCC	CCG	P	P	.	G	C	2965	badReads	0.375
+chr11	130749558	-	399979	coding	SNX19	nonsynonymous	GGT	GAT	G	D	.	C	T	2965	badReads	0.466666667
+chr11	18317608	-	11234	coding	HPS5	synonymous	TTC	TTT	F	F	.	G	A	2965	badReads	0.346153846
+chr11	61511865	+	747	coding	DAGLA	synonymous	CAG	CAA	Q	Q	.	G	A	2965	badReads	0.428571429
+chr11	7064825	+	338323	coding	NLRP14	nonsynonymous	CCC	CAC	P	H	.	C	A	2965	badReads	1
+chr11	76371135	-	2615	coding	LRRC32	frameshift	GAGGTCCTGGCACTGCAGGGCAAC	AC			.	TTGCCCTGCAGTGCCAGGACCTC	T	2925	badReads	0.526315789
+chr11	57995949	-	219960	coding	OR10Q1	synonymous	CCG	CCA	P	P	.	C	T	2965	alleleBias	0.125
+chr11	57313469	+	219537	coding	SMTNL1	nonsynonymous	CGG	GGG	R	G	.	C	G	2965	badReads	0.6
+chr11	113268059	+	255239	coding	ANKK1	nonsynonymous	GGG	AGG	G	R	.	G	A	2965	badReads	0.4
+chr11	65827270	+	10992	coding	SF3B2	nonsynonymous	GATGTC	GAT	DV	D	.	TGTC	T	2957	badReads	0.166666667
+chr11	554166	+	115399	coding	LRRC56	nonsynonymous	CGC	GGC	R	G	.	C	G	2965	PASS	1
+chr11	71723964	-	4926	coding	NUMA1	nonsynonymous	GAG	CAG	E	Q	.	C	G	2965	badReads	0.857142857
+chr11	68854040	+	219931	coding	TPCN2	frameshift	TGG	TG			.	TG	T	2951	badReads	0.357142857
+chr11	72946279	+	5029	coding	P2RY2	nonsynonymous	TCT	CCT	S	P	.	T	C	2025	badReads	0.666666667
+chr11	94231257	+	54851	coding	ANKRD49	nonsynonymous	CTC	CTG	L	M	.	C	G	1519	badReads	1
+chr11	65547333	-	91056	coding	AP5B1	nonsynonymous	CTC	TTC	L	F	.	G	A	738	badReads	0
+chr11	31703352	+	26610	coding	ELP4	synonymous	CAC	CAT	H	H	.	C	T	764	badReads	0
+chr11	64898226	-	84447	coding	SYVN1	synonymous	TCG	TCA	S	S	.	C	T	523	badReads	1
+chr11	32610669	+	10480	coding	EIF3M	nonsynonymous	ACTGAGCTGGATCAA	ACT	TELDQ	T	.	TGAGCTGGATCAA	T	523	badReads	0
+chr11	118220649	+	917	coding	CD3G	frameshift	CAG	C			.	CAG	C	273	PASS	0
+chr11	55111460	+	81327	coding	OR4A16	frameshift	AACTTTCCCTTTGATAAATTAATG	A			.	AACTTTCCCTTTGATAAATTAATG	A	554	badReads	0
+chr11	101776550	-	253935	coding	ANGPTL5	frameshift	ATTGTTTCCTAC	AC			.	GTAGGAAACAA	G	458	alleleBias	0
+chr11	114453694	-	54827	coding	NXPE4	nonsynonymous	TCC	TTC	S	F	.	G	A	167	badReads	0
+chr11	5687213	-	85363	coding	TRIM5	nonsynonymous	AGA	ACA	R	T	.	C	G	22	PASS	0
+chr11	100996786	-	5241	coding	PGR	nonsynonymous	TGTCATTATGGTGTC	GTC	CHYGV	V	.	CACCATAATGACA	C	500	alleleBias	0
+chr11	694955	-	10522	coding	DEAF1	nonsynonymous	GCGGCGGTGGCGGCCGCGGCCGCTGTGGCGGCGGCGGCCGCGGCC	GCC	AAVAAAAAVAAAAAA	A	.	GGCCGCGGCCGCCGCCGCCACAGCGGCCGCGGCCGCCACCGCC	G	287	alleleBias	0
+chr11	69514179	-	9965	coding	FGF19	frameshift	CCCATG	CATG			.	TGG	T	547	alleleBias	0
+chr11	69514251	-	9965	coding	FGF19	nonsynonymous	CTCCCGGTCTCC	TCC	LPVS	S	.	AGACCGGGAG	A	648	alleleBias	0
+chr12	29598217	-	341350	coding	OVCH1	nonsynonymous	GTC	ATC	V	I	.	C	T	2965	badReads	0.833333333
+chr12	76741459	-	79738	coding	BBS10	nonsynonymous	GAC	GAG	D	E	.	G	C	2965	badReads	0.6
+chr12	100732786	+	55681	coding	SCYL2	nonsynonymous	ACT	GCT	T	A	.	A	G	2965	badReads	0.434782609
+chr12	1040402	-	5893	coding	RAD52	nonsynonymous	GCT	GGT	A	G	.	G	C	2965	badReads	0.6
+chr12	106729873	+	255394	coding	TCP11L2	nonsynonymous	ATT	GTT	I	V	.	A	G	2965	badReads	0.484848485
+chr12	133159733	+	57666	coding	FBRSL1	nonsynonymous	GCC	GTC	A	V	.	C	T	2965	badReads	0.916666667
+chr12	133327411	-	23141	coding	ANKLE2	nonsynonymous	AAA	ACA	K	T	.	T	G	2965	badReads	0.615384615
+chr12	20522427	+	5139	coding	PDE3A	nonsynonymous	CTG	CCG	M	P	.	T	C	2965	badReads	0.294117647
+chr12	41312566	+	1272	coding	CNTN1	nonsynonymous	GTT	TTT	V	F	.	G	T	2965	badReads	0.557692308
+chr12	248202	+	440073	coding	IQSEC3	nonsynonymous	GCG	GGG	A	G	.	C	G	2965	PASS	1
+chr12	40657602	+	120892	coding	LRRK2	nonsense	GAA	TAA	E	*	.	G	T	2965	badReads	0.714285714
+chr12	113758439	-	80024	coding	SLC8B1	nonsynonymous	CTG	CGG	M	R	.	A	C	2965	badReads	0.294117647
+chr12	124915218	-	9612	coding	NCOR2	nonsynonymous	TAC	TGC	Y	C	.	T	C	2965	badReads	0.666666667
+chr12	132335592	+	4326	coding	MMP17	nonsynonymous	GAT	AAT	D	N	.	G	A	2965	badReads	0.4
+chr12	56827650	-	8914	coding	TIMELESS	nonsynonymous	CAG	CTG	Q	M	.	T	A	2965	badReads	0.133333333
+chr12	133159870	+	57666	coding	FBRSL1	nonsynonymous	GGCCTGGGCCGCGAGCGC	GGC	GLGRER	G	.	GGCCTGGGCCGCGAGC	G	2933	badReads	0.75
+chr12	133264332	+	5827	coding	PXMP2	synonymous	CTG	TTG	M	M	.	C	T	1642	badReads	0.9
+chr12	131323639	-	2054	coding	STX2	synonymous	CGG	CGC	R	R	.	C	G	1919	badReads	0.666666667
+chr12	123341018	+	9026	coding	HIP1R	nonsynonymous	AGC	GGC	S	G	.	A	G	2965	badReads	0
+chr12	104373829	+	6996	coding	TDG	synonymous	ACC	ACA	T	T	.	C	A	2965	alleleBias	0.171428571
+chr12	49435088	-	8085	coding	KMT2D	synonymous	TCG	TCA	S	S	.	C	T	267	PASS	0
+chr12	52215523	-	401720	coding	FIGNL2	synonymous	CCA	CCC	P	P	.	T	G	243	badReads	0.5
+chr12	133160238	+	57666	coding	FBRSL1	synonymous	ACG	ACC	T	T	.	G	C	314	badReads	0
+chr12	88442117	+	91298	coding	C12orf29	frameshift	GATATTAAGTGTTTGTTTAATCATTTT	GATT			.	ATATTAAGTGTTTGTTTAATCATT	A	365	alleleBias	0
+chr12	118472068	-	55884	coding	WSB2	nonsynonymous	ACT	ATT	T	I	.	G	A	48	PASS	0
+chr12	53044296	-	3849	coding	KRT2	nonsynonymous	GAGCAGCAGAACCAGGTGTTACAGACCAAA	GAA	EQQNQVLQTK	E	.	TTTGGTCTGTAACACCTGGTTCTGCTGC	T	305	alleleBias	0
+chr12	49087511	-	904	coding	CCNT1	frameshift	GCTGCAGCTGATAAGCACAATTCTGTA	GGTA			.	CAGAATTGTGCTTATCAGCTGCAG	C	252	alleleBias	0
+chr12	11061495	-	50838	coding	TAS2R13	nonsynonymous	ATTCTGATGATACTGCTA	CTA	ILMILL	L	.	GCAGTATCATCAGAAT	G	419	alleleBias	0.032258065
+chr12	53041630	-	3849	coding	KRT2	nonsynonymous	TATGAGGAGCTC	CTC	YEEL	L	.	GCTCCTCATA	G	184	alleleBias	0
+chr12	39727057	-	55605	coding	KIF21A	frameshift	CAA	AA			.	TG	T	256	alleleBias	0.013513514
+chr12	110230178	-	59341	coding	TRPV4	frameshift	GGC	GC			.	GC	G	268	alleleBias	0
+chr12	110230214	-	59341	coding	TRPV4	frameshift	TTC	TC			.	GA	G	344	alleleBias	0
+chr12	65564557	+	23592	coding	LEMD3	nonsynonymous	GGCGGTGGGGCCTTC	GGC	GGGAF	G	.	GCGGTGGGGCCTT	G	202	alleleBias	0
+chr13	36226007	+	26960	coding	NBEA	synonymous	TTA	CTA	L	L	.	T	C	2965	badReads	1
+chr13	25363500	+	56163	coding	RNF17	nonsynonymous	TTGCAGTTAACTTCAGATAGT	TTG	MQLTSDS	M	.	GCAGTTAACTTCAGATAGT	G	589	PASS	0
+chr13	114773030	-	22821	coding	RASA3	frameshift	CAG	AG			.	TG	T	57	alleleBias	0
+chr13	110835598	-	1282	coding	COL4A1	frameshift	CCAGGAAAAATT	CT			.	AATTTTTCCTG	A	145	alleleBias	0
+chr14	104165251	-	7517	coding	XRCC3	nonsynonymous	GGC	CGC	G	R	.	C	G	2965	badReads	0.452380952
+chr14	23902775	-	4625	coding	MYH7	nonsynonymous	GGT	GTT	G	V	.	C	A	2965	badReads	0.539325843
+chr14	23945490	+	25983	coding	NGDN	nonsynonymous	GCC	GTC	A	V	.	C	T	2965	badReads	0.75
+chr14	55310539	-	2643	coding	GCH1	nonsense	TGC	TGA	C	*	.	G	T	2965	badReads	0.625
+chr14	33016025	+	9472	coding	AKAP6	synonymous	TCT	TCC	S	S	.	T	C	2965	badReads	0.518518519
+chr14	51370908	+	145447	coding	ABHD12B	synonymous	GTG	GTA	V	V	.	G	A	2965	badReads	0
+chr14	77843331	-	283578	coding	TMED8	synonymous	GCT	GCC	A	A	.	A	G	2082	badReads	0.285714286
+chr14	105412138	-	113146	coding	AHNAK2	nonsynonymous	CTC	CCC	L	P	.	A	G	2313	alleleBias	0.25
+chr14	103593950	+	7127	coding	TNFAIP2	nonsynonymous	CAG	GAG	Q	E	.	C	G	1186	badReads	0.5
+chr14	53110309	-	30001	coding	ERO1A	frameshift	TTAGAAAACTTCAGGAAC	C			.	GTTCCTGAAGTTTTCTAA	G	633	badReads	0
+chr14	21957396	+	9878	coding	TOX4	frameshift	AGAAAA	AGAA			.	GAA	G	311	alleleBias	0
+chr14	64894132	+	4522	coding	MTHFD1	nonsynonymous	TACCAGAATGTC	TAC	YQNV	Y	.	ACCAGAATGT	A	203	alleleBias	0
+chr14	105410760	-	113146	coding	AHNAK2	frameshift	TCC	C			.	GGA	G	191	alleleBias	0.03125
+chr14	21560546	-	51222	coding	ZNF219	frameshift	GCGTGT	GTGT			.	ACG	A	115	alleleBias	0.014492754
+chr14	21785896	+	57096	coding	RPGRIP1	frameshift	AGCAACGAGCTCATAGCGGAACAGCTA	AG			.	GCAACGAGCTCATAGCGGAACAGCTA	G	113	alleleBias	0
+chr15	49531437	+	2585	coding	GALK2	nonsynonymous	AAC	AGC	N	S	.	A	G	2965	badReads	0.421052632
+chr15	40594535	-	5330	coding	PLCB2	nonsynonymous	GTA	TTA	V	L	.	C	A	2965	badReads	0.25
+chr15	51207697	+	23431	coding	AP4E1	nonsynonymous	TAT	TGT	Y	C	.	A	G	2965	badReads	0.4
+chr15	22382478	+	283694	coding	OR4N4	synonymous	AAG	AAA	K	K	.	G	A	2875	PASS	1
+chr15	22382478	+	727924	coding	LINC02203	synonymous	AAG	AAA	K	K	.	G	A	2875	PASS	1
+chr15	74703929	-	8482	coding	SEMA7A	synonymous	CAA	CAG	Q	Q	.	T	C	1999	badReads	0
+chr15	69237952	+	246777	coding	SPESP1	nonsynonymous	CCT	ACT	P	T	.	C	A	1889	badReads	0
+chr15	90320161	+	145873	coding	MESP2	synonymous	GGG	GGA	G	G	.	G	A	1165	alleleBias	0
+chr15	58891816	-	102	coding	ADAM10	nonsynonymous	CCAAGTAGTAATCCAAAGTTGCCT	CCT	PSSNPKLP	P	.	AGGCAACTTTGGATTACTACTT	A	395	alleleBias	0
+chr15	83826747	-	50810	coding	HDGFRP3	nonsynonymous	TATAAGGAGTACAAAGAC	GAC	YKEYKD	D	.	CTTTGTACTCCTTATA	C	255	alleleBias	0
+chr15	48762873	-	2200	coding	FBN1	frameshift	TTCCGCTGTGAGTGTGAG	TGAG			.	CACACTCACAGCGGA	C	484	alleleBias	0
+chr15	34439430	-	79768	coding	KATNBL1	frameshift	TTGTTGCCTCTAGTA	TA			.	TACTAGAGGCAACA	T	642	alleleBias	0
+chr15	29346294	+	321	coding	APBA2	frameshift	GATGGG	GATGG			.	TG	T	216	alleleBias	0
+chr15	29346317	+	321	coding	APBA2	frameshift	GTGAACAACACC	GTCC			.	TGAACAACA	T	249	alleleBias	0
+chr15	89820078	+	55215	coding	FANCI	nonsynonymous	CATGCATGTAAG	CAG	HACK	Q	.	CATGCATGTA	C	646	alleleBias	0
+chr16	11016330	+	4261	coding	CIITA	synonymous	CCT	CCA	P	P	.	T	A	2965	badReads	1
+chr16	5105296	-	146556	coding	C16orf89	synonymous	GAG	GAA	E	E	.	C	T	2965	badReads	1
+chr16	87782296	-	54758	coding	KLHDC4	nonsynonymous	AAG	AAC	K	N	.	C	G	2965	badReads	1
+chr16	29907079	-	26470	coding	SEZ6L2	nonsynonymous	AGC	ACC	S	T	.	C	G	2965	badReads	1
+chr16	88800814	-	9780	coding	PIEZO1	synonymous	GAC	GAT	D	D	.	G	A	2704	badReads	1
+chr16	29907048	-	26470	coding	SEZ6L2	nonsynonymous	GAG	GAC	E	D	.	C	G	2957	badReads	1
+chr16	67465279	+	3291	coding	HSD11B2	nonsynonymous	GCG	GTG	A	V	.	C	T	2965	badReads	0
+chr16	88800785	-	9780	coding	PIEZO1	nonsynonymous	CGC	CAC	R	H	.	C	T	1907	badReads	1
+chr16	90110289	-	100130015	coding	URAHP	nonsynonymous	GTT	TTT	V	F	.	C	A	2343	badReads	0
+chr16	5083677	-	51172	coding	NAGPA	frameshift	CGCCTC	CCTC			.	GGC	G	141	alleleBias	0
+chr16	29810739	+	3835	coding	KIF22	frameshift	GGCAAAGTGGTAGATGCGCTGAATCAGGGCCTCCCT	GG			.	GCAAAGTGGTAGATGCGCTGAATCAGGGCCTCCCT	G	348	alleleBias	0
+chr17	1613132	-	727910	coding	TLCD2	synonymous	CCG	CCT	P	P	.	C	A	2965	badReads	1
+chr17	7578413	-	7157	coding	TP53	nonsynonymous	GTG	TTG	V	M	.	C	A	2965	badReads	1
+chr17	35298264	+	3975	coding	LHX1	nonsynonymous	CAG	CTG	Q	M	.	A	T	2965	badReads	0.958333333
+chr17	42987839	-	2670	coding	GFAP	frameshift	ACACTGCAGCGCTCCTAG	ATAG			.	AGGAGCGCTGCAGTG	A	2935	badReads	1
+chr17	34185210	-	256957	coding	HEATR9	synonymous	CCC	CCG	P	P	.	G	C	2965	badReads	1
+chr17	260142	+	400566	coding	C17orf97	synonymous	ACG	ACT	T	T	.	G	T	2965	PASS	1
+chr17	37563919	-	5469	coding	MED1	nonsynonymous	GAC	CAC	D	H	.	C	G	2965	badReads	1
+chr17	47010614	-	11267	coding	SNF8	nonsynonymous	CCA	GCA	P	A	.	G	C	2965	badReads	1
+chr17	67129921	-	23460	coding	ABCA6	nonsynonymous	CTT	TTT	L	F	.	G	A	2965	badReads	1
+chr17	33491014	+	146862	coding	UNC45B	nonsynonymous	GGT	GAT	G	D	.	G	A	2965	badReads	1
+chr17	8168224	+	5198	coding	PFAS	synonymous	TCT	TCC	S	S	.	T	C	2789	PASS	1
+chr17	5250086	+	9135	coding	RABEP1	nonsynonymous	GTT	GCT	V	A	.	T	C	2128	badReads	0
+chr17	45219364	-	996	coding	CDC27	nonsynonymous	ATG	AGG	M	R	.	A	C	662	badReads	0
+chr17	40818353	+	27175	coding	TUBG2	synonymous	CTG	TTG	M	M	.	C	T	327	badReads	0.25
+chr17	8093429	-	54785	coding	BORCS6	synonymous	CCC	CCG	P	P	.	G	C	898	badReads	0
+chr17	39383069	+	83899	coding	KRTAP9-2	nonsynonymous	ACT	GCT	T	A	.	A	G	885	alleleBias	0.041666667
+chr17	27857491	+	57551	coding	TAOK1	frameshift	GCATTAAGAAAT	G			.	GCATTAAGAAAT	G	232	badReads	0
+chr17	43535636	-	9842	coding	PLEKHM1	NA	NA	NA	NA	NA	.	GC	G	288	alleleBias	0.064516129
+chr17	43535642	-	9842	coding	PLEKHM1	NA	NA	NA	NA	NA	.	AG	A	270	alleleBias	0.064516129
+chr17	43535721	-	9842	coding	PLEKHM1	NA	NA	NA	NA	NA	.	CTATTGGGTGG	C	148	alleleBias	0.027027027
+chr17	60814471	-	162333	coding	Mar-10	nonsynonymous	GAGTTCTCGGGG	GGG	EFSG	G	.	CCCGAGAACT	C	446	alleleBias	0
+chr18	33554977	+	83608	coding	C18orf21	nonsynonymous	CTT	CTG	L	M	.	T	G	2965	badReads	1
+chr18	20816008	+	91768	coding	CABLES1	synonymous	CTC	CTT	L	L	.	C	T	2965	badReads	0.866666667
+chr18	13099500	+	55125	coding	CEP192	nonsynonymous	CCTAATTCCTCCTTATCC	CCC	PNSSLS	P	.	CCTAATTCCTCCTTAT	C	549	alleleBias	0
+chr18	50929197	+	1630	coding	DCC	frameshift	GAA	GA			.	GA	G	241	alleleBias	0
+chr18	50929202	+	1630	coding	DCC	frameshift	GGGAAG	GGGAG			.	GA	G	241	alleleBias	0
+chr19	15586946	-	114770	coding	PGLYRP2	nonsynonymous	GAT	TAT	D	Y	.	C	A	2965	badReads	0.358974359
+chr19	30934748	+	9745	coding	ZNF536	synonymous	GAC	GAT	D	D	.	C	T	2965	badReads	0.289473684
+chr19	42855640	+	1954	coding	MEGF8	nonsynonymous	ACC	ATC	T	I	.	C	T	2965	badReads	0.6
+chr19	50365807	-	11284	coding	PNKP	synonymous	TGC	TGT	C	C	.	G	A	2965	badReads	1
+chr19	56090661	-	163033	coding	ZNF579	synonymous	CTC	CTA	L	L	.	G	T	2965	badReads	1
+chr19	42265390	+	4680	coding	CEACAM6	nonsynonymous	CCA	ACA	P	T	.	C	A	2965	badReads	0
+chr19	50209615	+	126129	coding	CPT1C	nonsynonymous	GCA	ACA	A	T	.	G	A	2965	badReads	0
+chr19	58146101	+	10520	coding	ZNF211	synonymous	AAC	AAT	N	N	.	C	T	2965	badReads	0
+chr19	16032851	-	57834	coding	CYP4F11	nonsynonymous	GAA	CAA	E	Q	.	C	G	1581	badReads	0
+chr19	17651370	+	199786	coding	FAM129C	synonymous	TCA	TCG	S	S	.	A	G	2825	badReads	1
+chr19	42342319	-	147719	coding	LYPD4	synonymous	GTT	GTC	V	V	.	A	G	1550	PASS	0
+chr19	36231288	-	79713	coding	IGFLR1	nonsynonymous	TGC	TAC	C	Y	.	C	T	1425	badReads	0
+chr19	49106935	-	54854	coding	FAM83E	nonsynonymous	CCG	CTG	P	M	.	G	A	986	PASS	0
+chr19	54745497	-	11025	coding	LILRB3	nonsynonymous	CGG	TGG	R	W	.	G	A	1040	alleleBias	0
+chr19	54745497	-	79168	coding	LILRA6	nonsynonymous	CGG	TGG	R	W	.	G	A	1040	alleleBias	0
+chr19	58420682	-	147687	coding	ZNF417	nonsynonymous	AGG	GGG	R	G	.	T	C	1007	alleleBias	0
+chr19	14236994	-	55723	coding	ASF1B	nonsynonymous	CAG	CAC	Q	H	.	C	G	68	badReads	0.090909091
+chr19	19653756	+	148113	coding	CILP2	frameshift	ACC	AC			.	AC	A	175	badReads	0
+chr2	102984375	+	8809	coding	IL18R1	nonsynonymous	GAA	GGA	E	G	.	A	G	2965	badReads	0.347826087
+chr2	127961007	-	339761	coding	CYP27C1	nonsynonymous	GCA	GTA	A	V	.	G	A	2965	badReads	0.956521739
+chr2	17830777	+	7447	coding	VSNL1	nonsynonymous	GCT	GTT	A	V	.	C	T	2965	badReads	0.6375
+chr2	179413304	-	7273	coding	TTN	nonsynonymous	CCA	GCA	P	A	.	G	C	2965	badReads	0.268292683
+chr2	210559154	+	4133	coding	MAP2	nonsynonymous	GAG	CAG	E	Q	.	G	C	2965	badReads	0.25
+chr2	242743297	+	64090	coding	GAL3ST2	nonsynonymous	GGG	CGG	G	R	.	G	C	2965	badReads	0.68
+chr2	31805886	-	6716	coding	SRD5A2	synonymous	GCG	GCA	A	A	.	C	T	2965	PASS	0.488372093
+chr2	159517902	+	8502	coding	PKP4	nonsynonymous	CTG	CTT	M	L	.	G	T	2965	badReads	0.333333333
+chr2	231948352	+	5707	coding	PSMD1	nonsynonymous	GTT	CTT	V	L	.	G	C	2965	badReads	0.6
+chr2	85780469	-	2677	coding	GGCX	nonsynonymous	AGG	AGC	R	S	.	C	G	2965	badReads	0.75
+chr2	8867060	-	57498	coding	KIDINS220	nonsynonymous	GGC	GTC	G	V	.	C	A	2965	badReads	0.166666667
+chr2	10220218	-	192668	coding	CYS1	nonsynonymous	GTC	CTC	V	L	.	C	G	2322	badReads	0.666666667
+chr2	84745175	+	1768	coding	DNAH6	nonsynonymous	TTG	TTT	M	F	.	G	T	2965	badReads	0
+chr2	48807796	+	11037	coding	STON1	nonsynonymous	AAA	AAC	K	N	.	A	C	1423	badReads	0.166666667
+chr2	48807796	+	286749	coding	STON1-GTF2A1L	nonsynonymous	AAA	AAC	K	N	.	A	C	1423	badReads	0.166666667
+chr2	1442616	+	7173	coding	TPO	nonsense	GAA	TAA	E	*	.	G	T	2687	badReads	0
+chr2	47748292	-	56660	coding	KCNK12	synonymous	GGT	GGC	G	G	.	A	G	2028	PASS	0.166666667
+chr2	112619981	-	64682	coding	ANAPC1	nonsynonymous	ACG	ATG	T	M	.	G	A	1539	PASS	0
+chr2	33590511	+	4052	coding	LTBP1	nonsynonymous	TGC	TAC	C	Y	.	G	A	1621	badReads	0.625
+chr2	113416584	+	6574	coding	SLC20A1	frameshift	CTTGGAGAT	C			.	CTTGGAGAT	C	516	PASS	0.083333333
+chr2	113416541	+	6574	coding	SLC20A1	frameshift	GTGCCC	GTGCC			.	GC	G	387	alleleBias	0.052631579
+chr2	160673482	-	100526664	coding	LY75-CD302	frameshift	TATGAAGATGGTATT	TT			.	AATACCATCTTCAT	A	67	alleleBias	0
+chr2	160673482	-	4065	coding	LY75	frameshift	TATGAAGATGGTATT	TT			.	AATACCATCTTCAT	A	67	alleleBias	0
+chr2	153537782	-	55660	coding	PRPF40A	frameshift	ACTTACTACTACAACACTGAAACCAAACAG	G			.	CTGTTTGGTTTCAGTGTTGTAGTAGTAAGT	C	519	badReads	0
+chr2	170038040	-	4036	coding	LRP2	frameshift	ACCAAG	ACAAG			.	TG	T	111	alleleBias	0
+chr2	177053721	+	3231	coding	HOXD1	frameshift	TCGCCC	TCGCC			.	GC	G	416	badReads	0
+chr2	166187933	+	6326	coding	SCN2A	frameshift	GTGAAA	GTAA			.	TGA	T	210	PASS	0
+chr2	11315097	+	130814	coding	PQLC3	frameshift	AGAATAATCACAACC	AGCC			.	GAATAATCACAA	G	524	alleleBias	0
+chr2	50573936	-	9378	coding	NRXN1	frameshift	GCA	CA			.	GC	G	356	alleleBias	0.044444444
+chr2	70057173	+	64395	coding	GMCL1	frameshift	CACAAGCGCAAG	CA			.	ACAAGCGCAAG	A	387	alleleBias	0.022727273
+chr2	179534364	-	7273	coding	TTN	frameshift	AAAGTT	AAGTT			.	CT	C	182	alleleBias	0
+chr2	131356236	-	55997	coding	CFC1	frameshift	CCCTAC	CCTAC			.	AG	A	206	alleleBias	0
+chr2	165551926	-	22837	coding	COBLL1	frameshift	GAATTCAGGAGT	GAGT			.	CTCCTGAAT	C	393	alleleBias	0
+chr2	165946880	-	6328	coding	SCN3A	frameshift	AATATATCAAGTAACTATAAC	AAAC			.	TTATAGTTACTTGATATA	T	97	alleleBias	0.027027027
+chr2	190682858	+	5378	coding	PMS1	frameshift	AGCTTT	AGCTT			.	CT	C	92	alleleBias	0
+chr2	191362369	+	54842	coding	MFSD6	frameshift	GTCTATGCACTCTAC	GT			.	TCTATGCACTCTAC	T	466	alleleBias	0
+chr2	45235726	-	10736	coding	SIX2	frameshift	AGCAACTGGTTCAAGAACCGG	GG			.	CGGTTCTTGAACCAGTTGCT	C	407	alleleBias	0
+chr20	31016043	+	171023	coding	ASXL1	nonsynonymous	GAA	GGA	E	G	.	A	G	2965	badReads	0.414634146
+chr20	31671265	+	149954	coding	BPIFB4	nonsynonymous	GGT	TGT	G	C	.	G	T	2965	badReads	0.555555556
+chr20	44418609	-	140686	coding	WFDC3	nonsynonymous	ATG	ATA	M	I	.	C	T	2965	badReads	0.548387097
+chr20	25507159	-	22981	coding	NINL	nonsynonymous	ACG	ATG	T	M	.	G	A	2965	badReads	0.230769231
+chr20	43933021	-	8785	coding	MATN4	nonsynonymous	CGC	AGC	R	S	.	G	T	1973	PASS	0
+chr20	55100084	+	200232	coding	FAM209A	nonsynonymous	CAG	AAG	Q	K	.	C	A	1578	alleleBias	0.166666667
+chr20	55100084	+	388799	coding	FAM209B	nonsynonymous	CAG	AAG	Q	K	.	C	A	1578	alleleBias	0.166666667
+chr20	6033033	-	164312	coding	LRRN4	nonsynonymous	CCG	CTG	P	M	.	G	A	28	alleleBias	0
+chr20	37194056	+	57148	coding	RALGAPB	nonsynonymous	GTGCTGTATTATGCT	GTT	VLYYA	V	.	TGCTGTATTATGC	T	645	alleleBias	0
+chr21	38117505	+	6493	coding	SIM2	synonymous	GGC	GGT	G	G	.	C	T	1630	badReads	1
+chr21	34927468	+	6651	coding	SON	synonymous	CGC	CGG	R	R	.	C	G	753	alleleBias	0
+chr21	46276193	-	754	coding	PTTG1IP	nonsynonymous	TGCAGG	AGG	CR	R	.	TGCA	T	322	alleleBias	0.125
+chr22	50964446	-	1890	coding	TYMP	synonymous	GGT	GGA	G	G	.	A	T	2965	badReads	1
+chr22	50716635	-	23654	coding	PLXNB2	nonsense	GAG	TAG	E	*	.	C	A	2965	badReads	0.923076923
+chr22	24579219	+	56241	coding	SUSD2	nonsynonymous	GCC	ACC	A	T	.	G	A	2965	alleleBias	0.444444444
+chr22	39239687	-	23467	coding	NPTXR	nonsynonymous	CTG	CTC	M	L	.	C	G	2965	badReads	1
+chr3	190573136	-	647309	coding	GMNC	nonsynonymous	CGT	CCT	R	P	.	C	G	2965	badReads	1
+chr3	119331874	+	51365	coding	PLA1A	synonymous	CCC	CCT	P	P	.	C	T	2965	badReads	0.727272727
+chr3	119331892	+	51365	coding	PLA1A	synonymous	ACC	ACG	T	T	.	C	G	2965	badReads	0.714285714
+chr3	12228997	+	6854	coding	SYN2	nonsynonymous	CGG	TGG	R	W	.	C	T	2965	badReads	1
+chr3	124733777	-	57493	coding	HEG1	synonymous	CCC	CCG	P	P	.	G	C	2000	alleleBias	0.133333333
+chr3	123051465	-	111	coding	ADCY5	synonymous	CAG	CAA	Q	Q	.	C	T	2965	badReads	0.571428571
+chr3	111356995	+	10225	coding	CD96	nonsynonymous	ACT	ATT	T	I	.	C	T	2965	badReads	0.2
+chr3	113659181	+	54762	coding	GRAMD1C	nonsynonymous	ATG	GTG	M	V	.	A	G	2965	badReads	0.666666667
+chr3	142297498	-	545	coding	ATR	nonsense	GAG	TAG	E	*	.	C	A	2965	badReads	0.481481481
+chr3	99567946	-	11259	coding	FILIP1L	nonsynonymous	AAC	AAG	N	K	.	G	C	2965	badReads	0.111111111
+chr3	122335901	+	165631	coding	PARP15	nonsynonymous	TAT	TGT	Y	C	.	A	G	2531	badReads	0
+chr3	14106332	+	348825	coding	TPRXL	nonsynonymous	AGC	ACC	S	T	.	G	C	399	alleleBias	0
+chr3	10140571	+	2177	coding	FANCD2	nonsynonymous	AGC	AGG	S	R	.	C	G	486	badReads	0
+chr3	127323892	+	4171	coding	MCM2	frameshift	GCG	GC			.	CG	C	320	badReads	0
+chr3	186024742	-	1608	coding	DGKG	frameshift	ATAAAAGATGCC	CC			.	GCATCTTTTAT	G	338	alleleBias	0
+chr3	9802403	-	8536	coding	CAMK1	frameshift	TTTGAA	TGAA			.	CAA	C	338	badReads	0
+chr3	155200509	-	23007	coding	PLCH1	frameshift	AAG	AG			.	CT	C	307	alleleBias	0
+chr3	195487941	-	4585	coding	MUC4	nonsynonymous	AATGACCAGCTGCCT	CCT	NDQLP	P	.	GCAGCTGGTCATT	G	188	alleleBias	0
+chr3	124826599	-	84561	coding	SLC12A8	frameshift	CAGCCC	CC			.	GGGCT	G	163	alleleBias	0
+chr3	146177762	-	57047	coding	PLSCR2	nonsynonymous	CATGACTACCTA	CTA	HDYL	L	.	AGGTAGTCAT	A	108	alleleBias	0
+chr3	169820386	-	80012	coding	PHC3	frameshift	CGGGAAAGAGAACGTGAG	CGAG			.	TCACGTTCTCTTTCC	T	192	alleleBias	0.006535948
+chr3	170784386	-	23043	coding	TNIK	nonsynonymous	CTCCAATGGGGA	GGA	LQWG	G	.	CCCATTGGAG	C	358	alleleBias	0
+chr3	3886630	+	57633	coding	LRRN1	frameshift	TTCTCC	TT			.	TCTCC	T	75	alleleBias	0
+chr3	57348619	-	201625	coding	DNAH12	frameshift	GTTTGTTTTTTTCATGCC	GTCC			.	GCATGAAAAAAACAA	G	280	alleleBias	0
+chr4	36317868	+	401124	coding	DTHD1	synonymous	AAC	AAT	N	N	.	C	T	2965	badReads	1
+chr4	189061106	+	339976	coding	TRIML1	nonsynonymous	GAG	AAG	E	K	.	G	A	2965	PASS	1
+chr4	17643848	-	27146	coding	FAM184B	nonsynonymous	CGG	TGG	R	W	.	G	A	2965	badReads	1
+chr4	436017	-	170960	coding	ZNF721	nonsynonymous	CAT	GAT	H	D	.	G	C	2865	badReads	0
+chr4	153874685	+	85462	coding	FHDC1	frameshift	ATTGGGATATTTCTTAAGCAA	ATAA			.	TTGGGATATTTCTTAAGC	T	328	alleleBias	0
+chr4	74846961	-	5196	coding	PF4	nonsynonymous	CCG	CTG	P	M	.	G	A	319	alleleBias	0
+chr4	44719190	-	132789	coding	GNPDA2	frameshift	GATTTACAAGCAGAA	GAGAA			.	CTGCTTGTAAA	C	407	alleleBias	0
+chr4	141310383	-	1047	coding	CLGN	frameshift	GTACGAAAGGAC	GGAC			.	CCTTTCGTA	C	366	alleleBias	0
+chr4	141310411	-	1047	coding	CLGN	frameshift	AAG	AG			.	CT	C	40	alleleBias	0
+chr5	39383168	-	1601	coding	DAB2	nonsynonymous	GAT	GGT	D	G	.	T	C	2965	badReads	0.970588235
+chr5	55164633	+	133396	coding	IL31RA	nonsynonymous	CCT	ACT	P	T	.	C	A	2965	badReads	1
+chr5	140788368	+	56100	coding	PCDHGB6	nonsynonymous	CTA	CCA	L	P	.	T	C	2965	badReads	0.92
+chr5	67592054	+	5295	coding	PIK3R1	nonsynonymous	TGG	CGG	W	R	.	T	C	2965	badReads	0.952380952
+chr5	485275	-	6550	coding	SLC9A3	nonsynonymous	AAG	AAC	K	N	.	C	G	2965	badReads	1
+chr5	111756062	+	54508	coding	EPB41L4A-AS2	synonymous	ACG	ACC	T	T	.	G	C	2965	badReads	1
+chr5	179498595	-	55819	coding	RNF130	synonymous	ACG	ACA	T	T	.	C	T	2553	badReads	1
+chr5	150436503	-	10318	coding	TNIP1	nonsynonymous	CCC	GCC	P	A	.	G	C	2965	badReads	1
+chr5	173035291	-	91272	coding	BOD1	nonsynonymous	CGC	TGC	R	C	.	G	A	738	alleleBias	0
+chr5	73144859	+	64283	coding	ARHGEF28	frameshift	TCT	TC			.	CT	C	212	alleleBias	0
+chr5	93966393	+	84250	coding	SLF1	frameshift	AGATGGAAAGTT	A			.	AGATGGAAAGTT	A	355	alleleBias	0.06
+chr6	26199247	-	3013	coding	HIST1H2AD	synonymous	AAG	AAA	K	K	.	C	T	2965	badReads	0.686567164
+chr6	29640553	-	346171	coding	ZFP57	NA	NA	NA	NA	NA	.	A	G	2965	badReads	0.549019608
+chr6	32944542	+	6046	coding	BRD2	NA	NA	NA	NA	NA	.	A	T	2965	badReads	0.6875
+chr6	32180302	-	4855	coding	NOTCH4	NA	NA	NA	NA	NA	.	G	A	2965	badReads	0.642857143
+chr6	32168771	-	4855	coding	NOTCH4	NA	NA	NA	NA	NA	.	G	T	2014	badReads	0.666666667
+chr6	31644806	-	80741	coding	LY6G5C	NA	NA	NA	NA	NA	.	G	C	2965	badReads	0.238095238
+chr6	146985413	+	79747	coding	ADGB	nonsynonymous	ACT	AAT	T	N	.	C	A	2965	badReads	0
+chr6	32292437	-	10665	coding	C6orf10	NA	NA	NA	NA	NA	.	T	A	2965	badReads	1
+chr6	41036657	-	221443	coding	OARD1	synonymous	TAT	TAC	Y	Y	.	A	G	2965	badReads	0
+chr6	1313980	+	94234	coding	FOXQ1	synonymous	CCC	CCG	P	P	.	C	G	2965	PASS	0.769230769
+chr6	31948448	+	8859	coding	STK19	NA	NA	NA	NA	NA	.	A	G	2965	badReads	0.625
+chr6	32946964	+	6046	coding	BRD2	NA	NA	NA	NA	NA	.	G	A	804	badReads	0.444444444
+chr6	311938	+	56940	coding	DUSP22	synonymous	CAC	CAT	H	H	.	C	T	763	badReads	0.666666667
+chr6	132190546	+	5167	coding	ENPP1	frameshift	TTG	TT			.	TG	T	425	alleleBias	0
+chr6	56373344	-	667	coding	DST	nonsynonymous	CAG	AAG	Q	K	.	G	T	362	badReads	0
+chr6	135513652	+	4602	coding	MYB	frameshift	GTT	GT			.	GT	G	115	alleleBias	0.027027027
+chr6	31785250	+	3303	coding	HSPA1A	NA	NA	NA	NA	NA	.	AAGTGTCAAGAGGTCATCTCGTGGCTGGACGCCAACACCTTGGCCGAGAAGGACG	A	236	alleleBias	0
+chr6	31997501	+	100293534	coding	C4B_2	NA	NA	NA	NA	NA	.	GCAGAGATGGCAGAC	G	327	alleleBias	0
+chr6	65596716	-	346007	coding	EYS	frameshift	TGTAATTGTGAACCT	TGCCT			.	GTTCACAATTA	G	465	alleleBias	0
+chr7	47852837	-	168507	coding	PKD1L1	nonsynonymous	GAA	AAA	E	K	.	C	T	2965	badReads	0.8
+chr7	107601758	-	3912	coding	LAMB1	nonsynonymous	CGG	GGG	R	G	.	G	C	2965	badReads	0.5
+chr7	114292323	+	93986	coding	FOXP2	nonsynonymous	GTG	GGG	V	G	.	T	G	2965	badReads	0.391304348
+chr7	12620774	+	85477	coding	SCIN	synonymous	GTG	GTA	V	V	.	G	A	2965	badReads	0.454545455
+chr7	131241029	-	5420	coding	PODXL	nonsynonymous	CCGTCGCCC	CCC	PSP	P	.	GGGCGAC	G	2988	badReads	0.923076923
+chr7	91630654	+	10142	coding	AKAP9	nonsynonymous	TTA	GTA	L	V	.	T	G	2965	badReads	0.517241379
+chr7	98547836	+	8295	coding	TRRAP	nonsynonymous	CGC	CAC	R	H	.	G	A	2965	badReads	0.5
+chr7	150812683	+	116988	coding	AGAP3	nonsynonymous	GGC	AGC	G	S	.	G	A	2965	badReads	0.461538462
+chr7	48965308	+	168448	coding	CDC14C	nonsynonymous	AGG	AAG	R	K	.	G	A	2965	alleleBias	0.149425287
+chr7	87047872	-	5244	coding	ABCB4	nonsynonymous	GAT	GGT	D	G	.	T	C	2965	badReads	0.333333333
+chr7	150417725	+	170575	coding	GIMAP1	nonsynonymous	TTG	TTT	M	F	.	G	T	2965	badReads	0.235294118
+chr7	102953437	-	27000	coding	DNAJC2	nonsynonymous	GCG	GTG	A	V	.	G	A	2965	badReads	1
+chr7	21630619	+	8701	coding	DNAH11	nonsynonymous	AAGAAAAGGAACACT	AAG	KKRNT	K	.	GAAAAGGAACACT	G	304	alleleBias	0
+chr7	80439952	-	10512	coding	SEMA3C	nonsynonymous	AAC	AAG	N	K	.	G	C	377	badReads	0
+chr7	48018166	-	3364	coding	HUS1	frameshift	AACGAATTTCAAATG	AAATG			.	TTTGAAATTCG	T	323	alleleBias	0.022727273
+chr7	107114980	+	2845	coding	GPR22	frameshift	ATGTTAATGATATCC	AC			.	ATGTTAATGATATC	A	267	alleleBias	0
+chr7	127953263	-	55131	coding	RBM28	frameshift	CAGTGG	CTGG			.	ACT	A	94	alleleBias	0
+chr7	127953267	-	55131	coding	RBM28	frameshift	AAC	AC			.	GT	G	88	alleleBias	0
+chr7	143000934	+	835	coding	CASP2	nonsynonymous	GGGTGCGAGGAG	GGG	GCEE	G	.	GGTGCGAGGA	G	46	alleleBias	0.028169014
+chr7	91731985	+	10142	coding	AKAP9	frameshift	TTACTGGGTGGGTTC	TTAC			.	ACTGGGTGGGTT	A	471	alleleBias	0
+chr7	121766472	-	10157	coding	AASS	frameshift	CATAGA	A			.	TCTATG	T	333	alleleBias	0
+chr7	121766494	-	10157	coding	AASS	frameshift	TAT	AT			.	TA	T	200	alleleBias	0
+chr8	72959422	-	8989	coding	TRPA1	nonsynonymous	ATG	ATT	M	I	.	C	A	2965	badReads	0.161290323
+chr8	99129266	-	10247	coding	RIDA	nonsynonymous	CCC	CGC	P	R	.	G	C	2965	badReads	0.636363636
+chr8	144874957	-	23513	coding	SCRIB	synonymous	CGC	CGT	R	R	.	G	A	1227	badReads	0.5
+chr8	126443348	+	10221	coding	TRIB1	synonymous	AGC	AGT	S	S	.	C	T	1906	badReads	0
+chr8	73993341	-	157869	coding	SBSPON	nonsynonymous	GGC	AGC	G	S	.	C	T	2235	badReads	0.4
+chr8	43172517	+	340441	coding	POTEA	nonsynonymous	GAC	GAG	D	E	.	C	G	391	badReads	0
+chr8	95392527	-	25788	coding	RAD54B	frameshift	TCTCAA	TCAA			.	TGA	T	152	alleleBias	0
+chr8	62577904	-	444	coding	ASPH	frameshift	ATG	TG			.	AT	A	260	alleleBias	0.047619048
+chr8	103271219	-	51366	coding	UBR5	nonsynonymous	TCTTTCAATGATGAA	GAA	SFNDE	E	.	CATCATTGAAAGA	C	290	alleleBias	0
+chr8	116426880	-	7227	coding	TRPS1	frameshift	ATGAGA	AAGA			.	TCA	T	122	alleleBias	0
+chr8	62577880	-	444	coding	ASPH	nonsynonymous	AAAGATGACAGA	AGA	KDDR	R	.	CTGTCATCTT	C	383	alleleBias	0.05
+chr9	139943429	-	954	coding	ENTPD2	synonymous	GAC	GAT	D	D	.	G	A	2965	badReads	0.8
+chr9	131243916	+	4957	coding	ODF2	nonsynonymous	GAC	AAC	D	N	.	G	A	2965	badReads	1
+chr9	131467816	+	29941	coding	PKN3	nonsynonymous	CCA	TCA	P	S	.	C	T	2965	badReads	1
+chr9	135983402	-	5900	coding	RALGDS	synonymous	GTG	GTA	V	V	.	C	T	2965	badReads	1
+chr9	139222174	+	26086	coding	GPSM1	nonsynonymous	GTG	GCG	V	A	.	T	C	2802	badReads	1
+chr9	132377900	-	375759	coding	C9orf50	nonsynonymous	AGG	AAG	R	K	.	C	T	2755	badReads	0.5
+chr9	115013371	-	9991	coding	PTBP3	nonsynonymous	CAG	AAG	Q	K	.	G	T	574	badReads	0.5
+chr9	39078733	-	79937	coding	CNTNAP3	synonymous	TCC	TCT	S	S	.	G	A	419	alleleBias	0
+chr9	39078748	-	79937	coding	CNTNAP3	synonymous	GCA	GCG	A	A	.	T	C	307	alleleBias	0
+chr9	20948327	+	54914	coding	FOCAD	frameshift	CATGGAAAA	C			.	CATGGAAAA	C	330	alleleBias	0
+chr9	126145969	-	57706	coding	DENND1A	nonsynonymous	AAGAGCTTAGAGGACCTTCGTGCCCCCAAAGAC	GAC	KSLEDLRAPKD	D	.	CTTTGGGGGCACGAAGGTCCTCTAAGCTCTT	C	328	badReads	0
+chr9	125486697	+	254973	coding	OR1L4	nonsynonymous	CTA	CTG	L	M	.	A	G	543	alleleBias	0.071428571
+chr9	79013857	+	653162	coding	RPSAP9	nonsynonymous	AATACTGGCCAGAGG	AAT	NTGQR	N	.	TACTGGCCAGAGG	T	64	alleleBias	0
+chrX	152482516	-	4100	coding	MAGEA1	synonymous	ACC	ACT	T	T	.	G	A	2965	PASS	1
+chrX	107977783	-	8471	coding	IRS4	frameshift	GGGAAA	GGAAA			.	TC	T	2177	badReads	0.181818182
+chrX	140994752	+	9947	coding	MAGEC1	frameshift	CCT	CC			.	CT	C	43	alleleBias	0
+chrX	91090964	+	27328	coding	PCDH11X	frameshift	ATA	AT			.	TA	T	272	alleleBias	0
+chrX	91090982	+	27328	coding	PCDH11X	frameshift	CTC	CT			.	TC	T	287	alleleBias	0

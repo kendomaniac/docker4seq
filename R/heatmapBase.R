@@ -2,12 +2,10 @@
 #' @description This function generate heatmap and other plot based on clustering and on a specific gene list
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
-#' @param data.folder, a character string indicating the folder where input data are located and where output will be written
-#' @param matrixName, counts table name. Matrix data file must be in data.folder. The file MUST contain RAW counts, without any modification, such as log transformation, normalizatio etc.
-#' @param format, matrix count format, "csv", "txt"
-#' @param separator, separator used in count file, e.g. '\\t', ','
-#' @param geneNameControl, 0 if the matrix has gene name without ENSEMBL code.1 if the gene names is formatted like this : ENSMUSG00000000001:Gnai3. If the gene names is only ensamble name you have to run SCannoByGtf before start using this script.
+#' @param file, a character string indicating the path of the file, with counts.table name and extension included
 #' @param status, 0 if is raw count, 1 otherwise
+#' @param lower.range, the lower range of signal in the heatmap.
+#' @param upper.range, the upper range of signal in the heatmap.
 #' @author Luca Alessandri , alessandri [dot] luca1991 [at] gmail [dot] com, University of Torino
 #'
 #' @return A heatmap.
@@ -16,11 +14,52 @@
 #' system("wget http://130.192.119.59/public/heatmap_test.zip")
 #' system("unzip heatmap_test.zip")
 #' setwd("heatmap_test")
-#' heatmapBase(group="docker",scratch.folder="/data/scratch",data.folder=getwd(),matrixName="DEfiltered__log2TPM",format="txt",separator="\t",geneNameControl=1,status=hcl1)
+#' heatmapBase(group="docker",scratch.folder="/data/scratch",file=paste(getwd(),"DEfiltered__log2TPM.txt", sep="/"), status=1, lower.range="/-1", upper.range="1")
 
 #'}
 #' @export
-heatmapBase <- function(group=c("sudo","docker"), scratch.folder, data.folder,matrixName,format,separator,geneNameControl=1,status){
+heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0, lower.range=NULL, upper.range=NULL){
+
+  b1=lower.range
+  b2=upper.range
+  if(b1<0){b1=paste("/",b1,sep="")}
+    if(b2<0){b2=paste("/",b2,sep="")}
+
+  if(is.null(lower.range)){b1=0}
+  if(is.null(upper.range)){b2=0}
+
+  geneNameControl=1
+
+  data.folder=dirname(file)
+  positions=length(strsplit(basename(file),"\\.")[[1]])
+  matrixNameC=strsplit(basename(file),"\\.")[[1]]
+  matrixName=paste(matrixNameC[seq(1,positions-1)],collapse="")
+  format=strsplit(basename(basename(file)),"\\.")[[1]][positions]
+  separator2="tab"
+
+  #updating rownames structure
+   tmp <- read.table(file, sep="\t", header=T, row.names=1)
+   tmp.n <- rownames(tmp)
+   if(length(grep("-miR-", tmp.n)) > 0){
+     tmp.n1 <- strsplit(tmp.n, "-")
+     tmp.ensembl <- sapply(tmp.n1, function(x){
+       paste(x[2:length(x)], collapse="-")
+     })
+     tmp.symbol <- sapply(tmp.n1, function(x){
+         paste(x[2:length(x)],collapse='.')
+     })
+   }else{
+       tmp.n <- strsplit(tmp.n, ":")
+       tmp.ensembl <- sapply(tmp.n, function(x)x[2])
+       tmp.symbol <- sapply(tmp.n, function(x)x[1])
+   }
+   rownames(tmp) <- paste(tmp.ensembl, tmp.symbol, sep=":")
+   #updating samples names
+   tmp.c <- names(tmp)
+   tmp.c <- strsplit(tmp.c, "_")
+   tmp.samples <- sapply(tmp.c, function(x)x[1])
+   names(tmp) <- tmp.samples
+   write.table(tmp, paste(data.folder, "heatmap.txt", sep="/"), sep="\t", col.names=NA)
 
 
 
@@ -64,30 +103,16 @@ heatmapBase <- function(group=c("sudo","docker"), scratch.folder, data.folder,ma
   #preprocess matrix and copying files
 
 
-
-if(separator=="\t"){
-separator2="tab"
-}else{separator2=separator}
-
-
-if(geneNameControl==0){
-system(paste("cp ",data.folder,"/",matrixName,".",format," ",data.folder,"/",matrixName,"_old.",format,sep=""))
-mainMatrix=read.table(paste(data.folder,"/",matrixName,".",format,sep=""),header=TRUE,row.names=1,sep=separator)
-rownames(mainMatrix)=paste(seq(1,nrow(mainMatrix)),":",rownames(mainMatrix),sep="")
-write.table(mainMatrix,paste(data.folder,"/",matrixName,".",format,sep=""),sep=separator,col.names=NA)
-}
-
-
-system(paste("cp ",data.folder,"/",matrixName,".",format," ",scrat_tmp.folder,sep=""))
+system(paste("cp ",data.folder,"/heatmap.txt ",scrat_tmp.folder,sep=""))
 
   #executing the docker job
-    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/heatmapbase4seq Rscript /home/main.R ",matrixName," ",format," ",separator2," ",status, sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/rcaloger/heatmapbase4seq Rscript /home/main.R heatmap txt tab ",status, " ", b1," ", b2, sep="")
 
 resultRun <- runDocker(group=group, params=params)
 
   #waiting for the end of the container work
   if(resultRun==0){
-    #system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
+    system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
   }
   #running time 2
   ptm <- proc.time() - ptm
@@ -118,13 +143,13 @@ resultRun <- runDocker(group=group, params=params)
 
   #Copy result folder
   cat("Copying Result Folder")
-  system(paste("cp -r ",scrat_tmp.folder,"/",matrixName,"_heatmap.pdf ",data.folder,"/",sep=""))
+#  system(paste("cp -r ",scrat_tmp.folder,"/",matrixName,"_heatmap.pdf ",data.folder,"/",sep=""))
   #removing temporary folder
   cat("\n\nRemoving the temporary file ....\n")
   system(paste("rm -R ",scrat_tmp.folder))
   system("rm -fR out.info")
   system("rm -fR dockerID")
   system("rm  -fR tempFolderID")
-  #system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
+  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
   setwd(home)
 }

@@ -1,13 +1,25 @@
 ---
 title: "Skeleton tutorial"
 author: "Raffaele A Calogero"
-output: 
+output:
   rmarkdown::html_vignette
 vignette: >
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::knitr}
+  %\VignetteIndexEntry{Skeleton tutorial}
   %\VignetteEncoding{UTF-8}   
+
+header-includes:
+- \usepackage{makeidx}
+- \makeindex
+- \usepackage{setspace}\doublespacing
+- \usepackage{pdfpages}
+
+
+fig_caption: true
 ---
+
+\newpage
+\tableofcontents
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -74,25 +86,25 @@ checking if scratch folder exists and creating a temporary folder.
 Executing the docker command:
 
 * first is created a parameter string, which is made of:
-  
+
     + --cidfile creates in data.folder the dockerID file that contains the docker job ID
-  
+
     + -v the temporary folder, created in the scratch folder, is mounted as /scratch
-  
+
     + -v the data folder is mounted as /data
-  
+
     + -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh is the command that executes the skeleton.sh script.
-  
+
 * the parameter string is passed to the runDocker that execute the job. runDocker check if docker is running and return **false** when is finished
 
 ```{r, echo=TRUE,eval=FALSE}
   #executing the docker job
   if(group=="sudo"){
     params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh", sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/ubuntu", params=params)
+    resultRun <- runDocker(group="sudo", params=params)
   }else{
     params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh", sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/ubuntu", params=params)
+    resultRun <- runDocker(group="docker", params=params)
   }
 ```
 
@@ -117,26 +129,38 @@ else
 fi
 #writing the result file helloworld in data scratch
 echo "hello world" > $SCRATCH_FOLDER/helloworld.txt
-# creating the out.info file indicating that run is finished 
+# creating the out.info file indicating that run is finished
 echo "analysis is finished" > $SCRATCH_FOLDER/out.info
-#changing the properties of files and folders in /data/scratch 
+#changing the properties of files and folders in /data/scratch
 chmod 777 -R $SCRATCH_FOLDER/*
 
 ```
 
-It writes hello world in the **helloworld.txt** and moves **helloworld.txt** to the scratch folder together with the **run.info** file, used to store information about the run, and the **out.info**, used to tell to the R script when the doker job is finished.
-The **skeleton.sh** scripts is a prototype for the handling of docker application(s). 
+It writes hello world in the **helloworld.txt** and moves **helloworld.txt** to the data folder together with the **run.info** file, used to store information about the run, and the **out.info**, used to tell to the R script when the doker job is finished.
+The **skeleton.sh** scripts is a prototype for the handling of docker application(s).
 
 Lets go back to the skeleton.R dissection:
 
-The **resultRun** is used to check when the docker job is finished. The results are copied from the scratch to the data folder
+The **resultRun** is used to check when the docker job is finished. The log of the docker job is saved with a name made of the first 12 letters of the docker job ID. Then, the docker container is deleted as well as the temporary folder and few other files: out.info, dockerID, tempFolderID. Finally the home folder is restored as working directory.
 
 ```{r, echo=TRUE, eval=FALSE}
- #when container ends copy results from scratch in data.folder
+ #when container ends
  if(resultRun=="false"){
-    system(paste("cp ", scrat_tmp.folder, "/* ", data.folder, sep=""))
-  }
- 
+   #everything is copied to the input folder
+    system(paste("mv ", scrat_tmp.folder,"/* ",data.folder, sep=""))
+     #saving log and removing docker container
+    container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
+    system(paste("docker logs ", substr(container.id,1,12), " &> ", substr(container.id,1,12),".log", sep=""))
+    system(paste("docker rm ", container.id, sep=""))
+    #removing temporary folder
+    cat("\n\nRemoving the temporary file ....\n")
+    system(paste("rm -R ",scrat_tmp.folder))
+    system("rm -fR out.info")
+    system("rm -fR dockerID")
+    system("rm  -fR tempFolderID")
+    system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
+ }
+
 ```
 
 Then, the computing time is estimated and saved in the run.info file
@@ -163,21 +187,7 @@ Then, the computing time is estimated and saved in the run.info file
 ```
 
 
-The log of the docker job (describing the events observed during the execution of the container) is saved with a name made of the first 12 letters of the docker job ID. After saving the docker instance log, the scratch folder and the docker container are deleted. The dockerID and tempFolderID files are also deleted. The list of the dockers installed on the machine is saved in the data.folder.
+
 ```{r, echo=TRUE, eval=FALSE}
-   #saving log and removing docker container
-  container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/", substr(container.id,1,12),".log", sep=""))
-  system(paste("docker rm ", container.id, sep=""))
-  #removing temporary folder
-  cat("\n\nRemoving the temporary file ....\n")
-  system(paste("rm -R ",scrat_tmp.folder))
-  system("rm -fR out.info")
-  system("rm -fR dockerID")
-  system("rm  -fR tempFolderID")
-  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
   setwd(home)
 ```
-
-
-

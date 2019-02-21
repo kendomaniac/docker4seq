@@ -23,13 +23,13 @@
 #' }
 #' @export
 skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", adapter5, adapter3, seq.type=c("se","pe"), threads=1, min.length=18){
- 
+
   home <- getwd()
   setwd(fastq.folder)
-  
+
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -135,4 +135,3 @@ skewer <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 	system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",fastq.folder, sep=""))
 	setwd(home)
 }
-

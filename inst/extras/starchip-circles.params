@@ -1,0 +1,25 @@
+##Parameters for starchip-circles
+readsCutoff = 5
+minSubjectLimit = 10
+cpus = 8
+do_splice = True
+cpmCutoff = 0
+subjectCPMcutoff = 0
+annotate = true
+
+#Reference Files
+refbed = /genome/genome.gtf.bed  #use setup.sh to create this from a gtf.
+refFasta = /genome/genome.fa
+
+#STAR Parameters
+## Do you use a prefix for your STAR output?
+starprefix =
+## Are you starting from fastq and need to run STAR alignment?
+runSTAR = False
+STARgenome = /genome/  #not necassary if runSTAR != True
+STARreadcommand = zcat   #cat for fastq, zcat for fastq.gz etc. not necassary   if runSTAR != True
+IDstepsback = 1 ## this is the position from the right of your path of the name of your files.
+                ##for example: /path/to/sample1/star/2.4.2/output/Chimeric.out.junction
+                ##sample1 is 4 steps back.
+                ##or /path/to/star/2.4.2/sample1/Chimeric.out.junction
+                #sample1 is 1 step back.

@@ -1,0 +1,12 @@
+docker.io/repbioinfo/annotate.2017.01
+docker.io/repbioinfo/r332.2017.01
+docker.io/repbioinfo/rsemstar.2017.01
+docker.io/repbioinfo/skewer.2017.01
+docker.io/repbioinfo/r340.2017.01
+docker.io/repbioinfo/demultiplexing.2017.01
+docker.io/repbioinfo/salmon.2017.01
+docker.io/repbioinfo/multiqc.2018.01
+docker.io/rcaloger/heatmapbase4seq
+docker.io/repbioinfo/desc.2018.01
+docker.io/repbioinfo/sra.2018.01
+

@@ -78,4 +78,3 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, threads=8){
   system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",main.folder, sep=""))
   setwd(home)
 }
-

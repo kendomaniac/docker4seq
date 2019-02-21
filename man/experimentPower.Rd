@@ -4,9 +4,9 @@
 \alias{experimentPower}
 \title{A wrapper function for experiment_power from RnaSeqSampleSize Bioconductor package}
 \usage{
-experimentPower(group = c("sudo", "docker"), filename, replicatesXgroup = 3,
-  FDR = 0.1, genes4dispersion = 200, log2fold.change = 1,
-  output.folder = getwd())
+experimentPower(group = c("sudo", "docker"), filename,
+  replicatesXgroup = 3, FDR = 0.1, genes4dispersion = 200,
+  log2fold.change = 1, output.folder = getwd())
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

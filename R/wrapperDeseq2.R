@@ -9,7 +9,7 @@
 #' @param type, character with three options: gene, isoform, mirna. if gene is used two files are generated for geneset enrichment, the filtered Gene symbols and the background that contains all gene simbols.
 #' @param batch, logical FALSE, TRUE
 #' @author Raffaele Calogero
-#' 
+#'
 #' @return Returns a full table of differentially expressed genes (prefix DEfull), a filtered table of differentially expressed genes (prefix DEfiltered) and the normalized counts table (prefix normalized)
 
 #' @examples
@@ -24,13 +24,13 @@
 #' }
 #' @export
 wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.table, log2fc=1, fdr=0.1, ref.covar="0", type=c("gene","isoform","mirna"), batch=FALSE){
-  
+
   home <- getwd()
   setwd(output.folder)
 
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -56,19 +56,25 @@ wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.ta
 
   home <- getwd()
   setwd(output.folder)
-  
+
   dir.out <- dir()
   if(type=="gene"){
     de.out0 <- dir.out[grep("DEfiltered", dir.out)]
     de.out1 <- sub("DEfiltered", "DEfiltered_gene", de.out0)
     system(paste("mv ", de.out0, " ", de.out1, sep=""))
+    system("mv genes4david.txt genes2GO.txt")
+    system("mv bkg4david.txt bkg2GO.txt")
   }else if(type=="isoform"){
     de.out0 <- dir.out[grep("DEfiltered", dir.out)]
     de.out1 <- sub("DEfiltered", "DEfiltered_isoform", de.out0)
     system(paste("mv ", de.out0, " ", de.out1, sep=""))
+  }else if(type=="mirna"){
+    de.out0 <- dir.out[grep("DEfiltered", dir.out)]
+    de.out1 <- sub("DEfiltered", "DEfiltered_mirna", de.out0)
+    system(paste("mv ", de.out0, " ", de.out1, sep=""))
   }
-  system("mv genes4david.txt genes2GO.txt")
-  
+
+
   #running time 2
   ptm <- proc.time() - ptm
   dir <- dir(output.folder)
