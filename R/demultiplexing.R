@@ -71,7 +71,7 @@ demultiplexing <- function(group=c("sudo","docker"),  data.folder, threads=8){
   #saving log and removing docker container
   container.id <- readLines(paste(main.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
-  system(paste("docker rm ", container.id, sep=""))
+ # system(paste("docker rm ", container.id, sep=""))
 
   #running time 2
   system(paste("rm ",main.folder,"/dockerID", sep=""))

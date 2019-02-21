@@ -25,10 +25,10 @@ starChipIndex <- function(group=c("sudo","docker"), genome.folder=getwd()){
 
   if(group=="sudo"){
     params <- paste("--cidfile ", genome.folder,"/dockerID -v ", genome.folder,":/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/starchipIndex.sh", sep="")
-    resultRun <- runDocker(group="sudo",container="docker.io/repbioinfo/star251.2017.01", params=params)
+    resultRun <- runDocker(group="sudo", params=params)
   }else{
     params <- paste("--cidfile ", genome.folder,"/dockerID -v ", genome.folder,":/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/starchipIndex.sh", sep="")
-    resultRun <- runDocker(group="docker",container="docker.io/repbioinfo/star251.2017.01", params=params)
+    resultRun <- runDocker(group="docker", params=params)
   }
 
   if(resultRun=="false"){
