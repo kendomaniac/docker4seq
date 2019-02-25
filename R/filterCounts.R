@@ -198,6 +198,3 @@ filterCounts <- function(data.folder, type=c("gene", "isoform", "mirna")){
 
 
 }
-
-
-

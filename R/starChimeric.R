@@ -5,11 +5,11 @@
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for STAR is located.
 #' @param threads, a number indicating the number of cores to be used from the application
-#' @param chimSegmentMin, is a positive value indicating the minimal lenght of the overlap of a read to the chimeric element
-#' @param chimJunctionOverhangMin, is a positive value indicating the minimum overhang for a chimeric junction
+#' @param chimSegmentMin, is a positive integer indicating the minimal length of the overlap of a read to the chimeric element
+#' @param chimJunctionOverhangMin, is a positive integer indicating the minimum overhang for a chimeric junction
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 #'
-#' @return three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics
+#' @return the set of chimeric transcripts identified by STAR chimeric
 #' @examples
 #'\dontrun{
 #'     #downloading fastq files
@@ -21,112 +21,108 @@
 #'
 #' }
 #' @export
-starChimeric <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, threads=1, chimSegmentMin=20, chimJunctionOverhangMin=15){
 
-  home <- getwd()
-  setwd(fastq.folder)
 
-  #initialize status
-  system("echo 0 > ExitStatusFile 2>&1")
+starChimeric <- function(group=c("sudo","docker"), fastq.folder=getwd(), scratch.folder,
+    genome.folder, threads=1, chimSegmentMin=20, chimJunctionOverhangMin=15) {
 
-  #running time 1
-  ptm <- proc.time()
-  #running time 1
-  test <- dockerTest()
-  if(!test){
-    cat("\nERROR: Docker seems not to be installed in your system\n")
-    system("echo 10 > ExitStatusFile 2>&1")
-    setwd(home)
-    return(10)
-  }
+    scratch.folder <- normalizePath(scratch.folder)
+    fastq.folder <- normalizePath(fastq.folder)
+    genome.folder <- normalizePath(genome.folder)
 
-  tmp.folder <- gsub(":","-",gsub(" ","-",date()))
-  scrat_tmp.folder=file.path(scratch.folder, tmp.folder)
-  writeLines(scrat_tmp.folder,paste(fastq.folder,"/tempFolderID", sep=""))
-  cat("\ncreating a folder in scratch folder\n")
-  dir.create(file.path(scratch.folder, tmp.folder))
-  dir.create(file.path(scratch.folder, tmp.folder,"/tmp"))
-  dir <- dir(path=fastq.folder)
-  dir.info <- dir[which(dir=="run.info")]
-  if(length(dir.info)>0){
-    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-    system(paste("cp ",fastq.folder,"/run.info ", scratch.folder,"/",tmp.folder,"/run.info", sep=""))
-
-  }
-  #moving run.inf in scratch
-  if(length(dir(fastq.folder)[grep("run.info",dir(fastq.folder))]) == 0){
-    system(paste("touch ", scrat_tmp.folder,"/run.info",sep=""))
-  }else{
-    system(paste("mv run.info ", scrat_tmp.folder,sep=""))
-  }
-
-  dir <- dir[grep(".fastq.gz$", dir)]
-  dir.trim <- dir[grep("trimmed", dir)]
-  cat("\ncopying \n")
-  if(length(dir)==0){
-    cat(paste("It seems that in ", fastq.folder, "there are not fastq.gz files"))
-    system("echo 1 > ExitStatusFile 2>&1")
-    setwd(home)
-    return(1)
-  }else if(length(dir.trim)>0){
-    dir <- dir.trim
-    for(i in dir){
-      system(paste("cp ",fastq.folder,"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
+    #running time 1
+    ptm <- proc.time()
+    #setting the data.folder as working folder
+    if (!file.exists(fastq.folder)) {
+      cat(paste("\nIt seems that the", fastq.folder, "folder does not exist\n"))
+      return(2)
     }
-    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-    system(paste("gzip -d ",scratch.folder,"/",tmp.folder,"/*.gz",sep=""))
-  }else if(length(dir)>2){
-    cat(paste("It seems that in ", fastq.folder, "there are more than two fastq.gz files"))
-    system("echo 2 > ExitStatusFile 2>&1")
-    setwd(home)
-    return(2)
-  }else{
-    for(i in dir){
-      system(paste("cp ",fastq.folder,"/",i, " ",scratch.folder,"/",tmp.folder,"/",i, sep=""))
+
+    data.folder <- fastq.folder
+
+    #storing the position of the home folder
+    home <- getwd()
+    setwd(fastq.folder)
+    #initialize status
+    system("echo 0 > ExitStatusFile 2>&1")
+
+    #check if scratch folder exist
+    if (!file.exists(scratch.folder)) {
+      cat(paste("\nIt seems that the", scratch.folder, "folder does not exist\n"))
+      system("echo 3 > ExitStatusFile 2>&1")
+      setwd(data.folder)
+      return(3)
     }
-    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
-    system(paste("gzip -d ",scratch.folder,"/",tmp.folder,"/*.gz",sep=""))
-  }
+    #check if genome folder exist
+    if (!file.exists(genome.folder)) {
+      cat(paste("\nIt seems that the", genome.folder, "folder does not exist\n"))
+      system("echo 3 > ExitStatusFile 2>&1")
+      setwd(data.folder)
+      return(3)
+    }
 
- params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",fastq.folder,":/fastq.folder -v ",scrat_tmp.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/star_chimeric_2.sh ",chimSegmentMin," ", chimJunctionOverhangMin," ", threads," ", sub(".gz$", "", dir[1])," ", sub(".gz$", "", dir[2]), sep="")
- resultRun <- runDocker(group=group, params=params)
+    samples <- dir(path=fastq.folder)
+    samples <- samples[grep(".fastq.gz", samples)]
+    trimmed.samples <- samples[grep("trimmed", samples)]
 
- if(resultRun==0){
-   #not saving fastq files
-   cat("\nStar to detect chimeric transcripts is finished\n")
- }
-    system(paste("cp ", scrat_tmp.folder,"/run.info ",fastq.folder, sep=""))
-    system(paste("cp ", scrat_tmp.folder,"/Chimeric.out.sam ",fastq.folder, sep=""))
-    system(paste("cp ", scrat_tmp.folder,"/Chimeric.out.junction ",fastq.folder, sep=""))
-    system(paste("cp ", scrat_tmp.folder,"/Unmapped.out.mate1 ",fastq.folder, sep=""))
-    system(paste("cp ", scrat_tmp.folder,"/Unmapped.out.mate2 ",fastq.folder, sep=""))
-    system(paste("cp ", scrat_tmp.folder,"/Aligned.sortedByCoord.out.bam ",fastq.folder, sep=""))
-    system(paste("cp ", scrat_tmp.folder,"/Log.out ",fastq.folder, sep=""))
-    system(paste("cp ", scrat_tmp.folder,"/Log.final.out ",fastq.folder, sep=""))
-    system(paste("cp ", scrat_tmp.folder,"/Log.progress.out ",fastq.folder, sep=""))
-    system(paste("cp ", scrat_tmp.folder,"/SJ.out.tab ",fastq.folder, sep=""))
+    if (length(samples) == 0) {
+        cat(paste("It seems that in", fastq.folder, "there are not fastq.gz files"))
+        system("echo 1 > ExitStatusFile 2>&1")
+        setwd(home)
+        return(1)
+    } else if (length(trimmed.samples) > 0) {
+        samples <- trimmed.samples
+    } else if (length(samples) > 2) {
+        cat(paste("It seems that in", fastq.folder, "there are more than two fastq.gz files"))
+        system("echo 2 > ExitStatusFile 2>&1")
+        setwd(home)
+        return(2)
+    }
+
+    #executing the docker job
+    params <- paste("--cidfile", paste0(fastq.folder, "/dockerID"),
+        "-v", paste0(fastq.folder, ":/fastq.folder"),
+        "-v", paste0(genome.folder, ":/genome"),
+        "-v", paste0(scratch.folder, ":/scratch"),
+        "-d docker.io/repbioinfo/star251.2019.02 bash /bin/star_chimeric_2.sh",
+        chimSegmentMin, chmJunctionOverhangMin, threads, samples[1], samples[2])
+
+    resultRun <- runDocker(group=group, params=params)
+
+    if(resultRun == 0) {
+      cat("\nStar to detect chimeric transcripts is finished\n")
+    }
+
     #running time 2
     ptm <- proc.time() - ptm
-    con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
-    tmp.run <- readLines(con)
-    close(con)
-    tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
-    writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
-    #running time 2
-    #removing temporary folder
+    dir <- dir(data.folder)
+    dir <- dir[grep("run.info",dir)]
+    if(length(dir)>0) {
+      con <- file("run.info", "r")
+      tmp.run <- readLines(con)
+      close(con)
+      tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+      writeLines(tmp.run,"run.info")
+    }
+    else {
+      tmp.run <- NULL
+      tmp.run[1] <- paste("run time mins ",ptm[1]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+
+      writeLines(tmp.run,"run.info")
+    }
+
     #saving log and removing docker container
-    container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
-#    system(paste("docker logs ", container.id, " >& ", substr(container.id,1,12),".log", sep=""))
-    system(paste("docker logs ", container.id, " >& ","starChimeric_",substr(container.id,1,12),".log", sep=""))
-#    system(paste("docker rm ", container.id, sep=""))
-
-
-    cat("\n\nRemoving the rsemStar temporary file ....\n")
- #   system(paste("rm -R ",scrat_tmp.folder))
-    system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))
-    system(paste("rm  -f ",fastq.folder,"/tempFolderID", sep=""))
+    container.id <- readLines(paste0(data.folder,"/dockerID"), warn = FALSE)
+    system(paste("docker logs", substr(container.id,1,12), "&>", paste0("starChimeric_", substr(container.id,1,12),".log")))
+    system(paste("docker rm", container.id))
+    # removing temporary files
+    cat("\n\nRemoving the temporary file ....\n")
+    system("rm -fR out.info")
+    system("rm -fR dockerID")
+    system(paste("cp", paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/"), data.folder))
     setwd(home)
-
 }

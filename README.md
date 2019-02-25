@@ -39,7 +39,7 @@ More info on docker4seq: [docker4seq web page](https://kendomaniac.github.io/doc
 ### How to be part of the Reproducible Bioinformatics Project community
 
 
-Any bioinformatician interested to embed specific applications in the available workflows or interested to develop a new workflow is requested to embed the application(s) in a docker image, save it in a public repository and configure one or more R functions that can be used to interact with the docker image. The module/workflow needs to fullfil at least the first 6 Sandve's rules. 
+Any bioinformatician interested to embed specific applications in the available workflows or interested to develop a new workflow is requested to embed the application(s) in a docker image, save it in a public repository and configure one or more R functions that can be used to interact with the docker image. The module/workflow needs to fullfil at least the first 6 Sandve's rules.
 
 Steps required to submit a new application/workflow:
 
@@ -47,20 +47,20 @@ Steps required to submit a new application/workflow:
 
 
     + Please have a look at: [Controlling jobs in a docker image, a brief tutorial](https://kendomaniac.github.io/docker4seq/articles/skeleton.html).
-    
-    
+
+
 - Create a public docker repository for the docker image, e.g. at [docker.com](http://docker.com).
 
 - Create a workflow.Rmd vignette using RStudio and publish it via RStudio. As example of a vignette see [docker4seq vignette](https://kendomaniac.github.io/docker4seq/).
 
-- Once the docker image, the function(s) and vignette are ready please fill this [submission form](http://goo.gl/bb42EN). 
+- Once the docker image, the function(s) and vignette are ready please fill this [submission form](http://goo.gl/bb42EN).
 
-    + If your module/workflow passes the validation analysis, you will be inserted as developer of the docker4seq package, and you will add your module and vignette to the docker4seq github repository. 
-    
+    + If your module/workflow passes the validation analysis, you will be inserted as developer of the docker4seq package, and you will add your module and vignette to the docker4seq github repository.
+
     + If your module will not satisfy some of the validation points we will help you in fixing the issues and having your module compliant to the requirements of the Reproducible-bioinformatics Project. Mantainers will be responsable of the maintainance of their application(s).
 
 
-### docker4seq 
+### docker4seq
 
 **docker4seq** is registed with RRID SCR_017006 at [*SciCrunch*](scicrunch.org). *docker4seq** is part of  [*Elixir bio.tools*](https://bio.tools/).
 
@@ -75,7 +75,7 @@ install_github("kendomaniac/docker4seq", ref="master")
 
 #### Requirements
 You need to have docker installed on your machine, for more info see this document:
-https://docs.docker.com/engine/installation/. 
+https://docs.docker.com/engine/installation/.
 **docker4seq** package is expected to run on 64 bits linux machine with at least 4 cores.  32 Gb RAM are required only if mapping will be done with STAR. In case mapping is done with Salmon, only 16 Gb RAM are needed.
 A scratch folder should be present, e.g. /data/scratch and it should be writable from everybody:
 
@@ -94,9 +94,9 @@ More info on the functionalities of the package are available at: [**docker4seq/
 - **docker4seq/4SeqGUI Video Tutorials:**
 
     + [HowTo run a full RNAseq analysis](https://www.youtube.com/playlist?list=PLN48SoNXrLRhTi9MYMysNI3O4fR0wt46D)
-    
+
     + [HowTo run a full miRNAseq analysis](https://www.youtube.com/playlist?list=PLN48SoNXrLRix-Er5unoze68qE8vW46s-)
-    
+
     + [HowTo run a full ChIPseq analysis](https://www.youtube.com/playlist?list=PLN48SoNXrLRhqjyPBGkDRTf0wNi4Y9Va2)
 
 
@@ -106,13 +106,13 @@ In *docker4seq* library is now present the function *testSeqbox*, allowing to ch
 
 #### Workflows compliance with Sandve rules:
 
-- The **whole transcriptome workflow**, embedding annotatingByGtf.R, demultiplexing.R, experimentPower.R, fastqc.R, filterCounts.R, pca.R, rnaseqCounts.R, rsemAnnotate.R, rsemStar.R, rsemstarIndex.R, salmonAnnotation.R, salmonCounts.R, salmonIndex.R, samples2experiment.R, sampleSize.R, skewer.R, wrapperDeseq2.R, wrapperSalmon.R fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285) reproducibility rules. 
+- The **whole transcriptome workflow**, embedding annotatingByGtf.R, demultiplexing.R, experimentPower.R, fastqc.R, filterCounts.R, pca.R, rnaseqCounts.R, rsemAnnotate.R, rsemStar.R, rsemstarIndex.R, salmonAnnotation.R, salmonCounts.R, salmonIndex.R, samples2experiment.R, sampleSize.R, skewer.R, wrapperDeseq2.R, wrapperSalmon.R fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285) reproducibility rules.
 
-- The **miRNAs analysis workflow**, embedding demultiplexing.R, experimentPower.R, fastqc.R, filterCounts.R, pca.R, mirnaCounts.R, mirnaCovar.R, sampleSize.R, wrapperDeseq2.R fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285) reproducibility rules. 
+- The **miRNAs analysis workflow**, embedding demultiplexing.R, experimentPower.R, fastqc.R, filterCounts.R, pca.R, mirnaCounts.R, mirnaCovar.R, sampleSize.R, wrapperDeseq2.R fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285) reproducibility rules.
 
 - The **Xenome module**, which allows to discriminate between mouse and human reads in patient derived xenograft DNA/RNA sequenced samples, embedding xenome.R and xenomeIndex.R, fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285) reproducibility rules.
 
-- The **inDrop single cell module**, which allows the single cell UMI counting generated with inDrop single cell sequencing technology, embedding indropCounts.R and demultiplexing.R fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285) reproducibility rules. 
+- The **inDrop single cell module**, which allows the single cell UMI counting generated with inDrop single cell sequencing technology, embedding indropCounts.R and demultiplexing.R fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285) reproducibility rules.
 
 - The **Platypus module**, which allows haplotype-based variant calling for next generation sequence data, embedding demultiplexing.R, bwa.R and platypus.R fullfils all [Sandve](http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285)
 
@@ -121,7 +121,7 @@ In *docker4seq* library is now present the function *testSeqbox*, allowing to ch
 - The **ChIPseq workflow** embedding demultiplexing.R, chipseq.R, chipseqCounts.R, bwa.R, bwaIndexUcsc.R does not satisfy Rule 4 (Version Control All Custom Scripts) because it download for annotation the latest version of ENSEMBL annotation. Thus, annotation executed at different time might differ because of the changes in the ENSEMBL downoaded information. We are working to fix this issue, expected fixing Q3 2018. Not all intermediate results are available as part of the final results (Sandve rule 5), expected fixing Q3 2018.
 
 #### Diclaimer:
-docker4seq developers have no liability for any use of docker4seq functions, including without limitation, any loss of data, incorrect results, or any costs, liabilities, or damages that result from use of docker4seq. 
+docker4seq developers have no liability for any use of docker4seq functions, including without limitation, any loss of data, incorrect results, or any costs, liabilities, or damages that result from use of docker4seq.
 
 ### 4SeqGUI Project
 
@@ -143,4 +143,19 @@ Short reads sequencing technology has been used for more than a decade now. Howe
 More info on SeqBox characteristics and cost are available at [www.seqbox.com](http://www.seqbox.com)
 
 
+**IMPORTANT** The first time *docker4seq* is installed the **downloadContainers** needs to be executed  to download to the local repository the containers that are needed for the use of *docker4seq*
 
+More info on the functionalities of the package are available at: [docker4seq/4seqGUI vignette](http://rpubs.com/rcaloger/279935)
+
+- **docker4seq/4SeqGUI Video Tutorials:**
+
+    + [HowTo run a full RNAseq analysis](https://www.youtube.com/playlist?list=PLN48SoNXrLRhTi9MYMysNI3O4fR0wt46D)
+
+    + [HowTo run a full miRNAseq analysis](https://www.youtube.com/playlist?list=PLN48SoNXrLRix-Er5unoze68qE8vW46s-)
+
+    + [HowTo run a full ChIPseq analysis](https://www.youtube.com/playlist?list=PLN48SoNXrLRhqjyPBGkDRTf0wNi4Y9Va2)
+
+
+
+## Diclaimer:
+docker4seq developers have no liability for any use of docker4seq functions, including without limitation, any loss of data, incorrect results, or any costs, liabilities, or damages that result from use of docker4seq.

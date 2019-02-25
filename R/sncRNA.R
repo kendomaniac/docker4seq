@@ -9,10 +9,10 @@
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param mb.version, a character string indicating the required version of miRBase database. Visit ftp://mirbase.org/pub/mirbase/ to select the proper version id.
 #' @param mb.species, a character string indicating the three-letter prefix of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to obtain the proper species prefix.
-#' 
+#'
 #' @author Giulio Ferrero
 #
-#' @return read count files:
+#' @return Read count table of RNA-Seq reads aligned miRNA or non-miRNA annotations
 #' @examples
 #'\dontrun{
 #'     #downloading fastq files
@@ -21,10 +21,10 @@
 #'     #running miRNAs quantification pipeline
 #'     bwaIndex(group="docker", genome.folder="/data/genomes", mb.version="22", mb.species="hsa", mode="miRNA")
 #'     sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="miRNA", reference="/data/genome/hairpin_hsa_miRBase_22.fa", threads=8, mb.version="22", mb.species="hsa")
-#'     
+#'
 #'     #running non miRNA ncRNAs quantification pipeline
 #'     bwaIndex(group="docker", genome.folder="/data/genomes/", rc.version="9.0", rc.species="Homo sapiens", length=80, mode="ncRNA")
-#'     sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="ncRNA", reference="/data/genome/ncRNA_Homo_sapiens_RNA_Central_9_len_80.fa", threads=8)
+#'     sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="ncRNA", reference="/data/genome/ncRNA_Homo_sapiens_RNA_Central_9.0_len_80.fa", threads=8)
 #'
 #' }
 #' @export
@@ -36,7 +36,7 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -64,38 +64,38 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 
 ref.folder=dirname(reference)
 ref.id=basename(reference)
-  
+
   if(mode=="miRNA"){
-    
+
     mb_ok_ver = c("1.0","10.0","10.1","1.1","11.0","1.2","12.0","1.3","13.0","14","1.4","15","1.5","16","17","18","19","20","2.0","21","2.1","22","2.2","3.0","3.1","4.0","5.0","5.1","6.0","7.0","7.1","8.0","8.1","8.2","9.0","9.1","9.2")
-    
+
     if(mb.version %in% mb_ok_ver == FALSE){
       cat("\nThe miRBase version is not correct\n")
       system("echo 2 > ExitStatusFile 2>&1")
       setwd(home)
       return(2)
     }
-    
+
     if(is.null(mb.species)){
       cat("\nPlease insert a proper miRBase species identifier\n")
       system("echo 2 > ExitStatusFile 2>&1")
       setwd(home)
       return(2)
     }
-    
+
     else{
     params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", scratch.folder,":/data/scratch -v ", ref.folder,":/data/ref -v ", fastq.folder,":/data/input -d docker.io/gferrero/sncrna /bin/bash /bin/sncRNA.sh ", mode, " ", threads, " ", ref.id, " ", mb.version, " ", mb.species, sep="")
     }
   }
 
   if(mode=="ncRNA"){
-    
+
     params <- paste("--cidfile ",fastq.folder,"/dockerID -v ", scratch.folder,":/data/scratch -v ", ref.folder,":/data/ref -v ", fastq.folder,":/data/input -d docker.io/gferrero/sncrna /bin/bash /bin/sncRNA.sh ", mode, " ", threads, " ", ref.id, sep="")
-    
+
   }
 
 resultRun <- runDocker(group=group, params=params)
-  
+
   ##############################################################
 
   #running time 2

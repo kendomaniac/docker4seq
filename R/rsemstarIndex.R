@@ -8,7 +8,7 @@
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @author Raffaele Calogero
 #'
-#' @return The indexed bwa genome reference sequence
+#' @return The index of the reference genomic sequence for STAR analysis
 #' @examples
 #'\dontrun{
 #'     #running rsemstar index for human
@@ -31,18 +31,20 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
 
   home <- getwd()
 
+  genome.folder <- normalizePath(genome.folder)
+
   #########check scratch folder exist###########
   if (!file.exists(genome.folder)){
     cat(paste("\nIt seems that the ",genome.folder, "folder does not exist, I create it\n"))
     dir.create(genome.folder)
   }
   #############################################
-  
+
   setwd(genome.folder)
 
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-  
+
   #running time 1
   ptm <- proc.time()
   #running time 1
@@ -53,12 +55,16 @@ rsemstarIndex <- function(group=c("sudo","docker"),  genome.folder=getwd(), ense
     setwd(home)
     return(10)
   }
-	
-	
+
+
 cat("\nsetting as working dir the genome folder and running bwa docker container\n")
 
 
-	params <- paste("--cidfile ",genome.folder,"/dockerID -v ",genome.folder,":/data/scratch"," -d docker.io/repbioinfo/rsemstar.2017.01 sh /bin/rsemstar.index.sh "," ",genome.folder," ",ensembl.urlgenome," ",ensembl.urlgtf," ",threads, sep="")
+	params <- paste(
+        "--cidfile", paste0(genome.folder,"/dockerID"),
+        "-v", paste0(genome.folder,":/data/scratch"),
+        "-d docker.io/repbioinfo/rsemstar.2019.02 bash /bin/rsemstar.index.sh",
+            genome.folder, ensembl.urlgenome, ensembl.urlgtf, threads)
 	resultRun <- runDocker(group=group, params=params)
 
   if(resultRun==0){
@@ -102,4 +108,3 @@ cat("\nsetting as working dir the genome folder and running bwa docker container
   setwd(home)
 
 }
-
