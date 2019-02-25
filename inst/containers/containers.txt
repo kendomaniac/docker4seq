@@ -8,7 +8,6 @@ docker.io/repbioinfo/rsemstar.2017.01
 docker.io/repbioinfo/skewer.2017.01
 docker.io/repbioinfo/r340.2017.01
 docker.io/repbioinfo/demultiplexing.2017.01
-docker.io/repbioinfo/xenome.2017.01
 docker.io/repbioinfo/star251.2017.01
 docker.io/repbioinfo/salmon.2017.01
 docker.io/repbioinfo/multiqc.2018.01
