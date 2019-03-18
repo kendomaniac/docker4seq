@@ -114,7 +114,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 ### BWA index case for non miRNA ncRNAs
 	if(mode=="ncRNA"){
 
-	  rc_ok_ver = c("1.0","1.0beta","2.0","3.0","4.0","5.0","6.0","7.0","8.0","9.0", "10.0")
+	  rc_ok_ver = c("1.0","1.0beta","2.0","3.0","4.0","5.0","6.0","7.0","8.0","9.0", "10.0", "11.0")
 
 	  if(rc.version %in% rc_ok_ver == FALSE){
 	    cat("\nThe RNA Central version is not correct\n")
