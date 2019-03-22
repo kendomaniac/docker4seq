@@ -1,14 +1,12 @@
-#' @title
-#' @description
-#'
+#' @title Function to execute Cutadapt on RNA-Seq reads
+#' @description This function executes the docker container  by running CutAdapt algorithm a the input RNA-Seq dataset to remove the sequencing adapters.
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param data.folder, a character string indicating where fastq files are located
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param adapter.type, a character string. Two options: \code{"ILLUMINA"} or \code{"NEB"}, depending to which miRNA library prep was used: ILLUMINA or NEB
 #' @author Nicola Licheri and Giulio Ferrero
-#
-#' @return
+#' @return The fastq files of the trimmed sequencing reads
 #' @examples
 #'\dontrun{
 #' ...

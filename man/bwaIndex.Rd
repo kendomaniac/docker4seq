@@ -51,7 +51,7 @@ This function executes the docker container bwa1 where BWA is installed. Optiona
     bwaIndex(group="docker", genome.folder="/data/genomes", mb.version="22", mb.species="hsa", mode="miRNA")
 
     #running bwa index for ncRNA analysis
-    bwaIndex(group="docker", genome.folder="/data/genomes/hg19_bwa", rc.version="9.0", rc.species="Homo sapiens", length=80, mode="ncRNA")
+    bwaIndex(group="docker", genome.folder="/data/genomes/hg19_bwa", rc.version="9", rc.species="Homo sapiens", length=80, mode="ncRNA")
 }
 }
 \author{

@@ -6,7 +6,8 @@
 \usage{
 sncRNA(group = c("sudo", "docker"), fastq.folder = getwd(),
   scratch.folder, mode, reference, threads = 1, mb.version = NULL,
-  mb.species = NULL)
+  mb.species = NULL, adapter.type = c("ILLUMINA", "NEB"),
+  trimmed.fastq = FALSE)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -24,6 +25,10 @@ sncRNA(group = c("sudo", "docker"), fastq.folder = getwd(),
 \item{mb.version, }{a character string indicating the required version of miRBase database. Visit ftp://mirbase.org/pub/mirbase/ to select the proper version id.}
 
 \item{mb.species, }{a character string indicating the three-letter prefix of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to obtain the proper species prefix.}
+
+\item{adapter.type, }{a character string. Two options: \code{"ILLUMINA"} or \code{"NEB"}, depending to which miRNA library prep was used: ILLUMINA or NEB}
+
+\item{trimmed.fastq, }{a boolean logical variable indicating if trimmed fastq are saved. Default is FALSE}
 }
 \value{
 Read count table of RNA-Seq reads aligned miRNA or non-miRNA annotations
