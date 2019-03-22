@@ -107,7 +107,7 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
             "--cidfile", paste0(fastq.folder, "/dockerID"),
             "-v", paste0(scratch.folder, ":/data/scratch"),
             "-v", paste0(ref.folder, ":/data/ref"),
-            "-v", paste0(fastq.folder, "/data/input"),
+            "-v", paste0(fastq.folder, ":/data/input"),
             "-d docker.io/gferrero/sncrna /bin/bash /bin/sncRNA.sh",
             mode, threads, ref.id, mb.version, mb.species)
     } else {
@@ -115,7 +115,7 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
             "--cidfile", paste0(fastq.folder, "/dockerID"),
             "-v", paste0(scratch.folder, ":/data/scratch"),
             "-v", paste0(ref.folder, ":/data/ref"),
-            "-v", paste0(fastq.folder, "/data/input"),
+            "-v", paste0(fastq.folder, ":/data/input"),
             "-d docker.io/gferrero/sncrna /bin/bash /bin/sncRNA.sh",
             mode, threads, ref.id)
     }
