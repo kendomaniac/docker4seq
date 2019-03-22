@@ -41,7 +41,7 @@ cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder, a
     params <- paste(
         "--cidfile", paste0(data.folder, "/dockerID"),
         "-v", paste0(data.folder, ":/data"),
-        "-d docker.io/cursecatcher/cutadapt /bin/bash /bin/cutadapt.sh", adapter.type, threads
+        "-d docker.io/cursecatcher/cutadapt /bin/bash /bin/cutadapt.sh", adapter.type, nthreads
     )
 
     resultRun <- runDocker(group=group, params=params)
