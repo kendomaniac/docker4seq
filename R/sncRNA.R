@@ -114,14 +114,14 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
     cat("\nCalling cutadapt to remove adapters\n")
     cutadapt(group=group, scratch.folder=scratch.folder, data.folder=fastq.folder, adapter.type=adapter.type, nthreads=threads)
     #fastq.folder <- paste0(fastq.folder, "/trimmed")
-    trimmed.fastq <- paste0(fastq.folder, "/trimmed")
+    trimmed.dir <- file.path(fastq.folder, "trimmed")
 
     if (mode == "miRNA") {
         params <- paste(
             "--cidfile", paste0(fastq.folder, "/dockerID"),
             "-v", paste0(scratch.folder, ":/data/scratch"),
             "-v", paste0(ref.folder, ":/data/ref"),
-            "-v", paste0(trimmed.fastq, ":/data/input"),
+            "-v", paste0(trimmed.dir, ":/data/input"),
             "-d docker.io/gferrero/sncrna /bin/bash /bin/sncRNA.sh",
             mode, threads, ref.id, mb.version, mb.species)
     } else {
@@ -129,17 +129,25 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
             "--cidfile", paste0(fastq.folder, "/dockerID"),
             "-v", paste0(scratch.folder, ":/data/scratch"),
             "-v", paste0(ref.folder, ":/data/ref"),
-            "-v", paste0(trimmed.fastq, ":/data/input"),
+            "-v", paste0(trimmed.dir, ":/data/input"),
             "-d docker.io/gferrero/sncrna /bin/bash /bin/sncRNA.sh",
             mode, threads, ref.id)
     }
 
     resultRun <- runDocker(group=group, params=params)
 
+    #moving output files outside 'trimmed' directory
+    for (myfile in list.files(path=trimmed.dir)) {
+        if (grepl(pattern="\\.trimmed\\.fastq\\.gz$", x=myfile, perl=TRUE) == FALSE) {
+            old.name <- file.path(trimmed.dir, myfile)
+            new.name <- file.path(fastq.folder, myfile)
+            file.rename(old.name, new.name)
+        }
+    }
 
     if (trimmed.fastq == FALSE) {
         cat("\nDeleting trimmed fastq files.\n")
-
+        unlink(trimmed.dir, recursive=TRUE, force=TRUE)
     }
 
   ##############################################################
