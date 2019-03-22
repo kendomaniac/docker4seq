@@ -99,15 +99,16 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 
     ######## calling docker to trim data : it creates a subdirectory called "trimmed" in fastq dir
     cat("\nCalling cutadapt to remove adapters\n")
-    cutadapt(group=group, scratch.folder=scratch.folder, data.folder=data.folder, adapter.type=adapter.type, nthreads=threads)
-    fastq.folder <- paste0(fastq.folder, "/trimmed")
+    cutadapt(group=group, scratch.folder=scratch.folder, data.folder=fastq.folder, adapter.type=adapter.type, nthreads=threads)
+    #fastq.folder <- paste0(fastq.folder, "/trimmed")
+    trimmed.fastq <- paste0(fastq.folder, "/trimmed")
 
     if (mode == "miRNA") {
         params <- paste(
             "--cidfile", paste0(fastq.folder, "/dockerID"),
             "-v", paste0(scratch.folder, ":/data/scratch"),
             "-v", paste0(ref.folder, ":/data/ref"),
-            "-v", paste0(fastq.folder, ":/data/input"),
+            "-v", paste0(trimmed.fastq, ":/data/input"),
             "-d docker.io/gferrero/sncrna /bin/bash /bin/sncRNA.sh",
             mode, threads, ref.id, mb.version, mb.species)
     } else {
@@ -115,12 +116,18 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
             "--cidfile", paste0(fastq.folder, "/dockerID"),
             "-v", paste0(scratch.folder, ":/data/scratch"),
             "-v", paste0(ref.folder, ":/data/ref"),
-            "-v", paste0(fastq.folder, ":/data/input"),
+            "-v", paste0(trimmed.fastq, ":/data/input"),
             "-d docker.io/gferrero/sncrna /bin/bash /bin/sncRNA.sh",
             mode, threads, ref.id)
     }
 
     resultRun <- runDocker(group=group, params=params)
+
+
+    if (trimmed.fastq == FALSE) {
+        cat("\nDeleting trimmed fastq files.\n")
+
+    }
 
   ##############################################################
 
