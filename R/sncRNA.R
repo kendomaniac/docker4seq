@@ -48,6 +48,12 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
         system("echo 2 > ExitStatusFile 2>&1")
         return(2)
     }
+    if (length(mode) != 1) {
+        cat("\nIt seems that the selected mode is not valid.")
+        cat("\nAvailable modes are \"miRNA\" or \"ncRNA\".\n")
+        system("echo 3 > ExitStatusFile 2>&1")
+        return(3)
+    }
 
     setwd(fastq.folder)
 
@@ -84,7 +90,6 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
     ref.folder <- dirname(reference)
     ref.id <- basename(reference)
 
-
     if (mode %in% c("miRNA", "ncRNA") == FALSE) {
         cat(paste("\nInvalid mode '", mode, "'"))
         system("echo 3 > ExitStatusFile 2>&1")
@@ -113,26 +118,21 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
     ######## calling docker to trim data : it creates a subdirectory called "trimmed" in fastq dir
     cat("\nCalling cutadapt to remove adapters\n")
     cutadapt(group=group, scratch.folder=scratch.folder, data.folder=fastq.folder, adapter.type=adapter.type, nthreads=threads)
-    #fastq.folder <- paste0(fastq.folder, "/trimmed")
     trimmed.dir <- file.path(fastq.folder, "trimmed")
 
-    if (mode == "miRNA") {
-        params <- paste(
-            "--cidfile", paste0(fastq.folder, "/dockerID"),
-            "-v", paste0(scratch.folder, ":/data/scratch"),
-            "-v", paste0(ref.folder, ":/data/ref"),
-            "-v", paste0(trimmed.dir, ":/data/input"),
-            "-d docker.io/gferrero/sncrna /bin/bash /bin/sncRNA.sh",
-            mode, threads, ref.id, mb.version, mb.species)
-    } else {
-        params <- paste(
-            "--cidfile", paste0(fastq.folder, "/dockerID"),
-            "-v", paste0(scratch.folder, ":/data/scratch"),
-            "-v", paste0(ref.folder, ":/data/ref"),
-            "-v", paste0(trimmed.dir, ":/data/input"),
-            "-d docker.io/gferrero/sncrna /bin/bash /bin/sncRNA.sh",
-            mode, threads, ref.id)
-    }
+    arguments <- ifelse(mode == "miRNA",
+        paste(mode, threads, ref.id, mb.version, mb.species),   #arguments for miRNA quantification
+        paste(mode, threads, ref.id)                #arguments for ncRNA quantification
+    )
+    #calling docker for quantification
+    params <- paste(
+        "--cidfile", paste0(fastq.folder, "/dockerID"),
+        "-v", paste0(scratch.folder, ":/data/scratch"),
+        "-v", paste0(ref.folder, ":/data/ref"),
+        "-v", paste0(trimmed.dir, ":/data/input"),
+        "-d docker.io/gferrero/sncrna /bin/bash /bin/sncRNA.sh",
+        arguments
+    )
 
     resultRun <- runDocker(group=group, params=params)
 

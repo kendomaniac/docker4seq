@@ -33,6 +33,8 @@
 #' @export
 bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, mode=c("General","GATK","miRNA","ncRNA"), mb.version=NULL, mb.species=NULL, rc.version=NULL, rc.species=NULL, length=NULL){
 
+    genome.folder <- normalizePath(genome.folder)
+
   #########check genome folder exist###########
   if (!file.exists(genome.folder)){
     cat(paste("\n",genome.folder, "folder does not exist, It will be created \n"))
@@ -93,7 +95,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 	if(mode=="miRNA"){
 
 	  mb_ok_ver = c("1.0","10.0","10.1","1.1","11.0","1.2","12.0","1.3","13.0","14","1.4","15","1.5","16","17","18","19","20","2.0","21","2.1","22","2.2","3.0","3.1","4.0","5.0","5.1","6.0","7.0","7.1","8.0","8.1","8.2","9.0","9.1","9.2")
-    
+
     if(mb.version %in% mb_ok_ver == FALSE){
       cat("\nThe miRBase version is not correct\n")
       system("echo 2 > ExitStatusFile 2>&1")
@@ -115,9 +117,9 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 	if(mode=="ncRNA"){
 
 	  rc_ok_ver = c("1.0","2.0","3.0","4.0","5.0","6.0","7.0","8.0","9.0", "10.0", "11.0")
-          
+
 	  rc.version = paste0(rc.version, ".0")
-		
+
 	  if(rc.version %in% rc_ok_ver == FALSE){
 	    cat("\nThe RNA Central version is not correct\n")
 	    system("echo 2 > ExitStatusFile 2>&1")
