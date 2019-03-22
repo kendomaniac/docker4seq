@@ -39,8 +39,8 @@ cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder, a
     setwd(data.folder)
 
     params <- paste(
-        "--cidfile", paste0(fastq.folder, "/dockerID"),
-        "-v", paste0(fastq.folder, ":/data"),
+        "--cidfile", paste0(data.folder, "/dockerID"),
+        "-v", paste0(data.folder, ":/data"),
         "-d docker.io/cursecatcher/cutadapt /bin/bash /bin/cutadapt.sh", adapter.type, threads
     )
 
