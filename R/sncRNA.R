@@ -38,7 +38,20 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
     fastq.folder <- normalizePath(fastq.folder)
     reference <- normalizePath(reference)
 
+    if (!file.exists(fastq.folder)){
+        cat(paste("\nIt seems that the ",fastq.folder, "folder does not exist\n"))
+        system("echo 2 > ExitStatusFile 2>&1")
+        return(2)
+    }
+    if (!file.exists(reference)){
+        cat(paste("\nIt seems that the ", reference, "folder does not exist\n"))
+        system("echo 2 > ExitStatusFile 2>&1")
+        return(2)
+    }
+
     setwd(fastq.folder)
+
+    fastqc(group="docker", data.folder=fastq.folder)
 
     #initialize status
     system("echo 0 > ExitStatusFile 2>&1")
