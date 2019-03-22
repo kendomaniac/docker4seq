@@ -1,0 +1,85 @@
+#' @title
+#' @description
+#'
+#' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
+#' @param data.folder, a character string indicating where fastq files are located
+#' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
+#' @param threads, a number indicating the number of cores to be used from the application
+#' @param adapter.type, a character string. Two options: \code{"ILLUMINA"} or \code{"NEB"}, depending to which miRNA library prep was used: ILLUMINA or NEB
+#' @author Nicola Licheri and Giulio Ferrero
+#
+#' @return
+#' @examples
+#'\dontrun{
+#' ...
+#' }
+#' @export
+
+
+cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder, adapter.type = c("ILLUMINA", "NEB"), nthreads = 1) {
+
+    #running time 1
+    ptm <- proc.time()
+
+    scratch.folder <- normalizePath(scratch.folder)
+    data.folder <- normalizePath(data.folder)
+
+    if (adapter.type %in% c("ILLUMINA", "NEB") == FALSE) {
+        cat(paste("\nInvalid adapter type '", mode, "'"))
+        system("echo 3 > ExitStatusFile 2>&1")
+        return(3)
+    }
+
+    if (!file.exists(data.folder)){
+        cat(paste("\nIt seems that the", data.folder, "folder does not exist\n"))
+        system("echo 2 > ExitStatusFile 2>&1")
+        return(2)
+    }
+
+    # storing the position of the home folder
+    home <- getwd()
+    setwd(data.folder)
+
+    params <- paste(
+        "--cidfile", paste0(fastq.folder, "/dockerID"),
+        "-v", paste0(fastq.folder, ":/data"),
+        "-d docker.io/cursecatcher/cutadapt /bin/bash /bin/cutadapt.sh", adapter.type, threads
+    )
+
+    resultRun <- runDocker(group=group, params=params)
+
+
+    #running time 2
+    ptm <- proc.time() - ptm
+    dir <- dir(data.folder)
+    dir <- dir[grep("run.info",dir)]
+    if(length(dir)>0) {
+      con <- file("run.info", "r")
+      tmp.run <- readLines(con)
+      close(con)
+      tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+      writeLines(tmp.run,"run.info")
+    }
+    else {
+      tmp.run <- NULL
+      tmp.run[1] <- paste("run time mins ",ptm[1]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+
+      writeLines(tmp.run,"run.info")
+    }
+
+    #saving log and removing docker container
+    container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
+    system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/", substr(container.id,1,12),".log", sep=""))
+    system(paste("docker rm ", container.id, sep=""))
+    # removing temporary files
+    cat("\n\nRemoving the temporary file ....\n")
+    system("rm -fR out.info")
+    system("rm -fR dockerID")
+    system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
+    setwd(home)
+
+}
