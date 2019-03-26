@@ -85,7 +85,7 @@ starChimeric <- function(group=c("sudo","docker"), fastq.folder=getwd(), scratch
         "-v", paste0(genome.folder, ":/genome"),
         "-v", paste0(scratch.folder, ":/scratch"),
         "-d docker.io/repbioinfo/star251.2019.02 bash /bin/star_chimeric_2.sh",
-        chimSegmentMin, chmJunctionOverhangMin, threads, samples[1], samples[2])
+        chimSegmentMin, chimJunctionOverhangMin, threads, samples[1], samples[2])
 
     resultRun <- runDocker(group=group, params=params)
 
