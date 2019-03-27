@@ -66,7 +66,7 @@ starchipCircle <- function(group=c("sudo","docker"), scratch.folder, genome.fold
     "-v", paste0(samples.folder, ":/samples"),
     "-v", paste0(genome.folder, ":/genome"),
     "-v", paste0(scratch.folder, ":/scratch"),
-    "-d docker.io/repbioinfo/star251.2019.02 bash /bin/starChipCircle.sh",
+    "-d docker.io/repbioinfo/star251.2019.02 bash /bin/start_starchipCircle.sh",
     reads.cutoff, min.subject.limit, threads, do.splice,
     cpm.cutoff, subjectCPM.cutoff, annotation
   )
