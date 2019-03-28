@@ -19,15 +19,15 @@
 #'     #downloading fastq files
 #'     starchipCircle(group="docker", genome.folder="/data/genomes/hg38star", scratch.folder="/data/scratch",
 #'                        samples.folder=getwd(), reads.cutoff=1, min.subject.limit=2, threads=8,
-#'                        do.splice = "True", cpm.cutoff=0, subjectCPM.cutoff=0, annotation="true")
+#'                        do.splice = TRUE, cpm.cutoff=0, subjectCPM.cutoff=0, annotation=TRUE)
 #' }
 #'
 #' @export
 
-starchipCircle <- function(group=c("sudo","docker"), scratch.folder, genome.folder, samples.folder,
-                           reads.cutoff, min.subject.limit, threads,
-                           do.splice = c("True", "False"),cpm.cutoff=0,
-                           subjectCPM.cutoff=0, annotation=c("true", "false")) {
+starchipCircle <- function(group=c("sudo","docker"), scratch.folder, genome.folder,
+                           samples.folder, reads.cutoff, min.subject.limit, threads,
+                           do.splice = c(TRUE, FALSE), cpm.cutoff=0,
+                           subjectCPM.cutoff=0, annotation=c(TRUE, FALSE)) {
 
   #running time 1
   ptm <- proc.time()
@@ -67,8 +67,10 @@ starchipCircle <- function(group=c("sudo","docker"), scratch.folder, genome.fold
     "-v", paste0(genome.folder, ":/genome"),
     "-v", paste0(scratch.folder, ":/scratch"),
     "-d docker.io/repbioinfo/star251.2019.02 /bin/bash /bin/start_starchipCircle.sh",
-    reads.cutoff, min.subject.limit, threads, do.splice,
-    cpm.cutoff, subjectCPM.cutoff, annotation
+    reads.cutoff, min.subject.limit, threads,
+    ifelse(do.splice, "True", "False"),
+    cpm.cutoff, subjectCPM.cutoff,
+    ifelse(annotation, "true", "false")
   )
   resultRun <- runDocker(group=group, params=params)
 
