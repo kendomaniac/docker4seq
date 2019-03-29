@@ -6,8 +6,8 @@
 \usage{
 starchipCircle(group = c("sudo", "docker"), scratch.folder,
   genome.folder, samples.folder, reads.cutoff, min.subject.limit, threads,
-  do.splice = c("True", "False"), cpm.cutoff = 0,
-  subjectCPM.cutoff = 0, annotation = c("true", "false"))
+  do.splice = c(TRUE, FALSE), cpm.cutoff = 0, subjectCPM.cutoff = 0,
+  annotation = c(TRUE, FALSE))
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
@@ -43,7 +43,7 @@ This function execute starchip on a set of folders containing the output of star
     #downloading fastq files
     starchipCircle(group="docker", genome.folder="/data/genomes/hg38star", scratch.folder="/data/scratch",
                        samples.folder=getwd(), reads.cutoff=1, min.subject.limit=2, threads=8,
-                       do.splice = "True", cpm.cutoff=0, subjectCPM.cutoff=0, annotation="true")
+                       do.splice = TRUE, cpm.cutoff=0, subjectCPM.cutoff=0, annotation=TRUE)
 }
 
 }
