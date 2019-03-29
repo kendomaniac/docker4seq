@@ -1,6 +1,6 @@
 #' @title generating a PCA from counts, FPKM and TPM tables from rnaseqCounts outuputs
 #' @description This function generates PCA plot from counts, FPKM and TPM tables from rnaseqCounts outuputs.
-#' @param experiment.table, a character string indicating the counts, FPKM or TPM table file name
+#' @param experiment.table, a character string indicating the counts, FPKM or TPM table file name and its path
 #' @param type, a character value indicating the content of the file: counts, FPKM or TPM
 #' @param covariatesInNames, a boolean value indicating if covariates are inserted after \_ in the filename
 #' @param samplesName, a boolean value indicating if in the plot samples names are plotted or not
@@ -17,7 +17,7 @@
 #'   unzip("test.analysis.zip")
 #'   setwd("test.analysis")
 #'   library(docker4seq)
-#'   pca(experiment.table="_log2FPKM.txt", type="FPKM",
+#'   pca(experiment.table="./_log2FPKM.txt", type="FPKM",
 #'       legend.position="topleft", covariatesInNames=FALSE, samplesName=TRUE,
 #'       principal.components=c(1,2), pdf = TRUE,
 #'       output.folder=getwd())
@@ -25,7 +25,7 @@
 #' }
 #' @export
 
-pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
+pca <- function(experiment.table="./_counts.txt", type=c("counts","FPKM","TPM"),
                 covariatesInNames=FALSE, samplesName=TRUE, principal.components=c(1,2),
                 legend.position=c("bottom", "bottomleft", "left", "topleft", "top", "topright", "right", "center"), pdf = TRUE, output.folder=getwd()){
 
