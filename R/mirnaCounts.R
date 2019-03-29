@@ -96,7 +96,7 @@ mirnaCounts <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.f
 	docker_fastq.folder=file.path("/data/scratch", tmp.folder)
 	cat("\nsetting as working dir the scratch folder and running mirna8 docker container\n")
 
-  params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/mirnaseq.2019.01 sh /bin/wrapperRun_local ", mirbase.id," ",docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep="")
+  params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch"," -d docker.io/repbioinfo/mirnaseq.2019.01:mirbase22.1 sh /bin/wrapperRun_local ", mirbase.id," ",docker_fastq.folder," ",download.status," ",adapter.type," ",trimmed.fastq, " ", fastq.folder, sep="")
   resultRun <- runDocker(group=group, params=params)
 
 	if(resultRun==0){
