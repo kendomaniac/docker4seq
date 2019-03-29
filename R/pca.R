@@ -32,11 +32,15 @@ pca <- function(experiment.table="_counts.txt", type=c("counts","FPKM","TPM"),
   #storing the position of the home folder
   home <- getwd()
   #setting rsem output folder as working dir
+
+
+  tmp <- read.table(experiment.table, sep="\t", stringsAsFactors = TRUE, header=T, check.names = FALSE, row.names=1)
+  
   setwd(output.folder)
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-
-  tmp <- read.table(experiment.table, sep="\t", stringsAsFactors = TRUE, header=T, check.names = FALSE, row.names=1)
+  
+  
   if(covariatesInNames){
     covar.tmp <- strsplit(names(tmp), '_')
     covar <- unlist(sapply(covar.tmp, function(x)x[2]))
