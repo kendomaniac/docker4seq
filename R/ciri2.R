@@ -114,7 +114,7 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
         paste("-v", paste0(annotation.file, ":/data/annotation.", annotation_extension)),
         ""
     ),
-    "-d docker.io/cursecatcher/docker4circ python3 /ciri2/docker4ciri.py ciri2",
+    "-d docker.io/qbioturin/docker4circ python3 /ciri2/docker4ciri.py ciri2",
     "--strigency", stringency,
     "-S", format(max.span, scientific=FALSE),
     "-T", threads,
