@@ -158,9 +158,9 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 	close(con)
 
 
-	tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
-	tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+	tmp.run[length(tmp.run)+1] <- paste("BWA index user run time mins ",ptm[1]/60, sep="")
+	tmp.run[length(tmp.run)+1] <- paste("BWA index system run time mins ",ptm[2]/60, sep="")
+	tmp.run[length(tmp.run)+1] <- paste("BWA index elapsed run time mins ",ptm[3]/60, sep="")
 	writeLines(tmp.run, paste(genome.folder,"run.info", sep="/"))
   #running time 2
 
