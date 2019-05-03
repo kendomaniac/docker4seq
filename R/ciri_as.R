@@ -105,6 +105,11 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
     ifelse(!is.na(annotation.file),"--anno", "")
   )
   resultRun <- runDocker(group = group, params = params)
+  
+    #waiting for the end of the container work
+  if(resultRun==0){
+    cat("\nCIRI AS analysis is finished\n")
+  }
 
   # running time 2
   ptm <- proc.time() - ptm
@@ -114,22 +119,22 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
     con <- file("run.info", "r")
     tmp.run <- readLines(con)
     close(con)
-    tmp.run[length(tmp.run) + 1] <- paste("user run time mins ", ptm[1] / 60, sep = "")
-    tmp.run[length(tmp.run) + 1] <- paste("system run time mins ", ptm[2] / 60, sep = "")
-    tmp.run[length(tmp.run) + 1] <- paste("elapsed run time mins ", ptm[3] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("CIRI AS user run time mins ", ptm[1] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("CIRI AS system run time mins ", ptm[2] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("CIRI AS elapsed run time mins ", ptm[3] / 60, sep = "")
     writeLines(tmp.run, "run.info")
   } else {
     tmp.run <- NULL
     tmp.run[1] <- paste("run time mins ", ptm[1] / 60, sep = "")
-    tmp.run[length(tmp.run) + 1] <- paste("system run time mins ", ptm[2] / 60, sep = "")
-    tmp.run[length(tmp.run) + 1] <- paste("elapsed run time mins ", ptm[3] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("CIRI AS system run time mins ", ptm[2] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("CIRI AS elapsed run time mins ", ptm[3] / 60, sep = "")
 
     writeLines(tmp.run, "run.info")
   }
 
   # saving log and removing docker container
   container.id <- readLines(paste0(data.folder, "/dockerID"), warn = FALSE)
-  system(paste("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/", substr(container.id, 1, 12), ".log", sep = ""))
+  system(paste("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/ciri_as_", substr(container.id, 1, 12), ".log", sep = ""))
   system(paste("docker rm", container.id))
   # removing temporary files
   cat("\n\nRemoving the temporary file ....\n")

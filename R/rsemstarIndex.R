@@ -63,12 +63,11 @@ cat("\nsetting as working dir the genome folder and running bwa docker container
 	params <- paste(
         "--cidfile", paste0(genome.folder,"/dockerID"),
         "-v", paste0(genome.folder,":/data/scratch"),
-        "-d docker.io/repbioinfo/rsemstar.2019.02 bash /bin/rsemstar.index.sh",
-            genome.folder, ensembl.urlgenome, ensembl.urlgtf, threads)
+        "-d docker.io/repbioinfo/rsemstar.2019.02 bash /bin/rsemstar.index.sh", genome.folder, ensembl.urlgenome, ensembl.urlgtf, threads)
 	resultRun <- runDocker(group=group, params=params)
 
   if(resultRun==0){
-    cat("\nRSEMSTAR index generation is finished\n")
+    cat("\nRSEM STAR index generation is finished\n")
   }
 
   #out <- "xxxx"
@@ -92,9 +91,9 @@ cat("\nsetting as working dir the genome folder and running bwa docker container
   close(con)
 
   tmp.run <- NULL
-  tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
-  tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-  tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+  tmp.run[length(tmp.run)+1] <- paste("rsemstarIndex user run time mins ",ptm[1]/60, sep="")
+  tmp.run[length(tmp.run)+1] <- paste("rsemstarIndex system run time mins ",ptm[2]/60, sep="")
+  tmp.run[length(tmp.run)+1] <- paste("rsemstarIndex elapsed run time mins ",ptm[3]/60, sep="")
   writeLines(tmp.run, paste(genome.folder,"run.info", sep="/"))
 
   #saving log and removing docker container

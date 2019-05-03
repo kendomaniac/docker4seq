@@ -32,9 +32,7 @@
 #' }
 #' @export
 
-wrapperCiri <- function(group = c("sudo", "docker"), scratch.folder, data.folder,
-                        genome.file, seq.type = c("se", "pe"), sample.id, threads = 1,
-                        annotation.file = "", max.span = 200000, stringency.value = c("high", "low", "zero"), quality.threshold = 10) {
+wrapperCiri <- function(group = c("sudo", "docker"), scratch.folder, data.folder, genome.file, seq.type = c("se", "pe"), sample.id, threads = 1, annotation.file = "", max.span = 200000, stringency.value = c("high", "low", "zero"), quality.threshold = 10) {
 
   # storing the position of the home folder
   home <- getwd()
@@ -47,7 +45,7 @@ wrapperCiri <- function(group = c("sudo", "docker"), scratch.folder, data.folder
   # Alignment with BWA
   genome.folder <- dirname(genome.file)
   
-  cat("\nrunning bwa\n")
+  cat("\nrunning BWA\n")
   bwa(
     group = group, scratch.folder = scratch.folder, fastq.folder = data.folder,
     genome.folder = genome.folder, seq.type = seq.type, threads = threads, sample.id = sample.id, circRNA = TRUE
@@ -55,9 +53,9 @@ wrapperCiri <- function(group = c("sudo", "docker"), scratch.folder, data.folder
 
 
   # circRNA prediction with Ciri2
-  cat("\nrunning ciri2\n")
+  cat("\nrunning CIRI2\n")
   ciri2(
-    group = group, scratch.folder = scratch.folder, sam.file = paste(data.folder, "aligned_reads.bam", sep="/"),
+    group = group, scratch.folder = scratch.folder, sam.file = paste(data.folder, "aligned_reads.sam", sep="/"),
     genome.file = genome.file, annotation.file = annotation.file,
     max.span = max.span, stringency.value = stringency.value,
     quality.threshold = quality.threshold, threads = threads

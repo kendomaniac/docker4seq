@@ -19,7 +19,7 @@ ciri2MergePredictions(group = c("sudo", "docker"), scratch.folder,
 
 \item{covariates.list, }{a character vector indicating the classes of the samples}
 
-\item{covariate.order, }{a character vector indicating ...}
+\item{covariate.order, }{a character vector indicating the order of covariates in the output files}
 
 \item{min_reads, }{the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)}
 

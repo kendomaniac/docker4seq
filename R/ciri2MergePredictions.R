@@ -6,7 +6,7 @@
 #' @param data.folder, a character string indicating the data folder where the CIRI 2 output files are located
 #' @param samples.list, a character vector indicating the identifiers of the samples
 #' @param covariates.list, a character vector indicating the classes of the samples
-#' @param covariate.order, a character vector indicating ...
+#' @param covariate.order, a character vector indicating the order of covariates in the output files
 #' @param min_reads, the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)
 #' @param min_reps, the minimum number of replicates associated with at least min_reads supporting a circRNA (default = 0)
 #' @param min_avg, the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)
@@ -79,6 +79,10 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, d
   )
   resultRun <- runDocker(group = group, params = params)
 
+  if(resultRun==0){
+    cat("\nCIRI 2 outputs merge is finished\n")
+  }
+  
   # running time 2
   ptm <- proc.time() - ptm
   dir <- dir(data.folder)
@@ -87,22 +91,22 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, d
     con <- file("run.info", "r")
     tmp.run <- readLines(con)
     close(con)
-    tmp.run[length(tmp.run) + 1] <- paste("user run time mins ", ptm[1] / 60, sep = "")
-    tmp.run[length(tmp.run) + 1] <- paste("system run time mins ", ptm[2] / 60, sep = "")
-    tmp.run[length(tmp.run) + 1] <- paste("elapsed run time mins ", ptm[3] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("CIRI2 merge user run time mins ", ptm[1] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("CIRI2 merge system run time mins ", ptm[2] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("CIRI2 merge elapsed run time mins ", ptm[3] / 60, sep = "")
     writeLines(tmp.run, "run.info")
   } else {
     tmp.run <- NULL
     tmp.run[1] <- paste("run time mins ", ptm[1] / 60, sep = "")
-    tmp.run[length(tmp.run) + 1] <- paste("system run time mins ", ptm[2] / 60, sep = "")
-    tmp.run[length(tmp.run) + 1] <- paste("elapsed run time mins ", ptm[3] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("CIRI2 merge system run time mins ", ptm[2] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("CIRI2 merge elapsed run time mins ", ptm[3] / 60, sep = "")
 
     writeLines(tmp.run, "run.info")
   }
 
   # saving log and removing docker container
   container.id <- readLines(paste(data.folder, "/dockerID", sep = ""), warn = FALSE)
-  system(paste("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/", substr(container.id, 1, 12), ".log", sep = ""))
+  system(paste("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/ciri2MergePredictions_", substr(container.id, 1, 12), ".log", sep = ""))
   system(paste("docker rm ", container.id, sep = ""))
   # removing temporary files
   cat("\n\nRemoving the temporary file ....\n")

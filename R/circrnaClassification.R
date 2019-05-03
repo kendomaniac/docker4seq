@@ -101,7 +101,12 @@ circrnaClassification <- function(group=c("sudo","docker"), scratch.folder, circ
   )
 
   resultRun <- runDocker(group=group, params=params)
-
+  
+  #waiting for the end of the container work
+  if(resultRun==0){
+    cat("\nThe circRNAs classification analysis is finished\n")
+  }
+  
   #running time 2
   ptm <- proc.time() - ptm
   dir <- dir(data.folder)
@@ -110,23 +115,23 @@ circrnaClassification <- function(group=c("sudo","docker"), scratch.folder, circ
     con <- file("run.info", "r")
     tmp.run <- readLines(con)
     close(con)
-    tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("circRNAs classification user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("circRNAs classification system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("circRNAs classification elapsed run time mins ",ptm[3]/60, sep="")
     writeLines(tmp.run,"run.info")
   }
   else {
     tmp.run <- NULL
     tmp.run[1] <- paste("run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("circRNAs classification system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("circRNAs classification elapsed run time mins ",ptm[3]/60, sep="")
 
     writeLines(tmp.run,"run.info")
   }
 
   #saving log and removing docker container
   container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/", substr(container.id,1,12),".log", sep=""))
+  system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/circrnaClassification_", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
   # removing temporary files
   cat("\n\nRemoving the temporary file ....\n")

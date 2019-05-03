@@ -135,6 +135,10 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
     )
 
     resultRun <- runDocker(group=group, params=params)
+    
+    if(resultRun==0){
+      cat("\nThe sncRNAs analysis is finished\n")
+    }
 
     #moving output files outside 'trimmed' directory
     for (myfile in list.files(path=trimmed.dir)) {
@@ -160,15 +164,15 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
     con <- file("run.info", "r")
     tmp.run <- readLines(con)
     close(con)
-    tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("sncRNA user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("sncRNA system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("sncRNA elapsed run time mins ",ptm[3]/60, sep="")
     writeLines(tmp.run,"run.info")
   }else{
     tmp.run <- NULL
     tmp.run[1] <- paste("run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("sncRNA system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("sncRNA elapsed run time mins ",ptm[3]/60, sep="")
 
     writeLines(tmp.run,"run.info")
   }
@@ -179,7 +183,7 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
   system(paste("docker rm ", container.id, sep=""))
 
   #removing temporary folder
-  cat("\n\nRemoving the bwa temporary file ....\n")
+  cat("\n\nRemoving the temporary files ....\n")
 
   system(paste("rm  -f ",fastq.folder,"/dockerID", sep=""))
   system(paste("rm  -f ",fastq.folder,"/tempFolderID", sep=""))

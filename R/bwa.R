@@ -121,6 +121,7 @@ if(circRNA == TRUE){
 
     if(resultRun==0){
       system(paste("cp ", docker_fastq.folder, "/* ", fastq.folder, sep=""))
+      cat("\nBWA analysis is finished\n")    
     }
     #running time 2
     ptm <- proc.time() - ptm
@@ -130,15 +131,15 @@ if(circRNA == TRUE){
       con <- file("run.info", "r")
       tmp.run <- readLines(con)
       close(con)
-      tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
-      tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-      tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("BWA user run time mins ",ptm[1]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("BWA system run time mins ",ptm[2]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("BWA elapsed run time mins ",ptm[3]/60, sep="")
       writeLines(tmp.run,"run.info")
     }else{
       tmp.run <- NULL
       tmp.run[1] <- paste("run time mins ",ptm[1]/60, sep="")
-      tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-      tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("BWA system run time mins ",ptm[2]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("BWA elapsed run time mins ",ptm[3]/60, sep="")
 
       writeLines(tmp.run,"run.info")
     }

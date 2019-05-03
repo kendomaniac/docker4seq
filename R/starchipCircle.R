@@ -3,13 +3,13 @@
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for STAR is located.
 #' @param scratch.folder,  a character string indicating the scratch folder where docker container will be mounted
-#' @param reads.cutoff, Integer. Minimum number of reads crossing the circular RNA backsplice required.
-#' @param min.subject.limit, Integer. Minimum number of individuals with readsCutoff reads required to carry forward a cRNA for analysis
+#' @param reads.cutoff, Integer. Minimum number of reads crossing the circRNA backsplice required.
+#' @param min.subject.limit, Integer. Minimum number of individuals with readsCutoff reads required to carry forward a circRNA for analysis
 #' @param threads, Integer. Number of threads to use
-#' @param do.splice, true false. The splices within the cRNA be detected and reported. Linear splices are searched within each cRNA in each individual. Any linear splice with >= 60\% of the read count of the cRNA is considered a splice within the cRNA. Two files are then created, .consensus with most common splice pattern, and .allvariants with all reported splice patterns.
-#' @param cpm.cutoff, Float. Reads counts are loaded into R and log2(CountsPerMillion) is calculated using the limma package. With cpmCutoff > 0, cRNA with log2(CPM) below this value will be filtered from this analysis
-#' @param subjectCPM.cutoff, Integer. See above. This value is the lower limit for number of individuals required to have the cRNA expressed at a value higher than cpmCutoff.
-#' @param annotation, true/false. cRNA are provided with gene annotations
+#' @param do.splice, true false. The splices within the circRNA be detected and reported. Linear splices are searched within each circRNA in each individual. Any linear splice with >= 60\% of the read count of the cRNA is considered a splice within the circRNA. Two files are then created, .consensus with most common splice pattern, and .allvariants with all reported splice patterns.
+#' @param cpm.cutoff, Float. Reads counts are loaded into R and log2(CountsPerMillion) is calculated using the limma package. With cpmCutoff > 0, circRNAs with log2(CPM) below this value will be filtered from this analysis
+#' @param subjectCPM.cutoff, Integer. See above. This value is the lower limit for number of individuals required to have the circRNAs expressed at a value higher than cpmCutoff.
+#' @param annotation, true/false. circRNAs are provided with gene annotations
 #' @param samples.folder, the folder where are located all the folders of the samples processed with starChimeric
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 #'
@@ -75,7 +75,7 @@ starchipCircle <- function(group=c("sudo","docker"), scratch.folder, genome.fold
   resultRun <- runDocker(group=group, params=params)
 
   if(resultRun == 0) {
-    cat("\nstarchipCircle runs are finished\n")
+    cat("\nThe STARChip analysis is finished\n")
   }
 
   #running time 2
@@ -86,22 +86,22 @@ starchipCircle <- function(group=c("sudo","docker"), scratch.folder, genome.fold
     con <- file("run.info", "r")
     tmp.run <- readLines(con)
     close(con)
-    tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("STARChip user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("STARChip system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("STARChip elapsed run time mins ",ptm[3]/60, sep="")
     writeLines(tmp.run,"run.info")
   } else {
     tmp.run <- NULL
     tmp.run[1] <- paste("run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("STARChip system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("STARChip elapsed run time mins ",ptm[3]/60, sep="")
 
     writeLines(tmp.run,"run.info")
   }
 
   #saving log and removing docker container
   container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/", substr(container.id,1,12),".log", sep=""))
+  system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/starchipCircle_", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
   # removing temporary files
   cat("\n\nRemoving the temporary file ....\n")
