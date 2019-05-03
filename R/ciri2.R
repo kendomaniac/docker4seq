@@ -128,7 +128,7 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
   
   #waiting for the end of the container work
   if(resultRun==0){
-    cat("\CIRI2 analysis is finished\n")
+    cat("\nCIRI2 analysis is finished\n")
   }
 
   # running time 2

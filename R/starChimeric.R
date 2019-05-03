@@ -90,7 +90,7 @@ starChimeric <- function(group=c("sudo","docker"), fastq.folder=getwd(), scratch
     resultRun <- runDocker(group=group, params=params)
 
     if(resultRun == 0) {
-      cat("\nStar to detect chimeric transcripts is finished\n")
+      cat("\nSTAR to detect chimeric transcripts is finished\n")
     }
 
     #running time 2
@@ -101,16 +101,16 @@ starChimeric <- function(group=c("sudo","docker"), fastq.folder=getwd(), scratch
       con <- file("run.info", "r")
       tmp.run <- readLines(con)
       close(con)
-      tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
-      tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-      tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("STAR chimeric user run time mins ",ptm[1]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("STAR chimeric system run time mins ",ptm[2]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("STAR chimeric elapsed run time mins ",ptm[3]/60, sep="")
       writeLines(tmp.run,"run.info")
     }
     else {
       tmp.run <- NULL
       tmp.run[1] <- paste("run time mins ",ptm[1]/60, sep="")
-      tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-      tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("STAR chimeric system run time mins ",ptm[2]/60, sep="")
+      tmp.run[length(tmp.run)+1] <- paste("STAR chimeric elapsed run time mins ",ptm[3]/60, sep="")
 
       writeLines(tmp.run,"run.info")
     }

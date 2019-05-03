@@ -18,19 +18,19 @@ starchipCircle(group = c("sudo", "docker"), scratch.folder,
 
 \item{samples.folder, }{the folder where are located all the folders of the samples processed with starChimeric}
 
-\item{reads.cutoff, }{Integer. Minimum number of reads crossing the circular RNA backsplice required.}
+\item{reads.cutoff, }{Integer. Minimum number of reads crossing the circRNA backsplice required.}
 
-\item{min.subject.limit, }{Integer. Minimum number of individuals with readsCutoff reads required to carry forward a cRNA for analysis}
+\item{min.subject.limit, }{Integer. Minimum number of individuals with readsCutoff reads required to carry forward a circRNA for analysis}
 
 \item{threads, }{Integer. Number of threads to use}
 
-\item{do.splice, }{true false. The splices within the cRNA be detected and reported. Linear splices are searched within each cRNA in each individual. Any linear splice with >= 60\% of the read count of the cRNA is considered a splice within the cRNA. Two files are then created, .consensus with most common splice pattern, and .allvariants with all reported splice patterns.}
+\item{do.splice, }{true false. The splices within the circRNA be detected and reported. Linear splices are searched within each circRNA in each individual. Any linear splice with >= 60\% of the read count of the cRNA is considered a splice within the circRNA. Two files are then created, .consensus with most common splice pattern, and .allvariants with all reported splice patterns.}
 
-\item{cpm.cutoff, }{Float. Reads counts are loaded into R and log2(CountsPerMillion) is calculated using the limma package. With cpmCutoff > 0, cRNA with log2(CPM) below this value will be filtered from this analysis}
+\item{cpm.cutoff, }{Float. Reads counts are loaded into R and log2(CountsPerMillion) is calculated using the limma package. With cpmCutoff > 0, circRNAs with log2(CPM) below this value will be filtered from this analysis}
 
-\item{subjectCPM.cutoff, }{Integer. See above. This value is the lower limit for number of individuals required to have the cRNA expressed at a value higher than cpmCutoff.}
+\item{subjectCPM.cutoff, }{Integer. See above. This value is the lower limit for number of individuals required to have the circRNAs expressed at a value higher than cpmCutoff.}
 
-\item{annotation, }{true/false. cRNA are provided with gene annotations}
+\item{annotation, }{true/false. circRNAs are provided with gene annotations}
 }
 \value{
 1. Count matrices : raw cRNA backsplice counts: circRNA.cutoff[readthreshold]reads.[subjectthreshold]ind.countmatrix log2CPM of above: norm_log2_counts_circRNA.[readthreshold]reads.[subjectthreshold]ind.0cpm_0samples.txt Maximum Linear Splices at Circular Loci: rawdata/linear.[readthreshold]reads.[subjectthreshold]ind.sjmax 2. Info about each circRNA:  Consensus Information about Internal Splicing: Circs[reads].[subjects].spliced.consensus Complete Gene Annotation: circRNA.[readthreshold]reads.[subjectthreshold]ind.annotated Consise Gene Annotation + Splice Type:  circRNA.[readthreshold]reads.[subjectthreshold]ind.genes 3. Images: PCA plots: circRNA.[readthreshold]reads.[subjectthreshold]ind.0cpm_0samples_variance_PCA.pdf Heatmap: circRNA.[readthreshold]reads.[subjectthreshold]ind.heatmap.pdf

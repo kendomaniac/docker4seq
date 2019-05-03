@@ -108,7 +108,7 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
   
     #waiting for the end of the container work
   if(resultRun==0){
-    cat("\CIRI AS analysis is finished\n")
+    cat("\nCIRI AS analysis is finished\n")
   }
 
   # running time 2

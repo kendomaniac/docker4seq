@@ -150,7 +150,7 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	}
 
 	if(resultRun==0){
-	  cat("\nrsemstar analysis is finished\n")
+	  cat("\nThe RSEM STAR analysis is finished\n")
 	}
 
 	#star logs
@@ -174,9 +174,9 @@ rsemstar <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.fold
 	con <- file(paste(fastq.folder,"run.info", sep="/"), "r")
 	tmp.run <- readLines(con)
 	close(con)
-	tmp.run[length(tmp.run)+1] <- paste("user run time mins ",ptm[1]/60, sep="")
-	tmp.run[length(tmp.run)+1] <- paste("system run time mins ",ptm[2]/60, sep="")
-	tmp.run[length(tmp.run)+1] <- paste("elapsed run time mins ",ptm[3]/60, sep="")
+	tmp.run[length(tmp.run)+1] <- paste("RSEM user run time mins ",ptm[1]/60, sep="")
+	tmp.run[length(tmp.run)+1] <- paste("RSEM system run time mins ",ptm[2]/60, sep="")
+	tmp.run[length(tmp.run)+1] <- paste("RSEM elapsed run time mins ",ptm[3]/60, sep="")
 	writeLines(tmp.run,paste(fastq.folder,"run.info", sep="/"))
 	#running time 2
 	if (save.bam) {

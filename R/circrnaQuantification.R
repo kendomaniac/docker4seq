@@ -91,6 +91,10 @@ circrnaQuantification <- function(group = c("sudo", "docker"), scratch.folder, r
   )
   resultRun <- runDocker(group = group, params = params)
 
+  #waiting for the end of the container work
+  if(resultRun==0){
+    cat("\nThe circRNAs quantification analysis is finished\n")
+  }
 
   # running time 2
   ptm <- proc.time() - ptm
@@ -100,23 +104,23 @@ circrnaQuantification <- function(group = c("sudo", "docker"), scratch.folder, r
     con <- file("run.info", "r")
     tmp.run <- readLines(con)
     close(con)
-    tmp.run[length(tmp.run) + 1] <- paste("user run time mins ", ptm[1] / 60, sep = "")
-    tmp.run[length(tmp.run) + 1] <- paste("system run time mins ", ptm[2] / 60, sep = "")
-    tmp.run[length(tmp.run) + 1] <- paste("elapsed run time mins ", ptm[3] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("circRNA quantification user run time mins ", ptm[1] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("circRNA quantification system run time mins ", ptm[2] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("circRNA quantification elapsed run time mins ", ptm[3] / 60, sep = "")
     writeLines(tmp.run, "run.info")
   }
   else {
     tmp.run <- NULL
     tmp.run[1] <- paste("run time mins ", ptm[1] / 60, sep = "")
-    tmp.run[length(tmp.run) + 1] <- paste("system run time mins ", ptm[2] / 60, sep = "")
-    tmp.run[length(tmp.run) + 1] <- paste("elapsed run time mins ", ptm[3] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("circRNA quantification system run time mins ", ptm[2] / 60, sep = "")
+    tmp.run[length(tmp.run) + 1] <- paste("circRNA quantification elapsed run time mins ", ptm[3] / 60, sep = "")
 
     writeLines(tmp.run, "run.info")
   }
 
   # saving log and removing docker container
   container.id <- readLines(paste(data.folder, "/dockerID", sep = ""), warn = FALSE)
-  system(paste("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/", substr(container.id, 1, 12), ".log", sep = ""))
+  system(paste("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/circrnaQuantification_", substr(container.id, 1, 12), ".log", sep = ""))
   system(paste("docker rm ", container.id, sep = ""))
   # removing temporary files
   cat("\n\nRemoving the temporary file ....\n")
