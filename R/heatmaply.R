@@ -15,7 +15,6 @@
 #'
 #' }
 #' @export
-
 heatmaply <- function(group=c("docker", "sudo"), scratch.folder, count.table, gene.list, output.folder,
                       separator=c("TAB", "COMMA", "SPACE"), status=c("raw", "log"),
                       lower.range=NA, upper.range=NA) {
