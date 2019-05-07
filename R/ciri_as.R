@@ -101,7 +101,7 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
         paste("-v", paste0(annotation.file, ":/data/annotation.", annotation_extension)),
         ""
     ),
-    "-d docker.io/cursecatcher/docker4circ python3 /ciri2/docker4ciri.py structure",
+    "-d docker.io/qbioturin/docker4circ python3 /ciri2/docker4ciri.py structure",
     ifelse(!is.na(annotation.file),"--anno", "")
   )
   resultRun <- runDocker(group = group, params = params)

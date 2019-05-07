@@ -69,7 +69,7 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, d
       "--cidfile", paste0(data.folder, "/dockerID"),
       "-v", paste0(scratch.folder, ":/scratch"),
       "-v", paste0(data.folder, ":/data"),
-      "-d docker.io/cursecatcher/docker4circ python3 /ciri2/docker4ciri.py merge",
+      "-d docker.io/qbioturin/docker4circ python3 /ciri2/docker4ciri.py merge",
       "--samples", paste(samples.list, collapse = " "),
       "--cov", paste(covariates.list, collapse = " "),
       "--order", paste(covariate.order, collapse = " "),

@@ -84,7 +84,7 @@ circrnaQuantification <- function(group = c("sudo", "docker"), scratch.folder, r
     "-v", paste0(data.folder, ":/data"),
     "-v", paste0(rnaseq.data, ":/data/rnaseq"),
     "-v", paste0(backsplicing_junctions.data, ":/data/bksj"),
-    "-d docker.io/cursecatcher/docker4circ Rscript /scripts/circhunter/circhunter.R",
+    "-d docker.io/qbioturin/docker4circ Rscript /scripts/circhunter/circhunter.R",
     "--readcount",
     "-of", # output_folder
     "-hc", paste(format(hc.params, scientific=FALSE), collapse=" ")
