@@ -18,7 +18,7 @@
 
 #'}
 #' @export
-heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0, lower.range=NULL, upper.range=NULL){
+heatmapBase <- function(group=c("sudo","docker"), scratch.folder, file, status=0, lower.range=-1, upper.range=1){
 
   b1=lower.range
   b2=upper.range
