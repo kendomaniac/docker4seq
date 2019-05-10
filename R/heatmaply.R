@@ -1,4 +1,4 @@
-#' @title Function to produce an interactive heatmap using plotly
+#' @title Function to produce an interactive heatmap using plot.ly
 #' @description This function generates an heatmap using a count table and a specific gene list
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
@@ -7,9 +7,11 @@
 #' @param output.folder, a character string indicating the path of the output folder
 #' @param separator, a character string indicating the separator character in the count table. Allowed characters are TAB ('\t'), COMMA (',') and SPACE (' ')
 #' @param status, a character string, 'raw' if the data are raw counts, 'log' otherwise
-#' @author Nicola Licheri
+#' @param lower.range, the lower range of signal in the heatmap
+#' @param upper.range, the upper range of signal in the heatmap
+#' @author Nicola Licheri, nicola [dot] licheri [at] unito [dot] it, University of Turin
 #'
-#' @return
+#' @return A html file containing the interactive heatmap produced using plot.ly
 #' @examples
 #'\dontrun{
 #'

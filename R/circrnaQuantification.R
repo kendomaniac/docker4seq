@@ -77,17 +77,21 @@ circrnaQuantification <- function(group = c("sudo", "docker"), scratch.folder, r
     return(3)
   }
 
+  #getting sample name
+  samplename.rna <- strsplit(basename(rnaseq.data), "\\.")[[1]][1]
+
   # executing the docker job
   params <- paste(
     "--cidfile", paste0(data.folder, "/dockerID"),
     "-v", paste0(scratch.folder, ":/scratch"),
-    "-v", paste0(data.folder, ":/data"),
+    "-v", paste0(data.folder, ":/data/out"),
     "-v", paste0(rnaseq.data, ":/data/rnaseq"),
     "-v", paste0(backsplicing_junctions.data, ":/data/bksj"),
     "-d docker.io/qbioturin/docker4circ Rscript /scripts/circhunter/circhunter.R",
     "--readcount",
     "-of", # output_folder
-    "-hc", paste(format(hc.params, scientific=FALSE), collapse=" ")
+    "-hc", paste(format(hc.params, scientific=FALSE), collapse=" "),
+    "--samplename", samplename.rna #to set output filename
   )
   resultRun <- runDocker(group = group, params = params)
 

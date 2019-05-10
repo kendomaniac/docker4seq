@@ -84,7 +84,7 @@ circrnaBSJunctions <- function(group=c("sudo","docker"), scratch.folder, circrna
   params <- paste(
       "--cidfile", paste0(data.folder, "/dockerID"),
       "-v", paste0(scratch.folder, ":/scratch"),
-      "-v", paste0(data.folder, ":/data"),
+      "-v", paste0(data.folder, ":/data/out"),
       "-v", paste0(exon.data, ":/data/genome"),
       "-v", paste0(circrna.data, ":/data/circRNA"),
       "-d docker.io/qbioturin/docker4circ Rscript /scripts/circhunter/circhunter.R",
@@ -94,11 +94,11 @@ circrnaBSJunctions <- function(group=c("sudo","docker"), scratch.folder, circrna
       "-sg" #exon.data
   )
   resultRun <- runDocker(group=group, params=params)
-  
+
   if(resultRun==0){
     cat("\nThe cirRNAs BS junction reconstruction is finished\n")
   }
-  
+
   #running time 2
   ptm <- proc.time() - ptm
   dir <- dir(data.folder)

@@ -96,7 +96,7 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
     "-v", paste0(sam.file, ":/data/samfile"),
     "-v", paste0(ciri.file, ":/data/cirifile"),
     "-v", paste0(genome.file, ":/data/reference"),
-    "-v", paste0(data.folder, ":/data"),
+    "-v", paste0(data.folder, ":/data/out"),
     ifelse(!is.na(annotation.file),
         paste("-v", paste0(annotation.file, ":/data/annotation.", annotation_extension)),
         ""
@@ -105,7 +105,7 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
     ifelse(!is.na(annotation.file),"--anno", "")
   )
   resultRun <- runDocker(group = group, params = params)
-  
+
     #waiting for the end of the container work
   if(resultRun==0){
     cat("\nCIRI AS analysis is finished\n")

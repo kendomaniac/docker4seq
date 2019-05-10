@@ -109,7 +109,7 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
     "-v", paste0(scratch.folder, ":/scratch"),
     "-v", paste0(sam.file, ":/data/samfile"),
     "-v", paste0(genome.file, ":/data/reference"),
-    "-v", paste0(data.folder, ":/data/"),
+    "-v", paste0(data.folder, ":/data/out"),
     ifelse(!is.na(annotation.file),
         paste("-v", paste0(annotation.file, ":/data/annotation.", annotation_extension)),
         ""
@@ -125,7 +125,7 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
     )
   )
   resultRun <- runDocker(group = group, params = params)
-  
+
   #waiting for the end of the container work
   if(resultRun==0){
     cat("\nCIRI2 analysis is finished\n")

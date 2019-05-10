@@ -74,7 +74,7 @@ circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.fi
       "--cidfile", paste0(data.folder, "/dockerID"),
       "-v", paste0(scratch.folder, ":/scratch"),
       "-v", paste0(ciri.file, ":/data/cirifile"),
-      "-v", paste0(data.folder, ":/data/"),
+      "-v", paste0(data.folder, ":/data/out"),
       "-d docker.io/qbioturin/docker4circ python3 /ciri2/docker4ciri.py annotation",
       "-s", paste(annotation.sources, collapse=" "),
       "-v", genome.version
