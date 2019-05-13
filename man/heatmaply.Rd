@@ -19,7 +19,7 @@ heatmaply(group = c("docker", "sudo"), scratch.folder, count.table,
 
 \item{output.folder, }{a character string indicating the path of the output folder}
 
-\item{separator, }{a character string indicating the separator character in the count table. Allowed characters are TAB ('\t'), COMMA (',') and SPACE (' ')}
+\item{separator, }{a character string indicating the separator character in the count table. Allowed characters are TAB, COMMA and SPACE}
 
 \item{status, }{a character string, 'raw' if the data are raw counts, 'log' otherwise}
 }
