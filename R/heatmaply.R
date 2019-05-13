@@ -5,7 +5,7 @@
 #' @param count.table, a character string indicating the path of the counts table file
 #' @param gene.list, a character string indicating the path of the file containing the genes to include in the heatmap
 #' @param output.folder, a character string indicating the path of the output folder
-#' @param separator, a character string indicating the separator character in the count table. Allowed characters are TAB ('\t'), COMMA (',') and SPACE (' ')
+#' @param separator, a character string indicating the separator character in the count table. Allowed characters are TAB, COMMA  and SPACE
 #' @param status, a character string, 'raw' if the data are raw counts, 'log' otherwise
 #' @param lower.range, the lower range of signal in the heatmap
 #' @param upper.range, the upper range of signal in the heatmap
