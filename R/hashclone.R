@@ -14,16 +14,16 @@
 #' @examples
 #' \dontrun{
 #' library(docker4seq)
-#' downloadContainers(group="docker","docker.io/beccuti/hashclone")
-#' hashclone(group="docker",scratch.folder="/home/scratch_folder", data.folder="/home/output_folder", kmer=26, hash=10999997, coll=10999997, threshold=1, spike="/home/spike_in.fa", input.files=c('/home/input_file1.fastq', '/home/input_file2.fastq'))	
+#' downloadContainers(group="docker","docker.io/qbioturin/hashclone")
+#' hashclone(group="docker",scratch.folder="/home/scratch_folder", data.folder="/home/output_folder", kmer=26, hash=10999997, coll=10999997, threshold=1, type= IGH, spike="/home/spike_in.fa", input.files=c('/home/input_file1.fastq', '/home/input_file2.fastq'))	
 #' }
 #'
 #'
 #' @export
-hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getwd(), kmer, hash,  coll, threshold=0.1, spike="null", input.files){
+hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getwd(), kmer, hash,  coll, threshold=0.1, type ,spike="null", input.files){
   
   #docker image
-  dockerImage="docker.io/beccuti/hashclone"
+  dockerImage="docker.io/qbioturin/hashclone"
   
 
   
