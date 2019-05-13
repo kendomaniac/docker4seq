@@ -90,7 +90,7 @@ hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getw
       }
   #executing the docker job
   
-  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d ",dockerImage, " /bin/hashclone.sh ",kmer," ",hash," ",coll," ",threshold, type ," "," /scratch  null ", sep="")
+  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d ",dockerImage, " /bin/hashclone.sh ",kmer," ",hash," ",coll," ",threshold," ",type ," "," /scratch  null ", sep="")
   if  (spike!="null")
     params <- paste(params,paste("/scratch/",basename(spike),sep=""), sep=" ")
   else
