@@ -7,7 +7,8 @@
 #' @param hash, a prime number indicating the size of the hash table. Increasing this value reduces the execution time but increases the memory utilization. Ideally, this value should be close to the number of different k-mers stored in the hash table;
 #' @param coll, an integer that define the maximum number of different k-mers that the tool might need to store in the hash table.
 #' @param threshold, (tau) this value is the threshold used to select significant k-mers. We suggest to set tau equal to 1
-#' @param spike, a character string indicating the path of the spike in file (if you don't want the spike in research, please set this parameter as 'null')
+#' @param type, IGH (immunoglobulin heavy chain) or  IGK (immunoglobulin kappa locus) 
+#'@param spike, a character string indicating the path of the spike in file (if you don't want the spike in research, please set this parameter as 'null')
 #' @param input.files, a character string indicating the path of the input files
 #' @author Beccuti Marco, Greta Romano, Francesca Cordero, Raffaele Calogero, beccuti[at]di[dot]unito[dot]it, Computer Science Department Univ. of Turin.
 #' 
