@@ -16,3 +16,4 @@ docker.io/repbioinfo/desc.2018.01
 docker.io/repbioinfo/sra.2018.01
 docker.io/gferrero/sncrna
 docker.io/cursecatcher/cutadapt
+docker.io/cursecatcher/heatmap
