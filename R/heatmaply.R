@@ -7,8 +7,6 @@
 #' @param output.folder, a character string indicating the path of the output folder
 #' @param separator, a character string indicating the separator character in the count table. Allowed characters are TAB, COMMA  and SPACE
 #' @param status, a character string, 'raw' if the data are raw counts, 'log' otherwise
-#' @param lower.range, the lower range of signal in the heatmap
-#' @param upper.range, the upper range of signal in the heatmap
 #' @author Nicola Licheri, nicola [dot] licheri [at] unito [dot] it, University of Turin
 #'
 #' @return A html file containing the interactive heatmap produced using plot.ly
@@ -19,7 +17,7 @@
 #' @export
 heatmaply <- function(group=c("docker", "sudo"), scratch.folder, count.table, gene.list, output.folder,
                       separator=c("TAB", "COMMA", "SPACE"), status=c("raw", "log"),
-                      lower.range=NA, upper.range=NA) {
+                      color.palette=c("viridis", "BrBG", "magma", "plasma", "cividis")) {
 
   #running time 1
   ptm <- proc.time()
@@ -46,23 +44,20 @@ heatmaply <- function(group=c("docker", "sudo"), scratch.folder, count.table, ge
     return(3)
   }
 
-  if (is.na(lower.range) || is.na(upper.range)) {
-      lower.range = 0
-      upper.range = 0
-  }
-
   params <- paste(
     "--cidfile", paste0(data.folder, "/dockerID"),
     "-v", paste0(count.table, ":/data/in/count_table"),
     "-v", paste0(gene.list, ":/data/in/gene_list"),
     "-v", paste0(output.folder, ":/data/out"),
     "-v", paste0(scratch.folder, ":/scratch"),
-    "-d", "docker.io/cursecatcher/heatmap", "/bin/bash /bin/heatmap.sh", count.table, separator, status, lower.range, upper.range
+    "-d", "docker.io/cursecatcher/heatmap", "/bin/bash /bin/heatmap.sh", color.palette, separator, status# count.table, separator, status
   )
   resultRun <- runDocker(group=group, params=params)
 
   if (resultRun == 0) {
     cat("Heatmaply terminated successfully.\n")
+  } else {
+    cat("Heatmaply terminated with errors.\n")
   }
 
   #running time 2
