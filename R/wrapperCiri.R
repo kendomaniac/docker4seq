@@ -8,7 +8,6 @@
 #' @param seq.type, a character string indicating the type of reads to be trimmed. Two options: \code{"se"} or \code{"pe"} respectively for single end and pair end sequencing
 #' @param sample.id, a character string indicating the unique id to be associated to the bam that will be created
 #' @param threads, a number indicating the number of cores to be used from the application
-#' @param sam.file, a character string indicating the path to the RNA-Seq alignment SAM file from BWA
 #' @param annotation.file, a character string indicating the path to the GTF/GFF file reporting the reference gene annotations
 #' @param max.span, an integer reporting the maximum spanning distance of a circRNA (default = 200000 bp)
 #' @param stringency.value, the selected stringency level of the analysis. Three possible options are available: "high" (high stringency, default), in which CIRI2 only provides circRNAs supported by more than 2 distinct PCC signals; "low" (low stringency), CIRI2 only provides circRNAs supported by more than 2 junction reads; "zero", CIRI2 provides all circRNAs regardless junction read counts or PCC signals
@@ -50,7 +49,6 @@ wrapperCiri <- function(group = c("sudo", "docker"), scratch.folder, data.folder
     group = group, scratch.folder = scratch.folder, fastq.folder = data.folder,
     genome.folder = genome.folder, seq.type = seq.type, threads = threads, sample.id = sample.id, circRNA = TRUE
   )
-
 
   # circRNA prediction with Ciri2
   cat("\nrunning CIRI2\n")

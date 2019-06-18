@@ -31,8 +31,6 @@ wrapperCiri(group = c("sudo", "docker"), scratch.folder, data.folder,
 \item{stringency.value, }{the selected stringency level of the analysis. Three possible options are available: "high" (high stringency, default), in which CIRI2 only provides circRNAs supported by more than 2 distinct PCC signals; "low" (low stringency), CIRI2 only provides circRNAs supported by more than 2 junction reads; "zero", CIRI2 provides all circRNAs regardless junction read counts or PCC signals}
 
 \item{quality.threshold, }{integer indicating the threshold for mapping quality of each segment of junction reads (default=10)}
-
-\item{sam.file, }{a character string indicating the path to the RNA-Seq alignment SAM file from BWA}
 }
 \value{
 The list of circRNAs predicted by CIRI starting from the raw RNA-Seq datasets

@@ -14,7 +14,7 @@
 #' @export
 
 
-cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder, adapter.type = c("ILLUMINA", "NEB"), nthreads = 1) {
+cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder, adapter.type = c("ILLUMINA", "NEB"), threads = 1) {
 
     #running time 1
     ptm <- proc.time()
@@ -41,7 +41,7 @@ cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder, a
     params <- paste(
         "--cidfile", paste0(data.folder, "/dockerID"),
         "-v", paste0(data.folder, ":/data"),
-        "-d docker.io/cursecatcher/cutadapt /bin/bash /bin/cutadapt.sh", adapter.type, nthreads
+        "-d docker.io/cursecatcher/cutadapt /bin/bash /bin/cutadapt.sh", adapter.type, threads
     )
 
     resultRun <- runDocker(group=group, params=params)

@@ -24,8 +24,6 @@ bwa(group = c("sudo", "docker"), fastq.folder = getwd(),
 \item{sample.id, }{a character string indicating the unique id to be associated to the bam that will be created}
 
 \item{circRNA, }{a boolean variable indicating whether the analysis concerns a circRNA prediction or not.}
-
-\item{genome.name, }{a character string indicating the prefix of the genome, e.g. genome in case of genome.fa}
 }
 \value{
 three files: dedup_reads.bam, which is sorted and duplicates marked bam file, dedup_reads.bai, which is the index of the dedup_reads.bam, and dedup_reads.stats, which provides mapping statistics

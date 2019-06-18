@@ -117,7 +117,7 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
 
     ######## calling docker to trim data : it creates a subdirectory called "trimmed" in fastq dir
     cat("\nCalling cutadapt to remove adapters\n")
-    cutadapt(group=group, scratch.folder=scratch.folder, data.folder=fastq.folder, adapter.type=adapter.type, nthreads=threads)
+    cutadapt(group=group, scratch.folder=scratch.folder, data.folder=fastq.folder, adapter.type=adapter.type, threads=threads)
     trimmed.dir <- file.path(fastq.folder, "trimmed")
 
     arguments <- ifelse(mode == "miRNA",

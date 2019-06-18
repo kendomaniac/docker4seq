@@ -8,7 +8,7 @@
 #' @param annotation.file, a character string indicating the path to the GTF/GFF file reporting the reference gene annotations
 #' @param max.span, an integer reporting the maximum spanning distance of a circRNA (default = 200000 bp)
 #' @param stringency.value, the selected stringency level of the analysis. Three possible options are available: "high" (high stringency, default), in which CIRI2 only provides circRNAs supported by more than 2 distinct Paired Chiastic Clipping (PCC) signals; "low" (low stringency), CIRI2 only provides circRNAs supported by more than 2 junction reads; "zero", CIRI2 provides all circRNAs regardless junction read counts or PCC signals
-#' @param stringency.value, integer indicating the threshold for mapping quality of each segment of junction reads (default=10)
+#' @param quality.threshold, integer indicating the threshold for mapping quality of each segment of junction reads (default=10)
 #' @param threads, integer indicating the number of threads used for the analysis (default=1)
 #' @author Nicola Licheri and Giulio Ferrero
 #'
@@ -27,12 +27,7 @@
 #'
 #' @export
 
-
-ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.file, annotation.file = NA,
-                  max.span = 200000, stringency.value = c("high", "low", "zero"), quality.threshold = 10, threads = 1) {
-
-
-
+ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.file, annotation.file = NA, max.span = 200000, stringency.value = c("high", "low", "zero"), quality.threshold = 10, threads = 1) {
 
   # running time 1
   ptm <- proc.time()

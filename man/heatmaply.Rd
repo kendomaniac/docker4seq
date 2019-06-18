@@ -6,7 +6,8 @@
 \usage{
 heatmaply(group = c("docker", "sudo"), scratch.folder, count.table,
   gene.list, output.folder, separator = c("TAB", "COMMA", "SPACE"),
-  status = c("raw", "log"), lower.range = NA, upper.range = NA)
+  status = c("raw", "log"), color.palette = c("viridis", "BrBG",
+  "magma", "plasma", "cividis"))
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -22,10 +23,6 @@ heatmaply(group = c("docker", "sudo"), scratch.folder, count.table,
 \item{separator, }{a character string indicating the separator character in the count table. Allowed characters are TAB, COMMA  and SPACE}
 
 \item{status, }{a character string, 'raw' if the data are raw counts, 'log' otherwise}
-
-\item{lower.range, }{the lower range of signal in the heatmap}
-
-\item{upper.range, }{the upper range of signal in the heatmap}
 }
 \value{
 A html file containing the interactive heatmap produced using plot.ly

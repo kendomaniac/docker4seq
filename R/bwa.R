@@ -5,7 +5,6 @@
 #' @param fastq.folder, a character string indicating where gzip fastq files are located
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa is located
-#' @param genome.name, a character string indicating the prefix of the genome, e.g. genome in case of genome.fa
 #' @param seq.type, a character string indicating the type of reads to be trimmed. Two options: \code{"se"} or \code{"pe"} respectively for single end and pair end sequencing
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param sample.id, a character string indicating the unique id to be associated to the bam that will be created

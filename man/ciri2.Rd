@@ -24,9 +24,9 @@ ciri2(group = c("sudo", "docker"), scratch.folder, sam.file, genome.file,
 
 \item{stringency.value, }{the selected stringency level of the analysis. Three possible options are available: "high" (high stringency, default), in which CIRI2 only provides circRNAs supported by more than 2 distinct Paired Chiastic Clipping (PCC) signals; "low" (low stringency), CIRI2 only provides circRNAs supported by more than 2 junction reads; "zero", CIRI2 provides all circRNAs regardless junction read counts or PCC signals}
 
-\item{threads, }{integer indicating the number of threads used for the analysis (default=1)}
+\item{quality.threshold, }{integer indicating the threshold for mapping quality of each segment of junction reads (default=10)}
 
-\item{stringency.value, }{integer indicating the threshold for mapping quality of each segment of junction reads (default=10)}
+\item{threads, }{integer indicating the number of threads used for the analysis (default=1)}
 }
 \value{
 The list of CIRI 2 predicted circRNAs
