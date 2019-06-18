@@ -2,7 +2,7 @@
 % Please edit documentation in R/heatmaply.R
 \name{heatmaply}
 \alias{heatmaply}
-\title{Function to produce an interactive heatmap using plotly}
+\title{Function to produce an interactive heatmap using plot.ly}
 \usage{
 heatmaply(group = c("docker", "sudo"), scratch.folder, count.table,
   gene.list, output.folder, separator = c("TAB", "COMMA", "SPACE"),
@@ -19,9 +19,16 @@ heatmaply(group = c("docker", "sudo"), scratch.folder, count.table,
 
 \item{output.folder, }{a character string indicating the path of the output folder}
 
-\item{separator, }{a character string indicating the separator character in the count table. Allowed characters are TAB, COMMA and SPACE}
+\item{separator, }{a character string indicating the separator character in the count table. Allowed characters are TAB, COMMA  and SPACE}
 
 \item{status, }{a character string, 'raw' if the data are raw counts, 'log' otherwise}
+
+\item{lower.range, }{the lower range of signal in the heatmap}
+
+\item{upper.range, }{the upper range of signal in the heatmap}
+}
+\value{
+A html file containing the interactive heatmap produced using plot.ly
 }
 \description{
 This function generates an heatmap using a count table and a specific gene list
@@ -32,5 +39,5 @@ This function generates an heatmap using a count table and a specific gene list
 }
 }
 \author{
-Nicola Licheri
+Nicola Licheri, nicola [dot] licheri [at] unito [dot] it, University of Turin
 }

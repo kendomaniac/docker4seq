@@ -5,7 +5,7 @@
 \title{HashClone running A function to handle a hashclone docker container NOT READY for STABLE RELEASE, YET}
 \usage{
 hashclone(group = c("sudo", "docker"), scratch.folder,
-  data.folder = getwd(), kmer, hash, coll, threshold = 0.1,
+  data.folder = getwd(), kmer, hash, coll, threshold = 0.1, type,
   spike = "null", input.files)
 }
 \arguments{
@@ -23,6 +23,8 @@ hashclone(group = c("sudo", "docker"), scratch.folder,
 
 \item{threshold, }{(tau) this value is the threshold used to select significant k-mers. We suggest to set tau equal to 1}
 
+\item{type, }{IGH (immunoglobulin heavy chain) or  IGK (immunoglobulin kappa locus)}
+
 \item{spike, }{a character string indicating the path of the spike in file (if you don't want the spike in research, please set this parameter as 'null')}
 
 \item{input.files, }{a character string indicating the path of the input files}
@@ -33,8 +35,8 @@ This function executes  HashClone algorithm developed to identify the set of clo
 \examples{
 \dontrun{
 library(docker4seq)
-downloadContainers(group="docker","docker.io/beccuti/hashclone")
-hashclone(group="docker",scratch.folder="/home/scratch_folder", data.folder="/home/output_folder", kmer=26, hash=10999997, coll=10999997, threshold=1, spike="/home/spike_in.fa", input.files=c('/home/input_file1.fastq', '/home/input_file2.fastq'))	
+downloadContainers(group="docker","docker.io/qbioturin/hashclone")
+hashclone(group="docker",scratch.folder="/home/scratch_folder", data.folder="/home/output_folder", kmer=26, hash=10999997, coll=10999997, threshold=1, type= IGH, spike="/home/spike_in.fa", input.files=c('/home/input_file1.fastq', '/home/input_file2.fastq'))	
 }
 
 
