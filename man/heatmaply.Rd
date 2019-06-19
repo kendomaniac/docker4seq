@@ -23,6 +23,8 @@ heatmaply(group = c("docker", "sudo"), scratch.folder, count.table,
 \item{separator, }{a character string indicating the separator character in the count table. Allowed characters are TAB, COMMA  and SPACE}
 
 \item{status, }{a character string, 'raw' if the data are raw counts, 'log' otherwise}
+
+\item{color.palette, }{a string indicating the color palette to be used in the heatmap. Available palettes are Viridis, BrBG, magma, plasma and cividis}
 }
 \value{
 A html file containing the interactive heatmap produced using plot.ly
