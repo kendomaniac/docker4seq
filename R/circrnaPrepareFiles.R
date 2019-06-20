@@ -53,7 +53,7 @@ circrnaPrepareFiles <- function(group=c("sudo","docker"), scratch.folder, data.f
   params <- paste("--cidfile", paste0(data.folder, "/dockerID"),
                   "-v", paste0(scratch.folder, ":/scratch"),
                   "-v", paste0(data.folder, ":/data"),
-                  "-d docker.io/qbioturin/docker4circ Rscript /scripts/circhunter/circhunter.R",
+                  "-d docker.io/repbioinfo/docker4circ.2019.01 Rscript /scripts/circhunter/circhunter.R",
                   "--preparedata ",
                   "-as", assembly,
                   "-of"

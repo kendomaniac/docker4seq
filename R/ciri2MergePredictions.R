@@ -27,7 +27,9 @@
 #' }
 #' @export
 
-ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, data.folder, samples.list, covariates.list, covariate.order, min_reads = 2, min_reps = 0, min_avg = 10) {
+ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder,
+    data.folder, samples.list, covariates.list, covariate.order,
+    min_reads = 2, min_reps = 0, min_avg = 10) {
 
 
   # running time 1
@@ -69,7 +71,7 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, d
       "--cidfile", paste0(data.folder, "/dockerID"),
       "-v", paste0(scratch.folder, ":/scratch"),
       "-v", paste0(data.folder, ":/data"),
-      "-d docker.io/qbioturin/docker4circ python3 /ciri2/docker4ciri.py merge",
+      "-d docker.io/repbioinfo/docker4circ.2019.01 python3 /ciri2/docker4ciri.py merge",
       "--samples", paste(samples.list, collapse = " "),
       "--cov", paste(covariates.list, collapse = " "),
       "--order", paste(covariate.order, collapse = " "),
@@ -82,7 +84,7 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder, d
   if(resultRun==0){
     cat("\nCIRI 2 outputs merge is finished\n")
   }
-  
+
   # running time 2
   ptm <- proc.time() - ptm
   dir <- dir(data.folder)

@@ -14,7 +14,8 @@
 #' @export
 
 
-cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder, adapter.type = c("ILLUMINA", "NEB"), threads = 1) {
+cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder,
+    adapter.type = c("ILLUMINA", "NEB"), threads = 1) {
 
     #running time 1
     ptm <- proc.time()
@@ -23,7 +24,7 @@ cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder, a
     data.folder <- normalizePath(data.folder)
 
     if (adapter.type %in% c("ILLUMINA", "NEB") == FALSE) {
-        cat(paste("\nInvalid adapter type '", mode, "'"))
+        cat(paste("\nInvalid adapter type:", mode))
         system("echo 3 > ExitStatusFile 2>&1")
         return(3)
     }
@@ -41,7 +42,7 @@ cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder, a
     params <- paste(
         "--cidfile", paste0(data.folder, "/dockerID"),
         "-v", paste0(data.folder, ":/data"),
-        "-d docker.io/cursecatcher/cutadapt /bin/bash /bin/cutadapt.sh", adapter.type, threads
+        "-d docker.io/repbioinfo/cutadapt.2019.01 /bin/bash /bin/cutadapt.sh", adapter.type, threads
     )
 
     resultRun <- runDocker(group=group, params=params)
@@ -71,13 +72,13 @@ cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder, a
 
     #saving log and removing docker container
     container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
-    system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/", substr(container.id,1,12),".log", sep=""))
-    system(paste("docker rm ", container.id, sep=""))
+    system(paste0("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/cutadapt_", substr(container.id,1,12),".log"))
+    system(paste("docker rm", container.id))
     # removing temporary files
     cat("\n\nRemoving the temporary file ....\n")
     system("rm -fR out.info")
     system("rm -fR dockerID")
-    system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
+    system(paste("cp", paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/"), data.folder))
     setwd(home)
 
 }
