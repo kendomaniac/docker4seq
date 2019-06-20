@@ -14,13 +14,7 @@ docker.io/repbioinfo/multiqc.2018.01
 docker.io/rcaloger/heatmapbase4seq
 docker.io/repbioinfo/desc.2018.01
 docker.io/repbioinfo/sra.2018.01
-<<<<<<< HEAD
 docker.io/repbioinfo/sncrna.2019.01
-docker.io/cursecatcher/cutadapt
-docker.io/cursecatcher/heatmap
-=======
-docker.io/qbioturin/sncrna
 docker.io/repbioinfo/cutadapt.2019.01
 docker.io/repbioinfo/heatmap.2019.01
 docker.io/repbioinfo/docker4circ.2019.01
->>>>>>> 5c0f8b0c1af81bc9bc75efa1c37477cf432b231e
