@@ -18,3 +18,4 @@ docker.io/repbioinfo/sncrna.2019.01
 docker.io/repbioinfo/cutadapt.2019.01
 docker.io/repbioinfo/heatmap.2019.01
 docker.io/repbioinfo/docker4circ.2019.01
+docker.io/repbioinfo/hashclone.2019.01
