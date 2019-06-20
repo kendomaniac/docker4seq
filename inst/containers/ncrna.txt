@@ -1,6 +1,6 @@
 docker.io/repbioinfo/r332.2017.01
 docker.io/repbioinfo/mirnaseq.2017.01
-docker.io/repbioinfo/skewer.2017.01
+docker.io/repbioinfo/skewer.2019.01
 docker.io/repbioinfo/r340.2017.01
 docker.io/repbioinfo/demultiplexing.2017.01
 docker.io/repbioinfo/multiqc.2018.01

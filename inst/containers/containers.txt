@@ -1,6 +1,6 @@
 docker.io/repbioinfo/annotate.2017.01
 docker.io/repbioinfo/bwaindex
-docker.io/repbioinfo/bwa.2017.01
+docker.io/repbioinfo/bwa.2019.01
 docker.io/repbioinfo/chipseq.2017.01
 docker.io/repbioinfo/r332.2017.01
 docker.io/repbioinfo/mirnaseq.2019.01:mirbase22.1
