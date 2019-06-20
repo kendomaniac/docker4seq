@@ -44,15 +44,15 @@ heatmaply <- function(group=c("docker", "sudo"), scratch.folder, count.table, ge
     setwd(data.folder)
     return(3)
   }
-  
-  #check if output folder exist 
+
+  #check if output folder exist
   if (!file.exists(output.folder)) {
     cat(paste("\nIt seems that", output.folder, "folder does not exist\n"))
     system("echo 3 > ExitStatusFile 2>&1")
     setwd(data.folder)
     return(3)
   }
-  
+
   #check if input data actually exist
   if (!file.exists(count.table)) {
     cat(paste("\nIt seems that", count.table, "file does not exist\n"))
@@ -66,7 +66,7 @@ heatmaply <- function(group=c("docker", "sudo"), scratch.folder, count.table, ge
     setwd(data.folder)
     return(3)
   }
-  
+
 
   params <- paste(
     "--cidfile", paste0(data.folder, "/dockerID"),
@@ -74,7 +74,7 @@ heatmaply <- function(group=c("docker", "sudo"), scratch.folder, count.table, ge
     "-v", paste0(gene.list, ":/data/in/gene_list"),
     "-v", paste0(output.folder, ":/data/out"),
     "-v", paste0(scratch.folder, ":/scratch"),
-    "-d", "docker.io/cursecatcher/heatmap", 
+    "-d", "docker.io/repbioinfo/heatmap.2019.01", 
     "/bin/bash /bin/heatmap.sh", color.palette, separator, status
   )
   resultRun <- runDocker(group=group, params=params)

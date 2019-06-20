@@ -18,7 +18,8 @@
 #' }
 #' @export
 
-mergeData <- function(group = c("sudo", "docker"), scratch.folder, data.folder, samples.ids, covariates, covariate.order, extension, column_index) {
+mergeData <- function(group = c("sudo", "docker"), scratch.folder, data.folder,
+    samples.ids, covariates, covariate.order, extension, column_index) {
 
 
   # running time 1
@@ -68,7 +69,7 @@ mergeData <- function(group = c("sudo", "docker"), scratch.folder, data.folder, 
       "--cidfile", paste0(data.folder, "/dockerID"),
       "-v", paste0(scratch.folder, ":/scratch"),
       "-v", paste0(data.folder, ":/data/"),
-      "-d docker.io/qbioturin/docker4circ merge_data",
+      "-d docker.io/repbioinfo/docker4circ.2019.01 merge_data",
       "--samples", paste(samples.ids, collapse = " "),
       "--cov", paste(covariates, collapse = " "),
       "--order", paste(covariate.order, collapse = " "),
@@ -100,7 +101,7 @@ mergeData <- function(group = c("sudo", "docker"), scratch.folder, data.folder, 
 
   # saving log and removing docker container
   container.id <- readLines(paste(data.folder, "/dockerID", sep = ""), warn = FALSE)
-  system(paste("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/", substr(container.id, 1, 12), ".log", sep = ""))
+  system(paste("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/mergeData_", substr(container.id, 1, 12), ".log", sep = ""))
   system(paste("docker rm ", container.id, sep = ""))
   # removing temporary files
   cat("\n\nRemoving the temporary file ....\n")

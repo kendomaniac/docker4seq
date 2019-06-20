@@ -92,7 +92,7 @@ circrnaClassification <- function(group=c("sudo","docker"), scratch.folder, circ
       "-v", paste0(isoform.data, ":/data/isoformdata"),
       "-v", paste0(exon.data, ":/data/genome"),
       "-v", paste0(circrna.data, ":/data/circRNA"),
-      "-d docker.io/qbioturin/docker4circ Rscript /scripts/circhunter/circhunter.R",
+      "-d docker.io/repbioinfo/docker4circ.2019.01 Rscript /scripts/circhunter/circhunter.R",
       "--classification",
       "-as", assembly,
       "-sg", #exon.data,
