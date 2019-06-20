@@ -27,7 +27,9 @@
 #'
 #' @export
 
-ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.file, annotation.file = NA, max.span = 200000, stringency.value = c("high", "low", "zero"), quality.threshold = 10, threads = 1) {
+ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file,
+    genome.file, annotation.file = NA, max.span = 200000,
+    stringency.value = c("high", "low", "zero"), quality.threshold = 10, threads = 1) {
 
   # running time 1
   ptm <- proc.time()
@@ -109,7 +111,7 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
         paste("-v", paste0(annotation.file, ":/data/annotation.", annotation_extension)),
         ""
     ),
-    "-d docker.io/qbioturin/docker4circ python3 /ciri2/docker4ciri.py ciri2",
+    "-d docker.io/repbioinfo/docker4circ.2019.01 python3 /ciri2/docker4ciri.py ciri2",
     "--strigency", stringency,
     "-S", format(max.span, scientific=FALSE),
     "-T", threads,
@@ -148,13 +150,13 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file, genome.
   }
 
   # saving log and removing docker container
-  container.id <- readLines(paste(data.folder, "/dockerID", sep = ""), warn = FALSE)
-  system(paste("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/", substr(container.id, 1, 12), ".log", sep = ""))
-  system(paste("docker rm ", container.id, sep = ""))
+  container.id <- readLines(paste0(data.folder, "/dockerID"), warn = FALSE)
+  system(paste0("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/ciri2_", substr(container.id, 1, 12), ".log"))
+  system(paste("docker rm", container.id))
   # removing temporary files
   cat("\n\nRemoving the temporary file ....\n")
   system("rm -fR out.info")
   system("rm -fR dockerID")
-  system(paste("cp ", paste(path.package(package = "docker4seq"), "containers/containers.txt", sep = "/CIRI2_"), " ", data.folder, sep = ""))
+  system(paste("cp", paste(path.package(package = "docker4seq"), "containers/containers.txt", sep = "/CIRI2_"), data.folder))
   setwd(home)
 }

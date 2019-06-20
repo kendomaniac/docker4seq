@@ -1,5 +1,5 @@
 #' @title Running CIRI_AS tool for circRNAs structure prediction
-#' @description This function executes the docker container ciri2 where CIRI_AS is installed
+#' @description This function executes the docker container docker4circ where CIRI_AS is installed
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
@@ -27,7 +27,8 @@
 #' @export
 
 
-ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.file, genome.file, annotation.file = NA) {
+ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file,
+    ciri.file, genome.file, annotation.file = NA) {
 
 
 
@@ -101,7 +102,7 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
         paste("-v", paste0(annotation.file, ":/data/annotation.", annotation_extension)),
         ""
     ),
-    "-d docker.io/qbioturin/docker4circ python3 /ciri2/docker4ciri.py structure",
+    "-d docker.io/repbioinfo/docker4circ.2019.01 python3 /ciri2/docker4ciri.py structure",
     ifelse(!is.na(annotation.file),"--anno", "")
   )
   resultRun <- runDocker(group = group, params = params)
@@ -134,7 +135,7 @@ ciriAS <- function(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.f
 
   # saving log and removing docker container
   container.id <- readLines(paste0(data.folder, "/dockerID"), warn = FALSE)
-  system(paste("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/ciri_as_", substr(container.id, 1, 12), ".log", sep = ""))
+  system(paste("docker logs ", substr(container.id, 1, 12), " &> ", data.folder, "/ciriAS_", substr(container.id, 1, 12), ".log", sep = ""))
   system(paste("docker rm", container.id))
   # removing temporary files
   cat("\n\nRemoving the temporary file ....\n")

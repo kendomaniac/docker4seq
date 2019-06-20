@@ -75,12 +75,12 @@ circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.fi
       "-v", paste0(scratch.folder, ":/scratch"),
       "-v", paste0(ciri.file, ":/data/cirifile"),
       "-v", paste0(data.folder, ":/data/out"),
-      "-d docker.io/qbioturin/docker4circ python3 /ciri2/docker4ciri.py annotation",
+      "-d docker.io/repbioinfo/docker4circ.2019.01 python3 /ciri2/docker4ciri.py annotation",
       "-s", paste(annotation.sources, collapse=" "),
       "-v", genome.version
   )
   resultRun <- runDocker(group = group, params = params)
-  
+
   #waiting for the end of the container work
   if(resultRun==0){
     cat("\nThe circRNAs annotation analysis is finished\n")
