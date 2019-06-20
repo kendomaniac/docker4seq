@@ -130,7 +130,7 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
         "-v", paste0(scratch.folder, ":/data/scratch"),
         "-v", paste0(ref.folder, ":/data/ref"),
         "-v", paste0(trimmed.dir, ":/data/input"),
-        "-d docker.io/qbioturin/sncrna /bin/bash /bin/sncRNA.sh",
+        "-d docker.io/repbioinfo/sncrna.2019.01 /bin/bash /bin/sncRNA.sh",
         arguments
     )
 
