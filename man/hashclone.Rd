@@ -36,7 +36,7 @@ This function executes  HashClone algorithm developed to identify the set of clo
 \dontrun{
 library(docker4seq)
 downloadContainers(group="docker","docker.io/qbioturin/hashclone")
-hashclone(group="docker",scratch.folder="/home/scratch_folder", data.folder="/home/output_folder", kmer=26, hash=10999997, coll=10999997, threshold=1, type= IGH, spike="/home/spike_in.fa", input.files=c('/home/input_file1.fastq', '/home/input_file2.fastq'))	
+hashclone(group="docker",scratch.folder="/home/scratch_folder", data.folder="/home/output_folder", kmer=26, hash=10999997, coll=10999997, threshold=1, type= IGH, spike="/home/spike_in.fa", input.files=c('/home/input_file1.fastq', '/home/input_file2.fastq'))
 }
 
 

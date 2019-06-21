@@ -24,7 +24,7 @@ ciriAS(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.file,
 The function returns the list of alternative circRNAs internal structures
 }
 \description{
-This function executes the docker container ciri2 where CIRI_AS is installed
+This function executes the docker container docker4circ where CIRI_AS is installed
 }
 \examples{
 \dontrun{
