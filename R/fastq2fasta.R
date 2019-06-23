@@ -68,9 +68,9 @@ fastq2fasta <- function(group=c("sudo","docker"), scratch.folder, data.folder){
     setwd(home)
     return(2)
   }else{
-    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+#    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
     system(paste("cp ",data.folder,"/",dir, " ",scratch.folder,"/",tmp.folder,"/",dir, sep=""))
-    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
+#    system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))
   }
   ###
   
