@@ -14,7 +14,7 @@
 #' @examples
 #' \dontrun{
 #'     #running fastq2fasta
-#'     cdhit(group="docker", scratch.folder="/data/scratch", data.folder=getwd(), identity.threshold=0.90, memory.limit=30000, threads=0, word.length=7)
+#'     cdhit(group="docker", scratch.folder="/data/scratch", data.folder=getwd(), identity.threshold=0.90, memory.limit=8000, threads=0, word.length=7)
 #' }
 #'
 #' @export
@@ -60,7 +60,7 @@ cdhit <- function(group=c("sudo","docker"), scratch.folder, data.folder, identit
   
   ### copying fastq files 
   dir <- dir(data.folder)
-  dir <- dir[grep(".fasta", dir)]
+  dir <- dir[grep(".fasta.gz$", dir)]
   cat("\ncopying \n")
   if(length(dir)==0){
     cat(paste("It seems that in ", data.folder, "there are not fasta files"))
@@ -80,7 +80,7 @@ cdhit <- function(group=c("sudo","docker"), scratch.folder, data.folder, identit
   ###
   
   #executing the docker job
-  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/cdhit.2019.01:cdhit-V4.8.1 sh /bin/cdhit_est.sh ", dir, " ", memory.limit, " ", threads, " ", word.length, sep="")
+  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/cdhit.2019.01:cdhit-V4.8.1 sh /bin/cdhit_est.sh ", dir, " ", identity.threshold, " ", memory.limit, " ", threads, " ", word.length, sep="")
   resultRun <- runDocker(group=group, params=params)
   
   #waiting for the end of the container work
