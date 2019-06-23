@@ -1,24 +1,21 @@
-#' @title A function to execute CD-HIT
-#' @description This function executes a ubuntu docker that cluster minION sequences using CD-HIT
+#' @title A function to execute seqtk trimming
+#' @description This function executes a ubuntu docker that remove reads shorter of a specific threshold
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the path of the scratch folder
 #' @param data.folder, a character string indicating the folder where input data are located and where output will be written
-#' @param identity.threshold, sequence identity threshold, default 0.9, this is the default cd-hit's global sequence identity calculated as: number of identical bases in alignment divided by the full length of the shorter sequence
-#' @param memory.limit, memory limit in MB for the program, default 30000. 0 for unlimitted
-#' @param threads, number of threads, default 0; with 0, all CPUs will be used
-#' @param word.length, 7 for thresholds between 0.88 and 0.9 for other option see user manual cdhit 
+#' @param min.length, min nucleotide lenght of each fasta seq
 #' 
 #' @author Raffaele A Calogero, raffaele.calogero [at] unito [dot] it, University of Torino. Italy
 #'
-#' @return Returns two files: a fasta file of representative sequences and a text file of list of clusters
+#' @return Returns a fasta file colled trimmed.fasta.gz
 #' @examples
 #' \dontrun{
 #'     #running fastq2fasta
-#'     cdhit(group="docker", scratch.folder="/data/scratch", data.folder=getwd(), identity.threshold=0.90, memory.limit=8000, threads=0, word.length=7)
+#'     trimfasta(group="docker", scratch.folder="/data/scratch", data.folder=getwd(), min.length=300)
 #' }
 #'
 #' @export
-cdhit <- function(group=c("sudo","docker"), scratch.folder, data.folder, identity.threshold=0.90, memory.limit=30000, threads=0, word.length=7){
+trimFasta <- function(group=c("sudo","docker"), scratch.folder, data.folder, min.length=300){
 
 
 #running time 1
@@ -81,12 +78,12 @@ cdhit <- function(group=c("sudo","docker"), scratch.folder, data.folder, identit
   ###
   
   #executing the docker job
-  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/cdhit.2019.01:cdhit-V4.8.1 bash /bin/cdhit_est.sh ", dir, " ", identity.threshold, " ", memory.limit, " ", threads, " ", word.length, sep="")
+  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/cdhit.2019.01:cdhit-V4.8.1 bash /bin/trim.sh ", dir, " ", min.length, sep="")
   resultRun <- runDocker(group=group, params=params)
   
   #waiting for the end of the container work
   if(resultRun==0){
-    cat("\nCDHIT analysis is finished \n")
+    cat("\nTrimming is finished \n")
   }
   #running time 2
   ptm <- proc.time() - ptm
@@ -96,22 +93,22 @@ cdhit <- function(group=c("sudo","docker"), scratch.folder, data.folder, identit
     con <- file("run.info", "r")
     tmp.run <- readLines(con)
     close(con)
-    tmp.run[length(tmp.run)+1] <- paste("cdhit user run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("cdhit system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("cdhit elapsed run time mins ",ptm[3]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("trimFasta user run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("trimFasta system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("trimFasta elapsed run time mins ",ptm[3]/60, sep="")
     writeLines(tmp.run,"run.info")
   }else{
     tmp.run <- NULL
-    tmp.run[1] <- paste("cdhit run time mins ",ptm[1]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("cdhit system run time mins ",ptm[2]/60, sep="")
-    tmp.run[length(tmp.run)+1] <- paste("cdhit elapsed run time mins ",ptm[3]/60, sep="")
+    tmp.run[1] <- paste("trimFasta run time mins ",ptm[1]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("trimFasta system run time mins ",ptm[2]/60, sep="")
+    tmp.run[length(tmp.run)+1] <- paste("trimFasta elapsed run time mins ",ptm[3]/60, sep="")
 
     writeLines(tmp.run,"run.info")
   }
 
   #saving log and removing docker container
   container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
-  system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/", substr(container.id,1,12),"_cdhit.log", sep=""))
+  system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/", substr(container.id,1,12),"_trimFasta.log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
   #removing temporary folder
   cat("\n\nRemoving the temporary file ....\n")
