@@ -20,8 +20,7 @@
 #' @export
 cdhit <- function(group=c("sudo","docker"), scratch.folder, data.folder, identity.threshold=0.90, memory.limit=30000, threads=0, word.length=7){
 
-  
-  output="output"
+
 #running time 1
   ptm <- proc.time()
   #setting the data.folder as working folder
@@ -82,7 +81,7 @@ cdhit <- function(group=c("sudo","docker"), scratch.folder, data.folder, identit
   ###
   
   #executing the docker job
-  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/cdhit.2019.01:cdhit-V4.8.1 sh /bin/cdhit_est.sh ", dir, " ", identity.threshold, " ", memory.limit, " ", threads, " ", word.length, " ", output, sep="")
+  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/cdhit.2019.01:cdhit-V4.8.1 sh /bin/cdhit_est.sh ", dir, " ", identity.threshold, " ", memory.limit, " ", threads, " ", word.length, sep="")
   resultRun <- runDocker(group=group, params=params)
   
   #waiting for the end of the container work
