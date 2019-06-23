@@ -80,7 +80,7 @@ cdhit <- function(group=c("sudo","docker"), scratch.folder, data.folder, identit
   ###
   
   #executing the docker job
-  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/cdhit.2019.01:cdhit-V4.8.1 sh /bin/cdhit.sh ", dir, " ", memory.limit, " ", threads, " ", word.length, sep="")
+  params <- paste("--cidfile ",data.folder,"/dockerID -v ",scrat_tmp.folder,":/scratch -v ", data.folder, ":/data -d docker.io/repbioinfo/cdhit.2019.01:cdhit-V4.8.1 sh /bin/cdhit_est.sh ", dir, " ", memory.limit, " ", threads, " ", word.length, sep="")
   resultRun <- runDocker(group=group, params=params)
   
   #waiting for the end of the container work
