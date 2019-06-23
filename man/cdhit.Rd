@@ -32,7 +32,7 @@ This function executes a ubuntu docker that cluster minION sequences using CD-HI
 \examples{
 \dontrun{
     #running fastq2fasta
-    cdhit(group="docker", scratch.folder="/data/scratch", data.folder=getwd(), identity.threshold=0.90, memory.limit=30000, threads=0, word.length=7)
+    cdhit(group="docker", scratch.folder="/data/scratch", data.folder=getwd(), identity.threshold=0.90, memory.limit=8000, threads=0, word.length=7)
 }
 
 }
