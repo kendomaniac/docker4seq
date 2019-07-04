@@ -4,12 +4,14 @@
 \alias{fastqc}
 \title{A function to handle a docker containier executing fastqc}
 \usage{
-fastqc(group = c("sudo", "docker"), data.folder)
+fastqc(group = c("sudo", "docker"), data.folder, large = FALSE)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
 
 \item{data.folder, }{a character string indicating the folder where input data are located and where output will be written}
+
+\item{large, }{boolenan if FALSE uses 10000 reads to make fastq statistics if TRUe uses 1 milion reads}
 }
 \description{
 This function executes a ubuntu docker that produces as output FASTQCstdin_fastqc.html and stdin_fastqc.zip files
@@ -18,7 +20,7 @@ This function executes a ubuntu docker that produces as output FASTQCstdin_fastq
 \dontrun{
     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
     #running fastqc
-    fastqc(group="docker", data.folder=getwd())
+    fastqc(group="docker", data.folder=getwd(), large=FALSE)
 }
 
 }

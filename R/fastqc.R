@@ -2,17 +2,18 @@
 #' @description This function executes a ubuntu docker that produces as output FASTQCstdin_fastqc.html and stdin_fastqc.zip files
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param data.folder, a character string indicating the folder where input data are located and where output will be written
+#' @param large, boolenan if FALSE uses 10000 reads to make fastq statistics if TRUe uses 1 milion reads
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, University of Torino
 #'
 #' @examples
 #' \dontrun{
 #'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 #'     #running fastqc
-#'     fastqc(group="docker", data.folder=getwd())
+#'     fastqc(group="docker", data.folder=getwd(), large=FALSE)
 #' }
 #'
 #' @export
-fastqc <- function(group=c("sudo","docker"), data.folder){
+fastqc <- function(group=c("sudo","docker"), data.folder, large=FALSE){
 
 
   #storing the position of the home folder
@@ -45,8 +46,13 @@ fastqc <- function(group=c("sudo","docker"), data.folder){
 
 
   #executing the docker job
-  params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/scratch -d docker.io/repbioinfo/r340.2017.01 bash /bin/fastqc.sh", sep="")
- resultRun <- runDocker(group=group, params=params)
+  if(!large){
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/scratch -d docker.io/repbioinfo/r340.2017.01 bash /bin/fastqc.sh", sep="")
+  }else{
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/scratch -d docker.io/repbioinfo/r340.2017.01 bash /bin/fastqc_large.sh", sep="")
+  }
+  
+  resultRun <- runDocker(group=group, params=params)
 
   #waiting for the end of the container work
   if(resultRun==0){
