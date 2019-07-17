@@ -4,19 +4,32 @@
 #' @param control.bam, aa character string indicating the path to the control bam file. IMPORTANT control.bam and chipseq.bam are in the same folder
 #' @param chipseq.bam, a character string indicating the path to the chipseq bam file. IMPORTANT control.bam and chipseq.bam are in the same folder
 #' @param experiment.name, a character string indicating the prefix for MCS2 output
+#' @param histone.marks, boolean if TRUE activate the broad option to call histone marks
+#' @param broad.cutoff, if histone.mark is TRUE broad.cutoff can be set, default 0.1
+#' @param qvalue, The qvalue (minimum FDR) cutoff to call significant regions. Default is 0.05. For broad marks, you can try 0.05 as cutoff.
+#' @param organism, required to select the correct genome size avaialble options hs, mm
+#' @return NAME_peaks.xls, which is a tabular file which contains information about called peaks. You can open it in excel and sort/filter using excel functions. Information include: chromosome name, start position of peak, end position of peak, length of peak region, absolute peak summit position, pileup height at peak summit, -log10(pvalue) for the peak summit (e.g. pvalue =1e-10, then this value should be 10), fold enrichment for this peak summit against random Poisson distribution with local lambda, -log10(qvalue) at peak summit. NAME_peaks.narrowPeak is BED6+4 format file which contains the peak locations together with peak summit, pvalue and qvalue. You can load it to UCSC genome browser. Definition of some specific columns are: 5th: integer score for display calculated as int(-10*log10qvalue). Please note that currently this value might be out of the [0-1000] range defined in UCSC Encode narrowPeak format, 7th: fold-change, 8th: -log10pvalue, 9th: -log10qvalue, 10th: relative summit position to peak start. NAME_peaks.broadPeak is in BED6+3 format which is similar to narrowPeak file.   
 
 
 #' @author raffaele.calogero [at] unito [dot] it, University of Torino
 #' 
 #' @examples
 #' \dontrun{
-#'     #running MACS
+#'     #running MACS for conventional peaks
 #'     macs2(group="docker", control.bam=paste(getwd(),"igg_dedup_reads.bam", sep="/"), 
-#'            chipseq.bam=paste(getwd(),"prdm51_dedup_reads.bam", sep="/"), experiment.name="prdm51_igg")
+#'             chipseq.bam=paste(getwd(),"prdm51_dedup_reads.bam", sep="/"), 
+#'             experiment.name="prdm51_igg", histone.marks=FALSE, qvalue=0.05, 
+#'             organism="mm")
+#'             
+#'     #running MACS for histone marks
+#'     macs2(group="docker", control.bam=paste(getwd(),"igg_dedup_reads.bam", sep="/"), 
+#'             chipseq.bam=paste(getwd(),"prdm51_dedup_reads.bam", sep="/"), 
+#'             experiment.name="prdm51_igg", histone.marks=TRUE, broad.cutoff=0.1, 
+#'             organism="mm")     
 #' }
 #'
 #' @export
-macs2 <- function(group=c("sudo","docker"), control.bam, chipseq.bam, experiment.name){
+macs2 <- function(group=c("sudo","docker"), control.bam, chipseq.bam, experiment.name, histone.marks=FALSE, broad.cutoff=0.1, qvalue=0.05, organism=c("hs", "mm")){
 
   #running time 1
   ptm <- proc.time()
@@ -57,9 +70,25 @@ macs2 <- function(group=c("sudo","docker"), control.bam, chipseq.bam, experiment
   }
   
   
-
+  if(organism=="hs"){
+    g.size=2.7e9
+  }else if(organism=="mm"){
+    g.size=1.87e9
+  }else{
+    cat("\nNot imple mented, yet!\n")
+    return(3)
+  }
+  
+  
+  
 #executing the docker job
-  params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data -d fooliu/macs2 callpeak -t /data/", chipseqC," -c /data/", controlC, " -n ", experiment.name, " --outdir /data", sep="")
+  if(!histone.marks){
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data -d fooliu/macs2 callpeak --qvalue ", qvalue, " --gsize ", g.size, " -t /data/", chipseqC," -c /data/", controlC, " -n ", experiment.name, " --outdir /data", sep="")
+  }else{
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data -d fooliu/macs2 callpeak --broad --broad-cutoff ", broad.cutoff, " --gsize ", g.size, " -t /data/", chipseqC," -c /data/", controlC, " -n ", experiment.name, " --outdir /data", sep="")
+  }
+  
+  
   resultRun <- runDocker(group=group, params=params)
   
   #waiting for the end of the container work
