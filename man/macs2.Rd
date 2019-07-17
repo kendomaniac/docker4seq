@@ -11,7 +11,7 @@ macs2(group = c("sudo", "docker"), control.bam, chipseq.bam,
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
 
-\item{control.bam, }{aa character string indicating the path to the control bam file. IMPORTANT control.bam and chipseq.bam are in the same folder}
+\item{control.bam, }{a character string indicating the path to the control bam file. IMPORTANT control.bam and chipseq.bam are in the same folder}
 
 \item{chipseq.bam, }{a character string indicating the path to the chipseq bam file. IMPORTANT control.bam and chipseq.bam are in the same folder}
 

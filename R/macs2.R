@@ -1,7 +1,7 @@
 #' @title A function to handle a MACS2 containier
 #' @description This function executes a MACS2 docker that produces as output peaks call
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
-#' @param control.bam, aa character string indicating the path to the control bam file. IMPORTANT control.bam and chipseq.bam are in the same folder
+#' @param control.bam, a character string indicating the path to the control bam file. IMPORTANT control.bam and chipseq.bam are in the same folder
 #' @param chipseq.bam, a character string indicating the path to the chipseq bam file. IMPORTANT control.bam and chipseq.bam are in the same folder
 #' @param experiment.name, a character string indicating the prefix for MCS2 output
 #' @param histone.marks, boolean if TRUE activate the broad option to call histone marks
