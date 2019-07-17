@@ -5,7 +5,8 @@
 \title{A function to handle a MACS2 containier}
 \usage{
 macs2(group = c("sudo", "docker"), control.bam, chipseq.bam,
-  experiment.name)
+  experiment.name, histone.marks = FALSE, broad.cutoff = 0.1,
+  qvalue = 0.05, organism = c("hs", "mm"))
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}
@@ -15,15 +16,34 @@ macs2(group = c("sudo", "docker"), control.bam, chipseq.bam,
 \item{chipseq.bam, }{a character string indicating the path to the chipseq bam file. IMPORTANT control.bam and chipseq.bam are in the same folder}
 
 \item{experiment.name, }{a character string indicating the prefix for MCS2 output}
+
+\item{histone.marks, }{boolean if TRUE activate the broad option to call histone marks}
+
+\item{broad.cutoff, }{if histone.mark is TRUE broad.cutoff can be set, default 0.1}
+
+\item{qvalue, }{The qvalue (minimum FDR) cutoff to call significant regions. Default is 0.05. For broad marks, you can try 0.05 as cutoff.}
+
+\item{organism, }{required to select the correct genome size avaialble options hs, mm}
+}
+\value{
+NAME_peaks.xls, which is a tabular file which contains information about called peaks. You can open it in excel and sort/filter using excel functions. Information include: chromosome name, start position of peak, end position of peak, length of peak region, absolute peak summit position, pileup height at peak summit, -log10(pvalue) for the peak summit (e.g. pvalue =1e-10, then this value should be 10), fold enrichment for this peak summit against random Poisson distribution with local lambda, -log10(qvalue) at peak summit. NAME_peaks.narrowPeak is BED6+4 format file which contains the peak locations together with peak summit, pvalue and qvalue. You can load it to UCSC genome browser. Definition of some specific columns are: 5th: integer score for display calculated as int(-10*log10qvalue). Please note that currently this value might be out of the [0-1000] range defined in UCSC Encode narrowPeak format, 7th: fold-change, 8th: -log10pvalue, 9th: -log10qvalue, 10th: relative summit position to peak start. NAME_peaks.broadPeak is in BED6+3 format which is similar to narrowPeak file.
 }
 \description{
 This function executes a MACS2 docker that produces as output peaks call
 }
 \examples{
 \dontrun{
-    #running MACS
+    #running MACS for conventional peaks
     macs2(group="docker", control.bam=paste(getwd(),"igg_dedup_reads.bam", sep="/"), 
-           chipseq.bam=paste(getwd(),"prdm51_dedup_reads.bam", sep="/"), experiment.name="prdm51_igg")
+            chipseq.bam=paste(getwd(),"prdm51_dedup_reads.bam", sep="/"), 
+            experiment.name="prdm51_igg", histone.marks=FALSE, qvalue=0.05, 
+            organism="mm")
+            
+    #running MACS for histone marks
+    macs2(group="docker", control.bam=paste(getwd(),"igg_dedup_reads.bam", sep="/"), 
+            chipseq.bam=paste(getwd(),"prdm51_dedup_reads.bam", sep="/"), 
+            experiment.name="prdm51_igg", histone.marks=TRUE, broad.cutoff=0.1, 
+            organism="mm")     
 }
 
 }
