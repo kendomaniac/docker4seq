@@ -44,8 +44,8 @@ annoByGtfchipseq <- function(group="docker", peaks.file=getwd(), gtf.file, exten
   }
 
 
-  params <- paste("--cidfile ", data.folder,"/dockerID -v ",data.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.annoByGtfchipseq.R ", basename(gtf.file), " ", basename(peaks.file), " ", extension, sep="")
-    resultRun <- runDocker(group=group, params=params)
+  params <- paste("--cidfile ", data.folder,"/dockerID -v ",data.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/annoByGtfchipseq.R ", basename(gtf.file), " ", basename(peaks.file), " ", extension, sep="")
+  resultRun <- runDocker(group=group, params=params)
 
 
   if(resultRun==0){
