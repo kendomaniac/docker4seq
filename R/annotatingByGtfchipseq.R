@@ -14,7 +14,7 @@
 ##'     #downloading fastq files
 
 #'     #running rsemannoByGtfchipseq
-#'     annoByGtfchipseq(group="docker", peaks.file=paste(getwd(),"prdm51_igg_peaks.xls", sep="/"), 
+#'     annoByGtfchipseq(group="docker", peaks.file=paste(getwd(),"h3k9me1_igg_peaks.xls", sep="/"), 
 #'                gtf.file=paste("/Users/raffaelecalogero/Dropbox/courses/DUKENUS_JUL2019/course/course/datasets/genomes/mm10bwa","Mus_musculus.GRCm38.97.gtf", sep="/"), extension=10000)
 #' }
 #'
@@ -44,7 +44,7 @@ annoByGtfchipseq <- function(group="docker", peaks.file=getwd(), gtf.file, exten
   }
 
 
-  params <- paste("--cidfile ",rsem.folder,"/dockerID -v ",data.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.annoByGtfchipseq.R /data/genome/", basename(gtf.file), " ", basename(peaks.file), " ", extension, sep="")
+  params <- paste("--cidfile ", data.folder,"/dockerID -v ",data.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/r332.2017.01 Rscript /bin/.annoByGtfchipseq.R /data/genome/", basename(gtf.file), " ", basename(peaks.file), " ", extension, sep="")
     resultRun <- runDocker(group=group, params=params)
 
 

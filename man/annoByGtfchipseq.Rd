@@ -26,7 +26,7 @@ This function executes the docker container annotate.1, where refGenome is used 
 \dontrun{
     #downloading fastq files
     #running rsemannoByGtfchipseq
-    annoByGtfchipseq(group="docker", peaks.file=paste(getwd(),"prdm51_igg_peaks.xls", sep="/"), 
+    annoByGtfchipseq(group="docker", peaks.file=paste(getwd(),"h3k9me1_igg_peaks.xls", sep="/"), 
                gtf.file=paste("/Users/raffaelecalogero/Dropbox/courses/DUKENUS_JUL2019/course/course/datasets/genomes/mm10bwa","Mus_musculus.GRCm38.97.gtf", sep="/"), extension=10000)
 }
 
