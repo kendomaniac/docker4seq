@@ -5,10 +5,10 @@
 \title{Generating bwa genome index}
 \usage{
 bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(),
-  genome.url = NULL, dbsnp.file = NULL, g1000.file = NULL,
-  mode = c("General", "GATK", "miRNA", "ncRNA"), mb.version = NULL,
-  mb.species = NULL, rc.version = NULL, rc.species = NULL,
-  length = NULL)
+  genome.url = NULL, gtf.url = NULL, dbsnp.file = NULL,
+  g1000.file = NULL, mode = c("General", "GATK", "miRNA", "ncRNA"),
+  mb.version = NULL, mb.species = NULL, rc.version = NULL,
+  rc.species = NULL, length = NULL)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -16,6 +16,8 @@ bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(),
 \item{genome.folder, }{a character string indicating the folder where the indexed reference genome for bwa will be located}
 
 \item{genome.url, }{a character string indicating the URL from download web page for the genome sequence of interest}
+
+\item{gtf.url, }{a character string indicating the URL from ENSEMBL ftp for the GTF for genome of interest}
 
 \item{dbsnp.file, }{a character string indicating the name of dbSNP vcf located in the genome folder. The dbSNP vcf, dbsnp_138.b37.vcf.gz and dbsnp_138.hg19.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37}
 
@@ -51,7 +53,7 @@ This function executes the docker container bwa1 where BWA is installed. Optiona
     bwaIndex(group="docker", genome.folder="/data/genomes", mb.version="22", mb.species="hsa", mode="miRNA")
 
     #running bwa index for ncRNA analysis
-    bwaIndex(group="docker", genome.folder="/data/genomes/hg19_bwa", rc.version="9.0", rc.species="Homo sapiens", length=80, mode="ncRNA")
+    bwaIndex(group="docker", genome.folder="/data/genomes/hg19_bwa", rc.version="9", rc.species="Homo sapiens", length=80, mode="ncRNA")
 }
 }
 \author{
