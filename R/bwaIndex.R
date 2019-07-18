@@ -5,6 +5,7 @@
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa will be located
 #' @param mode, a character string indicating the required type of analysis. Compatible analyses mode are "General", "GATK", "miRNA", and "ncRNA". In "General" mode the url of any online fasta file ("genome.url" argument) can be provided and indexed, only canonical cromosopmes are kept see id.fa after end of indexing. In the GATK analysis mode, the list of variants from dbsnp ("dbsnp.file" argument) and g1000 ("dbsnp.file" argument) are required in addition to the url of the genome fasta ("genome.url" argument). In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. In "ncRNA" analysis mode, the version ("rc.version" argument) and species prefix ("rc.species" argument) of RNA Central are required. This mode require also a desidered maximum length of the studied RNA annotations ("length" argument).
 #' @param genome.url, a character string indicating the URL from download web page for the genome sequence of interest
+#' @param gtf.url, a character string indicating the URL from ENSEMBL ftp for the GTF for genome of interest
 #' @param dbsnp.file, a character string indicating the name of dbSNP vcf located in the genome folder. The dbSNP vcf, dbsnp_138.b37.vcf.gz and dbsnp_138.hg19.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37
 #' @param g1000.file, a character string indicating the name of 1000 genome vcf located in the genome folder. The 1000 genomes vcf, Mills_and_1000G_gold_standard.indels.b37.vcf.gz and Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/
 #' @param mb.version, a character string indicating the required version of miRBase database. Visit http://www.mirbase.org to select the proper version number.
@@ -31,7 +32,7 @@
 #'     bwaIndex(group="docker", genome.folder="/data/genomes/hg19_bwa", rc.version="9", rc.species="Homo sapiens", length=80, mode="ncRNA")
 #' }
 #' @export
-bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url=NULL, dbsnp.file=NULL, g1000.file=NULL, mode=c("General","GATK","miRNA","ncRNA"), mb.version=NULL, mb.species=NULL, rc.version=NULL, rc.species=NULL, length=NULL){
+bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url=NULL, gtf.url=NULL, dbsnp.file=NULL, g1000.file=NULL, mode=c("General","GATK","miRNA","ncRNA"), mb.version=NULL, mb.species=NULL, rc.version=NULL, rc.species=NULL, length=NULL){
 
     genome.folder <- normalizePath(genome.folder)
 
@@ -140,7 +141,10 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 ### BWA index case for generic analysis
 
   if(mode=="General"){
-
+  
+  #download gtf
+  system(paste("wget", gtf.url, sep=" "))
+  system("gzip -d *.gz")
   params <- paste("--cidfile ", genome.folder, "/dockerID -v ",     genome.folder,":/data/scratch", " -d docker.io/repbioinfo/bwaindex bash /bin/bwa.index.sh ", genome.folder, " ", mode, " ", genome.url,   sep="")
 
 }
