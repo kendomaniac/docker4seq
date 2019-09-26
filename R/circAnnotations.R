@@ -5,7 +5,7 @@
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param ciri.file, a list of circRNAs derived from a CIRI2 prediction analysis
 #' @param annotation.sources, a vector of character strings indicating the circRNA databases to analyse
-#' @param genome.version, a character string indicating the reference genome assembly. The function currently work with the hg18, hg19 and hg38 human genome assemblies
+#' @param assembly, a character string indicating the reference genome assembly. The function currently work with the hg18, hg19 and hg38 human genome assemblies
 #' @author Nicola Licheri and Giulio Ferrero
 #'
 #' @return The annotations of a list of circRNAs from different databases
@@ -18,14 +18,14 @@
 #'     system("unzip master.zip")
 #'
 #' # Run the circAnnotations function
-#'  circAnnotations(group = "docker", scratch.folder="/data/scratch", ciri.file=paste(getwd(),"/circhunter-master/CircHunter/data/circRNA_CRC.bed", sep=""), genome.version="hg19")
+#'  circAnnotations(group = "docker", scratch.folder="/data/scratch", ciri.file=paste(getwd(),"/circhunter-master/CircHunter/data/circRNA_CRC.bed", sep=""), assembly="hg19")
 #'
 #' circAnnotations()
 #' }
 #' @export
 
 
-circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.file, annotation.sources=c("circbase", "tscd"), genome.version=c("hg18", "hg19", "hg38")) {
+circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.file, annotation.sources=c("circbase", "tscd"), assembly=c("hg18", "hg19", "hg38")) {
 
   # running time 1
   ptm <- proc.time()
@@ -77,7 +77,7 @@ circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.fi
       "-v", paste0(data.folder, ":/data/out"),
       "-d docker.io/repbioinfo/docker4circ.2019.01 python3 /ciri2/docker4ciri.py annotation",
       "-s", paste(annotation.sources, collapse=" "),
-      "-v", genome.version
+      "-v", assembly
   )
   resultRun <- runDocker(group = group, params = params)
 
