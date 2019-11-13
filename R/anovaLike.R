@@ -1,5 +1,5 @@
 #' @title A function allowing the identification of differentially expressed genes if multiple groups are provided.
-#' @description This function executes in a docker edgeR for the identification of differentially expressed genes in bulk RNAseq
+#' @description This function executes in a docker edgeR for the identification of differentially expressed genes in bulk RNAseq. IMPORTANT the filename shoould not have any '.' in the name unless .txt
 #' @param group, a character string. Two options: sudo or docker, depending to which group the user belongs
 #' @param file, a character string indicating the path of the file, with counts.table name and extension included
 #' @param logFC.threshold, minimal logFC present in at least one of the comparisons with respect to reference covariate
