@@ -121,8 +121,8 @@ sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder
     trimmed.dir <- file.path(fastq.folder, "trimmed")
 
     arguments <- ifelse(mode == "miRNA",
-        paste(mode, threads, ref.id, mb.version, mb.species),   #arguments for miRNA quantification
-        paste(mode, threads, ref.id)                #arguments for ncRNA quantification
+        paste(mode, threads, ref.id, mb.version, mb.species), #arguments for miRNA quantification
+        paste(mode, threads, ref.id) #arguments for ncRNA quantification
     )
     #calling docker for quantification
     params <- paste(

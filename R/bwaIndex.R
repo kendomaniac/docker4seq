@@ -110,7 +110,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 	    return(2)
 	  }
 	  else{
-	    params <- paste("--cidfile ", genome.folder, "/dockerID -v ", genome.folder,":/data/scratch", " -d docker.io/gferrero/bwaindex bash /bin/bwa.index.sh ", genome.folder, " ", mode, " ", mb.version, " ", mb.species, sep="")
+	    params <- paste("--cidfile ", genome.folder, "/dockerID -v ", genome.folder,":/data/scratch", " -d docker.io/repbioinfo/bwaindex bash /bin/bwa.index.sh ", genome.folder, " ", mode, " ", mb.version, " ", mb.species, sep="")
 	  }
 	}
 
@@ -134,7 +134,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 	    return(2)
 	  }
 	  else{
-	    params <- paste("--cidfile ", genome.folder, "/dockerID -v ", genome.folder,":/data/scratch", " -d docker.io/gferrero/bwaindex bash /bin/bwa.index.sh ", genome.folder, " ", mode, " ", rc.version, " \"", rc.species, "\" ", length, sep="")
+	    params <- paste("--cidfile ", genome.folder, "/dockerID -v ", genome.folder,":/data/scratch", " -d docker.io/repbioinfo/bwaindex bash /bin/bwa.index.sh ", genome.folder, " ", mode, " ", rc.version, " \"", rc.species, "\" ", length, sep="")
 	  }
 	}
 

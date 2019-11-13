@@ -5,7 +5,7 @@
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param circrna.data, string indicating the path to the list of circRNAs
 #' @param exon.data, string indicating the path to the exon annotation file
-#' @param assembly, string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38
+#' @param assembly, string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38, mm9, mm10, rn6, dm6, ce11.
 #' @author Nicola Licheri and Giulio Ferrero
 #'
 #' @return A fasta file reporting the sequence of circRNA back-splice junctions
@@ -22,9 +22,7 @@
 #' }
 #' @export
 
-
 circrnaBSJunctions <- function(group=c("sudo","docker"), scratch.folder, circrna.data, exon.data, assembly="hg19") {
-
 
   #running time 1
   ptm <- proc.time()
@@ -42,13 +40,11 @@ circrnaBSJunctions <- function(group=c("sudo","docker"), scratch.folder, circrna
     return(2)
   }
 
-
   #storing the position of the home folder
   home <- getwd()
   setwd(data.folder)
   #initialize status
   system("echo 0 > ExitStatusFile 2>&1")
-
 
   #check if input files exist
   if (!file.exists(circrna.data)) {
@@ -64,13 +60,12 @@ circrnaBSJunctions <- function(group=c("sudo","docker"), scratch.folder, circrna
     return(2)
   }
   #check if assembly is supported
-  if (!(assembly %in% c("hg19", "hg18", "hg38"))) {
+  if (!(assembly %in% c("hg19", "hg18", "hg38", "mm9", "mm10", "rn6", "dm6", "ce11"))) {
     cat(paste("\nThe given assembly is not supported\n"))
     system("echo 4 > ExitStatusFile 2>&1")
     setwd(home)
     return(4)
   }
-
 
   #check  if scratch folder exist
   if (!file.exists(scratch.folder)) {
