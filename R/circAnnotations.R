@@ -1,11 +1,11 @@
 #' @title Annotation of a list of circRNAs
-#' @description This function executes the docker container ciri2 in the annotation mode to overlap a list of circRNAs with the annotations from circBase and TSCD
+#' @description This function executes the docker container ciri2 in the annotation mode to overlap a list of circRNAs with the annotations from circBase, CSCD, ExoRBase, Circ2Disease, CircFunBase, and TSCD
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
-#' @param ciri.file, a list of circRNAs derived from a CIRI2 prediction analysis
-#' @param annotation.sources, a vector of character strings indicating the circRNA databases to analyse
-#' @param assembly, a character string indicating the reference genome assembly. The function currently work with the hg18, hg19 and hg38 human genome assemblies
+#' @param circrna.file, a list of circRNAs derived from a circRNAs prediction analysis
+#' @param annotation.sources, a vector of character strings indicating the circRNA databases to analyse. Compatible databases id: circbase, cscd, exorbase, circ2disease, circfunbase, tscd.
+#' @param assembly, a character string indicating the reference genome assembly. The function currently work with the hg18, hg19, and hg38, mm9, and mm10 genome assemblies.
 #' @author Nicola Licheri and Giulio Ferrero
 #'
 #' @return The annotations of a list of circRNAs from different databases
@@ -25,7 +25,7 @@
 #' @export
 
 
-circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.file, annotation.sources=c("circbase", "tscd"), assembly=c("hg18", "hg19", "hg38")) {
+circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.file, annotation.sources=c("circbase", "tscd", "cscd", "exorbase", "circ2disease", "circfunbase"), assembly=c("hg18", "hg19", "hg38", "mm9", "mm10")) {
 
   # running time 1
   ptm <- proc.time()

@@ -21,7 +21,7 @@ anovaLike(group = c("sudo", "docker"), file, logFC.threshold = 1,
 \item{plot, }{TRUE if differentially expressed genes are represented in a plot.}
 }
 \description{
-This function executes in a docker edgeR for the identification of differentially expressed genes in bulk RNAseq
+This function executes in a docker edgeR for the identification of differentially expressed genes in bulk RNAseq. IMPORTANT the filename shoould not have any '.' in the name unless .txt
 }
 \examples{
 \dontrun{

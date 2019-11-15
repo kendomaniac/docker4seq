@@ -4,7 +4,8 @@
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param data.folder, a character string indicating the data folder where the output files will be saved
-#' @param assembly, string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38
+#' @param assembly, string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38, mm9, mm10, rn6, dm6, ce11
+#' @param version, Ensembl database version used for the analysis. If no version number is provided, the last version is considered
 #' @author Nicola Licheri and Giulio Ferrero
 #'
 #' @return Two tab-delimited tables reporting the exons and the transcript isoforms annotations of an user-selected human genome assembly
@@ -20,7 +21,7 @@
 #' }
 #' @export
 
-circrnaPrepareFiles <- function(group=c("sudo","docker"), scratch.folder, data.folder, assembly="hg19") {
+circrnaPrepareFiles <- function(group=c("sudo","docker"), scratch.folder, data.folder, assembly="hg19", version=NULL) {
 
   #running time 1
   ptm <- proc.time()
@@ -56,7 +57,8 @@ circrnaPrepareFiles <- function(group=c("sudo","docker"), scratch.folder, data.f
                   "-d docker.io/repbioinfo/docker4circ.2019.01 Rscript /scripts/circhunter/circhunter.R",
                   "--preparedata ",
                   "-as", assembly,
-                  "-of"
+                  "-of",
+                  "-v", version
   )
   resultRun <- runDocker(group=group, params=params)
 

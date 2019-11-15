@@ -6,7 +6,8 @@
 #' @param circrna.data, string indicating the path to the list of circRNAs
 #' @param exon.data, string indicating the path to the exon annotation file
 #' @param isoform.data, string indicating the path to the isoform annotation file
-#' @param assembly, string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38
+#' @param assembly, string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38, mm9, mm10, rn6, dm6, ce11
+#' @param version, Ensembl database version used for the analysis. If no version number is provided, the last version is considered
 #' @author Nicola Licheri and Giulio Ferrero
 #'
 #' @return Two tab-delimited tables reporting the transcript- and gene-level classification of a list of circRNAs
@@ -95,6 +96,7 @@ circrnaClassification <- function(group=c("sudo","docker"), scratch.folder, circ
       "-d docker.io/repbioinfo/docker4circ.2019.01 Rscript /scripts/circhunter/circhunter.R",
       "--classification",
       "-as", assembly,
+      "-v", version,
       "-sg", #exon.data,
       "-id", #isoform.data,
 	  "-of" #output_folder
