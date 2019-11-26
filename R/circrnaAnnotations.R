@@ -25,7 +25,7 @@
 #' @export
 
 
-circAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.file, annotation.sources=c("circbase", "tscd", "cscd", "exorbase", "circ2disease", "circfunbase"), assembly=c("hg18", "hg19", "hg38", "mm9", "mm10")) {
+circrnaAnnotations <- function(group = c("sudo", "docker"), scratch.folder, ciri.file, annotation.sources=c("circbase", "tscd", "cscd", "exorbase", "circ2disease", "circfunbase"), assembly=c("hg18", "hg19", "hg38", "mm9", "mm10")) {
 
   # running time 1
   ptm <- proc.time()

@@ -28,7 +28,7 @@
 #' }
 #' @export
 
-ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder,
+circrnaMergePredictions <- function(group = c("sudo", "docker"), scratch.folder,
     data.folder, samples.list, covariates.list, covariate.order,
     min_reads = 2, min_reps = 0, min_avg = 10, used.tool = c("ciri2", "circexplorer2")) {
 
