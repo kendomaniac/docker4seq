@@ -5,7 +5,7 @@
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param input.folder, string indicating the path of the folder containing the samples to overlap
 #' @param output.folder, string indicating the path of the output folder 
-#' @param min_support, an integer representing the minimum number of occurrencies that a circRNA has to be in order to be reported
+#' @param min_support, an integer representing the minimum number of occurrences that a circRNA has to be in order to be reported
 #' @author Nicola Licheri
 #'
 #' @return 
