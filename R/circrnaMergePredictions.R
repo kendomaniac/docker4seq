@@ -1,15 +1,16 @@
-#' @title Function to merge different circRNA lists from CIRI 2
-#' @description This function executes the docker container ciri2merge by running the merge of different lists of circRNAs predicted by CIRI2  following a sample data files provided by the user. The function executes also a filter based on the number of back-splicing reads computed in each experiment and across replicates of the same biological condition.
+#' @title Function to merge different circRNA lists predicted from CIRI 2 or CIRCexplorer2
+#' @description This function executes the docker container ciri2merge by running the merge of different lists of circRNAs predicted by CIRI2 or CIRCexplorer2 following a sample data files provided by the user. The function executes also a filter based on the number of back-splicing reads computed in each experiment and across replicates of the same biological condition.
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
-#' @param data.folder, a character string indicating the data folder where the CIRI 2 output files are located
+#' @param data.folder, a character string indicating the data folder where the CIRI 2 / CIRCexplorer2 output files are located
 #' @param samples.list, a character vector indicating the identifiers of the samples
 #' @param covariates.list, a character vector indicating the classes of the samples
 #' @param covariate.order, a character vector indicating the order of covariates in the output files
 #' @param min_reads, the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)
 #' @param min_reps, the minimum number of replicates associated with at least min_reads supporting a circRNA (default = 0)
 #' @param min_avg, the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)
+#' @param used.tool, the tool used to predict the circRNA. Supported tools are CIRI2 and CIRCexplorer2
 #' @author Nicola Licheri and Giulio Ferrero
 #'
 #' @return Two tab-delimited tables reporting the BS supporting reads and the coordinates of the filtered circRNAs are reported
@@ -29,7 +30,7 @@
 
 ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder,
     data.folder, samples.list, covariates.list, covariate.order,
-    min_reads = 2, min_reps = 0, min_avg = 10) {
+    min_reads = 2, min_reps = 0, min_avg = 10, used.tool = c("ciri2", "circexplorer2")) {
 
 
   # running time 1
@@ -70,14 +71,15 @@ ciri2MergePredictions <- function(group = c("sudo", "docker"), scratch.folder,
   params <- paste(
       "--cidfile", paste0(data.folder, "/dockerID"),
       "-v", paste0(scratch.folder, ":/scratch"),
-      "-v", paste0(data.folder, ":/data"),
-      "-d docker.io/repbioinfo/docker4circ.2019.01 python3 /ciri2/docker4ciri.py merge",
+      "-v", paste0(data.folder, ":/data/out"),
+      "-d docker.io/repbioinfo/docker4circ.2019.02 python3 /ciri2/docker4ciri.py merge",
       "--samples", paste(samples.list, collapse = " "),
       "--cov", paste(covariates.list, collapse = " "),
       "--order", paste(covariate.order, collapse = " "),
       "--mr", min_reads,
       "--mrep", min_reps,
-      "--avg", min_avg
+      "--avg", min_avg, 
+      "--tool", used.tool
   )
   resultRun <- runDocker(group = group, params = params)
 
