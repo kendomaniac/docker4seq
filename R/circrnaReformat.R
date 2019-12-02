@@ -8,7 +8,7 @@
 #' @param tool, string indicating the tool used to create the input files. Supported tools are: acfs, circexplorer, circexplorer2, circrnafinder, ciri, ciri2, dcc, findcirc2, knife, starchip, uroborus
 #' @author Nicola Licheri
 #'
-#' @return 
+#' @return A circRNA list reformatted in a tab-delimited file storing the circRNA genomic coordinates
 #' @examples
 #'\dontrun{
 #' }

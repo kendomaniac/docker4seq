@@ -5,7 +5,7 @@
 \title{Function to prepare the CircHunter reference annotations}
 \usage{
 circrnaPrepareFiles(group = c("sudo", "docker"), scratch.folder,
-  data.folder, assembly = "hg19")
+  data.folder, assembly = "hg19", version = NULL)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -14,7 +14,9 @@ circrnaPrepareFiles(group = c("sudo", "docker"), scratch.folder,
 
 \item{data.folder, }{a character string indicating the data folder where the output files will be saved}
 
-\item{assembly, }{string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38}
+\item{assembly, }{string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38, mm9, mm10, rn6, dm6, ce11}
+
+\item{version, }{Ensembl database version used for the analysis. If no version number is provided, the last version is considered}
 }
 \value{
 Two tab-delimited tables reporting the exons and the transcript isoforms annotations of an user-selected human genome assembly

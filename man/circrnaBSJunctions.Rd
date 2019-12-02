@@ -16,7 +16,7 @@ circrnaBSJunctions(group = c("sudo", "docker"), scratch.folder,
 
 \item{exon.data, }{string indicating the path to the exon annotation file}
 
-\item{assembly, }{string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38}
+\item{assembly, }{string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38, mm9, mm10, rn6, dm6, ce11.}
 }
 \value{
 A fasta file reporting the sequence of circRNA back-splice junctions
