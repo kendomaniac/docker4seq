@@ -8,7 +8,7 @@
 #' @param min_support, an integer representing the minimum number of occurrences that a circRNA has to be in order to be reported
 #' @author Nicola Licheri
 #'
-#' @return 
+#' @return The list of circRNAs detected in at least the user-defined number of algorithms
 #' @examples
 #'\dontrun{
 #' }
