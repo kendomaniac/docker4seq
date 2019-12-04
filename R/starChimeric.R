@@ -62,7 +62,7 @@ starChimeric <- function(group=c("sudo","docker"), fastq.folder=getwd(), scratch
     }
 
     samples <- dir(path=fastq.folder)
-    samples <- samples[grep(".fastq.gz", samples)]
+    samples <- samples[grep(".fastq.gz$", samples)]
     trimmed.samples <- samples[grep("trimmed", samples)]
 
     if (length(samples) == 0) {
