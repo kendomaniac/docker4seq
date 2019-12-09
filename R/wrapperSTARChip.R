@@ -5,7 +5,7 @@
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for STAR is located.
 #' @param samples.folder, the folder where are located all the subfolders of the samples processed with starChimeric
-#' @param nthreads, a number indicating the number of cores to be used from the application
+#' @param threads, a number indicating the number of cores to be used from the application
 #' @param chimSegmentMin, is a positive integer indicating the minimal length of the overlap of a read to the chimeric element
 #' @param chimJunctionOverhangMin, is a positive integer indicating the minimum overhang for a chimeric junction
 #' @param reads.cutoff, Integer. Minimum number of reads crossing the circRNA backsplice required.
@@ -36,7 +36,7 @@
 
 wrapperSTARChip <- function(group=c("sudo", "docker"), 
     #I/O parameters + #threads 
-    scratch.folder, genome.folder, samples.folder, nthreads, 
+    scratch.folder, genome.folder, samples.folder, threads, 
     # STARChimeric parameters
     chimSegmentMin, chimJunctionOverhangMin, 
     # STARChipCircle parameters
@@ -65,7 +65,7 @@ wrapperSTARChip <- function(group=c("sudo", "docker"),
 
             ## Chimeric transcripts detection 
             starChimeric(group = group, fastq.folder = sample, scratch.folder = scratch.folder, 
-                genome.folder = genome.folder, threads = nthreads, chimSegmentMin = chimSegmentMin, 
+                genome.folder = genome.folder, threads = threads, chimSegmentMin = chimSegmentMin, 
                 chimJunctionOverhangMin = chimJunctionOverhangMin)
         }
     }
@@ -73,7 +73,7 @@ wrapperSTARChip <- function(group=c("sudo", "docker"),
     ## circRNA prediction 
     starchipCircle(group=group, scratch.folder=scratch.folder, genome.folder=genome.folder, 
         samples.folder=samples.folder, reads.cutoff=reads.cutoff, min.subject.limit=min.subject.limit, 
-        threads=nthreads, do.splice=do.splice, cpm.cutoff=cpm.cutoff, 
+        threads=threads, do.splice=do.splice, cpm.cutoff=cpm.cutoff, 
         subjectCPM.cutoff=subjectCPM.cutoff, annotation=annotation)
     
     setwd(home)
