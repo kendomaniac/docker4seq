@@ -1,16 +1,16 @@
-#' @title Function to merge different circRNA lists predicted from CIRI 2 or CIRCexplorer2
-#' @description This function executes the docker container ciri2merge by running the merge of different lists of circRNAs predicted by CIRI2 or CIRCexplorer2 following a sample data files provided by the user. The function executes also a filter based on the number of back-splicing reads computed in each experiment and across replicates of the same biological condition.
+#' @title Function to merge different circRNA lists predicted from one of the supported circRNA prediction tools. 
+#' @description This function executes the docker container ciri2merge by running the merge of different lists of circRNAs predicted by one of the supported tools following a sample data files provided by the user. The function executes also a filter based on the number of back-splicing reads computed in each experiment and across replicates of the same biological condition.
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
-#' @param data.folder, a character string indicating the data folder where the CIRI 2 / CIRCexplorer2 output files are located
+#' @param data.folder, a character string indicating the data folder where the circRNA  output files are located
 #' @param samples.list, a character vector indicating the identifiers of the samples
 #' @param covariates.list, a character vector indicating the classes of the samples
 #' @param covariate.order, a character vector indicating the order of covariates in the output files
 #' @param min_reads, the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)
 #' @param min_reps, the minimum number of replicates associated with at least min_reads supporting a circRNA (default = 0)
 #' @param min_avg, the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)
-#' @param used.tool, the tool used to predict the circRNA. Supported tools are CIRI2 and CIRCexplorer2
+#' @param used.tool, the tool used to predict the circRNAs. Supported tools are: ACFS, CIRI, CIRI2, CIRCEXPLORER, CIRCEXPLORER2, CIRCRNAFINDER, DCC, FINDCIRC2, KNIFE.
 #' @author Nicola Licheri and Giulio Ferrero
 #'
 #' @return Two tab-delimited tables reporting the BS supporting reads and the coordinates of the filtered circRNAs are reported
@@ -22,16 +22,19 @@
 #'     system("unzip master.zip")
 #'     system("unzip ./circhunter-master/CircHunter/data/CIRI_predictions.zip")
 #'
-#'     #running the ciri2MergePredictions function
-#'     ciri2MergePredictions(group="docker", scratch.folder="/data/scratch", data.folder="./circhunter-master/CircHunter/data/CIRI_predictions", groups.file="./circhunter-master/CircHunter/data/CIRI_predictions/SampleData.tsv", min_reads = 2, min_reps = 2, min_avg = 10)
+#'     #running the circrnaMergePredictions function
+#'     circrnaMergePredictions(group="docker", scratch.folder="/data/scratch", data.folder="./circhunter-master/CircHunter/data/CIRI_predictions", groups.file="./circhunter-master/CircHunter/data/CIRI_predictions/SampleData.tsv", min_reads = 2, min_reps = 2, min_avg = 10, used.tool="ciri2")
 #
 #' }
 #' @export
 
 circrnaMergePredictions <- function(group = c("sudo", "docker"), scratch.folder,
     data.folder, samples.list, covariates.list, covariate.order,
-    min_reads = 2, min_reps = 0, min_avg = 10, used.tool = c("ciri2", "circexplorer2")) {
+    min_reads = 2, min_reps = 0, min_avg = 10, 
+    used.tool = c('acfs', 'ciri', 'ciri2', 'circexplorer', 'circexplorer2', 'circrnafinder', 'dcc', 'findcirc2', 'knife')) {
 
+
+  supported_tools = c('acfs', 'ciri', 'ciri2', 'circexplorer', 'circexplorer2', 'circrnafinder', 'dcc', 'findcirc2', 'knife')
 
   # running time 1
   ptm <- proc.time()
@@ -50,6 +53,14 @@ circrnaMergePredictions <- function(group = c("sudo", "docker"), scratch.folder,
   setwd(data.folder)
   # initialize status
   system("echo 0 > ExitStatusFile 2>&1")
+
+  # check tool 
+  if (!tolower(used.tool) %in% supported_tools) {
+    cat(paste("\nIt seems that the tool", used.tool, " is not supported by \n"))
+    system("echo 4 > ExitStatusFile 2>&1")
+    setwd(home)
+    return (4)
+  }
 
   # check  if scratch folder exist
   if (!file.exists(scratch.folder)) {
