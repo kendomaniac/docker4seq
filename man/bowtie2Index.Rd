@@ -15,7 +15,7 @@ bowtie2Index(
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
 
-\item{genome.folder, }{a character string indicating the folder where the indexed reference genome for bwa will be located}
+\item{genome.folder, }{a character string indicating the folder where the indexed reference genome for Bowtie will be located}
 
 \item{ensembl.urlgenome, }{a character string indicating the URL from ENSEMBL ftp for the unmasked genome sequence of interest}
 
@@ -24,7 +24,7 @@ bowtie2Index(
 \item{threads, }{a number indicating the number of cores to be used from the application}
 }
 \value{
-The indexed bwa genome reference sequence
+The indexed Bowtie genome reference sequence
 }
 \description{
 This function executes the docker container bowtie2 where bowtie2-2.2.9 is installed. The index is created using ENSEMBL genome fasta file. User needs to provide the URL for ENSEMBL genome located in the ENSEMBL ftp

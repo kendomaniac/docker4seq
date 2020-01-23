@@ -37,7 +37,7 @@ circrnaMergePredictions(
 
 \item{min_avg, }{the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)}
 
-\item{used.tool, }{the tool used to predict the circRNAs. Supported tools are: ACFS, CIRI, CIRI2, CIRCEXPLORER, CIRCEXPLORER2, CIRCRNAFINDER, DCC, FINDCIRC2, KNIFE.}
+\item{used.tool, }{the tool used to predict the circRNAs. Supported tools are: ACFS, CIRI, CIRI2, CIRCexplorer, CIRCexplorer2, CircRNA_Finder, DCC, Find_Circ2, KNIFE, Uroborus.}
 }
 \value{
 Two tab-delimited tables reporting the BS supporting reads and the coordinates of the filtered circRNAs are reported

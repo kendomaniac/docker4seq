@@ -10,7 +10,7 @@
 #' @param min_reads, the minimum number of back-splicing reads supporting a circRNA and detected in at least min_reps number of biological replicates of the same experimental condition (default = 2)
 #' @param min_reps, the minimum number of replicates associated with at least min_reads supporting a circRNA (default = 0)
 #' @param min_avg, the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)
-#' @param used.tool, the tool used to predict the circRNAs. Supported tools are: ACFS, CIRI, CIRI2, CIRCEXPLORER, CIRCEXPLORER2, CIRCRNAFINDER, DCC, FINDCIRC2, KNIFE.
+#' @param used.tool, the tool used to predict the circRNAs. Supported tools are: ACFS, CIRI, CIRI2, CIRCexplorer, CIRCexplorer2, CircRNA_Finder, DCC, Find_Circ2, KNIFE, Uroborus.
 #' @author Nicola Licheri and Giulio Ferrero
 #'
 #' @return Two tab-delimited tables reporting the BS supporting reads and the coordinates of the filtered circRNAs are reported
@@ -34,7 +34,7 @@ circrnaMergePredictions <- function(group = c("sudo", "docker"), scratch.folder,
     used.tool = c('acfs', 'ciri', 'ciri2', 'circexplorer', 'circexplorer2', 'circrnafinder', 'dcc', 'findcirc2', 'knife')) {
 
 
-  supported_tools = c('acfs', 'ciri', 'ciri2', 'circexplorer', 'circexplorer2', 'circrnafinder', 'dcc', 'findcirc2', 'knife')
+  supported_tools = c('acfs', 'ciri', 'ciri2', 'circexplorer', 'circexplorer2', 'circrnafinder', 'dcc', 'findcirc2', 'knife', 'uroborus')
 
   # running time 1
   ptm <- proc.time()

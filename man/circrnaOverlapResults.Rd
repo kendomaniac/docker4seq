@@ -21,7 +21,7 @@ circrnaOverlapResults(
 
 \item{output.folder, }{string indicating the path of the output folder}
 
-\item{min_support, }{an integer representing the minimum number of occurrences that a circRNA has to be in order to be reported}
+\item{min_support, }{an integer representing the minimum number of algorithms detecting the circRNA.}
 }
 \value{
 The list of circRNAs detected in at least the user-defined number of algorithms

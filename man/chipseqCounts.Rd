@@ -53,7 +53,7 @@ chipseqCounts(
 
 \item{min.length, }{a number indicating minimal length required to return a trimmed read}
 
-\item{genome.folder, }{a character string indicating the folder where the indexed reference genome for bwa is located}
+\item{genome.folder, }{a character string indicating the folder where the indexed reference genome is located}
 
 \item{mock.id, }{a character string indicating the unique id to be associated to the mock bam that will be created}
 

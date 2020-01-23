@@ -11,7 +11,7 @@
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param seq.type, a character string indicating the type of reads to be trimmed. One options: \code{"se"} for single end sequencing
 #' @param min.length, a number indicating minimal length required to return a trimmed read
-#' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa is located
+#' @param genome.folder, a character string indicating the folder where the indexed reference genome is located
 #' @param mock.id, a character string indicating the unique id to be associated to the mock bam that will be created
 #' @param test.id, a character string indicating the unique id to be associated to the test bam that will be created
 #' @param genome, a character string indicating the genome used as reference for data generation. Available options: hg19, hg38, mm9, mm10

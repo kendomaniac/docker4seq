@@ -2,7 +2,7 @@
 #' @description This function executes the docker container rsem-star1 where RSEM and STAR are installed. The index is created using ENSEMBL genome fasta file. User needs to provide the URL for ENSEMBL genome located in the ENSEMBL ftp
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
-#' @param genome.folder, a character string indicating the folder where the indexed reference genome for bwa will be located
+#' @param genome.folder, a character string indicating the folder where the indexed reference genome will be located
 #' @param uscs.urlgenome, a character string indicating the URL from uscs download web page for the unmasked genome sequence of interest
 #' @param uscs.gtf, a character string indicating the path of the GTF file for genome of interest
 #' @param uscs.urlknownIsoforms, a character string indicating the URL from uscs download web page for the knowisoforms file for genome of interest
@@ -10,7 +10,7 @@
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @author Raffaele Calogero
 #'
-#' @return The indexed bwa genome reference sequence
+#' @return The indexed genome reference sequence
 #' @examples
 #'\dontrun{
 #'     #running rsemstar index for human
