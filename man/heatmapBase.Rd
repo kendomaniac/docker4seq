@@ -4,8 +4,14 @@
 \alias{heatmapBase}
 \title{hfc, heatmap for clustering}
 \usage{
-heatmapBase(group = c("sudo", "docker"), scratch.folder, file,
-  status = 0, lower.range = -1, upper.range = 1)
+heatmapBase(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  file,
+  status = 0,
+  lower.range = -1,
+  upper.range = 1
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

@@ -4,10 +4,17 @@
 \alias{ciri2}
 \title{Running CIRI v2 tool for circRNAs prediction}
 \usage{
-ciri2(group = c("sudo", "docker"), scratch.folder, sam.file, genome.file,
-  annotation.file = NA, max.span = 2e+05,
-  stringency.value = c("high", "low", "zero"), quality.threshold = 10,
-  threads = 1)
+ciri2(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  sam.file,
+  genome.file,
+  annotation.file = NA,
+  max.span = 2e+05,
+  stringency.value = c("high", "low", "zero"),
+  quality.threshold = 10,
+  threads = 1
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

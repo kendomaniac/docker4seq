@@ -4,8 +4,12 @@
 \alias{annoByGtfchipseq}
 \title{Annotating RSEM gene.results using ENSEMBL gtf and refGenome CRAN package}
 \usage{
-annoByGtfchipseq(group = "docker", peaks.file = getwd(), gtf.file,
-  extension = 10000)
+annoByGtfchipseq(
+  group = "docker",
+  peaks.file = getwd(),
+  gtf.file,
+  extension = 10000
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

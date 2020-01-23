@@ -4,10 +4,15 @@
 \alias{mirnaCounts}
 \title{Counting miRNAs, Cordero et al. PLoS One. 2012;7:e31630}
 \usage{
-mirnaCounts(group = c("sudo", "docker"), fastq.folder = getwd(),
-  scratch.folder = "/data/scratch", mirbase.id = c("hsa", "mmu"),
-  download.status = FALSE, adapter.type = c("ILLUMINA", "NEB"),
-  trimmed.fastq = FALSE)
+mirnaCounts(
+  group = c("sudo", "docker"),
+  fastq.folder = getwd(),
+  scratch.folder = "/data/scratch",
+  mirbase.id = c("hsa", "mmu"),
+  download.status = FALSE,
+  adapter.type = c("ILLUMINA", "NEB"),
+  trimmed.fastq = FALSE
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

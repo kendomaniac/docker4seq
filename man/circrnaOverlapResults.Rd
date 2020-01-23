@@ -4,8 +4,13 @@
 \alias{circrnaOverlapResults}
 \title{Running circRNA prediction overlap}
 \usage{
-circrnaOverlapResults(group = c("sudo", "docker"), scratch.folder,
-  input.folder, output.folder, min_support)
+circrnaOverlapResults(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  input.folder,
+  output.folder,
+  min_support
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

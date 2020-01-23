@@ -4,8 +4,13 @@
 \alias{xenomeIndex}
 \title{Generating xenome genome indexes}
 \usage{
-xenomeIndex(group = c("sudo", "docker"), xenome.folder = getwd(),
-  hg.urlgenome = NULL, mm.urlgenome = NULL, threads = 8)
+xenomeIndex(
+  group = c("sudo", "docker"),
+  xenome.folder = getwd(),
+  hg.urlgenome = NULL,
+  mm.urlgenome = NULL,
+  threads = 8
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

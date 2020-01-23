@@ -4,8 +4,14 @@
 \alias{ciriAS}
 \title{Running CIRI_AS tool for circRNAs structure prediction}
 \usage{
-ciriAS(group = c("sudo", "docker"), scratch.folder, sam.file, ciri.file,
-  genome.file, annotation.file = NA)
+ciriAS(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  sam.file,
+  ciri.file,
+  genome.file,
+  annotation.file = NA
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

@@ -4,10 +4,19 @@
 \alias{starchipCircle}
 \title{Running starchip to detect circular RNAs on paired-end sequences}
 \usage{
-starchipCircle(group = c("sudo", "docker"), scratch.folder,
-  genome.folder, samples.folder, reads.cutoff, min.subject.limit, threads,
-  do.splice = c(TRUE, FALSE), cpm.cutoff = 0, subjectCPM.cutoff = 0,
-  annotation = c(TRUE, FALSE))
+starchipCircle(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  genome.folder,
+  samples.folder,
+  reads.cutoff,
+  min.subject.limit,
+  threads,
+  do.splice = c(TRUE, FALSE),
+  cpm.cutoff = 0,
+  subjectCPM.cutoff = 0,
+  annotation = c(TRUE, FALSE)
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

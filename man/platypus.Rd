@@ -4,11 +4,28 @@
 \alias{platypus}
 \title{Platypus analysis NOT READY TO GO ON STABLE missing test set}
 \usage{
-platypus(group = c("sudo", "docker"), data.folder = getwd(),
-  scratch.folder, pathRef, nameRef, threads, GQ, minSampGQ, NR, minSampNR,
-  NV, minSampNV, normal_samples, GT_normal, minSampGT_normal,
-  tumoral_samples, GT_tumoral, minSampGT_tumoral, stringent_filter = 0,
-  annotation = c("hg19", "mm10"))
+platypus(
+  group = c("sudo", "docker"),
+  data.folder = getwd(),
+  scratch.folder,
+  pathRef,
+  nameRef,
+  threads,
+  GQ,
+  minSampGQ,
+  NR,
+  minSampNR,
+  NV,
+  minSampNV,
+  normal_samples,
+  GT_normal,
+  minSampGT_normal,
+  tumoral_samples,
+  GT_tumoral,
+  minSampGT_tumoral,
+  stringent_filter = 0,
+  annotation = c("hg19", "mm10")
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

@@ -4,8 +4,16 @@
 \alias{mergeData}
 \title{Function to merge different circRNA lists from CIRI 2}
 \usage{
-mergeData(group = c("sudo", "docker"), scratch.folder, data.folder,
-  samples.ids, covariates, covariate.order, extension, column_index)
+mergeData(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  data.folder,
+  samples.ids,
+  covariates,
+  covariate.order,
+  extension,
+  column_index
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

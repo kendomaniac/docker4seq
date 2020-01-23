@@ -4,10 +4,21 @@
 \alias{wrapperSTARChip}
 \title{Wrapper function for circRNAs prediction using STARChip}
 \usage{
-wrapperSTARChip(group = c("sudo", "docker"), scratch.folder,
-  genome.folder, samples.folder, threads, chimSegmentMin,
-  chimJunctionOverhangMin, reads.cutoff, min.subject.limit, do.splice,
-  cpm.cutoff, subjectCPM.cutoff, annotation)
+wrapperSTARChip(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  genome.folder,
+  samples.folder,
+  threads,
+  chimSegmentMin,
+  chimJunctionOverhangMin,
+  reads.cutoff,
+  min.subject.limit,
+  do.splice,
+  cpm.cutoff,
+  subjectCPM.cutoff,
+  annotation
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

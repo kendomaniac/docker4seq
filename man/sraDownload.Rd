@@ -4,8 +4,13 @@
 \alias{sraDownload}
 \title{A function to handle fasterq-dumper SRA to download SRA fastq files}
 \usage{
-sraDownload(group = c("sudo", "docker"), sra.name, data.folder,
-  scratch.folder, threads = 8)
+sraDownload(
+  group = c("sudo", "docker"),
+  sra.name,
+  data.folder,
+  scratch.folder,
+  threads = 8
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

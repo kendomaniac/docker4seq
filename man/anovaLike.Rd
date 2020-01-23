@@ -4,8 +4,14 @@
 \alias{anovaLike}
 \title{A function allowing the identification of differentially expressed genes if multiple groups are provided.}
 \usage{
-anovaLike(group = c("sudo", "docker"), file, logFC.threshold = 1,
-  FDR.threshold, logCPM.threshold = 4, plot = c(TRUE, FALSE))
+anovaLike(
+  group = c("sudo", "docker"),
+  file,
+  logFC.threshold = 1,
+  FDR.threshold,
+  logCPM.threshold = 4,
+  plot = c(TRUE, FALSE)
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

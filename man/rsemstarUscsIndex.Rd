@@ -4,10 +4,15 @@
 \alias{rsemstarUscsIndex}
 \title{Generating rsem-star genome index}
 \usage{
-rsemstarUscsIndex(group = c("sudo", "docker"), genome.folder = getwd(),
-  uscs.urlgenome = NULL, uscs.gtf = NULL,
-  uscs.urlknownIsoforms = NULL, uscs.urlknownToLocusLink = NULL,
-  threads = 1)
+rsemstarUscsIndex(
+  group = c("sudo", "docker"),
+  genome.folder = getwd(),
+  uscs.urlgenome = NULL,
+  uscs.gtf = NULL,
+  uscs.urlknownIsoforms = NULL,
+  uscs.urlknownToLocusLink = NULL,
+  threads = 1
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

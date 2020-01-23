@@ -4,11 +4,21 @@
 \alias{rnaseqCounts}
 \title{Running RNAseq counting workflow for a single sample}
 \usage{
-rnaseqCounts(group = "sudo", fastq.folder = getwd(),
-  scratch.folder = "/data/scratch", threads = 4, adapter5, adapter3,
-  seq.type = "pe", min.length = 40,
-  genome.folder = "/data/genomes/hg38star", strandness = "none",
-  save.bam = TRUE, org = "hg38", annotation.type = "gtfENSEMBL")
+rnaseqCounts(
+  group = "sudo",
+  fastq.folder = getwd(),
+  scratch.folder = "/data/scratch",
+  threads = 4,
+  adapter5,
+  adapter3,
+  seq.type = "pe",
+  min.length = 40,
+  genome.folder = "/data/genomes/hg38star",
+  strandness = "none",
+  save.bam = TRUE,
+  org = "hg38",
+  annotation.type = "gtfENSEMBL"
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

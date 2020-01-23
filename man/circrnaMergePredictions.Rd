@@ -2,19 +2,28 @@
 % Please edit documentation in R/circrnaMergePredictions.R
 \name{circrnaMergePredictions}
 \alias{circrnaMergePredictions}
-\title{Function to merge different circRNA lists predicted from CIRI 2 or CIRCexplorer2}
+\title{Function to merge different circRNA lists predicted from one of the supported circRNA prediction tools.}
 \usage{
-circrnaMergePredictions(group = c("sudo", "docker"), scratch.folder,
-  data.folder, samples.list, covariates.list, covariate.order,
-  min_reads = 2, min_reps = 0, min_avg = 10, used.tool = c("ciri2",
-  "circexplorer2"))
+circrnaMergePredictions(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  data.folder,
+  samples.list,
+  covariates.list,
+  covariate.order,
+  min_reads = 2,
+  min_reps = 0,
+  min_avg = 10,
+  used.tool = c("acfs", "ciri", "ciri2", "circexplorer", "circexplorer2",
+    "circrnafinder", "dcc", "findcirc2", "knife")
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
 
 \item{scratch.folder, }{a character string indicating the scratch folder where docker container will be mounted}
 
-\item{data.folder, }{a character string indicating the data folder where the CIRI 2 / CIRCexplorer2 output files are located}
+\item{data.folder, }{a character string indicating the data folder where the circRNA  output files are located}
 
 \item{samples.list, }{a character vector indicating the identifiers of the samples}
 
@@ -28,13 +37,13 @@ circrnaMergePredictions(group = c("sudo", "docker"), scratch.folder,
 
 \item{min_avg, }{the average number of back-splicing reads across biological replicates of the same experimental condition that shall support a circRNA (default = 10)}
 
-\item{used.tool, }{the tool used to predict the circRNA. Supported tools are CIRI2 and CIRCexplorer2}
+\item{used.tool, }{the tool used to predict the circRNAs. Supported tools are: ACFS, CIRI, CIRI2, CIRCEXPLORER, CIRCEXPLORER2, CIRCRNAFINDER, DCC, FINDCIRC2, KNIFE.}
 }
 \value{
 Two tab-delimited tables reporting the BS supporting reads and the coordinates of the filtered circRNAs are reported
 }
 \description{
-This function executes the docker container ciri2merge by running the merge of different lists of circRNAs predicted by CIRI2 or CIRCexplorer2 following a sample data files provided by the user. The function executes also a filter based on the number of back-splicing reads computed in each experiment and across replicates of the same biological condition.
+This function executes the docker container ciri2merge by running the merge of different lists of circRNAs predicted by one of the supported tools following a sample data files provided by the user. The function executes also a filter based on the number of back-splicing reads computed in each experiment and across replicates of the same biological condition.
 }
 \examples{
 \dontrun{
@@ -44,8 +53,8 @@ This function executes the docker container ciri2merge by running the merge of d
     system("unzip master.zip")
     system("unzip ./circhunter-master/CircHunter/data/CIRI_predictions.zip")
 
-    #running the ciri2MergePredictions function
-    ciri2MergePredictions(group="docker", scratch.folder="/data/scratch", data.folder="./circhunter-master/CircHunter/data/CIRI_predictions", groups.file="./circhunter-master/CircHunter/data/CIRI_predictions/SampleData.tsv", min_reads = 2, min_reps = 2, min_avg = 10)
+    #running the circrnaMergePredictions function
+    circrnaMergePredictions(group="docker", scratch.folder="/data/scratch", data.folder="./circhunter-master/CircHunter/data/CIRI_predictions", groups.file="./circhunter-master/CircHunter/data/CIRI_predictions/SampleData.tsv", min_reads = 2, min_reps = 2, min_avg = 10, used.tool="ciri2")
 }
 }
 \author{

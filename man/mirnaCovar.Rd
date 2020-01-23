@@ -4,8 +4,7 @@
 \alias{mirnaCovar}
 \title{Adding covariates and batch information to miRNAseq raw counts output}
 \usage{
-mirnaCovar(experiment.folder, covariates = NULL, batches = NULL,
-  output.folder)
+mirnaCovar(experiment.folder, covariates = NULL, batches = NULL, output.folder)
 }
 \arguments{
 \item{experiment.folder, }{a character string indicating the full paths to miRNAseq input file, i.e. including the name of the file}

@@ -4,10 +4,16 @@
 \alias{heatmaply}
 \title{Function to produce an interactive heatmap using plot.ly}
 \usage{
-heatmaply(group = c("docker", "sudo"), scratch.folder, count.table,
-  gene.list, output.folder, separator = c("TAB", "COMMA", "SPACE"),
-  status = c("raw", "log"), color.palette = c("viridis", "BrBG",
-  "magma", "plasma", "cividis"))
+heatmaply(
+  group = c("docker", "sudo"),
+  scratch.folder,
+  count.table,
+  gene.list,
+  output.folder,
+  separator = c("TAB", "COMMA", "SPACE"),
+  status = c("raw", "log"),
+  color.palette = c("viridis", "BrBG", "magma", "plasma", "cividis")
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

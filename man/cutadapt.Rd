@@ -4,8 +4,13 @@
 \alias{cutadapt}
 \title{Function to execute Cutadapt on RNA-Seq reads}
 \usage{
-cutadapt(group = c("sudo", "docker"), scratch.folder, data.folder,
-  adapter.type = c("ILLUMINA", "NEB"), threads = 1)
+cutadapt(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  data.folder,
+  adapter.type = c("ILLUMINA", "NEB"),
+  threads = 1
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

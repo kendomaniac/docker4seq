@@ -4,8 +4,13 @@
 \alias{bowtie2Index}
 \title{Generating bowtie2 genome index}
 \usage{
-bowtie2Index(group = c("sudo", "docker"), genome.folder = getwd(),
-  ensembl.urlgenome = NULL, ensembl.urlgtf = NULL, threads = 1)
+bowtie2Index(
+  group = c("sudo", "docker"),
+  genome.folder = getwd(),
+  ensembl.urlgenome = NULL,
+  ensembl.urlgtf = NULL,
+  threads = 1
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

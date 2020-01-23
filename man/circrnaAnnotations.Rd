@@ -4,10 +4,14 @@
 \alias{circrnaAnnotations}
 \title{Annotation of a list of circRNAs}
 \usage{
-circrnaAnnotations(group = c("sudo", "docker"), scratch.folder,
-  ciri.file, annotation.sources = c("circbase", "tscd", "cscd",
-  "exorbase", "circ2disease", "circfunbase"), assembly = c("hg18",
-  "hg19", "hg38", "mm9", "mm10"))
+circrnaAnnotations(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  ciri.file,
+  annotation.sources = c("circbase", "tscd", "cscd", "exorbase", "circ2disease",
+    "circfunbase"),
+  assembly = c("hg18", "hg19", "hg38", "mm9", "mm10")
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

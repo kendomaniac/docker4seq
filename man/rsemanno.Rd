@@ -4,9 +4,14 @@
 \alias{rsemanno}
 \title{Annotating RSEM gene.results using ENSEMBL annotation}
 \usage{
-rsemanno(group = c("sudo", "docker"), rsem.folder = getwd(),
-  scratch.folder = "/data/scratch", org = c("hg19", "hg38", "mm10",
-  "mm9"), truncating.expected.counts = FALSE, protein.anno = FALSE)
+rsemanno(
+  group = c("sudo", "docker"),
+  rsem.folder = getwd(),
+  scratch.folder = "/data/scratch",
+  org = c("hg19", "hg38", "mm10", "mm9"),
+  truncating.expected.counts = FALSE,
+  protein.anno = FALSE
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

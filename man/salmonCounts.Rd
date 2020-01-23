@@ -4,9 +4,15 @@
 \alias{salmonCounts}
 \title{A function to handle a salmon docker container}
 \usage{
-salmonCounts(group = c("sudo", "docker"), scratch.folder, fastq.folder,
-  index.folder, threads = 8, seq.type = c("se", "pe"),
-  strandness = c("none", "forward", "reverse"))
+salmonCounts(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  fastq.folder,
+  index.folder,
+  threads = 8,
+  seq.type = c("se", "pe"),
+  strandness = c("none", "forward", "reverse")
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

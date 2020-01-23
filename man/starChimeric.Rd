@@ -4,9 +4,15 @@
 \alias{starChimeric}
 \title{Running Star to detect chimeric transcripts on paired-end sequences}
 \usage{
-starChimeric(group = c("sudo", "docker"), fastq.folder = getwd(),
-  scratch.folder, genome.folder, threads = 1, chimSegmentMin = 20,
-  chimJunctionOverhangMin = 15)
+starChimeric(
+  group = c("sudo", "docker"),
+  fastq.folder = getwd(),
+  scratch.folder,
+  genome.folder,
+  threads = 1,
+  chimSegmentMin = 20,
+  chimJunctionOverhangMin = 15
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

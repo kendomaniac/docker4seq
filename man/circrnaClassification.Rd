@@ -4,8 +4,14 @@
 \alias{circrnaClassification}
 \title{Running CircHunter circRNA classification module}
 \usage{
-circrnaClassification(group = c("sudo", "docker"), scratch.folder,
-  circrna.data, exon.data, isoform.data, assembly = "hg19")
+circrnaClassification(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  circrna.data,
+  exon.data,
+  isoform.data,
+  assembly = "hg19"
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

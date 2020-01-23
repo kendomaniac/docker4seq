@@ -4,8 +4,12 @@
 \alias{getInfo}
 \title{Downloading the full set of genes information from HGNC}
 \usage{
-getInfo(group = c("sudo", "docker"), data.folder = getwd(), url,
-  type = c("pubmed", "omim"))
+getInfo(
+  group = c("sudo", "docker"),
+  data.folder = getwd(),
+  url,
+  type = c("pubmed", "omim")
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
