@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Running NGS computing demanding applications, e.g reads mapping and counting, wrapped in docker containers • docker4seq</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Running NGS computing demanding applications, e.g reads mapping and counting, wrapped in docker containers">
 <meta property="og:description" content="A collection of functions to execute NGS computing demanding applications, e.g reads mapping and counting, wrapped in docker containers">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">docker4seq</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -70,33 +71,34 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="contents col-md-9">
 <div id="reproducible-bioinformatics-community" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#reproducible-bioinformatics-community" class="anchor"></a>Reproducible Bioinformatics Community</h1></div>
-<p>The aim of Reproducible Bioinformatics project is the creation of easy to use Bioinformatics workflows that fullfill the following roles (<a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285">Sandve et al. PLoS Comp Biol. 2013</a>):</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="dv">1</span> For Every Result, Keep Track of How It Was Produced
-<span class="dv">2</span> Avoid Manual Data Manipulation Steps
-<span class="dv">3</span> Archive the Exact Versions of All External Programs Used
-<span class="dv">4</span> Version Control All Custom Scripts
-<span class="dv">5</span> Record All Intermediate Results, When Possible <span class="cf">in</span> Standardized Formats
-<span class="dv">6</span> For Analyses That Include Randomness, Note Underlying Random Seeds
-<span class="dv">7</span> Always Store Raw Data behind Plots
-<span class="dv">8</span> Generate Hierarchical Analysis Output, Allowing Layers of Increasing Detail to Be Inspected
-<span class="dv">9</span> Connect Textual Statements to Underlying Results
-<span class="dv">10</span> Provide Public Access to Scripts, Runs, and Results</code></pre></div>
+<p>The aim of Reproducible Bioinformatics project is the creation of easy to use Bioinformatics workflows that fullfill the following roles (<a href="http://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285">Sandve et al. PLoS Comp Biol. 2013</a>):</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="dv">1</span> For Every Result, Keep Track of How It Was Produced</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="dv">2</span> Avoid Manual Data Manipulation Steps</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="dv">3</span> Archive the Exact Versions of All External Programs Used</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="dv">4</span> Version Control All Custom Scripts</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="dv">5</span> Record All Intermediate Results, When Possible <span class="cf">in</span> Standardized Formats</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="dv">6</span> For Analyses That Include Randomness, Note Underlying Random Seeds</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="dv">7</span> Always Store Raw Data behind Plots</a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="dv">8</span> Generate Hierarchical Analysis Output, Allowing Layers of Increasing Detail to Be Inspected</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"><span class="dv">9</span> Connect Textual Statements to Underlying Results</a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="dv">10</span> Provide Public Access to Scripts, Runs, and Results</a></code></pre></div>
 <p>Reproducible Bioinformatics is a non-profit and open-source project.</p>
 <p>We are a group of Bioinformaticians interested to simplify the use of bioinformatics tools to Biologists w/wo scripting ability. At the same time we are interested in providing robust and reproducible workflows.</p>
 <p>For this reason we have developed the docker4seq package.</p>
 <p>At the present time a total of three workflows are available in the stable version of docker4seq package (more info below in the text):</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>RNAseq workflow
-<span class="op">-</span><span class="st"> </span>miRNAseq workflow
-<span class="op">-</span><span class="st"> </span>ChIPseq workflow</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>RNAseq workflow</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="op">-</span><span class="st"> </span>miRNAseq workflow</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>ChIPseq workflow</a></code></pre></div>
 <p>Under development are:</p>
-<div class="sourceCode"><pre class="sourceCode R"><code class="sourceCode r"><span class="op">-</span><span class="st"> </span>PDX workflow<span class="op">:</span><span class="st"> </span>variants calling <span class="cf">in</span> patient derived <span class="kw">xenograft</span> (PDX) from RNAseq and EXOMEseq data
-<span class="op">-</span><span class="st"> </span>Single cell analysis workflow
-<span class="op">-</span><span class="st"> </span>Metagenomics workflow</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="op">-</span><span class="st"> </span>PDX workflow<span class="op">:</span><span class="st"> </span>variants calling <span class="cf">in</span> patient derived <span class="kw">xenograft</span> (PDX) from RNAseq and EXOMEseq data</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="op">-</span><span class="st"> </span>Single cell analysis workflow</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="op">-</span><span class="st"> </span>Metagenomics workflow</a></code></pre></div>
 <p>All workflows are controlled by a set of R fuctions, part of docker4seq package, and the algorithms used are all encapsulated into Docker images and stored at docker.io/repbioinfo repository.</p>
 <p>More info on docker4seq: <a href="https://kendomaniac.github.io/docker4seq/index.html">docker4seq web page</a></p>
 <div id="how-to-be-part-of-the-reproducible-bioinformatics-project-community" class="section level3">
@@ -125,8 +127,9 @@
 <div id="docker4seq" class="section level3">
 <h3 class="hasAnchor">
 <a href="#docker4seq" class="anchor"></a>docker4seq</h3>
+<p><strong>docker4seq</strong> is registed with RRID SCR_017006 at <a href="scicrunch.org"><em>SciCrunch</em></a>. *docker4seq** is part of <a href="https://bio.tools/"><em>Elixir bio.tools</em></a>.</p>
 <p>A collection of functions to execute NGS computing demanding applications, e.g reads mapping and counting, wrapped in docker containers. To install it you can use use <strong>devtools</strong>:</p>
-<pre><code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("devtools")
+<pre><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("devtools")
 library(devtools)
 install_github("kendomaniac/docker4seq", ref="master")</a></code></pre>
 <div id="requirements" class="section level4">
@@ -182,6 +185,23 @@ install_github("kendomaniac/docker4seq", ref="master")</a></code></pre>
 <a href="#the-seqbox-project" class="anchor"></a>The SeqBox Project</h3>
 <p>Short reads sequencing technology has been used for more than a decade now. However, the analysis of RNAseq and ChIPseq data is still computational demanding and the simple access to raw data does not guarantee results reproducibility between laboratories. To address these two aspects, we developed SeqBox, a cheap, efficient and reproducible RNAseq/ChIPseq hardware/software solution based on NUC6I7KYK mini-PC (an Intel consumer game computer with a fast processor and a high performance SSD disk), and Docker container platform. In SeqBox the analysis of RNAseq and ChIPseq data is supported by a friendly GUI. This allows access to fast and reproducible analyses also to scientists with/without scripting experience.</p>
 <p>More info on SeqBox characteristics and cost are available at <a href="http://www.seqbox.com">www.seqbox.com</a></p>
+<p><strong>IMPORTANT</strong> The first time <em>docker4seq</em> is installed the <strong>downloadContainers</strong> needs to be executed to download to the local repository the containers that are needed for the use of <em>docker4seq</em></p>
+<p>More info on the functionalities of the package are available at: <a href="http://rpubs.com/rcaloger/279935">docker4seq/4seqGUI vignette</a></p>
+<ul>
+<li>
+<p><strong>docker4seq/4SeqGUI Video Tutorials:</strong></p>
+<ul>
+<li><p><a href="https://www.youtube.com/playlist?list=PLN48SoNXrLRhTi9MYMysNI3O4fR0wt46D">HowTo run a full RNAseq analysis</a></p></li>
+<li><p><a href="https://www.youtube.com/playlist?list=PLN48SoNXrLRix-Er5unoze68qE8vW46s-">HowTo run a full miRNAseq analysis</a></p></li>
+<li><p><a href="https://www.youtube.com/playlist?list=PLN48SoNXrLRhqjyPBGkDRTf0wNi4Y9Va2">HowTo run a full ChIPseq analysis</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<div id="diclaimer-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#diclaimer-1" class="anchor"></a>Diclaimer:</h2>
+<p>docker4seq developers have no liability for any use of docker4seq functions, including without limitation, any loss of data, incorrect results, or any costs, liabilities, or damages that result from use of docker4seq.</p>
 </div>
 </div>
   </div>
@@ -191,6 +211,12 @@ install_github("kendomaniac/docker4seq", ref="master")</a></code></pre>
 <h2>License</h2>
 <ul class="list-unstyled">
 <li>GPL (&gt;= 2)</li>
+</ul>
+</div>
+<div class="community">
+<h2>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CONTRIBUTING.html">Contributing guide</a></li>
 </ul>
 </div>
 <div class="developers">
@@ -208,17 +234,20 @@ install_github("kendomaniac/docker4seq", ref="master")</a></code></pre>
   </div>
 </div>
 
+
       <footer><div class="copyright">
   <p>Developed by Raffaele Calogero, Neha Kulkarni, Luca Alessandri, Marco Beccuti, Greta Romano, Francesca Cordero.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

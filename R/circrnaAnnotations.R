@@ -3,7 +3,7 @@
 #'
 #' @param group, a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
-#' @param circrna.file, a list of circRNAs derived from a circRNAs prediction analysis
+#' @param ciri.file, a list of circRNAs derived from a circRNAs prediction analysis
 #' @param annotation.sources, a vector of character strings indicating the circRNA databases to analyse. Compatible databases id: circbase, cscd, exorbase, circ2disease, circfunbase, tscd.
 #' @param assembly, a character string indicating the reference genome assembly. The function currently work with the hg18, hg19, and hg38, mm9, and mm10 genome assemblies.
 #' @author Nicola Licheri and Giulio Ferrero
