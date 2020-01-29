@@ -111,7 +111,7 @@ ciri2 <- function(group = c("sudo", "docker"), scratch.folder, sam.file,
         paste("-v", paste0(annotation.file, ":/data/annotation.", annotation_extension)),
         ""
     ),
-    "-d docker.io/repbioinfo/docker4circ.2019.01 python3 /ciri2/docker4ciri.py ciri2",
+    "-d docker.io/repbioinfo/docker4circ.2019.02 python3 /ciri2/docker4ciri.py ciri2",
     "--strigency", stringency,
     "-S", format(max.span, scientific=FALSE),
     "-T", threads,

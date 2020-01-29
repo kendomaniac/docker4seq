@@ -70,7 +70,7 @@ circrnaClassification <- function(group=c("sudo","docker"), scratch.folder, circ
     setwd(home)
     return(2)
   }
-  if (!(assembly %in% c("hg19", "hg18", "hg38"))) {
+  if (!(assembly %in% c("hg19", "hg18", "hg38", "mm9", "mm10", "rn6", "dm6", "ce11"))) {
     cat(paste("\nThe given assembly is not supported\n"))
     system("echo 2 > ExitStatusFile 2>&1")
     setwd(home)
@@ -93,7 +93,7 @@ circrnaClassification <- function(group=c("sudo","docker"), scratch.folder, circ
       "-v", paste0(isoform.data, ":/data/isoformdata"),
       "-v", paste0(exon.data, ":/data/genome"),
       "-v", paste0(circrna.data, ":/data/circRNA"),
-      "-d docker.io/repbioinfo/docker4circ.2019.01 Rscript /scripts/circhunter/circhunter.R",
+      "-d docker.io/repbioinfo/docker4circ.2019.02 Rscript /scripts/circhunter/circhunter.R",
       "--classification",
       "-as", assembly,
       "-v", version,

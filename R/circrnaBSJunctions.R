@@ -82,7 +82,7 @@ circrnaBSJunctions <- function(group=c("sudo","docker"), scratch.folder, circrna
       "-v", paste0(data.folder, ":/data/out"),
       "-v", paste0(exon.data, ":/data/genome"),
       "-v", paste0(circrna.data, ":/data/circRNA"),
-      "-d docker.io/repbioinfo/docker4circ.2019.01 Rscript /scripts/circhunter/circhunter.R",
+      "-d docker.io/repbioinfo/docker4circ.2019.02 Rscript /scripts/circhunter/circhunter.R",
       "--sequences",
       "-as", assembly,
       "-of", #output folder
