@@ -26,6 +26,7 @@
 wrapperDeseq2 <- function(output.folder, group=c("sudo","docker"), experiment.table, log2fc=1, fdr=0.1, ref.covar="0", type=c("gene","isoform","mirna"), batch=FALSE){
 
   home <- getwd()
+  output.folder <- normalizePath(output.folder)
   setwd(output.folder)
 
   #initialize status
