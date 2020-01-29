@@ -4,11 +4,20 @@
 \alias{bwaIndex}
 \title{Generating bwa genome index}
 \usage{
-bwaIndex(group = c("sudo", "docker"), genome.folder = getwd(),
-  genome.url = NULL, gtf.url = NULL, dbsnp.file = NULL,
-  g1000.file = NULL, mode = c("General", "GATK", "miRNA", "ncRNA"),
-  mb.version = NULL, mb.species = NULL, rc.version = NULL,
-  rc.species = NULL, length = NULL)
+bwaIndex(
+  group = c("sudo", "docker"),
+  genome.folder = getwd(),
+  genome.url = NULL,
+  gtf.url = NULL,
+  dbsnp.file = NULL,
+  g1000.file = NULL,
+  mode = c("General", "GATK", "miRNA", "ncRNA"),
+  mb.version = NULL,
+  mb.species = NULL,
+  rc.version = NULL,
+  rc.species = NULL,
+  length = NULL
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

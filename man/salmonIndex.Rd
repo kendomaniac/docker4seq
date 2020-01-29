@@ -4,8 +4,13 @@
 \alias{salmonIndex}
 \title{A function to create a Salmon pseudo reference}
 \usage{
-salmonIndex(group = c("sudo", "docker"), index.folder,
-  ensembl.urltranscriptome, ensembl.urlgtf, k = 31)
+salmonIndex(
+  group = c("sudo", "docker"),
+  index.folder,
+  ensembl.urltranscriptome,
+  ensembl.urlgtf,
+  k = 31
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

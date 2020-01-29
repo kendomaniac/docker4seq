@@ -4,9 +4,15 @@
 \alias{cdhit}
 \title{A function to execute CD-HIT}
 \usage{
-cdhit(group = c("sudo", "docker"), scratch.folder, data.folder,
-  identity.threshold = 0.9, memory.limit = 30000, threads = 0,
-  word.length = 7)
+cdhit(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  data.folder,
+  identity.threshold = 0.9,
+  memory.limit = 30000,
+  threads = 0,
+  word.length = 7
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

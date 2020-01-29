@@ -4,9 +4,18 @@
 \alias{wrapperSalmon}
 \title{A function to estimate counts using Salmon quasi-alignment}
 \usage{
-wrapperSalmon(group = c("sudo", "docker"), scratch.folder, fastq.folder,
-  index.folder, threads = 24, seq.type = c("se", "pe"), adapter5,
-  adapter3, min.length, strandness = c("none", "forward", "reverse"))
+wrapperSalmon(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  fastq.folder,
+  index.folder,
+  threads = 24,
+  seq.type = c("se", "pe"),
+  adapter5,
+  adapter3,
+  min.length,
+  strandness = c("none", "forward", "reverse")
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

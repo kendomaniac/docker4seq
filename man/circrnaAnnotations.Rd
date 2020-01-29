@@ -4,21 +4,25 @@
 \alias{circrnaAnnotations}
 \title{Annotation of a list of circRNAs}
 \usage{
-circrnaAnnotations(group = c("sudo", "docker"), scratch.folder,
-  ciri.file, annotation.sources = c("circbase", "tscd", "cscd",
-  "exorbase", "circ2disease", "circfunbase"), assembly = c("hg18",
-  "hg19", "hg38", "mm9", "mm10"))
+circrnaAnnotations(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  ciri.file,
+  annotation.sources = c("circbase", "tscd", "cscd", "exorbase", "circ2disease",
+    "circfunbase"),
+  assembly = c("hg18", "hg19", "hg38", "mm9", "mm10")
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
 
 \item{scratch.folder, }{a character string indicating the scratch folder where docker container will be mounted}
 
+\item{ciri.file, }{a list of circRNAs derived from a circRNAs prediction analysis}
+
 \item{annotation.sources, }{a vector of character strings indicating the circRNA databases to analyse. Compatible databases id: circbase, cscd, exorbase, circ2disease, circfunbase, tscd.}
 
 \item{assembly, }{a character string indicating the reference genome assembly. The function currently work with the hg18, hg19, and hg38, mm9, and mm10 genome assemblies.}
-
-\item{circrna.file, }{a list of circRNAs derived from a circRNAs prediction analysis}
 }
 \value{
 The annotations of a list of circRNAs from different databases

@@ -4,9 +4,18 @@
 \alias{hashclone}
 \title{HashClone running A function to handle a hashclone docker container NOT READY for STABLE RELEASE, YET}
 \usage{
-hashclone(group = c("sudo", "docker"), scratch.folder,
-  data.folder = getwd(), kmer, hash, coll, threshold = 0.1, type,
-  spike = "null", input.files)
+hashclone(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  data.folder = getwd(),
+  kmer,
+  hash,
+  coll,
+  threshold = 0.1,
+  type,
+  spike = "null",
+  input.files
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

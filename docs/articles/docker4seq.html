@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>An Introduction to docker4seq package and 4SeqGUI • docker4seq</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="An Introduction to docker4seq package and 4SeqGUI">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">docker4seq</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -70,6 +71,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -105,8 +107,8 @@
 <a href="#setup" class="anchor"></a>Setup</h3>
 <p><a href="https://github.com/kendomaniac/docker4seq"><strong>docker4seq</strong></a> and its graphical interface (optional) <a href="https://github.com/mbeccuti/4SeqGUI"><strong>4SeqGUI</strong></a> can fit ideally in the <a href="https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc6i7kyk.html">NUC6I7KYK, Intel mini-computer</a> equipped with Kingston Technology HyperX Impact 32GB Kit (2x16GB), 2133MHz DDR4 CL13 260-Pin SODIMM and Samsung 850 EVO - 250GB - M.2 SATA III Internal SSD.</p>
 <p><strong>MANDATORY:</strong> The first time <em>docker4seq</em> is installed the <strong>downloadContainers</strong> function needs to be executed to download, in the local repository, the docker images that are needed by <em>docker4seq</em>.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(docker4seq)
-<span class="kw"><a href="../reference/downloadContainers.html">downloadContainers</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(docker4seq)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="../reference/downloadContainers.html">downloadContainers</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="dockers-containers" class="section level2">
@@ -135,11 +137,11 @@
 <a href="#reproducibility" class="anchor"></a>Reproducibility</h3>
 <p>The file <strong>containers.txt</strong>, which indicates the Docker images available in the local release of docker4seq is saved within any folder generated with docker4seq functions.</p>
 <p>In case, user would like to download a set of dockers images different from those provided as part of the package, then these images must be specified in a file with the following format <strong>docker.repository/user/docker.name</strong>, which has to be passed to downloadContainers function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/downloadContainers.html">downloadContainers</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">containers.file=</span><span class="st">"my_containers.txt"</span>)
-<span class="co">#an example of the my_containers.txt file content</span>
-docker.io<span class="op">/</span>rcaloger<span class="op">/</span>bwa.<span class="fl">2017.01</span>
-docker.io<span class="op">/</span>rcaloger<span class="op">/</span>chipseq.<span class="fl">2017.01</span>
-docker.io<span class="op">/</span>rcaloger<span class="op">/</span>r340.<span class="fl">2017.01</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw"><a href="../reference/downloadContainers.html">downloadContainers</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">containers.file=</span><span class="st">"my_containers.txt"</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">#an example of the my_containers.txt file content</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">docker.io<span class="op">/</span>rcaloger<span class="op">/</span>bwa.<span class="fl">2017.01</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">docker.io<span class="op">/</span>rcaloger<span class="op">/</span>chipseq.<span class="fl">2017.01</span></a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">docker.io<span class="op">/</span>rcaloger<span class="op">/</span>r340.<span class="fl">2017.01</span></a></code></pre></div>
 </div>
 </div>
 <div id="available-workflows" class="section level2">
@@ -166,7 +168,7 @@ docker.io<span class="op">/</span>rcaloger<span class="op">/</span>r340.<span cl
 </ul>
 </li>
 <li>
-<strong>miRNAseq</strong>, which executes the workflow described in Cordero et al. PLoS One. 2012;7(2):e31630, embedding the following steps:
+<strong>miRNAseq</strong>, which executes the workflow described in Cordero et al. PLoS One. 2012;7(2):e31630, embedding the following steps:
 <ul>
 <li>trimming adapters with <a href="http://cutadapt.readthedocs.io/en/stable/guide.html">cutadapt</a>
 </li>
@@ -257,9 +259,9 @@ chipseqCounts overall performance
 <h3 class="hasAnchor">
 <a href="#demultiplexing" class="anchor"></a>Demultiplexing</h3>
 <p><em>demultiplexing</em> function is used to convert in fastq bcl files generated by an Illumina sequencer. The function requires that in the bcl folder the SampleSheet.csv is present. An example fo SampleSheet for a pair-end run is present in docker4seq examples folder. The function require that the full path to the bcl file folder is provided, <strong>data.folder</strong>, the scratch folder where temporary analysis is run and the number of cores that will be used by the program.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/demultiplexing.html">demultiplexing</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>,
-      <span class="dt">data.folder=</span><span class="st">"/home/calogero/Documents/data/lollini/3a_run/170712_NB501050_0097_AH3FGNBGX3"</span>,
-      <span class="dt">scratch.folder=</span><span class="st">"/data/scratch"</span>, <span class="dt">threads=</span><span class="dv">24</span>)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/demultiplexing.html">demultiplexing</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>,</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">      <span class="dt">data.folder=</span><span class="st">"/home/calogero/Documents/data/lollini/3a_run/170712_NB501050_0097_AH3FGNBGX3"</span>,</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">      <span class="dt">scratch.folder=</span><span class="st">"/data/scratch"</span>, <span class="dt">threads=</span><span class="dv">24</span>)</a></code></pre></div>
 <p>The function will return, in the folder containing the bcl files folder, e.g. /home/calogero/Documents/data/lollini/3a_run/, the fastq files generated by the analysis.</p>
 <p>This function is not implemented in <strong>4SeqGUI</strong> because this step is generally done by a core lab. Thus only a limited group of users require the use of this function.</p>
 <p>The <strong>mRNAseq workflow</strong>, that can be handled using <strong>4SeqGUI</strong> graphical interface (linux/MAC) (figure below), starts from the availability of fastq files .</p>
@@ -291,10 +293,10 @@ Creating a STAR genome index
 <div id="creating-a-star-index-file-by-line-command" class="section level4">
 <h4 class="hasAnchor">
 <a href="#creating-a-star-index-file-by-line-command" class="anchor"></a>Creating a STAR index file by line command</h4>
-<p></p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/rsemstarIndex.html">rsemstarIndex</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>,<span class="dt">genome.folder=</span><span class="st">"/data/scratch/hg38star"</span>,
-<span class="dt">ensembl.urlgenome=</span><span class="st">"ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz"</span>,
-<span class="dt">ensembl.urlgtf=</span><span class="st">"ftp://ftp.ensembl.org/pub/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh38.87.gtf.gz"</span>)</code></pre></div>
+
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="../reference/rsemstarIndex.html">rsemstarIndex</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>,<span class="dt">genome.folder=</span><span class="st">"/data/scratch/hg38star"</span>,</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="dt">ensembl.urlgenome=</span><span class="st">"ftp://ftp.ensembl.org/pub/release-87/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.toplevel.fa.gz"</span>,</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="dt">ensembl.urlgtf=</span><span class="st">"ftp://ftp.ensembl.org/pub/release-87/gtf/homo_sapiens/Homo_sapiens.GRCh38.87.gtf.gz"</span>)</a></code></pre></div>
 <p>In brief, <strong>rsemstarIndex</strong> uses ENSEMBL genomic data. User has to provide the URL (<strong>ensembl.urlgenome</strong>) for the file XXXXX_dna.toplevel.fa.gz related to the organism of interest, the URL (<strong>ensembl.urlgtf</strong>) for the annotation GTF XXX.gtf.gz and the path to the folder where the index will be generated (<strong>genome.folder</strong>). The parameter <strong>threads</strong> indicate the number of cores dedicated to this task.</p>
 <p>Precompiled index folders are available:</p>
 <ul>
@@ -316,17 +318,17 @@ Gene, Isoform counting
 <h4 class="hasAnchor">
 <a href="#sample-quantification-by-line-command" class="anchor"></a>Sample quantification by line command</h4>
 <p>The sample quantification can be also executed using R and it is completely embedded in a single function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#test example</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget http://130.192.119.59/public/test.mrnaCounts.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/unzip">unzip</a></span>(<span class="st">"test.mrnaCounts.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">"./test.mrnaCounts"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(docker4seq)
-<span class="kw"><a href="../reference/rnaseqCounts.html">rnaseqCounts</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>,<span class="dt">fastq.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>(), <span class="dt">scratch.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>(),
-<span class="dt">adapter5=</span><span class="st">"AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"</span>,
-<span class="dt">adapter3=</span><span class="st">"AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"</span>,
-<span class="dt">seq.type=</span><span class="st">"se"</span>, <span class="dt">threads=</span><span class="dv">8</span>,  <span class="dt">min.length=</span><span class="dv">40</span>,
-<span class="dt">genome.folder=</span><span class="st">"/data/scratch/mm10star"</span>, <span class="dt">strandness=</span><span class="st">"none"</span>, <span class="dt">save.bam=</span><span class="ot">FALSE</span>,
-<span class="dt">org=</span><span class="st">"mm10"</span>, <span class="dt">annotation.type=</span><span class="st">"gtfENSEMBL"</span>)</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co">#test example</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget http://130.192.119.59/public/test.mrnaCounts.zip"</span>)</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(<span class="st">"test.mrnaCounts.zip"</span>)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(<span class="st">"./test.mrnaCounts"</span>)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(docker4seq)</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="kw"><a href="../reference/rnaseqCounts.html">rnaseqCounts</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>,<span class="dt">fastq.folder=</span><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>(), <span class="dt">scratch.folder=</span><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>(),</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="dt">adapter5=</span><span class="st">"AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"</span>,</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="dt">adapter3=</span><span class="st">"AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"</span>,</a>
+<a class="sourceLine" id="cb6-9" data-line-number="9"><span class="dt">seq.type=</span><span class="st">"se"</span>, <span class="dt">threads=</span><span class="dv">8</span>,  <span class="dt">min.length=</span><span class="dv">40</span>,</a>
+<a class="sourceLine" id="cb6-10" data-line-number="10"><span class="dt">genome.folder=</span><span class="st">"/data/scratch/mm10star"</span>, <span class="dt">strandness=</span><span class="st">"none"</span>, <span class="dt">save.bam=</span><span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="dt">org=</span><span class="st">"mm10"</span>, <span class="dt">annotation.type=</span><span class="st">"gtfENSEMBL"</span>)</a></code></pre></div>
 <p>User needs to create the <strong>fastq.folder</strong>, where the fastq.gz file(s) for the sample under analysis are located. The <strong>scratch.folder</strong> is the location where temporary data are created. The results will be then saved in the <strong>fastq.folder</strong>.</p>
 <p>User needs to provide also the sequence of the sequencing adapters, <strong>adapter5</strong> and <strong>adapter3</strong> parameters. In case Illumina platform the adapters sequences can be easily recovered <a href="https://support.illumina.com/downloads/illumina-customer-sequence-letter.html"><strong>here</strong></a>.</p>
 <p><strong>seq.type</strong> indicates if single-end (se) or pair-end (pe) data are provided, <strong>threads</strong> indicates the max number of cores used by <em>skewer</em> and <em>STAR</em>, all the other steps are done on a single core.</p>
@@ -348,11 +350,11 @@ Gene, Isoform counting
 Salmon reference
 </p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#running salmonIndex human</span>
-<span class="kw"><a href="../reference/salmonIndex.html">salmonIndex</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">index.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>(), 
-       <span class="dt">ensembl.urltranscriptome=</span><span class="st">"ftp://ftp.ensembl.org/pub/release-90/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz"</span>,
-       <span class="dt">ensembl.urlgtf=</span><span class="st">"ftp://ftp.ensembl.org/pub/release-90/gtf/homo_sapiens/Homo_sapiens.GRCh38.90.gtf.gz"</span>, 
-       <span class="dt">k=</span><span class="dv">31</span>)</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">#running salmonIndex human</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="../reference/salmonIndex.html">salmonIndex</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">index.folder=</span><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>(),</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">       <span class="dt">ensembl.urltranscriptome=</span><span class="st">"ftp://ftp.ensembl.org/pub/release-90/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz"</span>,</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">       <span class="dt">ensembl.urlgtf=</span><span class="st">"ftp://ftp.ensembl.org/pub/release-90/gtf/homo_sapiens/Homo_sapiens.GRCh38.90.gtf.gz"</span>,</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">       <span class="dt">k=</span><span class="dv">31</span>)</a></code></pre></div>
 </div>
 <div id="quantifying-isoforms-and-genes-with-salmon" class="section level4">
 <h4 class="hasAnchor">
@@ -363,14 +365,14 @@ Salmon reference
 Salmon quantification
 </p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget http://130.192.119.59/public/test_R1.fastq.gz"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget http://130.192.119.59/public/test_R2.fastq.gz"</span>)
-
-<span class="co">#running salmonCounts</span>
-<span class="kw"><a href="../reference/wrapperSalmon.html">wrapperSalmon</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">scratch.folder=</span><span class="st">"/data/scratch/"</span>,
-         <span class="dt">fastq.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>(), <span class="dt">index.folder=</span><span class="st">"/data/genome/salmonhg38/"</span>,
-         <span class="dt">threads=</span><span class="dv">8</span>, <span class="dt">seq.type=</span><span class="st">"pe"</span>, <span class="dt">adapter5=</span><span class="st">"AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"</span>,
-         <span class="dt">adapter3=</span><span class="st">"AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"</span>, <span class="dt">min.length=</span><span class="dv">40</span>, <span class="dt">strandness=</span><span class="st">"none"</span>)</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget http://130.192.119.59/public/test_R1.fastq.gz"</span>)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget http://130.192.119.59/public/test_R2.fastq.gz"</span>)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#running salmonCounts</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="kw"><a href="../reference/wrapperSalmon.html">wrapperSalmon</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">scratch.folder=</span><span class="st">"/data/scratch/"</span>,</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">         <span class="dt">fastq.folder=</span><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>(), <span class="dt">index.folder=</span><span class="st">"/data/genome/salmonhg38/"</span>,</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">         <span class="dt">threads=</span><span class="dv">8</span>, <span class="dt">seq.type=</span><span class="st">"pe"</span>, <span class="dt">adapter5=</span><span class="st">"AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"</span>,</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">         <span class="dt">adapter3=</span><span class="st">"AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"</span>, <span class="dt">min.length=</span><span class="dv">40</span>, <span class="dt">strandness=</span><span class="st">"none"</span>)</a></code></pre></div>
 <p><strong>IMPORTANT</strong>: Salmon produces only isoforms-level counts, thus we quantified gene-level counts as described by RSEM:</p>
 <ul>
 <li><p>Gene counts are gived by the sum of the counts associated to all transcripts associated to the gene locus.</p></li>
@@ -456,15 +458,15 @@ generating a table with covariates
 <div id="from-samples-to-experiments-by-line-command" class="section level4">
 <h4 class="hasAnchor">
 <a href="#from-samples-to-experiments-by-line-command" class="anchor"></a>From samples to experiments by line command</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#test example</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget http://130.192.119.59/public/test.samples2experiment.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/unzip">unzip</a></span>(<span class="st">"test.samples2experiment.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">"test.samples2experiment"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(docker4seq)
-<span class="kw"><a href="../reference/sample2experiment.html">sample2experiment</a></span>(<span class="dt">sample.folders=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"./e1g"</span>,<span class="st">"./e2g"</span>,<span class="st">"./e3g"</span>,
-<span class="st">"./p1g"</span>, <span class="st">"./p2g"</span>, <span class="st">"./p3g"</span>),
-<span class="dt">covariates=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Cov.1"</span>,<span class="st">"Cov.1"</span>,<span class="st">"Cov.1"</span>,<span class="st">"Cov.2"</span>,<span class="st">"Cov.2"</span>,<span class="st">"Cov.2"</span>),
-<span class="dt">bio.type=</span><span class="st">"protein_coding"</span>, <span class="dt">output.prefix=</span><span class="st">"."</span>)</code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co">#test example</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget http://130.192.119.59/public/test.samples2experiment.zip"</span>)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(<span class="st">"test.samples2experiment.zip"</span>)</a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(<span class="st">"test.samples2experiment"</span>)</a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(docker4seq)</a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="kw"><a href="../reference/sample2experiment.html">sample2experiment</a></span>(<span class="dt">sample.folders=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"./e1g"</span>,<span class="st">"./e2g"</span>,<span class="st">"./e3g"</span>,</a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="st">"./p1g"</span>, <span class="st">"./p2g"</span>, <span class="st">"./p3g"</span>),</a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="dt">covariates=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Cov.1"</span>,<span class="st">"Cov.1"</span>,<span class="st">"Cov.1"</span>,<span class="st">"Cov.2"</span>,<span class="st">"Cov.2"</span>,<span class="st">"Cov.2"</span>),</a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="dt">bio.type=</span><span class="st">"protein_coding"</span>, <span class="dt">output.prefix=</span><span class="st">"."</span>)</a></code></pre></div>
 <p>User needs to provide the paths of the samples, <strong>sample.folder</strong> parameter, a vector of the covariates, <strong>covariates</strong>, and the biotype(s) of interest, <strong>bio.type</strong> parameter. The parameter <strong>output.prefix</strong> refers to the path where the output will be created, as default this is the current R working folder.</p>
 </div>
 <div id="from-samples-to-experiments-output-files" class="section level4">
@@ -493,12 +495,12 @@ PCA
 <div id="pca-by-line-command" class="section level4">
 <h4 class="hasAnchor">
 <a href="#pca-by-line-command" class="anchor"></a>PCA by line command</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#test example</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.analysis.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/unzip">unzip</a></span>(<span class="st">"test.analysis.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">"test.analysis"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(docker4seq)
-<span class="kw"><a href="../reference/pca.html">pca</a></span>(<span class="dt">experiment.table=</span><span class="st">"_log2FPKM.txt"</span>, <span class="dt">type=</span><span class="st">"FPKM"</span>, <span class="dt">legend.position=</span><span class="st">"topleft"</span>, <span class="dt">covariatesInNames=</span><span class="ot">FALSE</span>, <span class="dt">principal.components=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">pdf =</span> <span class="ot">TRUE</span>, <span class="dt">output.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>())</code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co">#test example</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.analysis.zip"</span>)</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(<span class="st">"test.analysis.zip"</span>)</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(<span class="st">"test.analysis"</span>)</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(docker4seq)</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="kw"><a href="../reference/pca.html">pca</a></span>(<span class="dt">experiment.table=</span><span class="st">"_log2FPKM.txt"</span>, <span class="dt">type=</span><span class="st">"FPKM"</span>, <span class="dt">legend.position=</span><span class="st">"topleft"</span>, <span class="dt">covariatesInNames=</span><span class="ot">FALSE</span>, <span class="dt">principal.components=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">pdf =</span> <span class="ot">TRUE</span>, <span class="dt">output.folder=</span><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>())</a></code></pre></div>
 <p>User needs to provide the paths of experiment table, <strong>experiment.table</strong> parameter, i.e. the file generated using the samples2experiment function. The <strong>type</strong> parameter indicates if FPKM, TPM or counts are used for the PCA generation. The parameter <strong>legend.position</strong> defines where to locate the covariates legend. The parameter <strong>covariatesInNames</strong> indicates if the header of the experiment table contains or not covariate information. The parameter <strong>principal.components</strong> indicates which principal components should be plotted. <strong>output.folder</strong> indicates where to save the pca.pdf file:</p>
 <div class="figure" style="text-align: center">
 <img src="../inst/img/pca2.jpeg" alt="pca.pdf" width="100%"><p class="caption">
@@ -528,12 +530,12 @@ experiment power estimation
 <div id="sample-size-estimation-by-line-command" class="section level4">
 <h4 class="hasAnchor">
 <a href="#sample-size-estimation-by-line-command" class="anchor"></a>Sample size estimation by line command</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#test example</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.analysis.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/unzip">unzip</a></span>(<span class="st">"test.analysis.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">"test.analysis"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(docker4seq)
-<span class="kw"><a href="../reference/sampleSize.html">sampleSize</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">filename=</span><span class="st">"_counts.txt"</span>, <span class="dt">power=</span><span class="fl">0.80</span>, <span class="dt">FDR=</span><span class="fl">0.1</span>, <span class="dt">genes4dispersion=</span><span class="dv">200</span>, <span class="dt">log2fold.change=</span><span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="co">#test example</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.analysis.zip"</span>)</a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(<span class="st">"test.analysis.zip"</span>)</a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(<span class="st">"test.analysis"</span>)</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(docker4seq)</a>
+<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="kw"><a href="../reference/sampleSize.html">sampleSize</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">filename=</span><span class="st">"_counts.txt"</span>, <span class="dt">power=</span><span class="fl">0.80</span>, <span class="dt">FDR=</span><span class="fl">0.1</span>, <span class="dt">genes4dispersion=</span><span class="dv">200</span>, <span class="dt">log2fold.change=</span><span class="dv">1</span>)</a></code></pre></div>
 <p>The requested parameters are the path to the counts experiment table generated by <strong>samples2experiment</strong> function. The param <strong>power</strong> indicates the expected fraction of differentially expressed gene, e.g 0.80. <strong>FDR</strong> and <strong>log2fold.change</strong> are the two thresholds used to define the set of differentially expressed genes of interest.</p>
 <p>The output file is <strong>sample_size_evaluation.txt</strong> is saved in the R working folder, below an example of the file content:</p>
 <div class="figure" style="text-align: center">
@@ -546,12 +548,12 @@ sample_size_evaluation.txt
 <div id="experiment-statistical-power-estimation-by-line-command" class="section level4">
 <h4 class="hasAnchor">
 <a href="#experiment-statistical-power-estimation-by-line-command" class="anchor"></a>Experiment statistical power estimation by line command</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#test example</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.analysis.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/unzip">unzip</a></span>(<span class="st">"test.analysis.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">"test.analysis"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(docker4seq)
-<span class="kw"><a href="../reference/experimentPower.html">experimentPower</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">filename=</span><span class="st">"_counts.txt"</span>,<span class="dt">replicatesXgroup=</span><span class="dv">7</span>, <span class="dt">FDR=</span><span class="fl">0.1</span>, <span class="dt">genes4dispersion=</span><span class="dv">200</span>, <span class="dt">log2fold.change=</span><span class="dv">1</span>)</code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co">#test example</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.analysis.zip"</span>)</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(<span class="st">"test.analysis.zip"</span>)</a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(<span class="st">"test.analysis"</span>)</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(docker4seq)</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="kw"><a href="../reference/experimentPower.html">experimentPower</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">filename=</span><span class="st">"_counts.txt"</span>,<span class="dt">replicatesXgroup=</span><span class="dv">7</span>, <span class="dt">FDR=</span><span class="fl">0.1</span>, <span class="dt">genes4dispersion=</span><span class="dv">200</span>, <span class="dt">log2fold.change=</span><span class="dv">1</span>)</a></code></pre></div>
 <p>The requested parameters are the path to the counts experiment table generated by <strong>samples2experiment</strong> function. The param <strong>replicatesXgroup</strong> indicates the number of sample associated with each of the two covariates. <strong>FDR</strong> and <strong>log2fold.change</strong> are the two thresholds used to define the set of differentially expressed genes of interest. <strong>genes4dispersion</strong> indicates the number of genes used in the estimation of read counts and dispersion distribution.</p>
 <p>The output file is <strong>power_estimation.txt</strong> is saved in the R working folder, below an example of the file content:</p>
 <div class="figure" style="text-align: center">
@@ -589,14 +591,14 @@ DEfiltered_log2fc_1_fdr_0.1.txt
 <div id="deseq2-by-line-command" class="section level4">
 <h4 class="hasAnchor">
 <a href="#deseq2-by-line-command" class="anchor"></a>DESeq2 by line command</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#test example</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.analysis.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/unzip">unzip</a></span>(<span class="st">"test.analysis.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">"test.analysis"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(docker4seq)
-<span class="kw"><a href="../reference/wrapperDeseq2.html">wrapperDeseq2</a></span>(<span class="dt">output.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>(), <span class="dt">group=</span><span class="st">"docker"</span>, 
-      <span class="dt">experiment.table=</span><span class="st">"_counts.txt"</span>, <span class="dt">log2fc=</span><span class="dv">1</span>, <span class="dt">fdr=</span><span class="fl">0.1</span>, 
-      <span class="dt">ref.covar=</span><span class="st">"Cov.1"</span>, <span class="dt">type=</span><span class="st">"gene"</span>, <span class="dt">batch=</span><span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co">#test example</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.analysis.zip"</span>)</a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(<span class="st">"test.analysis.zip"</span>)</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(<span class="st">"test.analysis"</span>)</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(docker4seq)</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="kw"><a href="../reference/wrapperDeseq2.html">wrapperDeseq2</a></span>(<span class="dt">output.folder=</span><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>(), <span class="dt">group=</span><span class="st">"docker"</span>,</a>
+<a class="sourceLine" id="cb15-7" data-line-number="7">      <span class="dt">experiment.table=</span><span class="st">"_counts.txt"</span>, <span class="dt">log2fc=</span><span class="dv">1</span>, <span class="dt">fdr=</span><span class="fl">0.1</span>,</a>
+<a class="sourceLine" id="cb15-8" data-line-number="8">      <span class="dt">ref.covar=</span><span class="st">"Cov.1"</span>, <span class="dt">type=</span><span class="st">"gene"</span>, <span class="dt">batch=</span><span class="ot">FALSE</span>)</a></code></pre></div>
 <p>User has to provide experiment table, <strong>experiment.table</strong> param, i.e. the counts table generated with <strong>samples2experiment</strong> function, the thresholds for the differential expression analysis, <strong>log2fc</strong> and <strong>fdr</strong> params, the reference covariate, <strong>ref.covar</strong> param, i.e. the covariate that is used as reference for differential expression detection, the <strong>type</strong> param, which refers to the type of experiment table in use: <em>gene</em>, <em>isoform</em>, <em>mirna</em>, <strong>batch</strong> parameter that indicates, if it is set to <strong>TRUE</strong> that the header of the experiment table also contains the extra information for the batch effect (see above).</p>
 <p>IMPORTANT: the above analysis can be also applied to miRNAseq data.</p>
 </div>
@@ -613,14 +615,14 @@ Count Filter
 <div id="filtercounts" class="section level4">
 <h4 class="hasAnchor">
 <a href="#filtercounts" class="anchor"></a>filterCounts</h4>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.analysis.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/unzip">unzip</a></span>(<span class="st">"test.analysis.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">"test.analysis"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(docker4seq)
-     <span class="kw"><a href="../reference/wrapperDeseq2.html">wrapperDeseq2</a></span>(<span class="dt">output.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>(), <span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">experiment.table=</span><span class="st">"_counts.txt"</span>, <span class="dt">log2fc=</span><span class="dv">1</span>,
-     <span class="dt">fdr=</span><span class="fl">0.1</span>, <span class="dt">ref.covar=</span><span class="st">"Cov.1"</span>, <span class="dt">type=</span><span class="st">"gene"</span>, <span class="dt">batch=</span><span class="ot">FALSE</span>)<span class="er">)</span>
-
-    <span class="kw"><a href="../reference/filterCounts.html">filterCounts</a></span>(<span class="dt">data.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>(), <span class="dt">type=</span><span class="st">"gene"</span>)</code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.analysis.zip"</span>)</a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(<span class="st">"test.analysis.zip"</span>)</a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(<span class="st">"test.analysis"</span>)</a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(docker4seq)</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">     <span class="kw"><a href="../reference/wrapperDeseq2.html">wrapperDeseq2</a></span>(<span class="dt">output.folder=</span><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>(), <span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">experiment.table=</span><span class="st">"_counts.txt"</span>, <span class="dt">log2fc=</span><span class="dv">1</span>,</a>
+<a class="sourceLine" id="cb16-6" data-line-number="6">     <span class="dt">fdr=</span><span class="fl">0.1</span>, <span class="dt">ref.covar=</span><span class="st">"Cov.1"</span>, <span class="dt">type=</span><span class="st">"gene"</span>, <span class="dt">batch=</span><span class="ot">FALSE</span>)<span class="er">)</span></a>
+<a class="sourceLine" id="cb16-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb16-8" data-line-number="8">    <span class="kw"><a href="../reference/filterCounts.html">filterCounts</a></span>(<span class="dt">data.folder=</span><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>(), <span class="dt">type=</span><span class="st">"gene"</span>)</a></code></pre></div>
 <p>IMPORTANT: the above analysis can be also applied to miRNAseq data, using for the type parameter <strong>mirna</strong>. In this case also mean centered CPMs are calculated (<strong>NOTE: DE filtered CPM are log2 transformed!</strong>).</p>
 <p>The outputs of <strong>filterCounts</strong> function start with <strong>DEfiltered</strong>. Mean centered data indicates that for each gene count is divided by the mean of that gene over all samples. This representation is more convenient to observe changes between experimental groups.</p>
 </div>
@@ -629,9 +631,9 @@ Count Filter
 <h3 class="hasAnchor">
 <a href="#rnaseq-workflow-tutorial" class="anchor"></a>RNAseq workflow Tutorial</h3>
 <p><a href="http://130.192.119.59/public/test.mrnaCounts_full.zip"><strong>Tutorial experiment downloadable here</strong></a>:</p>
-<pre><code>+ Three replicates for two experimental conditions 
+<pre><code>+ Three replicates for two experimental conditions
 
-+ single-end mode sequencing 
++ single-end mode sequencing
 
 + 1 million reads for each sample</code></pre>
 <p><strong>Experiment description</strong>:</p>
@@ -674,7 +676,7 @@ miRNAseq workflow
 miRNAseq workflow
 </p>
 </div>
-<p>The full workflow is described in <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0031630">Cordero et al. Plos ONE 2012</a>. In brief, fastq files are trimmed using <a href="https://github.com/marcelm/cutadapt">cutadapt</a> and the trimmed reads are mapped on miRNA precursors, i.e. harpin.fa file, from <a href="http://www.mirbase.org/ftp.shtml">miRBase</a> using <a href="http://compbio.cs.toronto.edu/shrimp/">SHRIMP</a>. Using the location of the mature miRNAs in the precursor, countOverlaps function, from the Bioconductor package GenomicRanges is used to quantify the reads mapping on mature miRNAs.</p>
+<p>The full workflow is described in <a href="http://journals.plos.org/plosone/article?id=10.1371/journal.pone.0031630">Cordero et al. Plos ONE 2012</a>. In brief, fastq files are trimmed using <a href="https://github.com/marcelm/cutadapt">cutadapt</a> and the trimmed reads are mapped on miRNA precursors, i.e. harpin.fa file, from <a href="http://www.mirbase.org/ftp.shtml">miRBase</a> using <a href="http://compbio.cs.toronto.edu/shrimp/">SHRIMP</a>. Using the location of the mature miRNAs in the precursor, countOverlaps function, from the Bioconductor package GenomicRanges is used to quantify the reads mapping on mature miRNAs.</p>
 <p>All the parameters needed to run the miRNAseq workflow can be setup using 4SeqGUI:</p>
 <div class="figure" style="text-align: center">
 <img src="../inst/img/mirna2.jpeg" alt="miRNAseq parameters" width="100%"><p class="caption">
@@ -686,13 +688,13 @@ miRNAseq parameters
 <h3 class="hasAnchor">
 <a href="#mirnaseq-workflow-by-line-command" class="anchor"></a>miRNAseq workflow by line command</h3>
 <p>The miRNAseq workflow can be also executed using R and it is completely embedded in a unique function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#test example</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.mirnaCounts.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/unzip">unzip</a></span>(<span class="st">"test.mirnaCounts.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">"test.mirnaCounts"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(docker4seq)
-<span class="kw"><a href="../reference/mirnaCounts.html">mirnaCounts</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>,<span class="dt">fastq.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>(), <span class="dt">scratch.folder=</span><span class="st">"/data/scratch"</span>, 
-            <span class="dt">mirbase.id=</span><span class="st">"hsa"</span>,<span class="dt">download.status=</span><span class="ot">FALSE</span>, <span class="dt">adapter.type=</span><span class="st">"NEB"</span>, <span class="dt">trimmed.fastq=</span><span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co">#test example</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.mirnaCounts.zip"</span>)</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(<span class="st">"test.mirnaCounts.zip"</span>)</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(<span class="st">"test.mirnaCounts"</span>)</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(docker4seq)</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"><span class="kw"><a href="../reference/mirnaCounts.html">mirnaCounts</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>,<span class="dt">fastq.folder=</span><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>(), <span class="dt">scratch.folder=</span><span class="st">"/data/scratch"</span>,</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7">            <span class="dt">mirbase.id=</span><span class="st">"hsa"</span>,<span class="dt">download.status=</span><span class="ot">FALSE</span>, <span class="dt">adapter.type=</span><span class="st">"NEB"</span>, <span class="dt">trimmed.fastq=</span><span class="ot">FALSE</span>)</a></code></pre></div>
 <p>User has to create the <strong>fastq.folder</strong>, where the fastq.gz files for all miRNAs under analysis are located. The <strong>scratch.folder</strong> is the location where temporary data are created. The results will be then saved in the <strong>fastq.folder</strong>. User has to provide also the identifier of the miRBase organism, e.g. <strong>hsa</strong> for Homo sapiens, <strong>mmu</strong> for Mus musculus. If the <strong>download.status</strong> is set to FALSE, mirnaCounts uses miRBase release 21, if it is set to TRUE the lastest version of precursor and mature miRNAs will be downloaded from miRBase. Users need to provide the name of the producer of the miRNA library prep kit to identify which adapters need to be provided to cutadapt, <strong>adapter.type</strong> parameter. The available adapters are NEB and Illumina, but, upon request, we can add other adapters. Finally, if the <strong>trimmed.fastq</strong> is set to FALSE the trimmed fastq are not saved at the end of the analysis.</p>
 </div>
 <div id="mirnaseq-workflow-output-files" class="section level3">
@@ -716,16 +718,16 @@ miRNAseq covariates and batches
 </p>
 </div>
 <p>The function <strong>mirnaCovar</strong> add to the header of all.counts.txt covariates and batches or covariates only.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#test example</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.mirna.analysis.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/unzip">unzip</a></span>(<span class="st">"test.mirna.analysis.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">"test.mirna.analysis"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(docker4seq)
-<span class="kw"><a href="../reference/mirnaCovar.html">mirnaCovar</a></span>(<span class="dt">experiment.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>(), <span class="st">"all.counts.txt"</span>, <span class="dt">sep=</span><span class="st">"/"</span>),
-     <span class="dt">covariates=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"Cov.1"</span>, <span class="st">"Cov.1"</span>, <span class="st">"Cov.1"</span>, <span class="st">"Cov.1"</span>, <span class="st">"Cov.1"</span>, <span class="st">"Cov.1"</span>, 
-                  <span class="st">"Cov.2"</span>, <span class="st">"Cov.2"</span>, <span class="st">"Cov.2"</span>, <span class="st">"Cov.2"</span>, <span class="st">"Cov.2"</span>, <span class="st">"Cov.2"</span>),
-     <span class="dt">batches=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"bath.1"</span>, <span class="st">"bath.1"</span>, <span class="st">"bath.2"</span>, <span class="st">"bath.2"</span>, <span class="st">"batch.1"</span>, <span class="st">"batch.1"</span>, 
-               <span class="st">"batch.2"</span>, <span class="st">"batch.2"</span>,<span class="st">"batch.1"</span>, <span class="st">"batch.1"</span>,<span class="st">"bath.2"</span>, <span class="st">"bath.2"</span>), <span class="dt">output.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>())</code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co">#test example</span></a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.mirna.analysis.zip"</span>)</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(<span class="st">"test.mirna.analysis.zip"</span>)</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(<span class="st">"test.mirna.analysis"</span>)</a>
+<a class="sourceLine" id="cb21-5" data-line-number="5"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(docker4seq)</a>
+<a class="sourceLine" id="cb21-6" data-line-number="6"><span class="kw"><a href="../reference/mirnaCovar.html">mirnaCovar</a></span>(<span class="dt">experiment.folder=</span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>(), <span class="st">"all.counts.txt"</span>, <span class="dt">sep=</span><span class="st">"/"</span>),</a>
+<a class="sourceLine" id="cb21-7" data-line-number="7">     <span class="dt">covariates=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Cov.1"</span>, <span class="st">"Cov.1"</span>, <span class="st">"Cov.1"</span>, <span class="st">"Cov.1"</span>, <span class="st">"Cov.1"</span>, <span class="st">"Cov.1"</span>,</a>
+<a class="sourceLine" id="cb21-8" data-line-number="8">                  <span class="st">"Cov.2"</span>, <span class="st">"Cov.2"</span>, <span class="st">"Cov.2"</span>, <span class="st">"Cov.2"</span>, <span class="st">"Cov.2"</span>, <span class="st">"Cov.2"</span>),</a>
+<a class="sourceLine" id="cb21-9" data-line-number="9">     <span class="dt">batches=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"bath.1"</span>, <span class="st">"bath.1"</span>, <span class="st">"bath.2"</span>, <span class="st">"bath.2"</span>, <span class="st">"batch.1"</span>, <span class="st">"batch.1"</span>,</a>
+<a class="sourceLine" id="cb21-10" data-line-number="10">               <span class="st">"batch.2"</span>, <span class="st">"batch.2"</span>,<span class="st">"batch.1"</span>, <span class="st">"batch.1"</span>,<span class="st">"bath.2"</span>, <span class="st">"bath.2"</span>), <span class="dt">output.folder=</span><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>())</a></code></pre></div>
 <p>The output of <strong>mirnaCovar</strong>, i.e. w_covar_batch_all.counts.txt, is compliant with PCA, Sample size estimator, Experiment stat. power and DEseq2 analysis.</p>
 </div>
 <div id="mirnaseq-workflow-tutorial" class="section level3">
@@ -780,9 +782,9 @@ ChIPseq workflow
 Creating a BWA index with Genome indexing BWA
 </p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/bwaIndexUcsc.html">bwaIndexUcsc</a></span>(<span class="dt">group=</span><span class="st">"sudo"</span>,<span class="dt">genome.folder=</span><span class="st">"/sto2/data/scratch/mm10bwa"</span>, <span class="dt">uscs.urlgenome=</span>
-<span class="st">"http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz"</span>,
-<span class="dt">gatk=</span><span class="ot">FALSE</span>)</code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="../reference/bwaIndexUcsc.html">bwaIndexUcsc</a></span>(<span class="dt">group=</span><span class="st">"sudo"</span>,<span class="dt">genome.folder=</span><span class="st">"/sto2/data/scratch/mm10bwa"</span>, <span class="dt">uscs.urlgenome=</span></a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="st">"http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz"</span>,</a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="dt">gatk=</span><span class="ot">FALSE</span>)</a></code></pre></div>
 <p>In brief, <strong>bwaIndexUcsc</strong> uses UCSC genomic data. User has to provide the URL (<strong>uscs.urlgenome</strong>) for the file chromFa.tar.gz related to the organism of interest and the path to the folder where the index will be generated (<strong>genome.folder</strong>). The parameter <strong>gatk</strong> has to be set to FALSE, it is not required for ChIPseq genomic index creation.</p>
 <p>Precompiled index folders are available:</p>
 <ul>
@@ -804,20 +806,20 @@ MACS and SICER analysis
 <h3 class="hasAnchor">
 <a href="#chipseq-workflow-by-line-command" class="anchor"></a>Chipseq workflow by line command</h3>
 <p>The chipseq workflow can be also executed using R and it is completely embedded in a unique function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.chipseqCounts.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/unzip">unzip</a></span>(<span class="st">"test.chipseqCounts.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(<span class="st">"test.chipseqCounts"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(docker4seq)
-<span class="kw"><a href="../reference/chipseqCounts.html">chipseqCounts</a></span>(<span class="dt">group =</span> <span class="st">"docker"</span>, <span class="dt">output.folder =</span> <span class="st">"./prdm51.igg"</span>,
-  <span class="dt">mock.folder=</span><span class="st">"./igg"</span>, <span class="dt">test.folder=</span><span class="st">"./prdm51"</span>, <span class="dt">scratch.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>(),
-  <span class="dt">adapter5 =</span> <span class="st">"AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"</span>,
-  <span class="dt">adapter3 =</span> <span class="st">"AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"</span>,
-  <span class="dt">threads =</span> <span class="dv">8</span>, <span class="dt">min.length =</span> <span class="dv">30</span>, genome.folder,
-  <span class="dt">mock.id =</span> <span class="st">"igg"</span>, <span class="dt">test.id =</span> <span class="st">"tf"</span>, genome, <span class="dt">read.size =</span> <span class="dv">50</span>,
-  <span class="dt">tool =</span> <span class="st">"macs"</span>, <span class="dt">macs.min.mfold =</span> <span class="dv">10</span>, <span class="dt">macs.max.mfold =</span> <span class="dv">30</span>,
-  <span class="dt">macs.pval =</span> <span class="st">"1e-5"</span>, <span class="dt">sicer.wsize =</span> <span class="dv">200</span>, <span class="dt">sicer.gsize =</span> <span class="dv">200</span>,
-  <span class="dt">sicer.fdr =</span> <span class="fl">0.1</span>, <span class="dt">tss.distance =</span> <span class="dv">0</span>, <span class="dt">max.upstream.distance =</span> <span class="dv">10000</span>,
-  <span class="dt">remove.duplicates =</span> <span class="st">"N"</span>)</code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget 130.192.119.59/public/test.chipseqCounts.zip"</span>)</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/utils/unzip.html">unzip</a></span>(<span class="st">"test.chipseqCounts.zip"</span>)</a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(<span class="st">"test.chipseqCounts"</span>)</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(docker4seq)</a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="kw"><a href="../reference/chipseqCounts.html">chipseqCounts</a></span>(<span class="dt">group =</span> <span class="st">"docker"</span>, <span class="dt">output.folder =</span> <span class="st">"./prdm51.igg"</span>,</a>
+<a class="sourceLine" id="cb23-6" data-line-number="6">  <span class="dt">mock.folder=</span><span class="st">"./igg"</span>, <span class="dt">test.folder=</span><span class="st">"./prdm51"</span>, <span class="dt">scratch.folder=</span><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>(),</a>
+<a class="sourceLine" id="cb23-7" data-line-number="7">  <span class="dt">adapter5 =</span> <span class="st">"AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"</span>,</a>
+<a class="sourceLine" id="cb23-8" data-line-number="8">  <span class="dt">adapter3 =</span> <span class="st">"AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"</span>,</a>
+<a class="sourceLine" id="cb23-9" data-line-number="9">  <span class="dt">threads =</span> <span class="dv">8</span>, <span class="dt">min.length =</span> <span class="dv">30</span>, genome.folder,</a>
+<a class="sourceLine" id="cb23-10" data-line-number="10">  <span class="dt">mock.id =</span> <span class="st">"igg"</span>, <span class="dt">test.id =</span> <span class="st">"tf"</span>, genome, <span class="dt">read.size =</span> <span class="dv">50</span>,</a>
+<a class="sourceLine" id="cb23-11" data-line-number="11">  <span class="dt">tool =</span> <span class="st">"macs"</span>, <span class="dt">macs.min.mfold =</span> <span class="dv">10</span>, <span class="dt">macs.max.mfold =</span> <span class="dv">30</span>,</a>
+<a class="sourceLine" id="cb23-12" data-line-number="12">  <span class="dt">macs.pval =</span> <span class="st">"1e-5"</span>, <span class="dt">sicer.wsize =</span> <span class="dv">200</span>, <span class="dt">sicer.gsize =</span> <span class="dv">200</span>,</a>
+<a class="sourceLine" id="cb23-13" data-line-number="13">  <span class="dt">sicer.fdr =</span> <span class="fl">0.1</span>, <span class="dt">tss.distance =</span> <span class="dv">0</span>, <span class="dt">max.upstream.distance =</span> <span class="dv">10000</span>,</a>
+<a class="sourceLine" id="cb23-14" data-line-number="14">  <span class="dt">remove.duplicates =</span> <span class="st">"N"</span>)</a></code></pre></div>
 <p>Specifically user needs to create three folders:</p>
 <pre><code>+ mock.folder, where the fastq.gz file for the control sample is located. For control sample we refer to ChIP with IgG only or input DNA.
 + test.folder, where the fastq.gz file for the ChIP of the sample to be analysed.
@@ -848,8 +850,7 @@ MACS and SICER analysis
 + cumulative_coverage_total.pdf: Cumulative normalized gene coverage
 + cumulative_coverage_chrN.pdf: Cumulative normalized gene coverage for the specific chromosome
 + mycontrol_sorted.bw: bigWig file for UCSC Genome Browser visualization
-+ mytreat_sorted.bw: bigWig file for UCSC Genome Browser visualization
- </code></pre>
++ mytreat_sorted.bw: bigWig file for UCSC Genome Browser visualization</code></pre>
 </div>
 <div id="chipseq-workflow-tutorial" class="section level3">
 <h3 class="hasAnchor">
@@ -857,12 +858,12 @@ MACS and SICER analysis
 <p><a href="http://130.192.119.59/public/test.chipseqCounts.zip"><strong>Tutorial experiment downloadable here</strong></a>:</p>
 <pre><code>+ Two ChIPseq one IgG control and an other Prdm5 TF moAb (mouse)
 
-+ single-end mode sequencing, 
++ single-end mode sequencing,
 
 + 1 million reads for each sample.</code></pre>
 <p><strong>Experiment description</strong>:</p>
 <ul>
-<li><p>PRDM family members are transcriptional regulators involved in tissue specific differentiation. PRDM5 has been reported to predominantly repress transcription, but a characterization of its molecular functions in a relevant biological context is lacking. Prdm5 controls both Collagen I transcription and fibrillogenesis by binding inside the Col1a1 gene body and maintaining RNA polymerase II occupancy (Galli et al. PLoS Genet. 2012,e1002711).</p></li>
+<li><p>PRDM family members are transcriptional regulators involved in tissue specific differentiation. PRDM5 has been reported to predominantly repress transcription, but a characterization of its molecular functions in a relevant biological context is lacking. Prdm5 controls both Collagen I transcription and fibrillogenesis by binding inside the Col1a1 gene body and maintaining RNA polymerase II occupancy (Galli et al. PLoS Genet. 2012,e1002711).</p></li>
 <li><p>The toy experiment is organized in three folders: i. one for IgG (igg, containing the igg pool down fastq); ii. one for Prdm5 (prdm5, containing the Prdm5 pool down fastq) and iii. the other for analysis output prdm5.igg, where MACS results will be located. The execution of the ChIPseq workflow using GUI or line command will provide the final annotated table of peaks (mypeaks.xls)</p></li>
 </ul>
 </div>
@@ -875,21 +876,21 @@ MACS and SICER analysis
 <h3 class="hasAnchor">
 <a href="#creating-xenome-index-files" class="anchor"></a>Creating Xenome index files</h3>
 <p>The index can be easily created using the the following function:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/xenomeIndex.html">xenomeIndex</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>,<span class="dt">xenome.folder=</span><span class="st">"/data/scratch/hg19.mm10"</span>, 
-    <span class="dt">hg.urlgenome=</span><span class="st">"http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz"</span>,
-    <span class="dt">mm.urlgenome=</span><span class="st">"http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz"</span>, <span class="dt">threads=</span><span class="dv">8</span>)</code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw"><a href="../reference/xenomeIndex.html">xenomeIndex</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>,<span class="dt">xenome.folder=</span><span class="st">"/data/scratch/hg19.mm10"</span>,</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">    <span class="dt">hg.urlgenome=</span><span class="st">"http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz"</span>,</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">    <span class="dt">mm.urlgenome=</span><span class="st">"http://hgdownload.cse.ucsc.edu/goldenPath/mm10/bigZips/chromFa.tar.gz"</span>, <span class="dt">threads=</span><span class="dv">8</span>)</a></code></pre></div>
 <p>In brief, <strong>xenomeIndex</strong> uses UCSC genomic data. User has to provide the <strong>hg.urlgenome</strong> for the human chromFa.tar.gz, the <strong>mm.urlgenome</strong> for the mouse chromFa.tar.gz and the path to the folder where the index will be generated (<strong>xenome.folder</strong>). The parameter <strong>threads</strong> indicates how many threads the user would like to use.</p>
 </div>
 <div id="running-xenome" class="section level3">
 <h3 class="hasAnchor">
 <a href="#running-xenome" class="anchor"></a>Running Xenome</h3>
 <p>Xenome classification can be run using the following code:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget http://130.192.119.59/public/mcf7_mouse_1m_R1.fastq.gz"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget http://130.192.119.59/public/mcf7_mouse_1m_R2.fastq.gz"</span>)
-<span class="co">#running xenome</span>
-<span class="kw"><a href="../reference/xenome.html">xenome</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>,<span class="dt">fastq.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>(), <span class="dt">scratch.folder=</span><span class="st">"/data/scratch"</span>,
-         <span class="dt">xenome.folder=</span><span class="st">"/data/scratch/hg19.mm10"</span>, <span class="dt">seq.type=</span><span class="st">"pe"</span>,
-         <span class="dt">threads=</span><span class="dv">8</span>)</code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget http://130.192.119.59/public/mcf7_mouse_1m_R1.fastq.gz"</span>)</a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget http://130.192.119.59/public/mcf7_mouse_1m_R2.fastq.gz"</span>)</a>
+<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co">#running xenome</span></a>
+<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="kw"><a href="../reference/xenome.html">xenome</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>,<span class="dt">fastq.folder=</span><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>(), <span class="dt">scratch.folder=</span><span class="st">"/data/scratch"</span>,</a>
+<a class="sourceLine" id="cb28-5" data-line-number="5">         <span class="dt">xenome.folder=</span><span class="st">"/data/scratch/hg19.mm10"</span>, <span class="dt">seq.type=</span><span class="st">"pe"</span>,</a>
+<a class="sourceLine" id="cb28-6" data-line-number="6">         <span class="dt">threads=</span><span class="dv">8</span>)</a></code></pre></div>
 <p>In brief, <strong>xenome.folder</strong> is the location of the output generated by <strong>xenomeIndex</strong>. The <strong>scratch.folder</strong> is the folder where temporary data are created. <strong>seq.type</strong> indicates if it is a pair-end <strong>pe</strong> or a single-end <strong>se</strong> sequence. The parameter <strong>threads</strong> indicates how many threads the user would like to use. <strong>fastq.folder</strong> is the folder were input fastq are located and where the output of xenome will be located.</p>
 </div>
 </div>
@@ -903,22 +904,22 @@ MACS and SICER analysis
 <li><p><strong>bwa</strong> for mapping and duplicates marking.</p></li>
 </ul>
 <p><strong>IMPORTANT</strong> In case the mutect v1 will be used it is necessary to use, a genome reference for <strong>bwa</strong> the following archive (61 GB):</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget http://130.192.119.59/public/hg19_exome.tar.gz)</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget http://130.192.119.59/public/hg19_exome.tar.gz)</span></a></code></pre></div>
 <div id="wrapperpdx" class="section level3">
 <h3 class="hasAnchor">
 <a href="#wrapperpdx" class="anchor"></a>wrapperPdx</h3>
 <p>PDX fastq preprocessing can be done with <strong>wrapperPdx</strong>. These are the parameters to be passed:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#example set made of 1 million reads of MCF7 exome data and 1 million reads of mouse genomic DNA pulled down with Illumina Nextera Rapid Capture Exome kit.</span>
-
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget http://130.192.119.59/public/mcf7_mouse_1m_R1.fastq.gz"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget http://130.192.119.59/public/mcf7_mouse_1m_R2.fastq.gz"</span>)
-
-<span class="co">#running wrapperPdx</span>
-<span class="kw"><a href="../reference/wrapperPdx.html">wrapperPdx</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>,<span class="dt">fastq.folder=</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>(), <span class="dt">scratch.folder=</span><span class="st">"/data/scratch"</span>,
-     <span class="dt">xenome.folder=</span><span class="st">"/data/scratch/hg19.mm10"</span>, <span class="dt">seq.type=</span><span class="st">"pe"</span>, <span class="dt">threads=</span><span class="dv">24</span>, 
-     <span class="dt">adapter5=</span><span class="st">"AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"</span>,
-     <span class="dt">adapter3=</span><span class="st">"AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"</span>
-     <span class="dt">min.length=</span><span class="dv">40</span>, <span class="dt">genome.folder=</span><span class="st">"/data/scratch/hg19_exome"</span>, <span class="dt">sample.id=</span><span class="st">"sampleX"</span>)</code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="co">#example set made of 1 million reads of MCF7 exome data and 1 million reads of mouse genomic DNA pulled down with Illumina Nextera Rapid Capture Exome kit.</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget http://130.192.119.59/public/mcf7_mouse_1m_R1.fastq.gz"</span>)</a>
+<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget http://130.192.119.59/public/mcf7_mouse_1m_R2.fastq.gz"</span>)</a>
+<a class="sourceLine" id="cb30-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="co">#running wrapperPdx</span></a>
+<a class="sourceLine" id="cb30-7" data-line-number="7"><span class="kw"><a href="../reference/wrapperPdx.html">wrapperPdx</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>,<span class="dt">fastq.folder=</span><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>(), <span class="dt">scratch.folder=</span><span class="st">"/data/scratch"</span>,</a>
+<a class="sourceLine" id="cb30-8" data-line-number="8">     <span class="dt">xenome.folder=</span><span class="st">"/data/scratch/hg19.mm10"</span>, <span class="dt">seq.type=</span><span class="st">"pe"</span>, <span class="dt">threads=</span><span class="dv">24</span>,</a>
+<a class="sourceLine" id="cb30-9" data-line-number="9">     <span class="dt">adapter5=</span><span class="st">"AGATCGGAAGAGCACACGTCTGAACTCCAGTCA"</span>,</a>
+<a class="sourceLine" id="cb30-10" data-line-number="10">     <span class="dt">adapter3=</span><span class="st">"AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT"</span></a>
+<a class="sourceLine" id="cb30-11" data-line-number="11">     <span class="dt">min.length=</span><span class="dv">40</span>, <span class="dt">genome.folder=</span><span class="st">"/data/scratch/hg19_exome"</span>, <span class="dt">sample.id=</span><span class="st">"sampleX"</span>)</a></code></pre></div>
 <p>In brief, <strong>xenome.folder</strong> is the location of the output generated by <strong>xenomeIndex</strong>. The <strong>scratch.folder</strong> is the folder where temporary data are created. <strong>seq.type</strong> indicates if it is a pair-end <strong>pe</strong> or a single-end <strong>se</strong> sequence. The parameter <strong>threads</strong> indicates how many threads the user would like to use. <strong>fastq.folder</strong> is the folder were input fastq are located and where the output of xenome will be located. User needs to provide also the sequence of the sequencing adapters, <strong>adapter5</strong> and <strong>adapter3</strong> parameters. In case Illumina platform the adapters sequences can be easily recovered <a href="https://support.illumina.com/content/dam/illumina-support/documents/documentation/chemistry_documentation/experiment-design/illumina-adapter-sequences_1000000002694-01.pdf"><strong>here</strong></a>. The <strong>min.length</strong> refers to the minimal length that a reads should have after adapters trimming. Since today the average read length for a RNAseq experiment is 50 or 75 nts would be better to bring to 40 nts the min.length parameter to increase the precision in assigning the correct position on the genome. The <strong>genome.folder</strong> parameter refers to the location of the genomic index <a href="http://130.192.119.59/public/hg19_exome.tar.gz"><strong>hg19_exome</strong></a> required for <strong>bwa</strong>, see above. <strong>Sample.id</strong> is a character string indicating the unique id to be associated to the bam that will be created.</p>
 </div>
 <div id="wrapperpdx-output" class="section level3">
@@ -938,15 +939,16 @@ MACS and SICER analysis
 <h3 class="hasAnchor">
 <a href="#oncosnp" class="anchor"></a>oncoSNP</h3>
 <p>The output of <a href="https://sites.google.com/site/oncosnp/">oncoSNP</a> is used to associate to gene symbols the detected CN, rank 5 (<a href="https://sites.google.com/site/oncosnp/user-guide/interpreting-oncosnp-output">see oncoSNP help</a>). This association is done using the <em>oncosnpAnnotation</em> function. The function requirements are the folder where the ouptut of oncoSNP is saved, i.e. where the file with extension .cnvs are located, and the folder where the ENSEMBL genome.gtf is located. The analysis returns for each .cnvs a file annotation_XXXXXX.cnvs.txt, which contains the genes location, gene symbol and CN and LOH (<a href="https://sites.google.com/site/oncosnp/user-guide/interpreting-oncosnp-output">see oncoSNP help</a>). Please note</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"wget http://130.192.119.59/public/test_oncosnp.zip"</span>)
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"unzip test_oncosnp.zip"</span>)
-
-<span class="kw"><a href="../reference/oncosnpAnnotation.html">oncosnpAnnotation</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">data.folder=</span><span class="st">"./test_oncosnp/oncosnp_out"</span>, <span class="dt">genome.folder=</span><span class="st">"./test_oncosnp/hg19"</span>)</code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"wget http://130.192.119.59/public/test_oncosnp.zip"</span>)</a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"unzip test_oncosnp.zip"</span>)</a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="kw"><a href="../reference/oncosnpAnnotation.html">oncosnpAnnotation</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">data.folder=</span><span class="st">"./test_oncosnp/oncosnp_out"</span>, <span class="dt">genome.folder=</span><span class="st">"./test_oncosnp/hg19"</span>)</a></code></pre></div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -968,17 +970,20 @@ MACS and SICER analysis
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Raffaele Calogero, Neha Kulkarni, Luca Alessandri, Marco Beccuti, Greta Romano, Francesca Cordero.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

@@ -4,8 +4,13 @@
 \alias{circrnaPrepareFiles}
 \title{Function to prepare the CircHunter reference annotations}
 \usage{
-circrnaPrepareFiles(group = c("sudo", "docker"), scratch.folder,
-  data.folder, assembly = "hg19", version = NULL)
+circrnaPrepareFiles(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  data.folder,
+  assembly = "hg19",
+  version = NULL
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

@@ -4,9 +4,16 @@
 \alias{bwa}
 \title{Running bwa, Li and Durbin Bioinformatics, 2009 Jul 15;25(14):1754-60}
 \usage{
-bwa(group = c("sudo", "docker"), fastq.folder = getwd(),
-  scratch.folder = "/data/scratch", genome.folder, seq.type = c("se",
-  "pe"), threads = 1, sample.id, circRNA = FALSE)
+bwa(
+  group = c("sudo", "docker"),
+  fastq.folder = getwd(),
+  scratch.folder = "/data/scratch",
+  genome.folder,
+  seq.type = c("se", "pe"),
+  threads = 1,
+  sample.id,
+  circRNA = FALSE
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

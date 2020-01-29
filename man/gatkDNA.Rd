@@ -4,9 +4,14 @@
 \alias{gatkDNA}
 \title{Running realignment and recalibration, GATK}
 \usage{
-gatkDNA(group = c("sudo", "docker"), bam.folder = getwd(),
-  scratch.folder = "/data/scratch", gatk.filename, genome.folder,
-  threads = 1)
+gatkDNA(
+  group = c("sudo", "docker"),
+  bam.folder = getwd(),
+  scratch.folder = "/data/scratch",
+  gatk.filename,
+  genome.folder,
+  threads = 1
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

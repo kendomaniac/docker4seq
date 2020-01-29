@@ -4,9 +4,14 @@
 \alias{bwaIndexUcsc}
 \title{Generating bwa genome index for GATK variant call}
 \usage{
-bwaIndexUcsc(group = c("sudo", "docker"), genome.folder = getwd(),
-  uscs.urlgenome = NULL, dbsnp.file = NULL, g1000.file = NULL,
-  gatk = FALSE)
+bwaIndexUcsc(
+  group = c("sudo", "docker"),
+  genome.folder = getwd(),
+  uscs.urlgenome = NULL,
+  dbsnp.file = NULL,
+  g1000.file = NULL,
+  gatk = FALSE
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

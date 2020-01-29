@@ -4,10 +4,16 @@
 \alias{rsemstar}
 \title{Running RSEM, Li and Dewey BMC Bioinformatics 2011 12:323}
 \usage{
-rsemstar(group = c("sudo", "docker"), fastq.folder = getwd(),
-  scratch.folder = "/data/scratch", genome.folder, seq.type = c("se",
-  "pe"), strandness = c("none", "forward", "reverse"), threads = 1,
-  save.bam = TRUE)
+rsemstar(
+  group = c("sudo", "docker"),
+  fastq.folder = getwd(),
+  scratch.folder = "/data/scratch",
+  genome.folder,
+  seq.type = c("se", "pe"),
+  strandness = c("none", "forward", "reverse"),
+  threads = 1,
+  save.bam = TRUE
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

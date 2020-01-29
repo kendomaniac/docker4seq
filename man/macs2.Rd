@@ -4,9 +4,16 @@
 \alias{macs2}
 \title{A function to handle a MACS2 containier}
 \usage{
-macs2(group = c("sudo", "docker"), control.bam, chipseq.bam,
-  experiment.name, histone.marks = FALSE, broad.cutoff = 0.1,
-  qvalue = 0.05, organism = c("hs", "mm"))
+macs2(
+  group = c("sudo", "docker"),
+  control.bam,
+  chipseq.bam,
+  experiment.name,
+  histone.marks = FALSE,
+  broad.cutoff = 0.1,
+  qvalue = 0.05,
+  organism = c("hs", "mm")
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

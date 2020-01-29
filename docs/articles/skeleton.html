@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Skeleton tutorial • docker4seq</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><meta property="og:title" content="Skeleton tutorial">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
@@ -30,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">docker4seq</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0</span>
       </span>
     </div>
 
@@ -38,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -70,6 +71,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
@@ -85,48 +87,47 @@
     
     
 
-
 <div id="dissecting-the-skeleton-r" class="section level2">
 <h2 class="hasAnchor">
 <a href="#dissecting-the-skeleton-r" class="anchor"></a>Dissecting the skeleton.R</h2>
 <p>The skeleton function allows to control a bash script, <strong>skeleton.sh</strong>, located in docker.io/repbioinfo/ubuntu image in /bin.</p>
 <p>The skeleton function has three parameters:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/skeleton.html">skeleton</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, scratch.folder, data.folder)</code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="../reference/skeleton.html">skeleton</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, scratch.folder, data.folder)</a></code></pre></div>
 <ul>
 <li><p><strong>group</strong>, a character string. Two options: <em>sudo</em> or <em>docker</em>, depending to which group the user belongs</p></li>
 <li><p><strong>scratch.folder</strong>, a character string indicating the path of the scratch folder. In principle the scratch folder is a temporary folder located in a disk with high I/O, e.g. a SSD disk, but if the fast disk is not available it represents only a temporary folder where the data generated by the application are saved.</p></li>
 <li><p><strong>data.folder</strong>, a character string indicating the folder where input data are located and where output will be written</p></li>
 </ul>
 <p>The first step in the skeleton function is storing the working folder and grabbing the process time for subsequent performance evaluation.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co">#storing the position of the home folder  </span>
-  home &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">getwd</a></span>()
-  <span class="co">#running time 1</span>
-  ptm &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/proc.time">proc.time</a></span>()</code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">  <span class="co">#storing the position of the home folder  </span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">  home &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/getwd.html">getwd</a></span>()</a>
+<a class="sourceLine" id="cb2-3" data-line-number="3">  <span class="co">#running time 1</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">  ptm &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/proc.time.html">proc.time</a></span>()</a></code></pre></div>
 <p>Then, it is tested if docker demon is running,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co">#testing if docker is running</span>
-  test &lt;-<span class="st"> </span><span class="kw"><a href="../reference/dockerTest.html">dockerTest</a></span>()
-  <span class="cf">if</span>(<span class="op">!</span>test){
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(<span class="st">"</span><span class="ch">\n</span><span class="st">ERROR: Docker seems not to be installed in your system</span><span class="ch">\n</span><span class="st">"</span>)
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>()
-  }</code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">  <span class="co">#testing if docker is running</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">  test &lt;-<span class="st"> </span><span class="kw"><a href="../reference/dockerTest.html">dockerTest</a></span>()</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">  <span class="cf">if</span>(<span class="op">!</span>test){</a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">    <span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="st">"</span><span class="ch">\n</span><span class="st">ERROR: Docker seems not to be installed in your system</span><span class="ch">\n</span><span class="st">"</span>)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>()</a>
+<a class="sourceLine" id="cb3-6" data-line-number="6">  }</a></code></pre></div>
 <p>checking if data folder exists and setting it as working folder,</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co">#setting the data.folder as working folder</span>
-  <span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.exists</a></span>(data.folder)){
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"</span><span class="ch">\n</span><span class="st">It seems that the "</span>,data.folder, <span class="st">" folder does not exist</span><span class="ch">\n</span><span class="st">"</span>))
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(<span class="dv">2</span>)
-  }
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(data.folder)</code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">  <span class="co">#setting the data.folder as working folder</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">  <span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span>(data.folder)){</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">    <span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"</span><span class="ch">\n</span><span class="st">It seems that the "</span>,data.folder, <span class="st">" folder does not exist</span><span class="ch">\n</span><span class="st">"</span>))</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">  }</a>
+<a class="sourceLine" id="cb4-6" data-line-number="6">  <span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(data.folder)</a></code></pre></div>
 <p>checking if scratch folder exists and creating a temporary folder.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co">#check  if scratch folder exist</span>
-  <span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files">file.exists</a></span>(scratch.folder)){
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"</span><span class="ch">\n</span><span class="st">It seems that the "</span>,scratch.folder, <span class="st">" folder does not exist</span><span class="ch">\n</span><span class="st">"</span>))
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/function">return</a></span>(<span class="dv">3</span>)
-  }
-  tmp.folder &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">gsub</a></span>(<span class="st">":"</span>,<span class="st">"-"</span>,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">gsub</a></span>(<span class="st">" "</span>,<span class="st">"-"</span>,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/date">date</a></span>()))
-  scrat_tmp.folder=<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(scratch.folder, tmp.folder)
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/writeLines">writeLines</a></span>(scrat_tmp.folder,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(data.folder,<span class="st">"/tempFolderID"</span>, <span class="dt">sep=</span><span class="st">""</span>))
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(<span class="st">"</span><span class="ch">\n</span><span class="st">creating a folder in scratch folder</span><span class="ch">\n</span><span class="st">"</span>)
-  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/files2">dir.create</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/file.path">file.path</a></span>(scrat_tmp.folder))</code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">  <span class="co">#check  if scratch folder exist</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="cf">if</span> (<span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/files.html">file.exists</a></span>(scratch.folder)){</a>
+<a class="sourceLine" id="cb5-3" data-line-number="3">    <span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"</span><span class="ch">\n</span><span class="st">It seems that the "</span>,scratch.folder, <span class="st">" folder does not exist</span><span class="ch">\n</span><span class="st">"</span>))</a>
+<a class="sourceLine" id="cb5-4" data-line-number="4">    <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">  }</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">  tmp.folder &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span>(<span class="st">":"</span>,<span class="st">"-"</span>,<span class="kw"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span>(<span class="st">" "</span>,<span class="st">"-"</span>,<span class="kw"><a href="https://rdrr.io/r/base/date.html">date</a></span>()))</a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">  scrat_tmp.folder=<span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(scratch.folder, tmp.folder)</a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">  <span class="kw"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span>(scrat_tmp.folder,<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(data.folder,<span class="st">"/tempFolderID"</span>, <span class="dt">sep=</span><span class="st">""</span>))</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">  <span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="st">"</span><span class="ch">\n</span><span class="st">creating a folder in scratch folder</span><span class="ch">\n</span><span class="st">"</span>)</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10">  <span class="kw"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/file.path.html">file.path</a></span>(scrat_tmp.folder))</a></code></pre></div>
 <p>Executing the docker command:</p>
 <ul>
 <li>
@@ -140,80 +141,81 @@
 </li>
 <li><p>the parameter string is passed to the runDocker that execute the job. runDocker check if docker is running and return <strong>false</strong> when is finished</p></li>
 </ul>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co">#executing the docker job</span>
-  <span class="cf">if</span>(group<span class="op">==</span><span class="st">"sudo"</span>){
-    params &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"--cidfile "</span>,data.folder,<span class="st">"/dockerID -v "</span>,scrat_tmp.folder,<span class="st">":/scratch -v "</span>, data.folder, <span class="st">":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh"</span>, <span class="dt">sep=</span><span class="st">""</span>)
-    resultRun &lt;-<span class="st"> </span><span class="kw"><a href="../reference/runDocker.html">runDocker</a></span>(<span class="dt">group=</span><span class="st">"sudo"</span>, <span class="dt">params=</span>params)
-  }<span class="cf">else</span>{
-    params &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"--cidfile "</span>,data.folder,<span class="st">"/dockerID -v "</span>,scrat_tmp.folder,<span class="st">":/scratch -v "</span>, data.folder, <span class="st">":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh"</span>, <span class="dt">sep=</span><span class="st">""</span>)
-    resultRun &lt;-<span class="st"> </span><span class="kw"><a href="../reference/runDocker.html">runDocker</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">params=</span>params)
-  }</code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">  <span class="co">#executing the docker job</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="cf">if</span>(group<span class="op">==</span><span class="st">"sudo"</span>){</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">    params &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"--cidfile "</span>,data.folder,<span class="st">"/dockerID -v "</span>,scrat_tmp.folder,<span class="st">":/scratch -v "</span>, data.folder, <span class="st">":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh"</span>, <span class="dt">sep=</span><span class="st">""</span>)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">    resultRun &lt;-<span class="st"> </span><span class="kw"><a href="../reference/runDocker.html">runDocker</a></span>(<span class="dt">group=</span><span class="st">"sudo"</span>, <span class="dt">params=</span>params)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">  }<span class="cf">else</span>{</a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">    params &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"--cidfile "</span>,data.folder,<span class="st">"/dockerID -v "</span>,scrat_tmp.folder,<span class="st">":/scratch -v "</span>, data.folder, <span class="st">":/data -d docker.io/repbioinfo/ubuntu sh /bin/skeleton.sh"</span>, <span class="dt">sep=</span><span class="st">""</span>)</a>
+<a class="sourceLine" id="cb6-7" data-line-number="7">    resultRun &lt;-<span class="st"> </span><span class="kw"><a href="../reference/runDocker.html">runDocker</a></span>(<span class="dt">group=</span><span class="st">"docker"</span>, <span class="dt">params=</span>params)</a>
+<a class="sourceLine" id="cb6-8" data-line-number="8">  }</a></code></pre></div>
 <p>The <strong>skeleton.sh</strong> scripts in docker.io/repbioinfo/ubuntu is the following:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="co">#!/bin/bash</span>
-<span class="bu">echo</span> <span class="st">"skeleton 0.0.1"</span>
-<span class="co">#setting the scratch folder as workinng directory</span>
-<span class="va">SCRATCH_FOLDER=</span>/scratch
-<span class="va">DATA_FOLDER=</span>/data
-<span class="co">#moving to scratch folder</span>
-<span class="bu">cd</span> <span class="va">$SCRATCH_FOLDER</span>
-<span class="co">#adding information to run.info file or creating a run.info file</span>
-<span class="va">file=</span><span class="st">"run.info"</span>
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Control">if</a></span><span class="bu"> [</span> <span class="ot">-f</span> <span class="st">"</span><span class="va">$file</span><span class="st">"</span><span class="bu"> ]</span>
-<span class="kw">then</span>
-        <span class="bu">echo</span> <span class="st">"skeleton 0.0.1"</span> <span class="op">&gt;&gt;</span> <span class="va">$SCRATCH_FOLDER</span>/run.info
-<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Control">else</a></span>
-        <span class="bu">echo</span> <span class="st">"skeleton 0.0.1"</span> <span class="op">&gt;</span> <span class="va">$SCRATCH_FOLDER</span>/run.info
-<span class="kw">fi</span>
-<span class="co">#writing the result file helloworld in data scratch</span>
-<span class="bu">echo</span> <span class="st">"hello world"</span> <span class="op">&gt;</span> <span class="va">$SCRATCH_FOLDER</span>/helloworld.txt
-<span class="co"># creating the out.info file indicating that run is finished </span>
-<span class="bu">echo</span> <span class="st">"analysis is finished"</span> <span class="op">&gt;</span> <span class="va">$SCRATCH_FOLDER</span>/out.info
-<span class="co">#changing the properties of files and folders in /data/scratch </span>
-<span class="fu">chmod</span> 777 -R <span class="va">$SCRATCH_FOLDER</span>/*</code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">#!/bin/bash</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="bu">echo</span> <span class="st">"skeleton 0.0.1"</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="co">#setting the scratch folder as workinng directory</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="va">SCRATCH_FOLDER=</span>/scratch</a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="va">DATA_FOLDER=</span>/data</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">#moving to scratch folder</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"><span class="bu">cd</span> <span class="va">$SCRATCH_FOLDER</span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="co">#adding information to run.info file or creating a run.info file</span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="va">file=</span><span class="st">"run.info"</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="kw"><a href="https://rdrr.io/r/base/Control.html">if</a></span><span class="bu"> [</span> <span class="ot">-f</span> <span class="st">"</span><span class="va">$file</span><span class="st">"</span><span class="bu"> ]</span></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="kw">then</span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12">        <span class="bu">echo</span> <span class="st">"skeleton 0.0.1"</span> <span class="op">&gt;&gt;</span> <span class="va">$SCRATCH_FOLDER</span>/run.info</a>
+<a class="sourceLine" id="cb7-13" data-line-number="13"><span class="kw"><a href="https://rdrr.io/r/base/Control.html">else</a></span></a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">        <span class="bu">echo</span> <span class="st">"skeleton 0.0.1"</span> <span class="op">&gt;</span> <span class="va">$SCRATCH_FOLDER</span>/run.info</a>
+<a class="sourceLine" id="cb7-15" data-line-number="15"><span class="kw">fi</span></a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"><span class="co">#writing the result file helloworld in data scratch</span></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17"><span class="bu">echo</span> <span class="st">"hello world"</span> <span class="op">&gt;</span> <span class="va">$SCRATCH_FOLDER</span>/helloworld.txt</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"><span class="co"># creating the out.info file indicating that run is finished</span></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="bu">echo</span> <span class="st">"analysis is finished"</span> <span class="op">&gt;</span> <span class="va">$SCRATCH_FOLDER</span>/out.info</a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"><span class="co">#changing the properties of files and folders in /data/scratch</span></a>
+<a class="sourceLine" id="cb7-21" data-line-number="21"><span class="fu">chmod</span> 777 -R <span class="va">$SCRATCH_FOLDER</span>/*</a></code></pre></div>
 <p>It writes hello world in the <strong>helloworld.txt</strong> and moves <strong>helloworld.txt</strong> to the data folder together with the <strong>run.info</strong> file, used to store information about the run, and the <strong>out.info</strong>, used to tell to the R script when the doker job is finished. The <strong>skeleton.sh</strong> scripts is a prototype for the handling of docker application(s).</p>
 <p>Lets go back to the skeleton.R dissection:</p>
 <p>The <strong>resultRun</strong> is used to check when the docker job is finished. The log of the docker job is saved with a name made of the first 12 letters of the docker job ID. Then, the docker container is deleted as well as the temporary folder and few other files: out.info, dockerID, tempFolderID. Finally the home folder is restored as working directory.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"> <span class="co">#when container ends</span>
- <span class="cf">if</span>(resultRun<span class="op">==</span><span class="st">"false"</span>){
-   <span class="co">#everything is copied to the input folder</span>
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"mv "</span>, scrat_tmp.folder,<span class="st">"/* "</span>,data.folder, <span class="dt">sep=</span><span class="st">""</span>))
-     <span class="co">#saving log and removing docker container</span>
-    container.id &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readLines">readLines</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(data.folder,<span class="st">"/dockerID"</span>, <span class="dt">sep=</span><span class="st">""</span>), <span class="dt">warn =</span> <span class="ot">FALSE</span>)
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"docker logs "</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>(container.id,<span class="dv">1</span>,<span class="dv">12</span>), <span class="st">" &amp;&gt; "</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/substr">substr</a></span>(container.id,<span class="dv">1</span>,<span class="dv">12</span>),<span class="st">".log"</span>, <span class="dt">sep=</span><span class="st">""</span>))
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"docker rm "</span>, container.id, <span class="dt">sep=</span><span class="st">""</span>))
-    <span class="co">#removing temporary folder</span>
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/cat">cat</a></span>(<span class="st">"</span><span class="ch">\n\n</span><span class="st">Removing the temporary file ....</span><span class="ch">\n</span><span class="st">"</span>)
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"rm -R "</span>,scrat_tmp.folder))
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"rm -fR out.info"</span>)
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"rm -fR dockerID"</span>)
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="st">"rm  -fR tempFolderID"</span>)
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system">system</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"cp "</span>,<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/find.package">path.package</a></span>(<span class="dt">package=</span><span class="st">"docker4seq"</span>),<span class="st">"containers/containers.txt"</span>,<span class="dt">sep=</span><span class="st">"/"</span>),<span class="st">" "</span>,data.folder, <span class="dt">sep=</span><span class="st">""</span>))
- }</code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"> <span class="co">#when container ends</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"> <span class="cf">if</span>(resultRun<span class="op">==</span><span class="st">"false"</span>){</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3">   <span class="co">#everything is copied to the input folder</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">    <span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"mv "</span>, scrat_tmp.folder,<span class="st">"/* "</span>,data.folder, <span class="dt">sep=</span><span class="st">""</span>))</a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">     <span class="co">#saving log and removing docker container</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6">    container.id &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(data.folder,<span class="st">"/dockerID"</span>, <span class="dt">sep=</span><span class="st">""</span>), <span class="dt">warn =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">    <span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"docker logs "</span>, <span class="kw"><a href="https://rdrr.io/r/base/substr.html">substr</a></span>(container.id,<span class="dv">1</span>,<span class="dv">12</span>), <span class="st">" &amp;&gt; "</span>, <span class="kw"><a href="https://rdrr.io/r/base/substr.html">substr</a></span>(container.id,<span class="dv">1</span>,<span class="dv">12</span>),<span class="st">".log"</span>, <span class="dt">sep=</span><span class="st">""</span>))</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">    <span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"docker rm "</span>, container.id, <span class="dt">sep=</span><span class="st">""</span>))</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9">    <span class="co">#removing temporary folder</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10">    <span class="kw"><a href="https://rdrr.io/r/base/cat.html">cat</a></span>(<span class="st">"</span><span class="ch">\n\n</span><span class="st">Removing the temporary file ....</span><span class="ch">\n</span><span class="st">"</span>)</a>
+<a class="sourceLine" id="cb8-11" data-line-number="11">    <span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"rm -R "</span>,scrat_tmp.folder))</a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">    <span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"rm -fR out.info"</span>)</a>
+<a class="sourceLine" id="cb8-13" data-line-number="13">    <span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"rm -fR dockerID"</span>)</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14">    <span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="st">"rm  -fR tempFolderID"</span>)</a>
+<a class="sourceLine" id="cb8-15" data-line-number="15">    <span class="kw"><a href="https://rdrr.io/r/base/system.html">system</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"cp "</span>,<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/find.package.html">path.package</a></span>(<span class="dt">package=</span><span class="st">"docker4seq"</span>),<span class="st">"containers/containers.txt"</span>,<span class="dt">sep=</span><span class="st">"/"</span>),<span class="st">" "</span>,data.folder, <span class="dt">sep=</span><span class="st">""</span>))</a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"> }</a></code></pre></div>
 <p>Then, the computing time is estimated and saved in the run.info file</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="co">#running time 2</span>
-  ptm &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/proc.time">proc.time</a></span>() <span class="op">-</span><span class="st"> </span>ptm
-  dir &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list.files">dir</a></span>(data.folder)
-  dir &lt;-<span class="st"> </span>dir[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">grep</a></span>(<span class="st">"run.info"</span>,dir)]
-  <span class="cf">if</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(dir)<span class="op">&gt;</span><span class="dv">0</span>){
-    con &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/connections">file</a></span>(<span class="st">"run.info"</span>, <span class="st">"r"</span>)
-    tmp.run &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readLines">readLines</a></span>(con)
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/connections">close</a></span>(con)
-    tmp.run[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(tmp.run)<span class="op">+</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"user run time mins "</span>,ptm[<span class="dv">1</span>]<span class="op">/</span><span class="dv">60</span>, <span class="dt">sep=</span><span class="st">""</span>)
-    tmp.run[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(tmp.run)<span class="op">+</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"system run time mins "</span>,ptm[<span class="dv">2</span>]<span class="op">/</span><span class="dv">60</span>, <span class="dt">sep=</span><span class="st">""</span>)
-    tmp.run[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(tmp.run)<span class="op">+</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"elapsed run time mins "</span>,ptm[<span class="dv">3</span>]<span class="op">/</span><span class="dv">60</span>, <span class="dt">sep=</span><span class="st">""</span>)
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/writeLines">writeLines</a></span>(tmp.run,<span class="st">"run.info"</span>)
-  }<span class="cf">else</span>{
-    tmp.run &lt;-<span class="st"> </span><span class="ot">NULL</span>
-    tmp.run[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"run time mins "</span>,ptm[<span class="dv">1</span>]<span class="op">/</span><span class="dv">60</span>, <span class="dt">sep=</span><span class="st">""</span>)
-    tmp.run[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(tmp.run)<span class="op">+</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"system run time mins "</span>,ptm[<span class="dv">2</span>]<span class="op">/</span><span class="dv">60</span>, <span class="dt">sep=</span><span class="st">""</span>)
-    tmp.run[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/length">length</a></span>(tmp.run)<span class="op">+</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/paste">paste</a></span>(<span class="st">"elapsed run time mins "</span>,ptm[<span class="dv">3</span>]<span class="op">/</span><span class="dv">60</span>, <span class="dt">sep=</span><span class="st">""</span>)
-    <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/writeLines">writeLines</a></span>(tmp.run,<span class="st">"run.info"</span>)
-  }</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">  <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/getwd">setwd</a></span>(home)</code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">  <span class="co">#running time 2</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">  ptm &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/proc.time.html">proc.time</a></span>() <span class="op">-</span><span class="st"> </span>ptm</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3">  dir &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.files.html">dir</a></span>(data.folder)</a>
+<a class="sourceLine" id="cb9-4" data-line-number="4">  dir &lt;-<span class="st"> </span>dir[<span class="kw"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="st">"run.info"</span>,dir)]</a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">  <span class="cf">if</span>(<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(dir)<span class="op">&gt;</span><span class="dv">0</span>){</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">    con &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/connections.html">file</a></span>(<span class="st">"run.info"</span>, <span class="st">"r"</span>)</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7">    tmp.run &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readLines.html">readLines</a></span>(con)</a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">    <span class="kw"><a href="https://rdrr.io/r/base/connections.html">close</a></span>(con)</a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">    tmp.run[<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(tmp.run)<span class="op">+</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"user run time mins "</span>,ptm[<span class="dv">1</span>]<span class="op">/</span><span class="dv">60</span>, <span class="dt">sep=</span><span class="st">""</span>)</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">    tmp.run[<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(tmp.run)<span class="op">+</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"system run time mins "</span>,ptm[<span class="dv">2</span>]<span class="op">/</span><span class="dv">60</span>, <span class="dt">sep=</span><span class="st">""</span>)</a>
+<a class="sourceLine" id="cb9-11" data-line-number="11">    tmp.run[<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(tmp.run)<span class="op">+</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"elapsed run time mins "</span>,ptm[<span class="dv">3</span>]<span class="op">/</span><span class="dv">60</span>, <span class="dt">sep=</span><span class="st">""</span>)</a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">    <span class="kw"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span>(tmp.run,<span class="st">"run.info"</span>)</a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">  }<span class="cf">else</span>{</a>
+<a class="sourceLine" id="cb9-14" data-line-number="14">    tmp.run &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb9-15" data-line-number="15">    tmp.run[<span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"run time mins "</span>,ptm[<span class="dv">1</span>]<span class="op">/</span><span class="dv">60</span>, <span class="dt">sep=</span><span class="st">""</span>)</a>
+<a class="sourceLine" id="cb9-16" data-line-number="16">    tmp.run[<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(tmp.run)<span class="op">+</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"system run time mins "</span>,ptm[<span class="dv">2</span>]<span class="op">/</span><span class="dv">60</span>, <span class="dt">sep=</span><span class="st">""</span>)</a>
+<a class="sourceLine" id="cb9-17" data-line-number="17">    tmp.run[<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(tmp.run)<span class="op">+</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste</a></span>(<span class="st">"elapsed run time mins "</span>,ptm[<span class="dv">3</span>]<span class="op">/</span><span class="dv">60</span>, <span class="dt">sep=</span><span class="st">""</span>)</a>
+<a class="sourceLine" id="cb9-18" data-line-number="18">    <span class="kw"><a href="https://rdrr.io/r/base/writeLines.html">writeLines</a></span>(tmp.run,<span class="st">"run.info"</span>)</a>
+<a class="sourceLine" id="cb9-19" data-line-number="19">  }</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">  <span class="kw"><a href="https://rdrr.io/r/base/getwd.html">setwd</a></span>(home)</a></code></pre></div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -226,17 +228,20 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by Raffaele Calogero, Neha Kulkarni, Luca Alessandri, Marco Beccuti, Greta Romano, Francesca Cordero.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

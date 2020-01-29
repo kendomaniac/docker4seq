@@ -4,8 +4,13 @@
 \alias{circrnaBSJunctions}
 \title{Running CircHunter circRNA backsplicing sequence reconstruction module}
 \usage{
-circrnaBSJunctions(group = c("sudo", "docker"), scratch.folder,
-  circrna.data, exon.data, assembly = "hg19")
+circrnaBSJunctions(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  circrna.data,
+  exon.data,
+  assembly = "hg19"
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

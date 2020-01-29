@@ -4,8 +4,12 @@
 \alias{trimFasta}
 \title{A function to execute seqtk trimming}
 \usage{
-trimFasta(group = c("sudo", "docker"), scratch.folder, data.folder,
-  min.length = 300)
+trimFasta(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  data.folder,
+  min.length = 300
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

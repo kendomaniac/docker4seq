@@ -4,8 +4,13 @@
 \alias{oncosnp}
 \title{A function to handle a docker containier executing CNV calculation. Only supporting hg19}
 \usage{
-oncosnp(group = c("sudo", "docker"), data.folder, scratch.folder,
-  sample.name = NULL, blood.name = NULL)
+oncosnp(
+  group = c("sudo", "docker"),
+  data.folder,
+  scratch.folder,
+  sample.name = NULL,
+  blood.name = NULL
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

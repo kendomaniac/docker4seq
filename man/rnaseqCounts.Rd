@@ -4,11 +4,21 @@
 \alias{rnaseqCounts}
 \title{Running RNAseq counting workflow for a single sample}
 \usage{
-rnaseqCounts(group = "sudo", fastq.folder = getwd(),
-  scratch.folder = "/data/scratch", threads = 4, adapter5, adapter3,
-  seq.type = "pe", min.length = 40,
-  genome.folder = "/data/genomes/hg38star", strandness = "none",
-  save.bam = TRUE, org = "hg38", annotation.type = "gtfENSEMBL")
+rnaseqCounts(
+  group = "sudo",
+  fastq.folder = getwd(),
+  scratch.folder = "/data/scratch",
+  threads = 4,
+  adapter5,
+  adapter3,
+  seq.type = "pe",
+  min.length = 40,
+  genome.folder = "/data/genomes/hg38star",
+  strandness = "none",
+  save.bam = TRUE,
+  org = "hg38",
+  annotation.type = "gtfENSEMBL"
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -28,7 +38,7 @@ rnaseqCounts(group = "sudo", fastq.folder = getwd(),
 \item{min.length, }{a number indicating minimal length required to return a trimmed read
 #params rsemstar}
 
-\item{genome.folder, }{a character string indicating the folder where the indexed reference genome for bwa is located. IMPORTANT the present function only suport genomic indexes made using ensembl genom and the corresponding gtf}
+\item{genome.folder, }{a character string indicating the folder where the indexed reference genome is located. IMPORTANT the present function only suport genomic indexes made using ensembl genom and the corresponding gtf}
 
 \item{strandness, }{a character string indicating the type ofsequencing protocol used for the analysis. Three options: \code{"none"}, \code{"forward"}, \code{"reverse"} respectively for non strand selection, reverse for Illumina strandness protocols, reverse for ACCESS Illumina protocol}
 

@@ -4,13 +4,18 @@
 \alias{rsemstarIndex}
 \title{Generating rsem-star genome index}
 \usage{
-rsemstarIndex(group = c("sudo", "docker"), genome.folder = getwd(),
-  ensembl.urlgenome = NULL, ensembl.urlgtf = NULL, threads = 1)
+rsemstarIndex(
+  group = c("sudo", "docker"),
+  genome.folder = getwd(),
+  ensembl.urlgenome = NULL,
+  ensembl.urlgtf = NULL,
+  threads = 1
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
 
-\item{genome.folder, }{a character string indicating the folder where the indexed reference genome for bwa will be located}
+\item{genome.folder, }{a character string indicating the folder where the indexed reference genome for STAR will be located}
 
 \item{ensembl.urlgenome, }{a character string indicating the URL from ENSEMBL ftp for the unmasked genome sequence of interest}
 

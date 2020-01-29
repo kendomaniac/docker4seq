@@ -4,8 +4,12 @@
 \alias{deeptoolBwig}
 \title{Create a bigWig from the output of bowtie2}
 \usage{
-deeptoolBwig(group = c("sudo", "docker"), fastq.folder = getwd(),
-  scratch.folder = "/data/scratch", threads)
+deeptoolBwig(
+  group = c("sudo", "docker"),
+  fastq.folder = getwd(),
+  scratch.folder = "/data/scratch",
+  threads
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

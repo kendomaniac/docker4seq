@@ -8,21 +8,25 @@
 
 <title>Running small RNA-seq single-end reads alignment and quantification using BWA and custom scripts — sncRNA • docker4seq</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,10 +34,11 @@
 
 
 
-<meta property="og:title" content="Running small RNA-seq single-end reads alignment and quantification using BWA and custom scripts — sncRNA" />
 
+<meta property="og:title" content="Running small RNA-seq single-end reads alignment and quantification using BWA and custom scripts — sncRNA" />
 <meta property="og:description" content="This function executes the docker container where BWA is installed. BWA is a read alignment package that efficiently align short sequencing reads against a large reference sequence. Alignment is performed against annotations of human small RNAs. Read count is performed by GenomicAlignments R package and custom Python and bash commands." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -45,6 +50,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -63,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">docker4seq</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0</span>
       </span>
     </div>
 
@@ -71,7 +77,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -94,7 +100,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -104,6 +109,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -115,15 +121,22 @@
     </div>
 
     <div class="ref-description">
-    
     <p>This function executes the docker container where BWA is installed. BWA is a read alignment package that efficiently align short sequencing reads against a large reference sequence. Alignment is performed against annotations of human small RNAs. Read count is performed by GenomicAlignments R package and custom Python and bash commands.</p>
-    
     </div>
 
-    <pre class="usage"><span class='fu'>sncRNA</span>(<span class='kw'>group</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"sudo"</span>, <span class='st'>"docker"</span>), <span class='kw'>fastq.folder</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>getwd</a></span>(),
-  <span class='no'>scratch.folder</span>, <span class='no'>mode</span>, <span class='no'>reference</span>, <span class='kw'>threads</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>mb.version</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>mb.species</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
-    
+    <pre class="usage"><span class='fu'>sncRNA</span>(
+  <span class='kw'>group</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sudo"</span>, <span class='st'>"docker"</span>),
+  <span class='kw'>fastq.folder</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>(),
+  <span class='no'>scratch.folder</span>,
+  <span class='no'>mode</span>,
+  <span class='no'>reference</span>,
+  <span class='kw'>threads</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>mb.version</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>mb.species</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>adapter.type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ILLUMINA"</span>, <span class='st'>"NEB"</span>),
+  <span class='kw'>trimmed.fastq</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -159,35 +172,40 @@
       <th>mb.species, </th>
       <td><p>a character string indicating the three-letter prefix of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to obtain the proper species prefix.</p></td>
     </tr>
+    <tr>
+      <th>adapter.type, </th>
+      <td><p>a character string. Two options: <code>"ILLUMINA"</code> or <code>"NEB"</code>, depending to which miRNA library prep was used: ILLUMINA or NEB</p></td>
+    </tr>
+    <tr>
+      <th>trimmed.fastq, </th>
+      <td><p>a boolean logical variable indicating if trimmed fastq are saved. Default is FALSE</p></td>
+    </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>read count files:</p>
-    
+    <p>Read count table of RNA-Seq reads aligned miRNA or non-miRNA annotations</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
     <span class='co'>#downloading fastq files</span>
-    <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system'>system</a></span>(<span class='st'>"wget http://130.192.119.59/public/test_R1.fastq.gz"</span>)
+    <span class='fu'><a href='https://rdrr.io/r/base/system.html'>system</a></span>(<span class='st'>"wget http://130.192.119.59/public/test_R1.fastq.gz"</span>)
 
     <span class='co'>#running miRNAs quantification pipeline</span>
     <span class='fu'><a href='bwaIndex.html'>bwaIndex</a></span>(<span class='kw'>group</span><span class='kw'>=</span><span class='st'>"docker"</span>, <span class='kw'>genome.folder</span><span class='kw'>=</span><span class='st'>"/data/genomes"</span>, <span class='kw'>mb.version</span><span class='kw'>=</span><span class='st'>"22"</span>, <span class='kw'>mb.species</span><span class='kw'>=</span><span class='st'>"hsa"</span>, <span class='kw'>mode</span><span class='kw'>=</span><span class='st'>"miRNA"</span>)
-    <span class='fu'>sncRNA</span>(<span class='kw'>group</span><span class='kw'>=</span><span class='st'>"docker"</span>, <span class='kw'>fastq.folder</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>getwd</a></span>(), <span class='kw'>scratch.folder</span><span class='kw'>=</span><span class='st'>"/data/scratch"</span>, <span class='kw'>mode</span><span class='kw'>=</span><span class='st'>"miRNA"</span>, <span class='kw'>reference</span><span class='kw'>=</span><span class='st'>"/data/genome/hairpin_hsa_miRBase_22.fa"</span>, <span class='kw'>threads</span><span class='kw'>=</span><span class='fl'>8</span>, <span class='kw'>mb.version</span><span class='kw'>=</span><span class='st'>"22"</span>, <span class='kw'>mb.species</span><span class='kw'>=</span><span class='st'>"hsa"</span>)
+    <span class='fu'>sncRNA</span>(<span class='kw'>group</span><span class='kw'>=</span><span class='st'>"docker"</span>, <span class='kw'>fastq.folder</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>(), <span class='kw'>scratch.folder</span><span class='kw'>=</span><span class='st'>"/data/scratch"</span>, <span class='kw'>mode</span><span class='kw'>=</span><span class='st'>"miRNA"</span>, <span class='kw'>reference</span><span class='kw'>=</span><span class='st'>"/data/genome/hairpin_hsa_miRBase_22.fa"</span>, <span class='kw'>threads</span><span class='kw'>=</span><span class='fl'>8</span>, <span class='kw'>mb.version</span><span class='kw'>=</span><span class='st'>"22"</span>, <span class='kw'>mb.species</span><span class='kw'>=</span><span class='st'>"hsa"</span>)
 
     <span class='co'>#running non miRNA ncRNAs quantification pipeline</span>
     <span class='fu'><a href='bwaIndex.html'>bwaIndex</a></span>(<span class='kw'>group</span><span class='kw'>=</span><span class='st'>"docker"</span>, <span class='kw'>genome.folder</span><span class='kw'>=</span><span class='st'>"/data/genomes/"</span>, <span class='kw'>rc.version</span><span class='kw'>=</span><span class='st'>"9.0"</span>, <span class='kw'>rc.species</span><span class='kw'>=</span><span class='st'>"Homo sapiens"</span>, <span class='kw'>length</span><span class='kw'>=</span><span class='fl'>80</span>, <span class='kw'>mode</span><span class='kw'>=</span><span class='st'>"ncRNA"</span>)
-    <span class='fu'>sncRNA</span>(<span class='kw'>group</span><span class='kw'>=</span><span class='st'>"docker"</span>, <span class='kw'>fastq.folder</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/getwd'>getwd</a></span>(), <span class='kw'>scratch.folder</span><span class='kw'>=</span><span class='st'>"/data/scratch"</span>, <span class='kw'>mode</span><span class='kw'>=</span><span class='st'>"ncRNA"</span>, <span class='kw'>reference</span><span class='kw'>=</span><span class='st'>"/data/genome/ncRNA_Homo_sapiens_RNA_Central_9_len_80.fa"</span>, <span class='kw'>threads</span><span class='kw'>=</span><span class='fl'>8</span>)
+    <span class='fu'>sncRNA</span>(<span class='kw'>group</span><span class='kw'>=</span><span class='st'>"docker"</span>, <span class='kw'>fastq.folder</span><span class='kw'>=</span><span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>(), <span class='kw'>scratch.folder</span><span class='kw'>=</span><span class='st'>"/data/scratch"</span>, <span class='kw'>mode</span><span class='kw'>=</span><span class='st'>"ncRNA"</span>, <span class='kw'>reference</span><span class='kw'>=</span><span class='st'>"/data/genome/ncRNA_Homo_sapiens_RNA_Central_9.0_len_80.fa"</span>, <span class='kw'>threads</span><span class='kw'>=</span><span class='fl'>8</span>)
 
-<span class='co'># }</span></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -196,19 +214,23 @@
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by Raffaele Calogero, Neha Kulkarni, Luca Alessandri, Marco Beccuti, Greta Romano, Francesca Cordero.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

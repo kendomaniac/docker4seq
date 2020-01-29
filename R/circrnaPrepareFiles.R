@@ -35,7 +35,6 @@ circrnaPrepareFiles <- function(group=c("sudo","docker"), scratch.folder, data.f
     return(2)
   }
 
-
   #storing the position of the home folder
   home <- getwd()
   setwd(data.folder)
@@ -49,12 +48,19 @@ circrnaPrepareFiles <- function(group=c("sudo","docker"), scratch.folder, data.f
     setwd(data.folder)
     return(3)
   }
-
+  
+  if (!(assembly %in% c("hg19", "hg18", "hg38", "mm9", "mm10", "rn6", "dm6", "ce11"))) {
+    cat(paste("\nThe given assembly is not supported\n"))
+    system("echo 2 > ExitStatusFile 2>&1")
+    setwd(home)
+    return(2)
+  }
+  
   #executing the docker job
   params <- paste("--cidfile", paste0(data.folder, "/dockerID"),
                   "-v", paste0(scratch.folder, ":/scratch"),
                   "-v", paste0(data.folder, ":/data"),
-                  "-d docker.io/repbioinfo/docker4circ.2019.01 Rscript /scripts/circhunter/circhunter.R",
+                  "-d docker.io/repbioinfo/docker4circ.2019.02 Rscript /scripts/circhunter/circhunter.R",
                   "--preparedata ",
                   "-as", assembly,
                   "-of",

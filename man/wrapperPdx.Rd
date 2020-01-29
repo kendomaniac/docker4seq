@@ -4,11 +4,19 @@
 \alias{wrapperPdx}
 \title{Running PDX data preprocessing TO BE REVISED}
 \usage{
-wrapperPdx(group = c("sudo", "docker"), fastq.folder, scratch.folder,
-  xenome.folder, seq.type, threads,
+wrapperPdx(
+  group = c("sudo", "docker"),
+  fastq.folder,
+  scratch.folder,
+  xenome.folder,
+  seq.type,
+  threads,
   adapter5 = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
-  adapter3 = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT", min.length = 40,
-  genome.folder = "/data/scratch/hg19_exome", sample.id = "sampleX")
+  adapter3 = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+  min.length = 40,
+  genome.folder = "/data/scratch/hg19_exome",
+  sample.id = "sampleX"
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

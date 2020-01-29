@@ -4,8 +4,14 @@
 \alias{kraken}
 \title{A function executing kraken}
 \usage{
-kraken(group = "docker", scratch.folder, fastq.folder, genome.folder,
-  fastq.prefix, threads)
+kraken(
+  group = "docker",
+  scratch.folder,
+  fastq.folder,
+  genome.folder,
+  fastq.prefix,
+  threads
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: sudo or docker, depending to which group the user belongs}

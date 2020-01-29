@@ -9,7 +9,6 @@
 #' @examples
 #'\dontrun{
 #'     #downloading fastq files
-#'     #running bwa
 #'     rsemBw(group="docker",bam.folder=getwd(), scratch.folder="/data/scratch")
 #'
 

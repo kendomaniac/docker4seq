@@ -4,9 +4,14 @@
 \alias{xenome}
 \title{Running xenome, https://github.com/data61/gossamer/}
 \usage{
-xenome(group = c("sudo", "docker"), fastq.folder = getwd(),
-  scratch.folder = "/data/scratch", xenome.folder, seq.type = "pe",
-  threads = 1)
+xenome(
+  group = c("sudo", "docker"),
+  fastq.folder = getwd(),
+  scratch.folder = "/data/scratch",
+  xenome.folder,
+  seq.type = "pe",
+  threads = 1
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

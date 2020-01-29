@@ -4,16 +4,33 @@
 \alias{chipseqCounts}
 \title{Running MACS & SICER workflow NOT READY FOR STABLE check it!}
 \usage{
-chipseqCounts(group = c("sudo", "docker"), output.folder = getwd(),
-  mock.folder, test.folder, scratch.folder,
+chipseqCounts(
+  group = c("sudo", "docker"),
+  output.folder = getwd(),
+  mock.folder,
+  test.folder,
+  scratch.folder,
   adapter5 = "AGATCGGAAGAGCACACGTCTGAACTCCAGTCA",
-  adapter3 = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT", threads = 8,
-  seq.type = "se", min.length = 30, genome.folder, mock.id = "igg",
-  test.id = "tf", genome, read.size = 50, tool = "macs",
-  macs.min.mfold = 10, macs.max.mfold = 30, macs.pval = "1e-5",
-  sicer.wsize = 200, sicer.gsize = 200, sicer.fdr = 0.1,
-  tss.distance = 0, max.upstream.distance = 10000,
-  remove.duplicates = "N")
+  adapter3 = "AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGT",
+  threads = 8,
+  seq.type = "se",
+  min.length = 30,
+  genome.folder,
+  mock.id = "igg",
+  test.id = "tf",
+  genome,
+  read.size = 50,
+  tool = "macs",
+  macs.min.mfold = 10,
+  macs.max.mfold = 30,
+  macs.pval = "1e-5",
+  sicer.wsize = 200,
+  sicer.gsize = 200,
+  sicer.fdr = 0.1,
+  tss.distance = 0,
+  max.upstream.distance = 10000,
+  remove.duplicates = "N"
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -36,7 +53,7 @@ chipseqCounts(group = c("sudo", "docker"), output.folder = getwd(),
 
 \item{min.length, }{a number indicating minimal length required to return a trimmed read}
 
-\item{genome.folder, }{a character string indicating the folder where the indexed reference genome for bwa is located}
+\item{genome.folder, }{a character string indicating the folder where the indexed reference genome is located}
 
 \item{mock.id, }{a character string indicating the unique id to be associated to the mock bam that will be created}
 

@@ -4,8 +4,11 @@
 \alias{rsemBw}
 \title{Creating a bigwig using RSEM}
 \usage{
-rsemBw(group = c("sudo", "docker"), bam.folder = getwd(),
-  scratch.folder = "/data/scratch")
+rsemBw(
+  group = c("sudo", "docker"),
+  bam.folder = getwd(),
+  scratch.folder = "/data/scratch"
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
@@ -23,7 +26,6 @@ This function executes the docker container rsemstar where RSEM is installed and
 \examples{
 \dontrun{
     #downloading fastq files
-    #running bwa
     rsemBw(group="docker",bam.folder=getwd(), scratch.folder="/data/scratch")
 
 

@@ -4,10 +4,14 @@
 \alias{circrnaReformat}
 \title{Running circRNA reformat script}
 \usage{
-circrnaReformat(group = c("sudo", "docker"), scratch.folder,
-  input.folder, output.folder, tool = c("acfs", "circexplorer",
-  "circexplorer2", "circrnafinder", "ciri", "ciri2", "dcc", "findcirc2",
-  "knife", "starchip", "uroborus"))
+circrnaReformat(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  input.folder,
+  output.folder,
+  tool = c("acfs", "circexplorer", "circexplorer2", "circrnafinder", "ciri", "ciri2",
+    "dcc", "findcirc2", "knife", "starchip", "uroborus")
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

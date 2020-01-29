@@ -4,8 +4,13 @@
 \alias{circrnaQuantification}
 \title{Running CircHunter circRNA quantification module}
 \usage{
-circrnaQuantification(group = c("sudo", "docker"), scratch.folder,
-  rnaseq.data, backsplicing_junctions.data, hc.params)
+circrnaQuantification(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  rnaseq.data,
+  backsplicing_junctions.data,
+  hc.params
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

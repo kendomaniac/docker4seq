@@ -4,8 +4,13 @@
 \alias{CIRCexplorer2}
 \title{Running CIRCexplorer2 parse command for circRNAs prediction from STAR or BWA alignment output}
 \usage{
-CIRCexplorer2(group = c("sudo", "docker"), scratch.folder, data.folder,
-  fusion.file, used.aligner = c("STAR", "BWA"))
+CIRCexplorer2(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  data.folder,
+  fusion.file,
+  used.aligner = c("STAR", "BWA")
+)
 }
 \arguments{
 \item{group, }{a string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}

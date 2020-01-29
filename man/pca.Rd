@@ -4,11 +4,17 @@
 \alias{pca}
 \title{generating a PCA from counts, FPKM and TPM tables from rnaseqCounts outuputs}
 \usage{
-pca(experiment.table = "./_counts.txt", type = c("counts", "FPKM",
-  "TPM"), covariatesInNames = FALSE, samplesName = TRUE,
-  principal.components = c(1, 2), legend.position = c("bottom",
-  "bottomleft", "left", "topleft", "top", "topright", "right", "center"),
-  pdf = TRUE, output.folder = getwd())
+pca(
+  experiment.table = "./_counts.txt",
+  type = c("counts", "FPKM", "TPM"),
+  covariatesInNames = FALSE,
+  samplesName = TRUE,
+  principal.components = c(1, 2),
+  legend.position = c("bottom", "bottomleft", "left", "topleft", "top", "topright",
+    "right", "center"),
+  pdf = TRUE,
+  output.folder = getwd()
+)
 }
 \arguments{
 \item{experiment.table, }{a character string indicating the counts, FPKM or TPM table file name and its path}

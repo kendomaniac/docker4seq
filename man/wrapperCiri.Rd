@@ -4,10 +4,19 @@
 \alias{wrapperCiri}
 \title{Wrapper function for circRNAs prediction using CIRI 2}
 \usage{
-wrapperCiri(group = c("sudo", "docker"), scratch.folder, data.folder,
-  genome.file, seq.type = c("se", "pe"), sample.id, threads = 1,
-  annotation.file = "", max.span = 2e+05,
-  stringency.value = c("high", "low", "zero"), quality.threshold = 10)
+wrapperCiri(
+  group = c("sudo", "docker"),
+  scratch.folder,
+  data.folder,
+  genome.file,
+  seq.type = c("se", "pe"),
+  sample.id,
+  threads = 1,
+  annotation.file = "",
+  max.span = 2e+05,
+  stringency.value = c("high", "low", "zero"),
+  quality.threshold = 10
+)
 }
 \arguments{
 \item{group, }{a character string. Two options: \code{"sudo"} or \code{"docker"}, depending to which group the user belongs}
