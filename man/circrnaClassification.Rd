@@ -25,8 +25,6 @@ circrnaClassification(
 \item{isoform.data, }{string indicating the path to the isoform annotation file}
 
 \item{assembly, }{string indicating the reference human genome assembly. Compatible assemblies: hg19 (default), hg18, hg38, mm9, mm10, rn6, dm6, ce11}
-
-\item{version, }{Ensembl database version used for the analysis. If no version number is provided, the last version is considered}
 }
 \value{
 Two tab-delimited tables reporting the transcript- and gene-level classification of a list of circRNAs

@@ -8,21 +8,25 @@
 
 <title>Function reference • docker4seq</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,7 +34,9 @@
 
 
 
+
 <meta property="og:title" content="Function reference" />
+
 
 
 
@@ -42,6 +48,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -60,7 +67,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">docker4seq</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.2.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.4.0</span>
       </span>
     </div>
 
@@ -68,7 +75,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -91,7 +98,6 @@
   </ul>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
@@ -101,6 +107,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -125,6 +132,18 @@
         </th>
       </tr>
       <tr>
+        
+        <td>
+          <p><code><a href="CIRCexplorer2.html">CIRCexplorer2()</a></code> </p>
+        </td>
+        <td><p>Running CIRCexplorer2 parse command for circRNAs prediction from STAR or BWA alignment output</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="annoByGtfchipseq.html">annoByGtfchipseq()</a></code> </p>
+        </td>
+        <td><p>Annotating RSEM gene.results using ENSEMBL gtf and refGenome CRAN package</p></td>
+      </tr><tr>
         
         <td>
           <p><code><a href="anovaLike.html">anovaLike()</a></code> </p>
@@ -163,6 +182,12 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="cdhit.html">cdhit()</a></code> </p>
+        </td>
+        <td><p>A function to execute CD-HIT</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="chipseq.html">chipseq()</a></code> </p>
         </td>
         <td><p>Detection and annotation of TF binding sites and histone marks, based on the workflow used in Galli et al Mol Cell. 2015 Oct 15;60(2):328-37</p></td>
@@ -172,6 +197,72 @@
           <p><code><a href="chipseqCounts.html">chipseqCounts()</a></code> </p>
         </td>
         <td><p>Running MACS &amp; SICER workflow NOT READY FOR STABLE check it!</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="circrnaAnnotations.html">circrnaAnnotations()</a></code> </p>
+        </td>
+        <td><p>Annotation of a list of circRNAs</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="circrnaBSJunctions.html">circrnaBSJunctions()</a></code> </p>
+        </td>
+        <td><p>Running CircHunter circRNA backsplicing sequence reconstruction module</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="circrnaClassification.html">circrnaClassification()</a></code> </p>
+        </td>
+        <td><p>Running CircHunter circRNA classification module</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="circrnaMergePredictions.html">circrnaMergePredictions()</a></code> </p>
+        </td>
+        <td><p>Function to merge different circRNA lists predicted from one of the supported circRNA prediction tools.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="circrnaOverlapResults.html">circrnaOverlapResults()</a></code> </p>
+        </td>
+        <td><p>Running circRNA prediction overlap</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="circrnaPrepareFiles.html">circrnaPrepareFiles()</a></code> </p>
+        </td>
+        <td><p>Function to prepare the CircHunter reference annotations</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="circrnaQuantification.html">circrnaQuantification()</a></code> </p>
+        </td>
+        <td><p>Running CircHunter circRNA quantification module</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="circrnaReformat.html">circrnaReformat()</a></code> </p>
+        </td>
+        <td><p>Running circRNA reformat script</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ciri2.html">ciri2()</a></code> </p>
+        </td>
+        <td><p>Running CIRI v2 tool for circRNAs prediction</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ciriAS.html">ciriAS()</a></code> </p>
+        </td>
+        <td><p>Running CIRI_AS tool for circRNAs structure prediction</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="cutadapt.html">cutadapt()</a></code> </p>
+        </td>
+        <td><p>Function to execute Cutadapt on RNA-Seq reads</p></td>
       </tr><tr>
         
         <td>
@@ -202,6 +293,12 @@
           <p><code><a href="experimentPower.html">experimentPower()</a></code> </p>
         </td>
         <td><p>A wrapper function for experiment_power from RnaSeqSampleSize Bioconductor package</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="fastq2fasta.html">fastq2fasta()</a></code> </p>
+        </td>
+        <td><p>A function to handle the conversion from fastq to fasta</p></td>
       </tr><tr>
         
         <td>
@@ -241,6 +338,30 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="heatmaply.html">heatmaply()</a></code> </p>
+        </td>
+        <td><p>Function to produce an interactive heatmap using plot.ly</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="kraken.html">kraken()</a></code> </p>
+        </td>
+        <td><p>A function executing kraken</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="macs2.html">macs2()</a></code> </p>
+        </td>
+        <td><p>A function to handle a MACS2 containier</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="mergeData.html">mergeData()</a></code> </p>
+        </td>
+        <td><p>Function to merge different circRNA lists from CIRI 2</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="mirnaCounts.html">mirnaCounts()</a></code> </p>
         </td>
         <td><p>Counting miRNAs, Cordero et al. PLoS One. 2012;7:e31630</p></td>
@@ -256,6 +377,12 @@
           <p><code><a href="multiQC.html">multiQC()</a></code> </p>
         </td>
         <td><p>A function to handle a docker containier executing MultiQC</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="oncosnp.html">oncosnp()</a></code> </p>
+        </td>
+        <td><p>A function to handle a docker containier executing CNV calculation. Only supporting hg19</p></td>
       </tr><tr>
         
         <td>
@@ -280,6 +407,12 @@
           <p><code><a href="platypusFilter.html">platypusFilter()</a></code> </p>
         </td>
         <td><p>Platypus filter analysis NOT READY TO GO ON STABLE to be used in case the full platypus workflow fail.</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="prepare4expands.html">prepare4expands()</a></code> </p>
+        </td>
+        <td><p>A function to handle a docker containier preparing the file needed for expanse</p></td>
       </tr><tr>
         
         <td>
@@ -379,9 +512,21 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="skewerXSergio.html">skewerXSergio()</a></code> </p>
+        </td>
+        <td><p>Running skewer, an adapter trimmer application, Jiang et al BMC Bioinformatics201415:182</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="sncRNA.html">sncRNA()</a></code> </p>
         </td>
         <td><p>Running small RNA-seq single-end reads alignment and quantification using BWA and custom scripts</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="snvPreprocessing.html">snvPreprocessing()</a></code> </p>
+        </td>
+        <td><p>Running indel relignment and quality recalibration on bam generated by bwa function NOT READY TO GO ON STABLE</p></td>
       </tr><tr>
         
         <td>
@@ -421,6 +566,18 @@
       </tr><tr>
         
         <td>
+          <p><code><a href="trimFasta.html">trimFasta()</a></code> </p>
+        </td>
+        <td><p>A function to execute seqtk trimming</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="wrapperCiri.html">wrapperCiri()</a></code> </p>
+        </td>
+        <td><p>Wrapper function for circRNAs prediction using CIRI 2</p></td>
+      </tr><tr>
+        
+        <td>
           <p><code><a href="wrapperDeseq2.html">wrapperDeseq2()</a></code> </p>
         </td>
         <td><p>A wrapper function for deseq2 for two groups only</p></td>
@@ -430,6 +587,12 @@
           <p><code><a href="wrapperPdx.html">wrapperPdx()</a></code> </p>
         </td>
         <td><p>Running PDX data preprocessing TO BE REVISED</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="wrapperSTARChip.html">wrapperSTARChip()</a></code> </p>
+        </td>
+        <td><p>Wrapper function for circRNAs prediction using STARChip</p></td>
       </tr><tr>
         
         <td>
@@ -461,19 +624,23 @@
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by Raffaele Calogero, Neha Kulkarni, Luca Alessandri, Marco Beccuti, Greta Romano, Francesca Cordero.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
