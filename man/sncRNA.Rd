@@ -13,7 +13,7 @@ sncRNA(
   threads = 1,
   mb.version = NULL,
   mb.species = NULL,
-  adapter.type = c("ILLUMINA", "NEB"),
+  adapter.type = c("ILLUMINA", "NEB", "QIAGEN"),
   trimmed.fastq = FALSE
 )
 }
