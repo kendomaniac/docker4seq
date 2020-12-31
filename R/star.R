@@ -7,6 +7,8 @@
 #' @param genome.folder, a character string indicating the folder where the indexed reference genome for STAR is located.
 #' @param groupid, a character string to be inserted in the bam as identifier for the sample
 #' @param threads, a number indicating the number of cores to be used from the application
+#' @param version, a number indicating version in use
+
 #' @author Raffaele Calogero, raffaele.calogero [at] unito [dot] it, Bioinformatics and Genomics unit, University of Torino Italy
 #'
 #' @return three files: sorted_reads.bam, which is sorted and duplicates marked bam file, sort_reads.bai, and sort_reads.stats, which provides mapping statistics
@@ -21,8 +23,9 @@
 #'
 #' }
 #' @export
-star <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, groupid, threads=1){
-
+star <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/data/scratch", genome.folder, groupid, threads=1, version=2){
+  
+  cat("\nIMPORTANT in version 2 ubuntu was upgraded in dic 2020 and java was updated\n")
   home <- getwd()
   setwd(fastq.folder)
 
@@ -87,13 +90,14 @@ star <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="
   cat("\nsetting as working dir the scratch folder and running  docker container\n")
 
 
-  if(group=="sudo"){
+  if(version==1){
         params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep="")
-        resultRun <- runDocker(group="docker", params=params)
-   }else{
-           params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.01 sh /bin/star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep="")
-           resultRun <- runDocker(group="docker", params=params)
-   }
+  }else{
+        params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",scratch.folder,":/data/scratch -v ",genome.folder,":/data/genome -d docker.io/repbioinfo/star251.2017.02 sh /bin/star.sh ",docker_fastq.folder," ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", groupid, " ", fastq.folder, sep="")
+  }
+  resultRun <- runDocker(group="docker", params=params)
+
+
   if(resultRun==0){
     out <- "out.info"
     #system(paste("chmod 777 -R", file.path(scratch.folder, tmp.folder)))

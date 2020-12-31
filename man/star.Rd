@@ -10,7 +10,8 @@ star(
   scratch.folder = "/data/scratch",
   genome.folder,
   groupid,
-  threads = 1
+  threads = 1,
+  version = 2
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ star(
 \item{groupid, }{a character string to be inserted in the bam as identifier for the sample}
 
 \item{threads, }{a number indicating the number of cores to be used from the application}
+
+\item{version, }{a number indicating version in use}
 }
 \value{
 three files: sorted_reads.bam, which is sorted and duplicates marked bam file, sort_reads.bai, and sort_reads.stats, which provides mapping statistics
