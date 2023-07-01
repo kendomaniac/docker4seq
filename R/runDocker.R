@@ -32,10 +32,10 @@ runDocker <- function(group="docker", params=NULL, DockerSwarm=FALSE){
     
     if(group=="sudo"){
       #      system(paste("sudo docker pull ",container, sep=""))
-      system(paste("sudo docker run --privileged=true ",params, sep=""))
+      system(paste("sudo docker run --privileged=true --platform linux/amd64 ",params, sep=""))
     }else if(group=="docker"){
       #      system(paste("docker pull ",container, sep=""))
-      system(paste("docker run --privileged=true ",params, sep=""))
+      system(paste("docker run --privileged=true --platform linux/amd64 ",params, sep=""))
     }else{
       cat("\nThe group provides is neither sudo or docker\n")
       system("echo 2 > ExitStatusFile 2>&1")
