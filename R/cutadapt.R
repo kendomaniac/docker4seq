@@ -15,7 +15,7 @@
 
 
 cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder,
-    adapter.type = c("ILLUMINA", "NEB"), threads = 1) {
+    adapter.type = c("NEB", "ILLUMINA", "QIAGEN", "LEXOGEN", "DIAGENE", "SEQMATIC", "TRILINK"), threads = 1) {
 
     #running time 1
     ptm <- proc.time()
@@ -23,7 +23,7 @@ cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder,
     scratch.folder <- normalizePath(scratch.folder)
     data.folder <- normalizePath(data.folder)
 
-    if (adapter.type %in% c("ILLUMINA", "NEB") == FALSE) {
+    if (adapter.type %in% c("NEB", "ILLUMINA", "QIAGEN", "LEXOGEN", "DIAGENE", "SEQMATIC", "TRILINK") == FALSE) {
         cat(paste("\nInvalid adapter type:", mode))
         system("echo 3 > ExitStatusFile 2>&1")
         return(3)
