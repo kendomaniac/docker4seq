@@ -8,7 +8,7 @@ cutadapt(
   group = c("sudo", "docker"),
   scratch.folder,
   data.folder,
-  adapter.type = c("ILLUMINA", "NEB"),
+  adapter.type = c("NEB", "ILLUMINA", "QIAGEN", "LEXOGEN", "DIAGENE", "SEQMATIC", "TRILINK"),
   threads = 1
 )
 }
@@ -19,7 +19,7 @@ cutadapt(
 
 \item{data.folder, }{a character string indicating where fastq files are located}
 
-\item{adapter.type, }{a character string. Two options: \code{"ILLUMINA"} or \code{"NEB"}, depending to which miRNA library prep was used: ILLUMINA or NEB}
+\item{adapter.type, }{a character string. Seven options are available depending on which miRNA library prep was used: NEB, ILLUMINA, QIAGEN, LEXOGEN, DIAGENE, SEQMATIC, TRILINK}
 
 \item{threads, }{a number indicating the number of cores to be used from the application}
 }
