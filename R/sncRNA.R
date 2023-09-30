@@ -9,7 +9,7 @@
 #' @param threads, a number indicating the number of cores to be used from the application
 #' @param mb.version, a character string indicating the required version of miRBase database. Visit ftp://mirbase.org/pub/mirbase/ to select the proper version id.
 #' @param mb.species, a character string indicating the three-letter prefix of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to obtain the proper species prefix.
-#' @param adapter.type, a character string. Two options: \code{"ILLUMINA"} or \code{"NEB"}, depending to which miRNA library prep was used: ILLUMINA or NEB
+#' @param adapter.type, a character string. Seven options are available depending on which miRNA library prep was used: NEB, ILLUMINA, QIAGEN, LEXOGEN, DIAGENE, SEQMATIC, TRILINK
 #' @param trimmed.fastq, a boolean logical variable indicating if trimmed fastq are saved. Default is FALSE
 #' @author Giulio Ferrero
 #
@@ -30,7 +30,8 @@
 #' }
 #' @export
 
-sncRNA <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder, mode, reference, threads=1, mb.version=NULL, mb.species=NULL, adapter.type=c("ILLUMINA","NEB", "QIAGEN"),  trimmed.fastq=FALSE){
+sncRNA <- function(group=c("sudo", "docker"), fastq.folder=getwd(), scratch.folder, mode, reference, threads=1, 
+                   mb.version=NULL, mb.species=NULL, adapter.type=c("NEB", "ILLUMINA", "QIAGEN", "LEXOGEN", "DIAGENE", "SEQMATIC", "TRILINK"),  trimmed.fastq=FALSE){
 
     home <- getwd()
 
