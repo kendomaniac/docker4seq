@@ -4,7 +4,7 @@
 #' @param data.folder, a character string indicating where fastq files are located
 #' @param scratch.folder, a character string indicating the scratch folder where docker container will be mounted
 #' @param threads, a number indicating the number of cores to be used from the application
-#' @param adapter.type, a character string. Seven options were available depending on which miRNA library prep was used: NEB, ILLUMINA, QIAGEN, LEXOGEN, DIAGENE, SEQMATIC, TRILINK
+#' @param adapter.type, a character string. Seven options are available depending on which miRNA library prep was used: NEB, ILLUMINA, QIAGEN, LEXOGEN, DIAGENE, SEQMATIC, TRILINK
 #' @author Nicola Licheri and Giulio Ferrero
 #' @return The fastq files of the trimmed sequencing reads
 #' @examples
