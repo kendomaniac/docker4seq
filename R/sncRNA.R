@@ -127,7 +127,7 @@ sncRNA <- function(group=c("sudo", "docker"), fastq.folder=getwd(), scratch.fold
     )
     #calling docker for quantification
     params <- paste(
-        "--cidfile", paste0(fastq.folder, "/dockerID"),
+        "--cidfile", paste0(fastq.folder, "/dockerID_sncRNA"),
         "-v", paste0(scratch.folder, ":/data/scratch"),
         "-v", paste0(ref.folder, ":/data/ref"),
         "-v", paste0(trimmed.dir, ":/data/input"),
