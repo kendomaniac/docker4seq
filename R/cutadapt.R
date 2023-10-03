@@ -40,7 +40,7 @@ cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder,
     setwd(data.folder)
 
     params <- paste(
-        "--cidfile", paste0(data.folder, "/dockerID"),
+        "--cidfile", paste0(data.folder, "/dockerID_cutadapt"),
         "-v", paste0(data.folder, ":/data"),
         "-d docker.io/repbioinfo/cutadapt.2019.01 /bin/bash /bin/cutadapt.sh", adapter.type, threads
     )
@@ -71,13 +71,13 @@ cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder,
     }
 
     #saving log and removing docker container
-    container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
+    container.id <- readLines(paste(data.folder,"/dockerID_cutadapt", sep=""), warn = FALSE)
     system(paste0("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/cutadapt_", substr(container.id,1,12),".log"))
     system(paste("docker rm", container.id))
     # removing temporary files
     cat("\n\nRemoving the temporary file ....\n")
     system("rm -fR out.info")
-    system("rm -fR dockerID")
+    system("rm -fR dockerID_cutadapt")
     system(paste("cp", paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/"), data.folder))
     setwd(home)
 
