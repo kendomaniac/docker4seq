@@ -85,8 +85,8 @@ fastqc <- function(group=c("sudo", "docker"), data.folder, large=FALSE){
   system(paste("docker rm ", container.id, sep=""))
 
   cat("\n\nRemoving the temporary file ....\n")
-  system("rm -fR dockerID_FastQC")
+  system(paste0("rm -fR ", data.folder, "/dockerID"))
 
-  system(paste("cp ",paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/")," ",data.folder, sep=""))
+  system(paste("cp ", paste(path.package(package="docker4seq"), "containers/containers.txt",sep="/")," ", data.folder, sep=""))
   setwd(home)
 }
