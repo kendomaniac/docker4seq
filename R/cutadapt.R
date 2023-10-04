@@ -77,7 +77,7 @@ cutadapt <- function(group = c("sudo", "docker"), scratch.folder, data.folder,
     # removing temporary files
     cat("\n\nRemoving the temporary file ....\n")
     system("rm -fR out.info")
-    system("rm -fR dockerID_cutadapt")
+   system(paste0("rm -fR ", data.folder, "/dockerID"))
     system(paste("cp", paste(path.package(package="docker4seq"),"containers/containers.txt",sep="/"), data.folder))
     setwd(home)
 
