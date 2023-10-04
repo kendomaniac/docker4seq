@@ -47,9 +47,9 @@ fastqc <- function(group=c("sudo", "docker"), data.folder, large=FALSE){
 
   #executing the docker job
   if(!large){
-    params <- paste("--cidfile ",data.folder,"/dockerID_FastQC -v ",data.folder,":/data/scratch -d docker.io/repbioinfo/r340.2017.01 bash /bin/fastqc.sh", sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/scratch -d docker.io/repbioinfo/r340.2017.01 bash /bin/fastqc.sh", sep="")
   }else{
-    params <- paste("--cidfile ",data.folder,"/dockerID_FastQC -v ",data.folder,":/data/scratch -d docker.io/repbioinfo/r340.2017.01 bash /bin/fastqc_large.sh", sep="")
+    params <- paste("--cidfile ",data.folder,"/dockerID -v ",data.folder,":/data/scratch -d docker.io/repbioinfo/r340.2017.01 bash /bin/fastqc_large.sh", sep="")
   }
   
   resultRun <- runDocker(group=group, params=params)
@@ -80,7 +80,7 @@ fastqc <- function(group=c("sudo", "docker"), data.folder, large=FALSE){
   }
 
   #saving log and removing docker container
-  container.id <- readLines(paste(data.folder,"/dockerID_FastQC", sep=""), warn = FALSE)
+  container.id <- readLines(paste(data.folder,"/dockerID", sep=""), warn = FALSE)
   system(paste("docker logs ", substr(container.id,1,12), " &> ",data.folder,"/fastqc_", substr(container.id,1,12),".log", sep=""))
   system(paste("docker rm ", container.id, sep=""))
 
