@@ -99,20 +99,20 @@ bwa <- function(group=c("sudo","docker"),fastq.folder=getwd(), scratch.folder="/
 
 if(circRNA == FALSE){
     if(seq.type=="pe"){
-		      params <- paste("--cidfile ",fastq.folder,"/dockerID_BWA -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2019.01 sh /bin/bwa_pe.sh /data/scratch ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", sample.id, " ",fastq.folder, sep="")
+		      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2019.01 sh /bin/bwa_pe.sh /data/scratch ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", sample.id, " ",fastq.folder, sep="")
 		      resultRun <- runDocker(group=group, params=params)
 	  }else if(seq.type=="se"){
-		    params <- paste("--cidfile ",fastq.folder,"/dockerID_BWA -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2019.01 sh /bin/bwa_se.sh /data/scratch ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2019.01 sh /bin/bwa_se.sh /data/scratch ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
 		    resultRun <- runDocker(group=group, params=params)
 	  }
 }
 
 if(circRNA == TRUE){
     if(seq.type=="pe"){
-		      params <- paste("--cidfile ",fastq.folder,"/dockerID_BWA -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2019.01 sh /bin/bwa_pe_ciri.sh /data/scratch ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", sample.id, " ",fastq.folder, sep="")
+		      params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2019.01 sh /bin/bwa_pe_ciri.sh /data/scratch ", threads," ", fastq[1]," ", fastq[2]," /data/genome ", sample.id, " ",fastq.folder, sep="")
 		      resultRun <- runDocker(group=group, params=params)
 	  }else if(seq.type=="se"){
-		    params <- paste("--cidfile ",fastq.folder,"/dockerID_BWA -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2019.01 sh /bin/bwa_se_ciri.sh /data/scratch ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
+		    params <- paste("--cidfile ",fastq.folder,"/dockerID -v ",docker_fastq.folder,":/data/scratch -v ",genome.folder,":/data/genome -v ", fastq.folder,":/fastq.folder -d docker.io/repbioinfo/bwa.2019.01 sh /bin/bwa_se_ciri.sh /data/scratch ", threads," ", fastq[1]," /data/genome ", sample.id, " ",fastq.folder, sep="")
 		    resultRun <- runDocker(group=group, params=params)
 		  }
 }
@@ -144,7 +144,7 @@ if(circRNA == TRUE){
     }
 
     #saving log and removing docker container
-    container.id <- readLines(paste(fastq.folder,"/dockerID_BWA", sep=""), warn = FALSE)
+    container.id <- readLines(paste(fastq.folder,"/dockerID", sep=""), warn = FALSE)
     system(paste("docker logs ", container.id, " >& ", "bwa_",substr(container.id,1,12),".log", sep=""))
     system(paste("docker rm ", container.id, sep=""))
 
