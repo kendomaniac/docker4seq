@@ -1,6 +1,6 @@
 Package: docker4seq
-Version: 2.4.3
-Date: 2023-07-01
+Version: 2.4.4
+Date: 2024-04-03
 Title: Running NGS computing demanding applications, e.g reads mapping and counting, wrapped in docker containers
 Authors@R: c(person("Raffaele", "Calogero", role = c("aut", "cre"),
                      email = "raffaele.calogero@unito.it"),

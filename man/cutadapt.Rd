@@ -8,7 +8,8 @@ cutadapt(
   group = c("sudo", "docker"),
   scratch.folder,
   data.folder,
-  adapter.type = c("NEB", "ILLUMINA", "QIAGEN", "LEXOGEN", "DIAGENE", "SEQMATIC", "TRILINK"),
+  adapter.type = c("NEB", "ILLUMINA", "QIAGEN", "LEXOGEN", "DIAGENE", "SEQMATIC",
+    "TRILINK"),
   threads = 1
 )
 }

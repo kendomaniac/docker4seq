@@ -26,7 +26,7 @@
 #'     bwaIndex(group="docker", genome.folder="/data/genomes", genome.url="http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz", dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz", mode="GATK")
 #'
 #'     #running bwa index for miRNA analysis
-#'     bwaIndex(group="docker", genome.folder="/data/genomes", mb.version="22", mb.species="hsa", mode="miRNA")
+#'     bwaIndex(group="docker", genome.folder="/data/genomes", mb.version="CURRENT", mb.species="hsa", mode="miRNA")
 #'
 #'     #running bwa index for ncRNA analysis
 #'     bwaIndex(group="docker", genome.folder="/data/genomes/hg19_bwa", rc.version="9", rc.species="Homo sapiens", length=80, mode="ncRNA")
@@ -95,7 +95,7 @@ bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url
 ### BWA index case for miRNA
 	if(mode=="miRNA"){
 
-	  mb_ok_ver = c("1.0","10.0","10.1","1.1","11.0","1.2","12.0","1.3","13.0","14","1.4","15","1.5","16","17","18","19","20","2.0","21","2.1","22","2.2","3.0","3.1","4.0","5.0","5.1","6.0","7.0","7.1","8.0","8.1","8.2","9.0","9.1","9.2")
+	  mb_ok_ver = c("1.0","10.0","10.1","1.1","11.0","1.2","12.0","1.3","13.0","14","1.4","15","1.5","16","17","18","19","20","2.0","21","2.1","22","2.2","3.0","3.1","4.0","5.0","5.1","6.0","7.0","7.1","8.0","8.1","8.2","9.0","9.1","9.2", "CURRENT")
 
     if(mb.version %in% mb_ok_ver == FALSE){
       cat("\nThe miRBase version is not correct\n")

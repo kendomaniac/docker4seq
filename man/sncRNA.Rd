@@ -13,7 +13,8 @@ sncRNA(
   threads = 1,
   mb.version = NULL,
   mb.species = NULL,
-  adapter.type = c("ILLUMINA", "NEB", "QIAGEN"),
+  adapter.type = c("NEB", "ILLUMINA", "QIAGEN", "LEXOGEN", "DIAGENE", "SEQMATIC",
+    "TRILINK"),
   trimmed.fastq = FALSE
 )
 }
@@ -34,7 +35,7 @@ sncRNA(
 
 \item{mb.species, }{a character string indicating the three-letter prefix of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to obtain the proper species prefix.}
 
-\item{adapter.type, }{a character string. Two options: \code{"ILLUMINA"} or \code{"NEB"}, depending to which miRNA library prep was used: ILLUMINA or NEB}
+\item{adapter.type, }{a character string. Seven options are available depending on which miRNA library prep was used: NEB, ILLUMINA, QIAGEN, LEXOGEN, DIAGENE, SEQMATIC, TRILINK}
 
 \item{trimmed.fastq, }{a boolean logical variable indicating if trimmed fastq are saved. Default is FALSE}
 }
