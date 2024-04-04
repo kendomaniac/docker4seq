@@ -7,7 +7,8 @@
 #' @param mode, a character string indicating the required type of analysis. Compatible analyses mode are "miRNA" and "ncRNA". In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. This mode require also the "reference" argument. In the "ncRNA" mode only the "reference" argument is required.
 #' @param reference, a character string indicating the path to the reference fasta file used to create the BWA index
 #' @param threads, a number indicating the number of cores to be used from the application
-#' @param mb.version, a character string indicating the required version of miRBase database. Visit ftp://mirbase.org/pub/mirbase/ to select the proper version id.
+#' @param mb.url.haripin, character string indicating the link to the hairpin miRNA sequences miRBase database. Visit http://www.mirbase.org to select the proper version number.
+#' @param mb.url.mature, a character string indicating the link to the mature miRNA sequences from miRBase database. Visit http://www.mirbase.org to select the proper version number.
 #' @param mb.species, a character string indicating the three-letter prefix of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to obtain the proper species prefix.
 #' @param adapter.type, a character string. Seven options are available depending on which miRNA library prep was used: NEB, ILLUMINA, QIAGEN, LEXOGEN, DIAGENE, SEQMATIC, TRILINK
 #' @param trimmed.fastq, a boolean logical variable indicating if trimmed fastq are saved. Default is FALSE
@@ -20,8 +21,8 @@
 #'     system("wget http://130.192.119.59/public/test_R1.fastq.gz")
 #'
 #'     #running miRNAs quantification pipeline
-#'     bwaIndex(group="docker", genome.folder="/data/genomes", mb.version="22", mb.species="hsa", mode="miRNA")
-#'     sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="miRNA", reference="/data/genome/hairpin_hsa_miRBase_22.fa", threads=8, mb.version="22", mb.species="hsa")
+#'     bwaIndex(group="docker", genome.folder="/data/genomes", mb.url.hairpin=https://www.mirbase.org/download/hairpin.fa, mb.url.mature=https://www.mirbase.org/download/mature.fa, mb.species="hsa", mode="miRNA")
+#'     sncRNA(group="docker", fastq.folder=getwd(), scratch.folder="/data/scratch", mode="miRNA", reference="/data/genome/hairpin_hsa_miRBase.fa", mb.url.hairpin=https://www.mirbase.org/download/hairpin.fa, mb.url.mature=https://www.mirbase.org/download/mature.fa, threads=8, , mb.species="hsa")
 #'
 #'     #running non miRNA ncRNAs quantification pipeline
 #'     bwaIndex(group="docker", genome.folder="/data/genomes/", rc.version="9", rc.species="Homo sapiens", length=80, mode="ncRNA")
@@ -31,7 +32,7 @@
 #' @export
 
 sncRNA <- function(group=c("sudo", "docker"), fastq.folder=getwd(), scratch.folder, mode, reference, threads=1, 
-                   mb.version=NULL, mb.species=NULL, adapter.type=c("NEB", "ILLUMINA", "QIAGEN", "LEXOGEN", "DIAGENE", "SEQMATIC", "TRILINK"),  trimmed.fastq=FALSE){
+                   mb.url.haripin=NULL, mb.url.mature=NULL, mb.species=NULL, adapter.type=c("NEB", "ILLUMINA", "QIAGEN", "LEXOGEN", "DIAGENE", "SEQMATIC", "TRILINK"),  trimmed.fastq=FALSE){
 
     home <- getwd()
 
@@ -99,14 +100,6 @@ sncRNA <- function(group=c("sudo", "docker"), fastq.folder=getwd(), scratch.fold
     }
 
     if(mode=="miRNA") {
-        mb_ok_ver = c("1.0","10.0","10.1","1.1","11.0","1.2","12.0","1.3","13.0","14","1.4","15","1.5","16","17","18","19","20","2.0","21","2.1","22","2.2","3.0","3.1","4.0","5.0","5.1","6.0","7.0","7.1","8.0","8.1","8.2","9.0","9.1","9.2")
-
-        if(mb.version %in% mb_ok_ver == FALSE) {
-          cat("\nThe miRBase version is not correct\n")
-          system("echo 2 > ExitStatusFile 2>&1")
-          setwd(home)
-          return(2)
-        }
 
         if(is.null(mb.species)) {
           cat("\nPlease insert a proper miRBase species identifier\n")
@@ -122,7 +115,7 @@ sncRNA <- function(group=c("sudo", "docker"), fastq.folder=getwd(), scratch.fold
     trimmed.dir <- file.path(fastq.folder, "trimmed")
 
     arguments <- ifelse(mode == "miRNA",
-        paste(mode, threads, ref.id, mb.version, mb.species), #arguments for miRNA quantification
+        paste(mode, threads, ref.id, mb.url.hairpin, mb.url.mature, mb.species), #arguments for miRNA quantification
         paste(mode, threads, ref.id) #arguments for ncRNA quantification
     )
     #calling docker for quantification
