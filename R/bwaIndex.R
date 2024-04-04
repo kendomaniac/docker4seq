@@ -27,7 +27,7 @@
 #'     bwaIndex(group="docker", genome.folder="/data/genomes", genome.url="http://hgdownload.soe.ucsc.edu/goldenPath/hg19/bigZips/chromFa.tar.gz", dbsnp.file="dbsnp_138.hg19.vcf.gz", g1000.file="Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.gz", mode="GATK")
 #'
 #'     #running bwa index for miRNA analysis
-#'     bwaIndex(group="docker", genome.folder="/data/genomes", mb.url.mature=https://www.mirbase.org/download/CURRENT/mature.fa, mb.url.hairpin=https://www.mirbase.org/download/CURRENT/hairpin.fa, mb.species="hsa", mode="miRNA")
+#'     bwaIndex(group="docker", genome.folder="/data/genomes", mb.url.mature=https://www.mirbase.org/download/mature.fa, mb.url.hairpin=https://www.mirbase.org/download/hairpin.fa, mb.species="hsa", mode="miRNA")
 #'
 #'     #running bwa index for ncRNA analysis
 #'     bwaIndex(group="docker", genome.folder="/data/genomes/hg19_bwa", rc.version="9", rc.species="Homo sapiens", length=80, mode="ncRNA")
