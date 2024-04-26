@@ -7,7 +7,7 @@
 #' @param mode, a character string indicating the required type of analysis. Compatible analyses mode are "miRNA" and "ncRNA". In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. This mode require also the "reference" argument. In the "ncRNA" mode only the "reference" argument is required.
 #' @param reference, a character string indicating the path to the reference fasta file used to create the BWA index
 #' @param threads, a number indicating the number of cores to be used from the application
-#' @param mb.url.haripin, character string indicating the link to the hairpin miRNA sequences miRBase database. Visit http://www.mirbase.org to select the proper version number.
+#' @param mb.url.hairpin, character string indicating the link to the hairpin miRNA sequences miRBase database. Visit http://www.mirbase.org to select the proper version number.
 #' @param mb.url.mature, a character string indicating the link to the mature miRNA sequences from miRBase database. Visit http://www.mirbase.org to select the proper version number.
 #' @param mb.species, a character string indicating the three-letter prefix of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to obtain the proper species prefix.
 #' @param adapter.type, a character string. Seven options are available depending on which miRNA library prep was used: NEB, ILLUMINA, QIAGEN, LEXOGEN, DIAGENE, SEQMATIC, TRILINK
