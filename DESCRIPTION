@@ -1,6 +1,6 @@
 Package: docker4seq
-Version: 2.4.4
-Date: 2024-04-03
+Version: 2.4.5
+Date: 2024-04-26
 Title: Running NGS computing demanding applications, e.g reads mapping and counting, wrapped in docker containers
 Authors@R: c(person("Raffaele", "Calogero", role = c("aut", "cre"),
                      email = "raffaele.calogero@unito.it"),
@@ -19,7 +19,7 @@ Maintainer: Raffaele Calogero <raffaele.calogero@unito.it>
 Depends:
     R (>= 3.0.0)
 VignetteBuilder: knitr
-Suggests: BiocStyle, knitr, rmarkdown
+Suggests: devtools, BiocStyle, knitr, rmarkdown
 BiocStyle: :html_document
 Description: A collection of functions to execute NGS computing demanding applications, e.g reads mapping and counting, wrapped in docker containers
 License: GPL (>= 2)

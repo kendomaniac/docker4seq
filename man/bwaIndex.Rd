@@ -12,7 +12,8 @@ bwaIndex(
   dbsnp.file = NULL,
   g1000.file = NULL,
   mode = c("General", "GATK", "miRNA", "ncRNA"),
-  mb.version = NULL,
+  mb.url.haripin,
+  mb.url.mature,
   mb.species = NULL,
   rc.version = NULL,
   rc.species = NULL,
@@ -32,7 +33,11 @@ bwaIndex(
 
 \item{g1000.file, }{a character string indicating the name of 1000 genome vcf located in the genome folder. The 1000 genomes vcf, Mills_and_1000G_gold_standard.indels.b37.vcf.gz and Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/}
 
-\item{mode, }{a character string indicating the required type of analysis. Compatible analyses mode are "General", "GATK", "miRNA", and "ncRNA". In "General" mode the url of any online fasta file ("genome.url" argument) can be provided and indexed, only canonical chromosomes are kept see id.fa after end of indexing. In the GATK analysis mode, the list of variants from dbsnp ("dbsnp.file" argument) and g1000 ("dbsnp.file" argument) are required in addition to the url of the genome fasta ("genome.url" argument). In "miRNA" analysis mode, the link to the fasta reporting the hairpin and mature sequences is required ("mb.url.hairpin" and "mb.url.mature" arguments) and species prefix ("mb.species" argument) of miRBase are required. In "ncRNA" analysis mode, the version ("rc.version" argument) and species prefix ("rc.species" argument) of RNA Central are required. This mode require also a desidered maximum length of the studied RNA annotations ("length" argument).}
+\item{mode, }{a character string indicating the required type of analysis. Compatible analyses mode are "General", "GATK", "miRNA", and "ncRNA". In "General" mode the url of any online fasta file ("genome.url" argument) can be provided and indexed, only canonical cromosopmes are kept see id.fa after end of indexing. In the GATK analysis mode, the list of variants from dbsnp ("dbsnp.file" argument) and g1000 ("dbsnp.file" argument) are required in addition to the url of the genome fasta ("genome.url" argument). In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. In "ncRNA" analysis mode, the version ("rc.version" argument) and species prefix ("rc.species" argument) of RNA Central are required. This mode require also a desidered maximum length of the studied RNA annotations ("length" argument).}
+
+\item{mb.url.haripin, }{character string indicating the link to the hairpin miRNA sequences miRBase database. Visit http://www.mirbase.org to select the proper version number.}
+
+\item{mb.url.mature, }{a character string indicating the link to the mature miRNA sequences from miRBase database. Visit http://www.mirbase.org to select the proper version number.}
 
 \item{mb.species, }{a character string indicating the name of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to proper species name.}
 
@@ -41,10 +46,6 @@ bwaIndex(
 \item{rc.species, }{a character string indicating the name of a species annotated in RNA Central (e.g. "Homo sapiens" for human ncRNAs). Please refer to NCBI taxonomy annotations at https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi to proper species name.}
 
 \item{length, }{an integer corresponding on the length threshold selected to define the ncRNA reference from RNA Central.}
-
-\item{mb.url.haripin, }{character string indicating the link to the hairpin miRNA sequences miRBase database. Visit http://www.mirbase.org to select the proper version number.}
-
-\item{mb.url.mature, }{a character string indicating the link to the mature miRNA sequences from miRBase database. Visit http://www.mirbase.org to select the proper version number.}
 }
 \value{
 The indexed bwa reference sequence

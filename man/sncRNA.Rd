@@ -26,7 +26,7 @@ sncRNA(
 
 \item{scratch.folder, }{a character string indicating the scratch folder where docker container will be mounted}
 
-\item{mode, }{a character string indicating the required type of analysis. Compatible analyses mode are "miRNA" and "ncRNA". In "miRNA" analysis mode, hairpin and mature sequences is required ("mb.url.hairpin" and "mb.url.mature" arguments) and species prefix ("mb.species" argument) of miRBase are required. This mode require also the "reference" argument. In the "ncRNA" mode only the "reference" argument is required.}
+\item{mode, }{a character string indicating the required type of analysis. Compatible analyses mode are "miRNA" and "ncRNA". In "miRNA" analysis mode, the version ("mb.version" argument) and species prefix ("mb.species" argument) of miRBase are required. This mode require also the "reference" argument. In the "ncRNA" mode only the "reference" argument is required.}
 
 \item{reference, }{a character string indicating the path to the reference fasta file used to create the BWA index}
 

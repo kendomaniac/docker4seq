@@ -33,7 +33,7 @@
 #'     bwaIndex(group="docker", genome.folder="/data/genomes/hg19_bwa", rc.version="9", rc.species="Homo sapiens", length=80, mode="ncRNA")
 #' }
 #' @export
-bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url=NULL, gtf.url=NULL, dbsnp.file=NULL, g1000.file=NULL, mode=c("General","GATK","miRNA","ncRNA"), mb.version=NULL, mb.species=NULL, rc.version=NULL, rc.species=NULL, length=NULL){
+bwaIndex <- function(group=c("sudo","docker"), genome.folder=getwd(), genome.url=NULL, gtf.url=NULL, dbsnp.file=NULL, g1000.file=NULL, mode=c("General","GATK","miRNA","ncRNA"), mb.url.haripin, mb.url.mature, mb.species=NULL, rc.version=NULL, rc.species=NULL, length=NULL){
 
     genome.folder <- normalizePath(genome.folder)
 
