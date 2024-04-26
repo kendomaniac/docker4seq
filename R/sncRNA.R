@@ -32,7 +32,7 @@
 #' @export
 
 sncRNA <- function(group=c("sudo", "docker"), fastq.folder=getwd(), scratch.folder, mode, reference, threads=1, 
-                   mb.url.haripin=NULL, mb.url.mature=NULL, mb.species=NULL, adapter.type=c("NEB", "ILLUMINA", "QIAGEN", "LEXOGEN", "DIAGENE", "SEQMATIC", "TRILINK"),  trimmed.fastq=FALSE){
+                   mb.url.hairpin=NULL, mb.url.mature=NULL, mb.species=NULL, adapter.type=c("NEB", "ILLUMINA", "QIAGEN", "LEXOGEN", "DIAGENE", "SEQMATIC", "TRILINK"),  trimmed.fastq=FALSE){
 
     home <- getwd()
 
