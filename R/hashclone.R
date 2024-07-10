@@ -24,7 +24,7 @@
 hashclone <- function(group=c("sudo","docker"), scratch.folder, data.folder=getwd(), kmer, hash,  coll, threshold=0.1, type ,spike="null", input.files){
 
   #docker image
-  dockerImage="docker.io/repbioinfo/hashclone.2019.01"
+  dockerImage="docker.io/mbeccuti/hashclone:2024"
 
   scratch.folder <- normalizePath(scratch.folder)
   data.folder <- normalizePath(data.folder)
