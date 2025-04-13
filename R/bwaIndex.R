@@ -8,7 +8,7 @@
 #' @param gtf.url, a character string indicating the URL from ENSEMBL ftp for the GTF for genome of interest
 #' @param dbsnp.file, a character string indicating the name of dbSNP vcf located in the genome folder. The dbSNP vcf, dbsnp_138.b37.vcf.gz and dbsnp_138.hg19.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37
 #' @param g1000.file, a character string indicating the name of 1000 genome vcf located in the genome folder. The 1000 genomes vcf, Mills_and_1000G_gold_standard.indels.b37.vcf.gz and Mills_and_1000G_gold_standard.indels.hg19.sites.vcf.idx.gz, can be downloaded from ftp://gsapubftp-anonymous@ftp.broadinstitute.org/bundle/b37/
-#' @param mb.url.haripin, character string indicating the link to the hairpin miRNA sequences miRBase database. Visit http://www.mirbase.org to select the proper version number.
+#' @param mb.url.hairpin, character string indicating the link to the hairpin miRNA sequences miRBase database. Visit http://www.mirbase.org to select the proper version number.
 #' @param mb.url.mature, a character string indicating the link to the mature miRNA sequences from miRBase database. Visit http://www.mirbase.org to select the proper version number.
 #' @param mb.species, a character string indicating the name of a species annotated in miRBase (e.g. "hsa" for human miRNAs). Please refer to http://www.mirbase.org/help/genome_summary.shtml to proper species name.
 #' @param rc.version, a character string indicating the required version of RNA Central database. Visit ftp://ftp.ebi.ac.uk/pub/databases/RNAcentral/releases/ to select the proper version number.
